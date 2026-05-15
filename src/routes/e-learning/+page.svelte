@@ -44,9 +44,9 @@
 	];
 
 	const pricingPlans = [
-		{ name: '12 bulan', label: 'TERPOPULER', price: 'Rp 179.000', perMonth: '', features: ['1400+ Materi Video', '500+ Modul Praktik Portfolio', 'Sertifikat di Tiap Materi', 'Grup Komunitas', 'FREE Q&A Webinar Series', 'Diskon untuk Bootcamp'], popular: true, gradient: 'from-primary-600 to-primary-700' },
-		{ name: '6 bulan', label: '', price: 'Rp 99.000', perMonth: '', features: ['1400+ Materi Video', '500+ Modul Praktik Portfolio', 'Sertifikat di Tiap Materi', 'Grup Komunitas', 'FREE Q&A Webinar Series', 'Diskon untuk Bootcamp'], popular: false, gradient: '' },
-		{ name: '1 bulan', label: '', price: 'Rp 29.000', perMonth: '', features: ['1400+ Materi Video', '500+ Modul Praktik Portfolio', 'Sertifikat di Tiap Materi', 'Grup Komunitas'], popular: false, gradient: '' },
+		{ id: '12-bulan', name: '12 bulan', label: 'TERPOPULER', price: 'Rp 179.000', perMonth: '', features: ['1400+ Materi Video', '500+ Modul Praktik Portfolio', 'Sertifikat di Tiap Materi', 'Grup Komunitas', 'FREE Q&A Webinar Series', 'Diskon untuk Bootcamp'], popular: true, gradient: 'from-primary-600 to-primary-700' },
+		{ id: '6-bulan', name: '6 bulan', label: '', price: 'Rp 99.000', perMonth: '', features: ['1400+ Materi Video', '500+ Modul Praktik Portfolio', 'Sertifikat di Tiap Materi', 'Grup Komunitas', 'FREE Q&A Webinar Series', 'Diskon untuk Bootcamp'], popular: false, gradient: '' },
+		{ id: '1-bulan', name: '1 bulan', label: '', price: 'Rp 29.000', perMonth: '', features: ['1400+ Materi Video', '500+ Modul Praktik Portfolio', 'Sertifikat di Tiap Materi', 'Grup Komunitas'], popular: false, gradient: '' },
 	];
 
 	const filteredCourses = $derived(
@@ -130,7 +130,7 @@
 		<!-- Course cards grid -->
 		<div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
 			{#each filteredCourses.slice(0, 10) as course}
-				<a href="#" class="group block">
+				<a href="/payment/e-learning/course-{course.title.toLowerCase().replace(/\s+/g, '-')}" class="group block">
 					<div class="rounded-xl bg-white border border-gray-200 overflow-hidden shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
 						<div class="h-28 bg-gradient-to-br {course.gradient} flex items-center justify-center">
 							<span class="text-4xl">{course.emoji}</span>
@@ -160,7 +160,7 @@
 		<p class="text-gray-500 text-sm mb-8">Cari learning path yang sesuai kebutuhanmu.</p>
 		<div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
 			{#each learningPaths as path}
-				<a href="#" class="group block">
+				<a href="/payment/e-learning/path-{path.title.toLowerCase().replace(/\s+/g, '-')}" class="group block">
 					<div class="rounded-2xl bg-white border border-gray-200 overflow-hidden shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
 						<div class="h-32 bg-gradient-to-br {path.gradient} flex items-center justify-center">
 							<span class="text-5xl">{path.emoji}</span>
@@ -202,7 +202,7 @@
 							</li>
 						{/each}
 					</ul>
-					<a href="#" class="block text-center rounded-full {plan.popular ? 'bg-white text-primary-600 font-bold hover:bg-orange-50' : 'bg-primary-600 text-white font-semibold hover:bg-primary-700'} px-6 py-2.5 text-sm transition-all active:scale-95">
+					<a href="/payment/e-learning/{plan.id}" class="block text-center rounded-full {plan.popular ? 'bg-white text-primary-600 font-bold hover:bg-orange-50' : 'bg-primary-600 text-white font-semibold hover:bg-primary-700'} px-6 py-2.5 text-sm transition-all active:scale-95">
 						Mulai Berlangganan
 					</a>
 				</div>
