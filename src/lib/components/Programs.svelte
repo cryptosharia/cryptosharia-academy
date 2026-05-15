@@ -45,10 +45,9 @@
 		</p>
 
 		<div class="space-y-16">
-			{#each programs as program, i}
-				<div class="grid lg:grid-cols-2 gap-10 items-center {i % 2 !== 0 ? 'lg:grid-flow-col-dense' : ''}">
-					<!-- Text -->
-					<div class="{i % 2 !== 0 ? 'lg:col-start-2' : ''}">
+			{#each programs as program}
+				<div class="max-w-2xl">
+					<div>
 						<div class="inline-flex items-center gap-2 rounded-full {program.bgLight} px-4 py-1.5 text-sm font-semibold text-slate-700 mb-4">
 							<span class="text-lg">{program.icon}</span>
 							{program.title}
