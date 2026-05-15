@@ -86,21 +86,6 @@
 							{/if}
 						</div>
 					</div>
-
-					<!-- Illustration card -->
-					<div class="{i % 2 !== 0 ? 'lg:col-start-1' : ''}">
-						<div class="relative rounded-3xl bg-gradient-to-br {program.gradient} p-8 sm:p-12 flex items-center justify-center min-h-[280px] overflow-hidden">
-							<div class="absolute inset-0 opacity-10">
-								<div class="absolute -top-10 -right-10 w-40 h-40 bg-white rounded-full blur-2xl"></div>
-								<div class="absolute -bottom-10 -left-10 w-56 h-56 bg-white rounded-full blur-3xl"></div>
-							</div>
-							<div class="relative text-center">
-								<div class="text-7xl sm:text-8xl mb-4">{program.icon}</div>
-								<div class="text-white font-display font-bold text-xl sm:text-2xl">{program.title}</div>
-								<div class="text-white/70 text-sm mt-1">CryptoSharia Academy</div>
-							</div>
-						</div>
-					</div>
 				</div>
 			{/each}
 		</div>
