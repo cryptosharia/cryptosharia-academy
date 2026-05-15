@@ -9,7 +9,7 @@
 				'Grup komunitas diskusi lifetime. Kelas gratis tiap bulannya'
 			],
 			cta: 'Lihat Ribuan Materi',
-			ctaHref: '#',
+			ctaHref: '/e-learning',
 			icon: '📚',
 			gradient: 'from-primary-500 to-primary-700',
 			bgLight: 'bg-primary-50',
@@ -25,30 +25,12 @@
 				'Tutor terkurasi. Memiliki lebih dari 5.000 alumni'
 			],
 			cta: 'Lihat Ragam Bootcamp',
-			ctaHref: '#',
+			ctaHref: '/bootcamp',
 			icon: '🎓',
 			gradient: 'from-violet-500 to-violet-700',
 			bgLight: 'bg-violet-50',
 			borderColor: 'border-violet-200',
 			ctaColor: 'bg-violet-600 hover:bg-violet-700'
-		},
-		{
-			title: 'Corporate Service',
-			description: 'Corporate training dan konsultasi Syariah compliance untuk perusahaan.',
-			features: [
-				'Selenggarakan corporate training sesuai kebutuhan. Online & offline',
-				'Konsultasi kepatuhan Syariah untuk platform crypto dan fintech',
-				'Dipercaya oleh berbagai perusahaan dan lembaga keuangan Syariah'
-			],
-			cta: 'Corporate Service',
-			ctaHref: '#',
-			ctaSecondary: 'Konsultasi',
-			ctaSecondaryHref: '#',
-			icon: '🏢',
-			gradient: 'from-accent-500 to-accent-700',
-			bgLight: 'bg-accent-50',
-			borderColor: 'border-accent-200',
-			ctaColor: 'bg-accent-600 hover:bg-accent-700'
 		}
 	];
 </script>
