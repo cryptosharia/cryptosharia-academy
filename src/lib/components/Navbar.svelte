@@ -3,7 +3,6 @@
 	let mobileMenuOpen = $state(false);
 
 	const navLinks = [
-		{ label: 'Beranda', href: '/' },
 		{ label: 'E-learning', href: '/e-learning' },
 		{ label: 'Bootcamp & Program', href: '/bootcamp' }
 	];
