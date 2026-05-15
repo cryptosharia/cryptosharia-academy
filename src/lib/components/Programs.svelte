@@ -44,47 +44,33 @@
 			Pilih jalur belajar yang sesuai dengan kebutuhanmu. Dari pemula hingga profesional.
 		</p>
 
-		<div class="space-y-16">
+		<div class="grid md:grid-cols-2 gap-8">
 			{#each programs as program}
-				<div class="max-w-2xl">
-					<div>
-						<div class="inline-flex items-center gap-2 rounded-full {program.bgLight} px-4 py-1.5 text-sm font-semibold text-slate-700 mb-4">
-							<span class="text-lg">{program.icon}</span>
-							{program.title}
-						</div>
-						<h3 class="font-display text-xl sm:text-2xl font-bold text-slate-900 mb-3">
-							{program.title}
-						</h3>
-						<p class="text-slate-600 mb-5 leading-relaxed">{program.description}</p>
-						<ul class="space-y-3 mb-6">
-							{#each program.features as feature}
-								<li class="flex items-start gap-3 text-sm text-slate-600">
-									<span class="flex-shrink-0 mt-0.5 flex h-5 w-5 items-center justify-center rounded-md bg-primary-100 text-primary-600">
-										<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-											<path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7" />
-										</svg>
-									</span>
-									<span>{feature}</span>
-								</li>
-							{/each}
-						</ul>
-						<div class="flex flex-wrap gap-3">
-							<a
-								href={program.ctaHref}
-								class="inline-flex items-center rounded-full {program.ctaColor} px-6 py-2.5 text-sm font-semibold text-white shadow-sm transition-all active:scale-95"
-							>
-								{program.cta}
-							</a>
-							{#if program.ctaSecondary}
-								<a
-									href={program.ctaSecondaryHref}
-									class="inline-flex items-center rounded-full border-2 border-slate-200 px-6 py-2.5 text-sm font-semibold text-slate-700 hover:border-slate-300 hover:bg-slate-50 transition-all"
-								>
-									{program.ctaSecondary}
-								</a>
-							{/if}
-						</div>
+				<div class="rounded-2xl border border-gray-200 bg-white p-8 hover:shadow-lg transition-all duration-300">
+					<div class="inline-flex items-center gap-2 rounded-full {program.bgLight} px-4 py-1.5 text-sm font-semibold text-slate-700 mb-4">
+						<span class="text-lg">{program.icon}</span>
+						{program.title}
 					</div>
+					<h3 class="font-sans text-xl font-bold text-gray-900 mb-3">{program.title}</h3>
+					<p class="text-gray-600 text-sm mb-5 leading-relaxed">{program.description}</p>
+					<ul class="space-y-3 mb-6">
+						{#each program.features as feature}
+							<li class="flex items-start gap-3 text-sm text-gray-600">
+								<span class="flex-shrink-0 mt-0.5 flex h-5 w-5 items-center justify-center rounded-md bg-primary-100 text-primary-600">
+									<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+										<path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7" />
+									</svg>
+								</span>
+								<span>{feature}</span>
+							</li>
+						{/each}
+					</ul>
+					<a
+						href={program.ctaHref}
+						class="inline-flex items-center rounded-full {program.ctaColor} px-6 py-2.5 text-sm font-semibold text-white shadow-sm transition-all active:scale-95"
+					>
+						{program.cta}
+					</a>
 				</div>
 			{/each}
 		</div>
