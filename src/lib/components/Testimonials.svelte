@@ -55,12 +55,12 @@
 	}
 </script>
 
-<section id="testimonials" class="py-16 bg-slate-50">
+<section id="testimonials" class="py-16 bg-slate-50 dark:bg-gray-900">
 	<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-		<h2 class="text-center font-display text-2xl sm:text-3xl font-extrabold text-slate-900 mb-4">
+		<h2 class="text-center font-display text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white mb-4">
 			Terbukti Berdampak dan Membuka Batasan
 		</h2>
-		<p class="text-center text-slate-500 mb-10 max-w-2xl mx-auto">
+		<p class="text-center text-slate-500 dark:text-gray-400 mb-10 max-w-2xl mx-auto">
 			Cerita nyata dari alumni CryptoSharia Academy yang berhasil membangun karir di industri crypto Syariah.
 		</p>
 
@@ -68,7 +68,7 @@
 			<!-- Scroll buttons -->
 			<button
 				onclick={scrollLeft}
-				class="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 z-10 hidden lg:flex w-10 h-10 items-center justify-center rounded-full bg-white shadow-lg border border-slate-200 text-slate-600 hover:text-primary-600 hover:border-primary-300 transition-colors"
+				class="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 z-10 hidden lg:flex w-10 h-10 items-center justify-center rounded-full bg-white dark:bg-gray-800 shadow-lg border border-slate-200 dark:border-gray-700 text-slate-600 dark:text-gray-300 hover:text-primary-600 hover:border-primary-300 transition-colors"
 				aria-label="Scroll left"
 			>
 				<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -78,7 +78,7 @@
 
 			<button
 				onclick={scrollRight}
-				class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 z-10 hidden lg:flex w-10 h-10 items-center justify-center rounded-full bg-white shadow-lg border border-slate-200 text-slate-600 hover:text-primary-600 hover:border-primary-300 transition-colors"
+				class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 z-10 hidden lg:flex w-10 h-10 items-center justify-center rounded-full bg-white dark:bg-gray-800 shadow-lg border border-slate-200 dark:border-gray-700 text-slate-600 dark:text-gray-300 hover:text-primary-600 hover:border-primary-300 transition-colors"
 				aria-label="Scroll right"
 			>
 				<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -94,7 +94,7 @@
 			>
 				{#each testimonials as t}
 					<div class="flex-shrink-0 w-72 sm:w-80 snap-start">
-						<div class="relative h-full rounded-2xl bg-white border border-slate-200 p-6 shadow-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-1 hover:border-primary-200">
+						<div class="relative h-full rounded-2xl bg-white dark:bg-gray-800 border border-slate-200 dark:border-gray-700 p-6 shadow-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-1 hover:border-primary-200">
 							<!-- Gradient accent bar -->
 							<div class="absolute top-0 left-6 right-6 h-1 rounded-b-full bg-gradient-to-r {t.color}"></div>
 
@@ -104,13 +104,13 @@
 									{t.name[0]}
 								</div>
 								<div>
-									<div class="font-semibold text-slate-900 text-sm">{t.name}</div>
-									<div class="text-xs text-slate-500">{t.role}, {t.company}</div>
+									<div class="font-semibold text-slate-900 dark:text-white text-sm">{t.name}</div>
+									<div class="text-xs text-slate-500 dark:text-gray-400">{t.role}, {t.company}</div>
 								</div>
 							</div>
 
 							<!-- Quote -->
-							<p class="text-slate-600 text-sm leading-relaxed mb-4">"{t.quote}"</p>
+							<p class="text-slate-600 dark:text-gray-300 text-sm leading-relaxed mb-4">"{t.quote}"</p>
 
 							<!-- CTA -->
 							<a href="#" class="inline-flex items-center text-sm font-semibold text-primary-600 hover:text-primary-700 transition-colors">

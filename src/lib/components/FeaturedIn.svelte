@@ -4,9 +4,9 @@
 	];
 </script>
 
-<section class="py-12 bg-white border-t border-slate-100">
+<section class="py-12 bg-white dark:bg-gray-800 border-t border-slate-100 dark:border-gray-800">
 	<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-		<h2 class="text-center font-display text-xl sm:text-2xl font-extrabold text-slate-900 mb-10">
+		<h2 class="text-center font-display text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-white mb-10">
 			Proudly Featured In
 		</h2>
 

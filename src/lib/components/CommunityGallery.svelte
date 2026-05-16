@@ -27,12 +27,12 @@
 	];
 </script>
 
-<section class="py-16 bg-white">
+<section class="py-16 bg-white dark:bg-gray-950">
 	<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-		<h2 class="text-center font-display text-2xl sm:text-3xl font-extrabold text-slate-900 mb-4">
+		<h2 class="text-center font-display text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white mb-4">
 			Rasanya Gabung Komunitas CryptoSharia <span class="text-primary-600">#CryptoHalal</span>
 		</h2>
-		<p class="text-center text-slate-500 mb-12 max-w-2xl mx-auto">
+		<p class="text-center text-slate-500 dark:text-gray-400 mb-12 max-w-2xl mx-auto">
 			Lebih dari sekedar belajar — gabung komunitas yang aktif, suportif, dan terus berkembang.
 		</p>
 

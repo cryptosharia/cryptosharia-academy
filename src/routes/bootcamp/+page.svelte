@@ -65,24 +65,21 @@
 </svelte:head>
 
 <!-- Hero Section -->
-<section class="relative overflow-hidden pt-16">
-	<div class="absolute inset-0 bg-gradient-to-br from-orange-500 via-orange-600 to-orange-800"></div>
-	<div class="absolute inset-0 opacity-10">
-		<div class="absolute top-10 right-20 w-72 h-72 bg-white rounded-full blur-3xl"></div>
-		<div class="absolute bottom-0 left-10 w-56 h-56 bg-yellow-300 rounded-full blur-3xl"></div>
-	</div>
+<section class="relative overflow-hidden pt-16 bg-orange-600">
+	<!-- Background Image -->
+	<div class="absolute inset-0 bg-cover bg-center bg-no-repeat" style="background-image: url('/background-beranda.png');"></div>
 
 	<div class="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16 sm:py-20">
-		<div class="grid lg:grid-cols-2 gap-10 items-center">
+		<div class="max-w-3xl text-center lg:text-left">
 			<div>
 				<h1 class="font-sans text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white leading-tight">
 					<span class="italic">Bootcamp yang Memberi Hasil.</span><br />
 					<span class="italic text-yellow-200">Fokus Praktik & Portfolio.</span>
 				</h1>
-				<p class="mt-5 text-lg text-orange-100 leading-relaxed max-w-lg">
+				<p class="mt-5 text-lg text-orange-100 leading-relaxed max-w-lg mx-auto lg:mx-0">
 					Full Online dan Dipandu oleh Praktisi Senior. Praktikal, lebih dari sekadar Webinar. Fokus Bantu Kembangkan Skill dan Portfolio di Industri Crypto Syariah.
 				</p>
-				<div class="mt-7 flex flex-wrap items-center gap-3">
+				<div class="mt-7 flex flex-wrap items-center justify-center lg:justify-start gap-3">
 					<a href="#program" class="inline-flex items-center rounded-full bg-white px-7 py-3 text-sm font-bold text-orange-600 shadow-lg transition-all hover:bg-orange-50 active:scale-95">
 						Lihat Program Pilihan
 					</a>
@@ -90,7 +87,7 @@
 						Dapatkan Promo
 					</a>
 				</div>
-				<div class="mt-6 flex flex-wrap items-center gap-4">
+				<div class="mt-6 flex flex-wrap items-center justify-center lg:justify-start gap-4">
 					{#each badges as badge}
 						<div class="flex items-center gap-2 text-sm text-white/80 font-medium">
 							<svg class="w-4 h-4 text-yellow-300" fill="currentColor" viewBox="0 0 20 20">
@@ -101,32 +98,21 @@
 					{/each}
 				</div>
 			</div>
-
-			<!-- Right illustration -->
-			<div class="hidden lg:flex justify-center">
-				<div class="w-72 h-72 rounded-3xl bg-gradient-to-br from-white/15 to-white/5 backdrop-blur-lg border border-white/20 flex items-center justify-center">
-					<div class="text-center">
-						<div class="text-7xl mb-3">🎓</div>
-						<div class="text-white font-sans font-bold text-xl">Bootcamp</div>
-						<div class="text-orange-200 text-sm mt-1">Intensive Program</div>
-					</div>
-				</div>
-			</div>
 		</div>
 	</div>
 
 	<!-- Wave -->
-	<div class="absolute bottom-0 left-0 right-0">
-		<svg viewBox="0 0 1440 50" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full">
-			<path d="M0 50L60 43.3C120 36.7 240 23.3 360 20C480 16.7 600 23.3 720 26.7C840 30 960 30 1080 26.7C1200 23.3 1320 16.7 1380 13.3L1440 10V50H0Z" fill="white"/>
+	<div class="absolute -bottom-px left-0 right-0">
+		<svg viewBox="0 0 1440 50" fill="none" xmlns="http://www.w3.org/2000/svg" class="block w-full">
+			<path d="M0 50L60 43.3C120 36.7 240 23.3 360 20C480 16.7 600 23.3 720 26.7C840 30 960 30 1080 26.7C1200 23.3 1320 16.7 1380 13.3L1440 10V50H0Z" class="fill-white dark:fill-gray-950"/>
 		</svg>
 	</div>
 </section>
 
 <!-- Testimonials -->
-<section class="py-12 bg-white">
+<section class="py-12 bg-white dark:bg-gray-950">
 	<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-		<h2 class="text-center font-sans text-xl sm:text-2xl font-extrabold text-gray-900 mb-8">
+		<h2 class="text-center font-sans text-xl sm:text-2xl font-extrabold text-gray-900 dark:text-white mb-8">
 			Testimoni Alumni Bootcamp CryptoSharia
 		</h2>
 		<div
@@ -136,14 +122,14 @@
 		>
 			{#each testimonials as t}
 				<div class="flex-shrink-0 w-64">
-					<div class="h-full rounded-2xl bg-white border border-gray-200 p-5 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+					<div class="h-full rounded-2xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 p-5 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
 						<div class="flex items-center gap-3 mb-3">
 							<div class="w-10 h-10 rounded-full bg-gradient-to-br {t.color} flex items-center justify-center text-white font-bold text-sm">
 								{t.name[0]}
 							</div>
-							<span class="font-semibold text-gray-900 text-sm">{t.name}</span>
+							<span class="font-semibold text-gray-900 dark:text-white text-sm">{t.name}</span>
 						</div>
-						<p class="text-gray-600 text-sm leading-relaxed">"{t.quote}"</p>
+						<p class="text-gray-600 dark:text-gray-300 text-sm leading-relaxed">"{t.quote}"</p>
 						<button class="mt-3 text-xs font-semibold text-primary-600 hover:text-primary-700 transition-colors">
 							Baca Cerita →
 						</button>
@@ -155,18 +141,18 @@
 </section>
 
 <!-- Search + Bootcamp Grid -->
-<section id="program" class="py-12 bg-gray-50">
+<section id="program" class="py-12 bg-gray-50 dark:bg-gray-900">
 	<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 		<!-- Search bar -->
 		<div class="relative max-w-xl mx-auto mb-10">
-			<svg class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+			<svg class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
 			</svg>
 			<input
 				type="text"
 				bind:value={searchQuery}
 				placeholder="Apa yang ingin kamu pelajari?"
-				class="w-full rounded-2xl border border-gray-200 bg-white py-4 pl-12 pr-4 text-sm text-gray-900 placeholder:text-gray-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-shadow"
+				class="w-full rounded-2xl border border-gray-200 dark:border-gray-700 bg-white py-4 pl-12 pr-4 text-sm text-gray-900 placeholder:text-gray-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-shadow"
 			/>
 		</div>
 
@@ -174,7 +160,7 @@
 		<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
 			{#each filteredBootcamps as bootcamp}
 				<a href="#" class="group block">
-					<div class="rounded-2xl bg-white border border-gray-200 overflow-hidden shadow-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-1 hover:border-primary-200">
+					<div class="rounded-2xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 overflow-hidden shadow-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-1 hover:border-primary-200">
 						<!-- Card header / thumbnail -->
 						<div class="relative h-40 bg-gradient-to-br {bootcamp.gradient} flex items-center justify-center overflow-hidden">
 							<div class="absolute inset-0 opacity-10">
@@ -198,10 +184,10 @@
 
 						<!-- Card body -->
 						<div class="p-4">
-							<h3 class="font-semibold text-gray-900 text-sm leading-snug mb-3 group-hover:text-primary-600 transition-colors line-clamp-2 min-h-[2.5rem]">
+							<h3 class="font-semibold text-gray-900 dark:text-white text-sm leading-snug mb-3 group-hover:text-primary-600 transition-colors line-clamp-2 min-h-[2.5rem]">
 								{bootcamp.title}
 							</h3>
-							<div class="flex items-center gap-2 text-xs text-gray-500 mb-1.5">
+							<div class="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400 mb-1.5">
 								<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
 								</svg>
@@ -222,14 +208,14 @@
 		{#if filteredBootcamps.length === 0}
 			<div class="text-center py-16">
 				<div class="text-5xl mb-4">🔍</div>
-				<p class="text-gray-500 text-sm">Tidak ada bootcamp yang cocok dengan pencarian "{searchQuery}"</p>
+				<p class="text-gray-500 dark:text-gray-400 text-sm">Tidak ada bootcamp yang cocok dengan pencarian "{searchQuery}"</p>
 			</div>
 		{/if}
 	</div>
 </section>
 
 <!-- Corporate CTA -->
-<section class="py-16 bg-white">
+<section class="py-16 bg-white dark:bg-gray-950">
 	<div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
 		<div class="rounded-3xl bg-gradient-to-br from-gray-900 to-gray-800 p-8 sm:p-12 text-center overflow-hidden relative">
 			<div class="absolute inset-0 opacity-5">

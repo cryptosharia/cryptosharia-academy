@@ -35,27 +35,27 @@
 	];
 </script>
 
-<section id="programs" class="py-20 bg-white">
+<section id="programs" class="py-20 bg-white dark:bg-gray-950">
 	<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-		<h2 class="text-center font-display text-2xl sm:text-3xl font-extrabold text-slate-900 mb-4">
+		<h2 class="text-center font-display text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white mb-4">
 			Berbagai Program CryptoSharia
 		</h2>
-		<p class="text-center text-slate-500 mb-14 max-w-2xl mx-auto">
+		<p class="text-center text-slate-500 dark:text-gray-400 mb-14 max-w-2xl mx-auto">
 			Pilih jalur belajar yang sesuai dengan kebutuhanmu. Dari pemula hingga profesional.
 		</p>
 
 		<div class="grid md:grid-cols-2 gap-8">
 			{#each programs as program}
-				<div class="rounded-2xl border border-gray-200 bg-white p-8 hover:shadow-lg transition-all duration-300">
+				<div class="rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-8 hover:shadow-lg transition-all duration-300">
 					<div class="inline-flex items-center gap-2 rounded-full {program.bgLight} px-4 py-1.5 text-sm font-semibold text-slate-700 mb-4">
 						<span class="text-lg">{program.icon}</span>
 						{program.title}
 					</div>
-					<h3 class="font-sans text-xl font-bold text-gray-900 mb-3">{program.title}</h3>
-					<p class="text-gray-600 text-sm mb-5 leading-relaxed">{program.description}</p>
+					<h3 class="font-sans text-xl font-bold text-gray-900 dark:text-white mb-3">{program.title}</h3>
+					<p class="text-gray-600 dark:text-gray-300 text-sm mb-5 leading-relaxed">{program.description}</p>
 					<ul class="space-y-3 mb-6">
 						{#each program.features as feature}
-							<li class="flex items-start gap-3 text-sm text-gray-600">
+							<li class="flex items-start gap-3 text-sm text-gray-600 dark:text-gray-300">
 								<span class="flex-shrink-0 mt-0.5 flex h-5 w-5 items-center justify-center rounded-md bg-primary-100 text-primary-600">
 									<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 										<path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7" />

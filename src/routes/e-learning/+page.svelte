@@ -1,36 +1,38 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
+	import { collection, query, getDocs, orderBy } from 'firebase/firestore';
+	import { db } from '$lib/firebase';
+
 	let activeCategory = $state('Semua');
 
 	const categories = ['Semua', 'Blockchain', 'Syariah', 'Trading', 'DeFi', 'Development', 'Data & AI', 'Security'];
 
 	interface Course {
+		id?: string;
 		title: string;
 		topics: number;
 		duration: string;
-		price: string;
 		category: string;
-		emoji: string;
-		gradient: string;
+		image: string;
 	}
 
-	const courses: Course[] = [
-		{ title: 'Blockchain & Crypto Fundamentals', topics: 24, duration: '8 Jam', price: 'Rp 99.000', category: 'Blockchain', emoji: '⛓️', gradient: 'from-orange-400 to-orange-600' },
-		{ title: 'Fiqh Muamalah Digital', topics: 18, duration: '6 Jam', price: 'Rp 79.000', category: 'Syariah', emoji: '🕌', gradient: 'from-emerald-400 to-emerald-600' },
-		{ title: 'Crypto Trading Fundamental', topics: 22, duration: '7 Jam', price: 'Rp 99.000', category: 'Trading', emoji: '📈', gradient: 'from-blue-400 to-blue-600' },
-		{ title: 'DeFi & Yield Farming Halal', topics: 16, duration: '5 Jam', price: 'Rp 79.000', category: 'DeFi', emoji: '🌾', gradient: 'from-teal-400 to-teal-600' },
-		{ title: 'Smart Contract & Solidity', topics: 30, duration: '12 Jam', price: 'Rp 149.000', category: 'Development', emoji: '📝', gradient: 'from-violet-400 to-violet-600' },
-		{ title: 'Token Screening Syariah', topics: 14, duration: '4 Jam', price: 'Rp 59.000', category: 'Syariah', emoji: '🔍', gradient: 'from-amber-400 to-amber-600' },
-		{ title: 'Data Analysis for Crypto', topics: 20, duration: '8 Jam', price: 'Rp 99.000', category: 'Data & AI', emoji: '📊', gradient: 'from-cyan-400 to-cyan-600' },
-		{ title: 'NFT Creation & Marketing', topics: 12, duration: '4 Jam', price: 'Rp 59.000', category: 'Blockchain', emoji: '🎨', gradient: 'from-pink-400 to-pink-600' },
-		{ title: 'Web3 Frontend Development', topics: 28, duration: '10 Jam', price: 'Rp 129.000', category: 'Development', emoji: '💻', gradient: 'from-indigo-400 to-indigo-600' },
-		{ title: 'Crypto Wallet & Security', topics: 10, duration: '3 Jam', price: 'Rp 49.000', category: 'Security', emoji: '🔐', gradient: 'from-red-400 to-red-600' },
-		{ title: 'Technical Analysis Crypto', topics: 18, duration: '6 Jam', price: 'Rp 79.000', category: 'Trading', emoji: '📉', gradient: 'from-sky-400 to-sky-600' },
-		{ title: 'AI & Machine Learning for Crypto', topics: 22, duration: '8 Jam', price: 'Rp 99.000', category: 'Data & AI', emoji: '🤖', gradient: 'from-fuchsia-400 to-fuchsia-600' },
-		{ title: 'Ekonomi Syariah & Fintech', topics: 16, duration: '5 Jam', price: 'Rp 69.000', category: 'Syariah', emoji: '💰', gradient: 'from-lime-500 to-lime-700' },
-		{ title: 'Stablecoin & CBDC Analysis', topics: 12, duration: '4 Jam', price: 'Rp 59.000', category: 'Blockchain', emoji: '🪙', gradient: 'from-yellow-400 to-yellow-600' },
-		{ title: 'DeFi Protocol Deep Dive', topics: 20, duration: '7 Jam', price: 'Rp 89.000', category: 'DeFi', emoji: '🏦', gradient: 'from-emerald-500 to-emerald-700' },
-		{ title: 'Blockchain Cybersecurity', topics: 14, duration: '5 Jam', price: 'Rp 79.000', category: 'Security', emoji: '🛡️', gradient: 'from-rose-400 to-rose-600' },
-	];
+	let courses = $state<Course[]>([]);
+	let isLoadingCourses = $state(true);
+
+	onMount(async () => {
+		try {
+			const q = query(collection(db, 'elearning_courses'), orderBy('createdAt', 'desc'));
+			const snap = await getDocs(q);
+			courses = snap.docs.map(doc => ({
+				id: doc.id,
+				...doc.data()
+			})) as Course[];
+		} catch (error) {
+			console.error("Failed to load courses:", error);
+		} finally {
+			isLoadingCourses = false;
+		}
+	});
 
 	const learningPaths: { title: string; courses: number; hours: number; emoji: string; gradient: string }[] = [
 		{ title: 'Blockchain & Crypto', courses: 8, hours: 32, emoji: '⛓️', gradient: 'from-orange-500 to-orange-700' },
@@ -62,112 +64,137 @@
 </script>
 
 <svelte:head>
-	<title>E-learning | CryptoSharia Academy</title>
-	<meta name="description" content="Kuasai ratusan skill crypto Syariah. Bangun portfolio & raih sertifikat. Akses materi sekali bayar, lifetime." />
+	<title>Materi E-Learning | CryptoSharia Academy</title>
 </svelte:head>
 
-<!-- Hero -->
-<section class="relative overflow-hidden pt-16">
-	<div class="absolute inset-0 bg-gradient-to-br from-orange-500 via-orange-600 to-orange-800"></div>
-	<div class="absolute inset-0 opacity-10">
-		<div class="absolute top-10 right-20 w-72 h-72 bg-white rounded-full blur-3xl"></div>
-		<div class="absolute bottom-0 left-10 w-56 h-56 bg-yellow-300 rounded-full blur-3xl"></div>
+<!-- Hero Section -->
+<section class="relative bg-black py-20 lg:py-28 overflow-hidden">
+	<div class="absolute inset-0 z-0">
+		<img src="/background-beranda.png" alt="Beranda Background" class="w-full h-full object-cover opacity-60" />
 	</div>
-	<div class="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16 sm:py-20">
-		<div class="max-w-2xl">
-			<h1 class="font-sans text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white leading-tight">
-				<span class="italic">Kuasai Ratusan Skill,</span><br />
-				<span class="italic text-yellow-200">Bangun Portfolio & Bersertifikat.</span>
+	<div class="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center sm:text-left">
+		<div class="max-w-3xl">
+			<div class="inline-flex items-center rounded-full border border-primary-500/30 bg-primary-500/10 px-3 py-1 text-sm font-medium text-primary-400 backdrop-blur-sm mb-6">
+				<span class="flex h-2 w-2 rounded-full bg-primary-500 mr-2"></span> Akses Ratusan Materi
+			</div>
+			<h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white mb-6 leading-tight font-sans">
+				Mulai Perjalanan Karirmu di <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary-400 to-orange-400">Web3 & Crypto</span>
 			</h1>
-			<p class="mt-5 text-lg text-orange-100 leading-relaxed">
-				Akses semua materi sekali bayar. Lebih dari ratusan materi video, studi kasus, bahan bacaan, project praktikal, dan komunitas diskusi lifetime.
+			<p class="text-lg sm:text-xl text-gray-300 mb-8 max-w-2xl mx-auto sm:mx-0">
+				Akses ratusan jam video pembelajaran komprehensif, dari dasar blockchain hingga smart contract development tingkat lanjut dengan pendekatan Syariah.
 			</p>
-			<div class="mt-7 flex flex-wrap gap-3">
-				<a href="#pricing" class="inline-flex items-center rounded-full bg-white px-7 py-3 text-sm font-bold text-orange-600 shadow-lg hover:bg-orange-50 active:scale-95 transition-all">Mulai Berlangganan</a>
-				<a href="#courses" class="inline-flex items-center rounded-full border-2 border-white/30 px-7 py-3 text-sm font-semibold text-white hover:bg-white/10 transition-all">Lihat Semua Materi</a>
+			<div class="flex flex-col sm:flex-row gap-4 justify-center sm:justify-start">
+				<a href="#pricing" class="inline-flex items-center justify-center rounded-full bg-primary-600 px-8 py-3.5 text-base font-bold text-white shadow-lg shadow-primary-500/30 hover:bg-primary-700 hover:-translate-y-0.5 transition-all orange-glow">
+					Mulai Belajar
+				</a>
+				<a href="#katalog" class="inline-flex items-center justify-center rounded-full bg-white/10 px-8 py-3.5 text-base font-bold text-white backdrop-blur-sm hover:bg-white/20 transition-all border border-white/10">
+					Lihat Katalog
+				</a>
 			</div>
 		</div>
 	</div>
-	<div class="absolute bottom-0 left-0 right-0">
-		<svg viewBox="0 0 1440 50" fill="none" class="w-full"><path d="M0 50L60 43C120 37 240 23 360 20C480 17 600 23 720 27C840 30 960 30 1080 27C1200 23 1320 17 1380 13L1440 10V50H0Z" fill="white"/></svg>
-	</div>
 </section>
 
-<!-- Features -->
-<section class="py-14 bg-white">
-	<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-		<h2 class="font-sans text-xl sm:text-2xl font-extrabold text-gray-900 mb-2">Solusi #1 Kuasai Ratusan Skill Crypto Syariah</h2>
-		<p class="text-gray-500 text-sm mb-8">Belajar fleksibel, praktikal, dan bersertifikat.</p>
-		<div class="space-y-5">
-			{#each features as f}
-				<div class="flex items-start gap-4 p-4 rounded-xl hover:bg-gray-50 transition-colors">
-					<span class="text-2xl flex-shrink-0">{f.icon}</span>
-					<div>
-						<h3 class="font-semibold text-gray-900 text-sm mb-1">{f.title}</h3>
-						<p class="text-gray-500 text-sm leading-relaxed">{f.desc}</p>
-					</div>
-				</div>
-			{/each}
+<!-- Stats Banner -->
+<div class="bg-primary-900 border-y border-primary-800">
+	<div class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+		<div class="grid grid-cols-2 gap-8 md:grid-cols-4 divide-x divide-primary-800/50">
+			<div class="text-center">
+				<div class="text-3xl font-extrabold text-white">1400+</div>
+				<div class="mt-1 text-sm font-medium text-primary-300">Video Materi</div>
+			</div>
+			<div class="text-center">
+				<div class="text-3xl font-extrabold text-white">500+</div>
+				<div class="mt-1 text-sm font-medium text-primary-300">Studi Kasus</div>
+			</div>
+			<div class="text-center">
+				<div class="text-3xl font-extrabold text-white">125K+</div>
+				<div class="mt-1 text-sm font-medium text-primary-300">Member Aktif</div>
+			</div>
+			<div class="text-center">
+				<div class="text-3xl font-extrabold text-white">4.9/5</div>
+				<div class="mt-1 text-sm font-medium text-primary-300">Rating Siswa</div>
+			</div>
 		</div>
 	</div>
-</section>
+</div>
 
-<!-- Courses with category tabs -->
-<section id="courses" class="py-14 bg-gray-50">
+<!-- Katalog Materi Section -->
+<section id="katalog" class="py-16 sm:py-24 bg-gray-50 dark:bg-gray-900">
 	<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-		<h2 class="text-center font-sans text-xl sm:text-2xl font-extrabold text-gray-900 mb-2">Ratusan Skill Impian Kini Dalam Genggamanmu</h2>
-		<p class="text-center text-gray-500 text-sm mb-8">Lihat contoh beberapa materi terpopuler rancangan experts berikut.</p>
+		<div class="text-center mb-12">
+			<div class="inline-flex items-center rounded-full bg-blue-100 dark:bg-blue-900/30 px-3 py-1 text-sm font-semibold text-blue-800 dark:text-blue-300 mb-4">
+				E-Learning Katalog
+			</div>
+			<h2 class="text-3xl sm:text-4xl font-extrabold text-gray-900 dark:text-white mb-4">Ratusan Skill Impian Kini Dalam Genggamanmu</h2>
+			<p class="text-lg text-gray-500 dark:text-gray-400 max-w-2xl mx-auto">Satu harga untuk akses semua materi. Belajar secara mandiri dan fleksibel kapanpun Anda mau.</p>
+		</div>
 
 		<!-- Category tabs -->
 		<div class="flex flex-wrap gap-2 justify-center mb-8">
 			{#each categories as cat}
-				<button onclick={() => (activeCategory = cat)} class="px-4 py-2 text-sm font-medium rounded-full transition-all {activeCategory === cat ? 'bg-primary-600 text-white shadow-sm' : 'bg-white text-gray-600 border border-gray-200 hover:border-primary-300 hover:text-primary-600'}">
+				<button onclick={() => (activeCategory = cat)} class="px-4 py-2 text-sm font-bold rounded-full transition-all {activeCategory === cat ? 'bg-primary-600 text-white shadow-sm border border-primary-600' : 'bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-gray-700 hover:border-primary-300 dark:hover:border-primary-700 hover:text-primary-600 dark:hover:text-primary-400'}">
 					{cat}
 				</button>
 			{/each}
 		</div>
 
 		<!-- Course cards grid -->
-		<div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
-			{#each filteredCourses.slice(0, 10) as course}
-				<a href="/payment/e-learning/course-{course.title.toLowerCase().replace(/\s+/g, '-')}" class="group block">
-					<div class="rounded-xl bg-white border border-gray-200 overflow-hidden shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
-						<div class="h-28 bg-gradient-to-br {course.gradient} flex items-center justify-center">
-							<span class="text-4xl">{course.emoji}</span>
-						</div>
-						<div class="p-3">
-							<h3 class="font-semibold text-gray-900 text-xs leading-snug mb-2 group-hover:text-primary-600 transition-colors line-clamp-2">{course.title}</h3>
-							<div class="flex items-center gap-2 text-[10px] text-gray-400">
-								<span>📖 {course.topics} Materi</span>
-								<span>⏱ {course.duration}</span>
+		{#if isLoadingCourses}
+			<div class="text-center py-16">
+				<svg class="animate-spin w-8 h-8 mx-auto text-primary-600 mb-4" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"/></svg>
+				<p class="text-sm font-medium text-gray-500 dark:text-gray-400">Memuat materi e-learning...</p>
+			</div>
+		{:else if filteredCourses.length === 0}
+			<div class="text-center py-16 bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700">
+				<div class="text-4xl mb-2">📭</div>
+				<p class="text-sm font-medium text-gray-500 dark:text-gray-400">Belum ada materi untuk kategori ini.</p>
+			</div>
+		{:else}
+			<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+				{#each filteredCourses.slice(0, 12) as course}
+					<a href="/e-learning/{course.id}" class="group block">
+						<div class="h-full rounded-2xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 flex flex-col">
+							<div class="h-40 bg-cover bg-center border-b border-gray-100 dark:border-gray-700 bg-gray-100 dark:bg-gray-900 transition-transform duration-500 group-hover:scale-105" style="background-image: url('{course.image || '/background-beranda.png'}');">
+							</div>
+							<div class="p-5 flex-1 flex flex-col bg-white dark:bg-gray-800 relative z-10">
+								<div class="flex items-center justify-between gap-2 mb-3">
+									<span class="px-2.5 py-1 rounded-md bg-gray-100 dark:bg-gray-700 text-[10px] font-bold text-gray-600 dark:text-gray-300">{course.category}</span>
+								</div>
+								<h3 class="font-bold text-gray-900 dark:text-white text-base leading-snug mb-4 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors line-clamp-2">{course.title}</h3>
+								
+								<div class="mt-auto flex items-center justify-between text-xs font-medium text-gray-500 dark:text-gray-400 pt-4 border-t border-gray-100 dark:border-gray-700">
+									<span class="flex items-center gap-1.5"><svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg> {course.topics} Materi</span>
+									<span class="flex items-center gap-1.5"><svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg> {course.duration}</span>
+								</div>
 							</div>
 						</div>
-					</div>
-				</a>
-			{/each}
-		</div>
+					</a>
+				{/each}
+			</div>
+		{/if}
 
-		<div class="text-center mt-8">
-			<a href="#pricing" class="inline-flex items-center rounded-full bg-primary-600 px-6 py-2.5 text-sm font-semibold text-white orange-glow hover:bg-primary-700 active:scale-95 transition-all">Mulai Berlangganan</a>
+		<div class="text-center mt-12">
+			<a href="#pricing" class="inline-flex items-center rounded-full bg-primary-600 px-8 py-3 text-base font-bold text-white orange-glow hover:bg-primary-700 active:scale-95 transition-all">Lihat Paket Harga Langganan</a>
 		</div>
 	</div>
 </section>
 
 <!-- Learning Paths -->
-<section class="py-14 bg-white">
+<section class="py-14 bg-white dark:bg-gray-950">
 	<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-		<h2 class="font-sans text-xl sm:text-2xl font-extrabold text-gray-900 mb-2">Daftar Learning Path Rancangan Experts</h2>
-		<p class="text-gray-500 text-sm mb-8">Cari learning path yang sesuai kebutuhanmu.</p>
+		<h2 class="font-sans text-xl sm:text-2xl font-extrabold text-gray-900 dark:text-white mb-2">Daftar Learning Path Rancangan Experts</h2>
+		<p class="text-gray-500 dark:text-gray-400 text-sm mb-8">Cari learning path yang sesuai kebutuhanmu.</p>
 		<div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
 			{#each learningPaths as path}
 				<a href="/payment/e-learning/path-{path.title.toLowerCase().replace(/\s+/g, '-')}" class="group block">
-					<div class="rounded-2xl bg-white border border-gray-200 overflow-hidden shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+					<div class="rounded-2xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 overflow-hidden shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
 						<div class="h-32 bg-gradient-to-br {path.gradient} flex items-center justify-center">
 							<span class="text-5xl">{path.emoji}</span>
 						</div>
 						<div class="p-4">
-							<h3 class="font-semibold text-gray-900 text-sm mb-2 group-hover:text-primary-600 transition-colors">{path.title}</h3>
-							<div class="flex items-center gap-3 text-xs text-gray-400">
+							<h3 class="font-semibold text-gray-900 dark:text-white text-sm mb-2 group-hover:text-primary-600 transition-colors">{path.title}</h3>
+							<div class="flex items-center gap-3 text-xs text-gray-400 dark:text-gray-500">
 								<span>📖 {path.courses} Kursus</span>
 								<span>⏱ {path.hours} Jam</span>
 							</div>
@@ -180,15 +207,15 @@
 </section>
 
 <!-- Pricing -->
-<section id="pricing" class="py-16 bg-gray-50">
+<section id="pricing" class="py-16 bg-gray-50 dark:bg-gray-900">
 	<div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-		<h2 class="text-center font-sans text-xl sm:text-2xl font-extrabold text-gray-900 mb-2">Langganan Sekarang dan Jadi Lebih Hebat</h2>
-		<p class="text-center text-gray-500 text-sm mb-10">Langganan bulanan untuk akses semua materi, tanpa batas.</p>
+		<h2 class="text-center font-sans text-xl sm:text-2xl font-extrabold text-gray-900 dark:text-white mb-2">Langganan Sekarang dan Jadi Lebih Hebat</h2>
+		<p class="text-center text-gray-500 dark:text-gray-400 text-sm mb-10">Langganan bulanan untuk akses semua materi, tanpa batas.</p>
 		<div class="grid sm:grid-cols-3 gap-5">
 			{#each pricingPlans as plan}
-				<div class="rounded-2xl {plan.popular ? 'bg-gradient-to-b from-primary-600 to-primary-700 text-white ring-2 ring-primary-500 ring-offset-2 scale-105' : 'bg-white border border-gray-200'} p-6 shadow-sm relative">
+				<div class="rounded-2xl {plan.popular ? 'bg-gradient-to-b from-primary-600 to-primary-700 text-white ring-2 ring-primary-500 ring-offset-2 scale-105' : 'bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700'} p-6 shadow-sm relative">
 					{#if plan.label}
-						<div class="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-yellow-400 px-3 py-1 text-xs font-bold text-gray-900">{plan.label}</div>
+						<div class="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-yellow-400 px-3 py-1 text-xs font-bold text-gray-900 dark:text-white">{plan.label}</div>
 					{/if}
 					<div class="text-center mb-5">
 						<h3 class="font-bold text-lg mb-1">{plan.name}</h3>
@@ -212,7 +239,7 @@
 </section>
 
 <!-- Corporate CTA -->
-<section class="py-14 bg-white">
+<section class="py-14 bg-white dark:bg-gray-950">
 	<div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
 		<div class="rounded-3xl bg-gradient-to-br from-gray-900 to-gray-800 p-8 sm:p-12 text-center relative overflow-hidden">
 			<div class="absolute inset-0 opacity-5"><div class="absolute top-0 right-0 w-64 h-64 bg-primary-500 rounded-full blur-3xl"></div></div>
