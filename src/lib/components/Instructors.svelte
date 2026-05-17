@@ -1,11 +1,11 @@
 <script lang="ts">
 	const instructors = [
-		{ name: 'Dr. Ahmad Zulkifli', role: 'Sharia Finance Expert', company: 'DSN-MUI', topic: 'Fiqh Muamalah Digital', color: 'from-primary-400 to-primary-600' },
-		{ name: 'Rina Mardhiana', role: 'Blockchain Lead', company: 'Tokocrypto', topic: 'Blockchain Fundamentals', color: 'from-violet-400 to-violet-600' },
-		{ name: 'Faisal Rahman', role: 'DeFi Analyst', company: 'INDODAX', topic: 'DeFi & Yield Halal', color: 'from-blue-400 to-blue-600' },
-		{ name: 'Sari Dewi', role: 'Smart Contract Dev', company: 'Pintu', topic: 'Solidity Development', color: 'from-emerald-400 to-emerald-600' },
-		{ name: 'M. Irfan Hakim', role: 'Crypto Researcher', company: 'Reku', topic: 'Token Screening Syariah', color: 'from-accent-400 to-accent-600' },
-		{ name: 'Nadia Putri', role: 'Product Manager', company: 'Bank Syariah Indonesia', topic: 'Product Management', color: 'from-rose-400 to-rose-600' }
+		{ name: 'Dr. Ahmad Zulkifli', role: 'Sharia Finance Expert', company: 'DSN-MUI', topic: 'Fiqh Muamalah Digital', color: 'from-primary-400 to-primary-600', photo: 'https://randomuser.me/api/portraits/men/33.jpg' },
+		{ name: 'Rina Mardhiana', role: 'Blockchain Lead', company: 'Tokocrypto', topic: 'Blockchain Fundamentals', color: 'from-violet-400 to-violet-600', photo: 'https://randomuser.me/api/portraits/women/45.jpg' },
+		{ name: 'Faisal Rahman', role: 'DeFi Analyst', company: 'INDODAX', topic: 'DeFi & Yield Halal', color: 'from-blue-400 to-blue-600', photo: 'https://randomuser.me/api/portraits/men/46.jpg' },
+		{ name: 'Sari Dewi', role: 'Smart Contract Dev', company: 'Pintu', topic: 'Solidity Development', color: 'from-emerald-400 to-emerald-600', photo: 'https://randomuser.me/api/portraits/women/65.jpg' },
+		{ name: 'M. Irfan Hakim', role: 'Crypto Researcher', company: 'Reku', topic: 'Token Screening Syariah', color: 'from-accent-400 to-accent-600', photo: 'https://randomuser.me/api/portraits/men/78.jpg' },
+		{ name: 'Nadia Putri', role: 'Product Manager', company: 'Bank Syariah Indonesia', topic: 'Product Management', color: 'from-rose-400 to-rose-600', photo: 'https://randomuser.me/api/portraits/women/32.jpg' }
 	];
 
 	let scrollEl: HTMLDivElement;
@@ -22,7 +22,7 @@
 
 		<div
 			bind:this={scrollEl}
-			class="flex gap-5 overflow-x-auto pb-4 snap-x snap-mandatory"
+			class="flex gap-5 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-hide"
 			style="scrollbar-width: none; -ms-overflow-style: none;"
 		>
 			{#each instructors as instructor}
@@ -33,9 +33,7 @@
 							<div class="absolute inset-0 opacity-10">
 								<div class="absolute -top-5 -right-5 w-24 h-24 bg-white rounded-full blur-xl"></div>
 							</div>
-							<div class="w-20 h-20 rounded-full bg-white/20 backdrop-blur-sm border-2 border-white/40 flex items-center justify-center text-white font-bold text-2xl">
-								{instructor.name.split(' ').map(n => n[0]).join('').slice(0, 2)}
-							</div>
+							<img src={instructor.photo} alt={instructor.name} class="w-24 h-24 rounded-full object-cover border-4 border-white/80 shadow-lg relative z-10" />
 						</div>
 
 						<!-- Info -->
