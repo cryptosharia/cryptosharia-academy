@@ -29,7 +29,7 @@
 		<h2 class="text-center font-display text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white mb-4">
 			Apa Kata Mereka?
 		</h2>
-		<p class="text-center text-slate-500 dark:text-gray-400 mb-14 max-w-2xl mx-auto">
+		<p class="text-center text-lg text-slate-500 dark:text-gray-400 mb-14 max-w-2xl mx-auto">
 			Cerita nyata dari alumni CryptoSharia Academy yang berhasil membangun karir di industri crypto Syariah.
 		</p>
 

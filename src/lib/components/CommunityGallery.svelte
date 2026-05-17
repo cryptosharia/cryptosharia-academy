@@ -32,7 +32,7 @@
 		<h2 class="text-center font-display text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white mb-4">
 			Rasanya Gabung Komunitas CryptoSharia <span class="text-primary-600">#CryptoHalal</span>
 		</h2>
-		<p class="text-center text-slate-500 dark:text-gray-400 mb-12 max-w-2xl mx-auto">
+		<p class="text-center text-lg text-slate-500 dark:text-gray-400 mb-12 max-w-2xl mx-auto">
 			Lebih dari sekedar belajar — gabung komunitas yang aktif, suportif, dan terus berkembang.
 		</p>
 

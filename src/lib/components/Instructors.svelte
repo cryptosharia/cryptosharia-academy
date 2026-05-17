@@ -1,11 +1,11 @@
 <script lang="ts">
 	const instructors = [
-		{ name: 'Dr. Ahmad Zulkifli', role: 'Sharia Finance Expert', company: 'DSN-MUI', topic: 'Fiqh Muamalah Digital', color: 'from-primary-400 to-primary-600', photo: 'https://randomuser.me/api/portraits/men/33.jpg' },
-		{ name: 'Rina Mardhiana', role: 'Blockchain Lead', company: 'Tokocrypto', topic: 'Blockchain Fundamentals', color: 'from-violet-400 to-violet-600', photo: 'https://randomuser.me/api/portraits/women/45.jpg' },
-		{ name: 'Faisal Rahman', role: 'DeFi Analyst', company: 'INDODAX', topic: 'DeFi & Yield Halal', color: 'from-blue-400 to-blue-600', photo: 'https://randomuser.me/api/portraits/men/46.jpg' },
-		{ name: 'Sari Dewi', role: 'Smart Contract Dev', company: 'Pintu', topic: 'Solidity Development', color: 'from-emerald-400 to-emerald-600', photo: 'https://randomuser.me/api/portraits/women/65.jpg' },
-		{ name: 'M. Irfan Hakim', role: 'Crypto Researcher', company: 'Reku', topic: 'Token Screening Syariah', color: 'from-accent-400 to-accent-600', photo: 'https://randomuser.me/api/portraits/men/78.jpg' },
-		{ name: 'Nadia Putri', role: 'Product Manager', company: 'Bank Syariah Indonesia', topic: 'Product Management', color: 'from-rose-400 to-rose-600', photo: 'https://randomuser.me/api/portraits/women/32.jpg' }
+		{ name: 'Dr. Ahmad Zulkifli', role: 'Sharia Finance Expert', company: 'DSN-MUI', topic: 'Fiqh Muamalah Digital', color: 'from-primary-500 to-primary-700', photo: 'https://randomuser.me/api/portraits/men/33.jpg' },
+		{ name: 'Rina Mardhiana', role: 'Blockchain Lead', company: 'Tokocrypto', topic: 'Blockchain Fundamentals', color: 'from-slate-800 to-slate-950', photo: 'https://randomuser.me/api/portraits/women/45.jpg' },
+		{ name: 'Faisal Rahman', role: 'DeFi Analyst', company: 'INDODAX', topic: 'DeFi & Yield Halal', color: 'from-primary-500 to-primary-700', photo: 'https://randomuser.me/api/portraits/men/46.jpg' },
+		{ name: 'Sari Dewi', role: 'Smart Contract Dev', company: 'Pintu', topic: 'Solidity Development', color: 'from-slate-800 to-slate-950', photo: 'https://randomuser.me/api/portraits/women/65.jpg' },
+		{ name: 'M. Irfan Hakim', role: 'Crypto Researcher', company: 'Reku', topic: 'Token Screening Syariah', color: 'from-primary-500 to-primary-700', photo: 'https://randomuser.me/api/portraits/men/78.jpg' },
+		{ name: 'Nadia Putri', role: 'Product Manager', company: 'Bank Syariah Indonesia', topic: 'Product Management', color: 'from-slate-800 to-slate-950', photo: 'https://randomuser.me/api/portraits/women/32.jpg' }
 	];
 
 	let scrollEl: HTMLDivElement;
@@ -16,7 +16,7 @@
 		<h2 class="text-center font-display text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white mb-4">
 			Belajar dari Para Senior Operator
 		</h2>
-		<p class="text-center text-slate-500 dark:text-gray-400 mb-12 max-w-2xl mx-auto">
+		<p class="text-center text-lg text-slate-500 dark:text-gray-400 mb-12 max-w-2xl mx-auto">
 			Instruktur berpengalaman dari perusahaan-perusahaan terkemuka di industri crypto dan keuangan Syariah.
 		</p>
 

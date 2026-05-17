@@ -24,7 +24,7 @@
 		<h2 class="text-center font-display text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white mb-4">
 			Program E-Learning CryptoSharia
 		</h2>
-		<p class="text-center text-slate-500 dark:text-gray-400 mb-14 max-w-2xl mx-auto">
+		<p class="text-center text-lg text-slate-500 dark:text-gray-400 mb-14 max-w-2xl mx-auto">
 			Mulai perjalanan belajarmu di dunia crypto Syariah dengan kurikulum terbaik. Dari pemula hingga profesional.
 		</p>
 
