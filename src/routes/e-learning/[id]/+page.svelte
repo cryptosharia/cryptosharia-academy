@@ -1,19 +1,34 @@
 <script lang="ts">
 	import { page } from '$app/state';
 	import { userAuth } from '$lib/auth.svelte';
-	import { collection, query, where, getDocs, doc, getDoc } from 'firebase/firestore';
+	import { collection, query, where, getDocs, doc, getDoc, Timestamp } from 'firebase/firestore';
 	import { db } from '$lib/firebase';
 	import { onMount } from 'svelte';
 
 	let hasAccess = $state(false);
-	// After course data is loaded, verify if the user has a paid order for this course
+	// Check user subscription status from users collection (set by admin on approval)
 	$effect(() => {
-		if (!userAuth.isLoggedIn || !course) return;
+		if (!userAuth.isLoggedIn) { hasAccess = false; return; }
 		(async () => {
-			const ordersRef = collection(db, 'orders');
-			const q = query(ordersRef, where('userId', '==', userAuth.user.uid), where('packageId', '==', course.id), where('status', '==', 'paid'));
-			const snap = await getDocs(q);
-			hasAccess = !snap.empty;
+			try {
+				const userDoc = await getDoc(doc(db, 'users', userAuth.user.uid));
+				if (userDoc.exists()) {
+					const data = userDoc.data();
+					if (data.subscriptionStatus === 'active' && data.subscriptionExpiry) {
+						const expiry = data.subscriptionExpiry instanceof Timestamp
+							? data.subscriptionExpiry.toDate()
+							: new Date(data.subscriptionExpiry);
+						hasAccess = expiry > new Date();
+					} else {
+						hasAccess = false;
+					}
+				} else {
+					hasAccess = false;
+				}
+			} catch (e) {
+				console.error('Failed to check subscription:', e);
+				hasAccess = false;
+			}
 		})();
 	});
 
