@@ -11,9 +11,10 @@
 			{ label: 'Bootcamp & Program', href: '/bootcamp' }
 		],
 		'Lainnya': [
-			{ label: 'FAQ', href: '#' },
+			{ label: 'FAQ', href: '#faq' },
 			{ label: 'Syarat & Ketentuan', href: '#' },
-			{ label: 'Ketentuan Privasi', href: '#' }
+			{ label: 'Kebijakan Privasi', href: '#' },
+			{ label: 'Hubungi Kami', href: 'mailto:admin@cryptosharia.id' }
 		]
 	};
 
@@ -110,13 +111,21 @@
 		</div>
 	</div>
 
-	<!-- Copyright -->
+	<!-- Disclaimer & Copyright -->
 	<div class="border-t border-slate-800">
-		<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-5 flex flex-col sm:flex-row items-center justify-between gap-3">
-			<p class="text-xs text-slate-500">© 2024 - {new Date().getFullYear()} CryptoSharia Academy. All rights reserved.</p>
-			<div class="flex items-center gap-1 text-xs text-slate-500">
-				<span>Terdaftar di</span>
-				<span class="font-semibold text-slate-400">Kominfo PSE</span>
+		<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8">
+			<div class="mb-6 p-4 rounded-xl bg-slate-800/50 border border-slate-700/50">
+				<p class="text-[10px] sm:text-xs text-slate-500 leading-relaxed text-justify">
+					<strong class="text-slate-400">Disclaimer Risiko Kripto:</strong> Perdagangan dan investasi aset kripto merupakan aktivitas berisiko tinggi (high-risk). Nilai aset kripto sangat fluktuatif dan dapat berubah secara signifikan dalam waktu singkat. CryptoSharia Academy adalah platform edukasi murni dan tidak menyediakan saran keuangan profesional, layanan penasihat investasi, manajemen portofolio, pialang, atau pertukaran aset (exchange). Semua materi, analisa, dan studi kasus yang disampaikan bertujuan semata-mata untuk pembelajaran. Keputusan investasi sepenuhnya merupakan tanggung jawab pribadi masing-masing individu. Selalu lakukan riset mandiri (DYOR) dan pastikan untuk hanya mengalokasikan dana yang Anda siap untuk kehilangan.
+				</p>
+			</div>
+
+			<div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+				<p class="text-xs text-slate-500 font-medium">© {new Date().getFullYear()} CryptoSharia Academy. Hak Cipta Dilindungi.</p>
+				<div class="flex items-center gap-1 text-xs text-slate-500">
+					<span>Terdaftar Resmi di</span>
+					<span class="font-bold text-slate-400">Kominfo PSE</span>
+				</div>
 			</div>
 		</div>
 	</div>

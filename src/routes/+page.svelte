@@ -9,15 +9,17 @@
 	import Investors from '$lib/components/Investors.svelte';
 	import FeaturedIn from '$lib/components/FeaturedIn.svelte';
 	import FAQ from '$lib/components/FAQ.svelte';
+	import SyariahPrinciples from '$lib/components/SyariahPrinciples.svelte';
 </script>
 
 <svelte:head>
 	<title>CryptoSharia Academy | Platform Edukasi Crypto Syariah #1</title>
-	<meta name="description" content="Kuasai Crypto Syariah. Kembangkan skill dan raih karir di ekosistem kripto Syariah terbesar. E-learning, bootcamp, dan sertifikat resmi." />
+	<meta name="description" content="Bangun karir di industri crypto syariah Indonesia. Belajar langsung dari praktisi Web3, bangun jaringan, dan akses peluang tanpa harus paham coding." />
 </svelte:head>
 
 <Hero />
 <StatsBar />
+<SyariahPrinciples />
 <Testimonials />
 <Programs />
 <CommunityGallery />
