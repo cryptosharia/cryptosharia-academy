@@ -22,10 +22,10 @@
 <section id="programs" class="py-20 bg-white dark:bg-gray-950">
 	<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 		<h2 class="text-center font-display text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white mb-4">
-			Berbagai Program CryptoSharia
+			Program E-Learning CryptoSharia
 		</h2>
 		<p class="text-center text-slate-500 dark:text-gray-400 mb-14 max-w-2xl mx-auto">
-			Pilih jalur belajar yang sesuai dengan kebutuhanmu. Dari pemula hingga profesional.
+			Mulai perjalanan belajarmu di dunia crypto Syariah dengan kurikulum terbaik. Dari pemula hingga profesional.
 		</p>
 
 		<div class="max-w-xl mx-auto">
