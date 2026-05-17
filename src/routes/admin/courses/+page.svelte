@@ -2,7 +2,8 @@
 	import { goto } from '$app/navigation';
 	import { userAuth } from '$lib/auth.svelte';
 	import { collection, query, orderBy, onSnapshot, doc, setDoc, deleteDoc, serverTimestamp, writeBatch } from 'firebase/firestore';
-	import { db } from '$lib/firebase';
+	import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+	import { db, storage } from '$lib/firebase';
 	import { onMount } from 'svelte';
 
 	const ADMIN_EMAILS = ['admin@cryptosharia.id'];
@@ -136,23 +137,15 @@
 		if (!file) return;
 
 		isUploading = true;
-		const uploadData = new FormData();
-		uploadData.append('file', file);
-
 		try {
-			const res = await fetch('/api/upload', {
-				method: 'POST',
-				body: uploadData
-			});
-			const data = await res.json();
-			if (data.url) {
-				formData.image = data.url;
-			} else {
-				alert(data.error || 'Upload gagal');
-			}
+			const filename = `${Date.now()}-${file.name.replace(/[^a-zA-Z0-9._-]/g, '')}`;
+			const storageRef = ref(storage, `courses/${filename}`);
+			await uploadBytes(storageRef, file);
+			const url = await getDownloadURL(storageRef);
+			formData.image = url;
 		} catch (error) {
 			console.error('Upload error:', error);
-			alert('Terjadi kesalahan saat upload');
+			alert('Terjadi kesalahan saat upload gambar');
 		} finally {
 			isUploading = false;
 			target.value = '';
