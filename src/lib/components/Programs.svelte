@@ -28,10 +28,15 @@
 			Mulai perjalanan belajarmu di dunia crypto Syariah dengan kurikulum terbaik. Dari pemula hingga profesional.
 		</p>
 
-		<div class="max-w-xl mx-auto">
+		<div class="max-w-2xl mx-auto">
 			{#each programs as program}
-				<div class="rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-8 hover:shadow-lg transition-all duration-300">
-					<div class="inline-flex items-center gap-2 rounded-full {program.bgLight} dark:bg-gray-700 px-4 py-1.5 text-sm font-semibold text-slate-700 dark:text-gray-200 mb-4">
+				<div class="relative rounded-3xl border-2 border-primary-500/20 dark:border-primary-500/30 bg-white dark:bg-slate-900 p-8 md:p-10 hover:shadow-2xl hover:shadow-primary-500/10 transition-all duration-300">
+					<!-- Badge -->
+					<div class="absolute -top-4 right-8 bg-gradient-to-r from-primary-500 to-orange-400 text-white text-xs font-bold px-4 py-1.5 rounded-full shadow-lg transform rotate-3">
+						Best Value
+					</div>
+
+					<div class="inline-flex items-center gap-2 rounded-full {program.bgLight} dark:bg-primary-900/30 px-4 py-1.5 text-sm font-semibold text-primary-700 dark:text-primary-300 mb-6 border border-primary-100 dark:border-primary-800">
 						<span class="text-lg">{program.icon}</span>
 						{program.title}
 					</div>

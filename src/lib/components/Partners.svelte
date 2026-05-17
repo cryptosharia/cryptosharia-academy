@@ -1,6 +1,11 @@
 <script lang="ts">
 	const partners = [
-		'Tokocrypto', 'INDODAX', 'Pintu', 'Reku', 'Bank Syariah Indonesia', 'Astra Financial'
+		{ name: 'Tokocrypto', domain: 'tokocrypto.com' },
+		{ name: 'INDODAX', domain: 'indodax.com' },
+		{ name: 'Pintu', domain: 'pintu.co.id' },
+		{ name: 'Reku', domain: 'reku.id' },
+		{ name: 'BSI', domain: 'bankbsi.co.id' },
+		{ name: 'Astra Financial', domain: 'astrafinancial.co.id' }
 	];
 </script>
 
@@ -15,10 +20,13 @@
 
 		<div class="flex flex-wrap items-center justify-center gap-8 sm:gap-12">
 			{#each partners as partner}
-				<div class="group flex items-center justify-center px-6 py-4 rounded-xl transition-all duration-300 hover:bg-primary-50 hover:shadow-sm">
-					<span class="text-xl sm:text-2xl font-bold text-slate-300 dark:text-gray-500 group-hover:text-primary-600 transition-colors duration-300 font-display">
-						{partner}
-					</span>
+				<div class="group flex items-center justify-center px-4 py-3 rounded-xl transition-all duration-300 hover:bg-primary-50 hover:shadow-sm">
+					<img 
+						src="https://logo.clearbit.com/{partner.domain}" 
+						alt="{partner.name} logo" 
+						class="h-8 md:h-10 object-contain grayscale opacity-40 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300"
+						onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name={partner.name}&background=f8fafc&color=64748b&bold=true';"
+					/>
 				</div>
 			{/each}
 		</div>

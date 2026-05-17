@@ -49,7 +49,7 @@
 					</div>
 
 					<!-- Quote text -->
-					<p class="text-slate-700 dark:text-gray-300 text-base leading-relaxed mb-6 relative z-10 italic">
+					<p class="text-slate-700 dark:text-gray-300 text-base leading-relaxed mb-6 relative z-10 italic font-medium">
 						"{t.quote}"
 					</p>
 
