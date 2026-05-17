@@ -15,10 +15,7 @@
 	const navLinks = $derived(
 		isAdmin
 			? [{ label: 'Kelola Materi E-Learning', href: '/admin/courses' }]
-			: [
-				{ label: 'E-learning', href: '/e-learning' },
-				{ label: 'Bootcamp & Program', href: '/bootcamp' }
-			]
+			: [{ label: 'E-learning', href: '/e-learning' }]
 	);
 
 	$effect(() => {
