@@ -22,8 +22,8 @@
 				<span class="italic text-yellow-200">Syariah.</span>
 			</h1>
 
-			<p class="mt-6 text-lg sm:text-xl text-orange-100 max-w-xl mx-auto lg:mx-0 leading-relaxed">
-				Kembangkan Skill dan Raih Karir di Ekosistem Kripto Syariah Terbesar. Belajar dari para ahli, raih sertifikat.
+			<p class="mt-6 text-lg sm:text-xl text-white/90 drop-shadow-md max-w-lg mx-auto lg:mx-0 leading-relaxed font-medium">
+				Tingkatkan skill dan bangun karir di ekosistem crypto Syariah terbesar di Indonesia.
 			</p>
 
 			<div class="mt-8 flex flex-col sm:flex-row items-center gap-4 justify-center lg:justify-start">
