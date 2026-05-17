@@ -58,7 +58,7 @@
 <section id="testimonials" class="py-16 bg-slate-50 dark:bg-gray-900">
 	<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 		<h2 class="text-center font-display text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white mb-4">
-			Terbukti Berdampak dan Membuka Batasan
+			Apa Kata Mereka?
 		</h2>
 		<p class="text-center text-slate-500 dark:text-gray-400 mb-10 max-w-2xl mx-auto">
 			Cerita nyata dari alumni CryptoSharia Academy yang berhasil membangun karir di industri crypto Syariah.
