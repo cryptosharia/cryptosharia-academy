@@ -1,9 +1,21 @@
 <script lang="ts">
 	import { page } from '$app/state';
 	import { userAuth } from '$lib/auth.svelte';
-	import { doc, getDoc } from 'firebase/firestore';
+	import { collection, query, where, getDocs, doc, getDoc } from 'firebase/firestore';
 	import { db } from '$lib/firebase';
 	import { onMount } from 'svelte';
+
+	let hasAccess = $state(false);
+	// After course data is loaded, verify if the user has a paid order for this course
+	$effect(() => {
+		if (!userAuth.isLoggedIn || !course) return;
+		(async () => {
+			const ordersRef = collection(db, 'orders');
+			const q = query(ordersRef, where('userId', '==', userAuth.user.uid), where('packageId', '==', course.id), where('status', '==', 'paid'));
+			const snap = await getDocs(q);
+			hasAccess = !snap.empty;
+		})();
+	});
 
 	interface Lesson {
 		title: string;
@@ -113,20 +125,27 @@
 			<div class="course-layout">
 				<!-- Video Player (LEFT) -->
 				<div class="video-panel">
-					{#if activeVideoUrl}
-						<iframe
-							src={activeVideoUrl}
-							title={activeLesson?.title || course.title}
-							frameborder="0"
-							allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-							allowfullscreen
-						></iframe>
-					{:else}
-						<div class="video-placeholder flex items-center justify-center text-gray-500">
-							<div class="text-center">
-								<svg class="w-16 h-16 mx-auto mb-4 opacity-40" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-								<p class="text-sm">Video belum tersedia</p>
+					{#if userAuth.isLoggedIn && hasAccess}
+						{#if activeVideoUrl}
+							<iframe
+								src={activeVideoUrl}
+								title={activeLesson?.title || course.title}
+								frameborder="0"
+								allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+								allowfullscreen
+							></iframe>
+						{:else}
+							<div class="video-placeholder flex items-center justify-center text-gray-500">
+								<div class="text-center">
+									<svg class="w-16 h-16 mx-auto mb-4 opacity-40" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+									<p class="text-sm">Video belum tersedia</p>
+								</div>
 							</div>
+						{/if}
+					{:else}
+						<div class="flex flex-col items-center justify-center h-full text-center p-8 bg-gray-800/50">
+							<p class="text-white mb-4">Anda harus berlangganan untuk menonton video materi ini.</p>
+							<a href="/payment/e-learning/{course.id}" class="inline-flex items-center rounded-full bg-primary-600 px-6 py-2 text-sm font-semibold text-white hover:bg-primary-700 transition">Berlangganan Sekarang</a>
 						</div>
 					{/if}
 				</div>
