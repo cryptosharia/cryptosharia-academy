@@ -28,18 +28,19 @@
 
 			<div class="mt-8 flex flex-col sm:flex-row items-center gap-4 justify-center lg:justify-start">
 				<a
-					href="#programs"
-					class="inline-flex items-center justify-center rounded-full bg-white px-8 py-3.5 text-base font-bold text-orange-600 shadow-lg shadow-black/10 transition-all hover:bg-orange-50 hover:shadow-xl active:scale-95"
+					href="/e-learning"
+					class="inline-flex items-center justify-center rounded-full bg-white px-10 py-4 text-base font-extrabold text-orange-600 shadow-lg shadow-orange-900/30 transition-all hover:bg-orange-50 hover:shadow-xl hover:scale-105 active:scale-95"
 				>
-					Lihat Program
+					Mulai Belajar Sekarang
 					<svg class="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
 					</svg>
 				</a>
 				<a
 					href="#testimonials"
-					class="inline-flex items-center justify-center rounded-full border-2 border-white/30 px-8 py-3.5 text-base font-semibold text-white transition-all hover:bg-white/10 hover:border-white/50"
+					class="inline-flex items-center justify-center gap-1.5 px-6 py-3 text-sm font-medium text-white/70 transition-all hover:text-white"
 				>
+					<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
 					Cerita Alumni
 				</a>
 			</div>
