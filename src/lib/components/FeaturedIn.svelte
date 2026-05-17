@@ -24,7 +24,7 @@
 							src="https://logo.clearbit.com/{mediaItem.domain}" 
 							alt="{mediaItem.name} logo" 
 							class="h-8 md:h-10 object-contain grayscale opacity-40 hover:grayscale-0 hover:opacity-100 transition-all duration-300 cursor-pointer"
-							onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name={mediaItem.name}&background=f8fafc&color=64748b&bold=true';"
+							onerror={(e) => { const el = e.currentTarget; el.onerror = null; el.src = `https://ui-avatars.com/api/?name=${mediaItem.name}&background=f8fafc&color=64748b&bold=true`; }}
 						/>
 					</div>
 				{/each}

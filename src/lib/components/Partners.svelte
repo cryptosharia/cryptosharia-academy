@@ -25,7 +25,7 @@
 						src="https://logo.clearbit.com/{partner.domain}" 
 						alt="{partner.name} logo" 
 						class="h-8 md:h-10 object-contain grayscale opacity-40 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300"
-						onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name={partner.name}&background=f8fafc&color=64748b&bold=true';"
+						onerror={(e) => { const el = e.currentTarget; el.onerror = null; el.src = `https://ui-avatars.com/api/?name=${partner.name}&background=f8fafc&color=64748b&bold=true`; }}
 					/>
 				</div>
 			{/each}
