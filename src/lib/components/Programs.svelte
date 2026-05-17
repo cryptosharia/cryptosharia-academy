@@ -15,22 +15,6 @@
 			bgLight: 'bg-primary-50',
 			borderColor: 'border-primary-200',
 			ctaColor: 'bg-primary-600 hover:bg-primary-700'
-		},
-		{
-			title: 'Bootcamp',
-			description: 'Intensive live class bersama experts. Praktikal & mendalam.',
-			features: [
-				'Kombinasi case study, diskusi dan praktik di tiap sesi. Basic to advanced',
-				'Group mentoring semi-privat untuk bangun portfolio',
-				'Tutor terkurasi. Memiliki lebih dari 5.000 alumni'
-			],
-			cta: 'Lihat Ragam Bootcamp',
-			ctaHref: '/bootcamp',
-			icon: '🎓',
-			gradient: 'from-violet-500 to-violet-700',
-			bgLight: 'bg-violet-50',
-			borderColor: 'border-violet-200',
-			ctaColor: 'bg-violet-600 hover:bg-violet-700'
 		}
 	];
 </script>
@@ -44,7 +28,7 @@
 			Pilih jalur belajar yang sesuai dengan kebutuhanmu. Dari pemula hingga profesional.
 		</p>
 
-		<div class="grid md:grid-cols-2 gap-8">
+		<div class="max-w-xl mx-auto">
 			{#each programs as program}
 				<div class="rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-8 hover:shadow-lg transition-all duration-300">
 					<div class="inline-flex items-center gap-2 rounded-full {program.bgLight} dark:bg-gray-700 px-4 py-1.5 text-sm font-semibold text-slate-700 dark:text-gray-200 mb-4">
