@@ -6,10 +6,16 @@
 	let mobileMenuOpen = $state(false);
 	let userMenuOpen = $state(false);
 
+	const ADMIN_EMAILS = ['admin@cryptosharia.id'];
+
 	const navLinks = [
 		{ label: 'E-learning', href: '/e-learning' },
 		{ label: 'Bootcamp & Program', href: '/bootcamp' }
 	];
+
+	const isAdmin = $derived(
+		userAuth.isLoggedIn && userAuth.user?.email && ADMIN_EMAILS.includes(userAuth.user.email)
+	);
 
 	$effect(() => {
 		const handleScroll = () => {
@@ -91,6 +97,15 @@
 									Kursus Saya
 								</a>
 								<div class="border-t border-gray-100 dark:border-gray-700 my-1"></div>
+								{#if isAdmin}
+									<div class="px-4 py-1.5">
+										<span class="text-[10px] font-bold text-primary-600 uppercase tracking-wider">Admin Panel</span>
+									</div>
+									<a href="/admin/courses" class="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+										<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+										Kelola Materi
+									</a>
+								{/if}
 								<button onclick={handleLogout} class="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors">
 									<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
 									Keluar
@@ -136,6 +151,12 @@
 							</div>
 						</div>
 						<button onclick={() => { handleLogout(); mobileMenuOpen = false; }} class="block w-full mt-2 text-center rounded-full border border-red-200 dark:border-red-800 px-5 py-2.5 text-sm font-semibold text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20">Keluar</button>
+						{#if isAdmin}
+							<div class="border-t border-gray-100 dark:border-gray-700 pt-2 mt-2">
+								<span class="block px-3 text-[10px] font-bold text-primary-600 uppercase tracking-wider mb-1">Admin Panel</span>
+								<a href="/admin/courses" onclick={() => (mobileMenuOpen = false)} class="block px-3 py-2.5 text-sm font-medium text-gray-600 dark:text-gray-300 rounded-lg hover:bg-primary-50 dark:hover:bg-primary-900/30 hover:text-primary-600">📦 Kelola Materi</a>
+							</div>
+						{/if}
 					</div>
 				{:else}
 					<a href="/auth/login" onclick={() => (mobileMenuOpen = false)} class="block mt-2 text-center rounded-full border border-gray-200 dark:border-gray-700 px-5 py-2.5 text-sm font-semibold text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800">Masuk</a>
