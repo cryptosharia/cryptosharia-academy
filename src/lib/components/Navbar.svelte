@@ -8,13 +8,17 @@
 
 	const ADMIN_EMAILS = ['admin@cryptosharia.id'];
 
-	const navLinks = [
-		{ label: 'E-learning', href: '/e-learning' },
-		{ label: 'Bootcamp & Program', href: '/bootcamp' }
-	];
-
 	const isAdmin = $derived(
 		userAuth.isLoggedIn && userAuth.user?.email && ADMIN_EMAILS.includes(userAuth.user.email)
+	);
+
+	const navLinks = $derived(
+		isAdmin
+			? [{ label: 'Kelola Materi E-Learning', href: '/admin/courses' }]
+			: [
+				{ label: 'E-learning', href: '/e-learning' },
+				{ label: 'Bootcamp & Program', href: '/bootcamp' }
+			]
 	);
 
 	$effect(() => {
@@ -88,6 +92,7 @@
 									</div>
 								</div>
 								<!-- Menu items -->
+								{#if !isAdmin}
 								<a href="/profile" class="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
 									<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
 									Profil Saya
@@ -96,20 +101,12 @@
 									<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
 									Kursus Saya
 								</a>
-								<div class="border-t border-gray-100 dark:border-gray-700 my-1"></div>
-								{#if isAdmin}
-									<div class="px-4 py-1.5">
-										<span class="text-[10px] font-bold text-primary-600 uppercase tracking-wider">Admin Panel</span>
-									</div>
-									<a href="/admin/courses" class="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
-										<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
-										Kelola Materi
-									</a>
-								{/if}
-								<button onclick={handleLogout} class="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors">
-									<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
-									Keluar
-								</button>
+							{/if}
+							<div class="border-t border-gray-100 dark:border-gray-700 my-1"></div>
+							<button onclick={handleLogout} class="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors">
+								<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
+								Keluar
+							</button>
 							</div>
 						{/if}
 					</div>
@@ -151,12 +148,6 @@
 							</div>
 						</div>
 						<button onclick={() => { handleLogout(); mobileMenuOpen = false; }} class="block w-full mt-2 text-center rounded-full border border-red-200 dark:border-red-800 px-5 py-2.5 text-sm font-semibold text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20">Keluar</button>
-						{#if isAdmin}
-							<div class="border-t border-gray-100 dark:border-gray-700 pt-2 mt-2">
-								<span class="block px-3 text-[10px] font-bold text-primary-600 uppercase tracking-wider mb-1">Admin Panel</span>
-								<a href="/admin/courses" onclick={() => (mobileMenuOpen = false)} class="block px-3 py-2.5 text-sm font-medium text-gray-600 dark:text-gray-300 rounded-lg hover:bg-primary-50 dark:hover:bg-primary-900/30 hover:text-primary-600">📦 Kelola Materi</a>
-							</div>
-						{/if}
 					</div>
 				{:else}
 					<a href="/auth/login" onclick={() => (mobileMenuOpen = false)} class="block mt-2 text-center rounded-full border border-gray-200 dark:border-gray-700 px-5 py-2.5 text-sm font-semibold text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800">Masuk</a>
