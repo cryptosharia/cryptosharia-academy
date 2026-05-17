@@ -39,16 +39,9 @@
 		<div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
 			{#each activities as activity, i}
 				{@const heights = ['h-48', 'h-56', 'h-44', 'h-52', 'h-48', 'h-56']}
-				{@const gradients = [
-					'from-primary-400 to-primary-600',
-					'from-violet-400 to-violet-600',
-					'from-accent-400 to-accent-600',
-					'from-blue-400 to-blue-600',
-					'from-emerald-400 to-emerald-600',
-					'from-rose-400 to-rose-600'
-				]}
+				{@const isPrimary = i % 2 === 0}
 				<div
-					class="group relative {heights[i]} rounded-2xl overflow-hidden bg-gradient-to-br {gradients[i]} cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-xl"
+					class="group relative {heights[i]} rounded-2xl overflow-hidden bg-gradient-to-br {isPrimary ? 'from-primary-500 to-primary-700' : 'from-slate-800 to-slate-950'} cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-xl"
 				>
 					<div class="absolute inset-0 opacity-10">
 						<div class="absolute top-0 right-0 w-20 h-20 bg-white rounded-full blur-xl"></div>
