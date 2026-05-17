@@ -47,7 +47,7 @@
 		<div class="grid md:grid-cols-2 gap-8">
 			{#each programs as program}
 				<div class="rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-8 hover:shadow-lg transition-all duration-300">
-					<div class="inline-flex items-center gap-2 rounded-full {program.bgLight} px-4 py-1.5 text-sm font-semibold text-slate-700 mb-4">
+					<div class="inline-flex items-center gap-2 rounded-full {program.bgLight} dark:bg-gray-700 px-4 py-1.5 text-sm font-semibold text-slate-700 dark:text-gray-200 mb-4">
 						<span class="text-lg">{program.icon}</span>
 						{program.title}
 					</div>
