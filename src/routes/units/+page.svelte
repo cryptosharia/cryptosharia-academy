@@ -52,12 +52,18 @@
 		{ icon: '💰', title: 'Lebih Hemat dari Kursus Sejenis', desc: 'Harga per materi mulai dari Rp 49.000. Jauh lebih hemat dibanding kursus lain di pasaran.' },
 	];
 
-	const featuredTopics = [
-		{ title: 'Blockchain & Crypto Fundamentals', price: 49000, originalPrice: 299000, topics: 24, duration: '8 Jam', category: 'Blockchain', emoji: '⛓️', color: 'from-orange-500 to-amber-600' },
-		{ title: 'Fiqh Muamalah Digital', price: 49000, originalPrice: 249000, topics: 18, duration: '6 Jam', category: 'Syariah', emoji: '🕌', color: 'from-emerald-500 to-teal-600' },
-		{ title: 'DeFi & Yield Farming Halal', price: 59000, originalPrice: 299000, topics: 16, duration: '5 Jam', category: 'DeFi', emoji: '🌾', color: 'from-teal-500 to-cyan-600' },
-		{ title: 'Smart Contract & Solidity', price: 79000, originalPrice: 399000, topics: 30, duration: '12 Jam', category: 'Development', emoji: '💻', color: 'from-violet-500 to-purple-600' },
+
+	const gradientColors = [
+		'from-orange-500 to-amber-600',
+		'from-emerald-500 to-teal-600',
+		'from-teal-500 to-cyan-600',
+		'from-violet-500 to-purple-600',
 	];
+
+	const categoryEmoji: Record<string, string> = {
+		'Blockchain': '⛓️', 'Syariah': '🕌', 'Trading': '📈', 'DeFi': '🌾',
+		'Development': '💻', 'Data & AI': '🤖', 'Security': '🔐',
+	};
 </script>
 
 <svelte:head>
@@ -128,35 +134,52 @@
 	</div>
 </div>
 
-<!-- Featured Units -->
 <section class="py-14 bg-gray-50 dark:bg-gray-900">
 	<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 		<h2 class="text-xl sm:text-2xl font-extrabold text-gray-900 dark:text-white mb-2">Materi Terpopuler</h2>
 		<p class="text-gray-500 dark:text-gray-400 text-sm mb-8">Pilihan terbaik dari para member CryptoSharia Academy.</p>
-		<div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
-			{#each featuredTopics as unit}
-				<div class="group bg-white dark:bg-gray-800 rounded-2xl overflow-hidden border border-gray-200 dark:border-gray-700 hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300">
-					<div class="h-36 bg-gradient-to-br {unit.color} flex items-center justify-center">
-						<span class="text-5xl">{unit.emoji}</span>
-					</div>
-					<div class="p-5">
-						<span class="px-2.5 py-1 rounded-md bg-gray-100 dark:bg-gray-700 text-[10px] font-bold text-gray-600 dark:text-gray-300 mb-3 inline-block">{unit.category}</span>
-						<h3 class="font-bold text-gray-900 dark:text-white text-sm leading-snug mb-3 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">{unit.title}</h3>
-						<div class="flex items-center gap-3 text-xs text-gray-400 mb-4">
-							<span>📖 {unit.topics} Topik</span>
-							<span>⏱ {unit.duration}</span>
-						</div>
-						<div class="flex items-center justify-between">
-							<div>
-								<div class="text-base font-extrabold text-emerald-600">{formatCurrency(unit.price)}</div>
-								<div class="text-xs text-gray-400 line-through">{formatCurrency(unit.originalPrice)}</div>
+		{#if isLoadingUnits}
+			<div class="text-center py-12">
+				<svg class="animate-spin w-7 h-7 mx-auto text-emerald-600 mb-3" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"/></svg>
+				<p class="text-sm text-gray-500 dark:text-gray-400">Memuat materi...</p>
+			</div>
+		{:else if units.length === 0}
+			<div class="text-center py-12 bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700">
+				<div class="text-4xl mb-2">📭</div>
+				<p class="text-sm text-gray-500 dark:text-gray-400">Belum ada materi tersedia.</p>
+			</div>
+		{:else}
+			<div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+				{#each units.slice(0, 4) as unit, i}
+					<a href="/units/{unit.id}" class="group block">
+						<div class="h-full bg-white dark:bg-gray-800 rounded-2xl overflow-hidden border border-gray-200 dark:border-gray-700 hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 flex flex-col">
+							{#if unit.image}
+								<div class="h-36 bg-cover bg-center" style="background-image: url('{unit.image}');"></div>
+							{:else}
+								<div class="h-36 bg-gradient-to-br {gradientColors[i % gradientColors.length]} flex items-center justify-center">
+									<span class="text-5xl">{categoryEmoji[unit.category] || '📚'}</span>
+								</div>
+							{/if}
+							<div class="p-5 flex-1 flex flex-col">
+								<span class="px-2.5 py-1 rounded-md bg-gray-100 dark:bg-gray-700 text-[10px] font-bold text-gray-600 dark:text-gray-300 mb-3 inline-block self-start">{unit.category}</span>
+								<h3 class="font-bold text-gray-900 dark:text-white text-sm leading-snug mb-3 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors line-clamp-2">{unit.title}</h3>
+								<div class="flex items-center gap-3 text-xs text-gray-400 mb-4">
+									<span>📖 {unit.topics} Materi</span>
+									{#if unit.duration}<span>⏱ {unit.duration}</span>{/if}
+								</div>
+								<div class="mt-auto flex items-center justify-between pt-3 border-t border-gray-100 dark:border-gray-700">
+									<div>
+										<div class="text-base font-extrabold text-emerald-600">{formatCurrency(unit.price ?? 49000)}</div>
+										<div class="text-xs text-gray-400 line-through">{formatCurrency(unit.originalPrice ?? 299000)}</div>
+									</div>
+									<span class="px-4 py-1.5 rounded-full bg-emerald-600 text-white text-xs font-bold group-hover:bg-emerald-700 transition-all">Beli</span>
+								</div>
 							</div>
-							<a href="/units" class="px-4 py-1.5 rounded-full bg-emerald-600 text-white text-xs font-bold hover:bg-emerald-700 transition-all active:scale-95">Beli</a>
 						</div>
-					</div>
-				</div>
-			{/each}
-		</div>
+					</a>
+				{/each}
+			</div>
+		{/if}
 	</div>
 </section>
 
