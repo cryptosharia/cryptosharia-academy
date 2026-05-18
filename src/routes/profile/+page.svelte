@@ -2,12 +2,21 @@
 	import { goto } from '$app/navigation';
 	import { userAuth } from '$lib/auth.svelte';
 	import { doc, getDoc, setDoc, serverTimestamp, collection, query, where, orderBy, onSnapshot, Timestamp } from 'firebase/firestore';
-	import { db } from '$lib/firebase';
+	import { updatePassword, EmailAuthProvider, reauthenticateWithCredential } from 'firebase/auth';
+	import { db, auth } from '$lib/firebase';
 
 	let activeMenu = $state('profil');
 	let isLoading = $state(true);
 	let isSaving = $state(false);
 	let saveSuccess = $state(false);
+
+	// Password change fields
+	let currentPassword = $state('');
+	let newPassword = $state('');
+	let confirmPassword = $state('');
+	let isChangingPassword = $state(false);
+	let passwordError = $state('');
+	let passwordSuccess = $state('');
 
 	// Profile form fields
 	let namaLengkap = $state('');
@@ -137,6 +146,45 @@
 			pwdError = userAuth.error || e?.message || 'Gagal mengubah password';
 		} finally {
 			pwdLoading = false;
+		}
+	}
+
+	async function changePassword() {
+		if (!auth.currentUser || !userAuth.user?.email) return;
+		if (newPassword !== confirmPassword) {
+			passwordError = "Password baru tidak cocok!";
+			return;
+		}
+		if (newPassword.length < 6) {
+			passwordError = "Password minimal 6 karakter!";
+			return;
+		}
+
+		isChangingPassword = true;
+		passwordError = '';
+		passwordSuccess = '';
+
+		try {
+			// Re-authenticate user first
+			const credential = EmailAuthProvider.credential(userAuth.user.email, currentPassword);
+			await reauthenticateWithCredential(auth.currentUser, credential);
+
+			// Update password
+			await updatePassword(auth.currentUser, newPassword);
+			
+			passwordSuccess = "Password berhasil diubah!";
+			currentPassword = '';
+			newPassword = '';
+			confirmPassword = '';
+		} catch (error: any) {
+			console.error("Gagal mengganti password:", error);
+			if (error.code === 'auth/invalid-credential' || error.code === 'auth/wrong-password') {
+				passwordError = "Password saat ini salah!";
+			} else {
+				passwordError = "Gagal mengganti password. Silakan coba lagi nanti.";
+			}
+		} finally {
+			isChangingPassword = false;
 		}
 	}
 
@@ -379,6 +427,44 @@
 								</span>
 							</label>
 						</div>
+
+						<!-- Ubah Password Section -->
+						<div class="mt-10 pt-10 border-t border-gray-200 dark:border-gray-700">
+							<h3 class="text-lg font-bold text-gray-900 dark:text-white mb-4">Ubah Password</h3>
+							<div class="max-w-md space-y-4">
+								{#if passwordError}
+									<div class="p-3 text-sm text-red-600 bg-red-50 dark:bg-red-900/30 rounded-lg border border-red-200 dark:border-red-800">
+										{passwordError}
+									</div>
+								{/if}
+								{#if passwordSuccess}
+									<div class="p-3 text-sm text-green-600 bg-green-50 dark:bg-green-900/30 rounded-lg border border-green-200 dark:border-green-800">
+										{passwordSuccess}
+									</div>
+								{/if}
+								
+								<div>
+									<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Password Saat Ini</label>
+									<input type="password" bind:value={currentPassword} class="w-full rounded-lg border border-gray-300 dark:border-gray-600 px-4 py-2.5 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-all" placeholder="Masukkan password saat ini">
+								</div>
+								<div>
+									<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Password Baru</label>
+									<input type="password" bind:value={newPassword} class="w-full rounded-lg border border-gray-300 dark:border-gray-600 px-4 py-2.5 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-all" placeholder="Minimal 6 karakter">
+								</div>
+								<div>
+									<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Konfirmasi Password Baru</label>
+									<input type="password" bind:value={confirmPassword} class="w-full rounded-lg border border-gray-300 dark:border-gray-600 px-4 py-2.5 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-all" placeholder="Ulangi password baru">
+								</div>
+								<button onclick={changePassword} disabled={isChangingPassword || !currentPassword || !newPassword || !confirmPassword} class="mt-2 px-5 py-2.5 bg-gray-900 dark:bg-white text-white dark:text-gray-900 rounded-lg font-semibold hover:bg-gray-800 dark:hover:bg-gray-100 transition-colors disabled:opacity-50 flex items-center justify-center min-w-[150px]">
+									{#if isChangingPassword}
+										<svg class="animate-spin -ml-1 mr-2 h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+										Memproses...
+									{:else}
+										Simpan Password
+									{/if}
+								</button>
+							</div>
+						</div>
 					{:else if activeMenu === 'subscription'}
 						<!-- Subscription Section -->
 						<div>
@@ -395,7 +481,6 @@
 									Akses Semua Materi
 								</a>
 							</div>
-						</div>
 						</div>
 
 						<!-- Aktivitas Subscription -->
