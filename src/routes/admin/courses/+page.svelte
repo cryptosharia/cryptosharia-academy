@@ -178,7 +178,7 @@
 </script>
 
 <svelte:head>
-	<title>Admin — Kelola Materi E-Learning | CryptoSharia Academy</title>
+	<title>Admin — Kelola Materi | CryptoSharia Academy</title>
 </svelte:head>
 
 {#if userAuth.loading || isLoading}
@@ -191,8 +191,8 @@
 
 			<div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
 				<div>
-					<h1 class="text-2xl font-extrabold text-gray-900 dark:text-white">Kelola Materi E-Learning</h1>
-					<p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Total {courses.length} materi terdaftar</p>
+					<h1 class="text-2xl font-extrabold text-gray-900 dark:text-white">Kelola Materi</h1>
+					<p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Total {courses.length} materi (digunakan untuk Subscription & Units)</p>
 				</div>
 				<div class="flex gap-2">
 					{#if courses.length === 0}

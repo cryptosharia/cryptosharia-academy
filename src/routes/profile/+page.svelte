@@ -25,7 +25,8 @@
 
 	const menuItems = [
 		{ id: 'profil', label: 'Profil', icon: 'user' },
-		{ id: 'e-learning', label: 'E-learning', icon: 'book' },
+		{ id: 'subscription', label: 'Subscription', icon: 'book' },
+		{ id: 'units', label: 'Units Saya', icon: 'receipt' },
 		{ id: 'bootcamp', label: 'Bootcamp', icon: 'graduation' },
 		{ id: 'transaksi', label: 'Riwayat Transaksi', icon: 'receipt' }
 	];
@@ -307,28 +308,28 @@
 								</span>
 							</label>
 						</div>
-					{:else if activeMenu === 'e-learning'}
-						<!-- E-learning Section -->
+					{:else if activeMenu === 'subscription'}
+						<!-- Subscription Section -->
 						<div>
-							<!-- Subscription status -->
-							<h1 class="text-2xl font-extrabold text-gray-900 dark:text-white">Selamat, Langganan E-learning Kamu Berstatus Aktif!</h1>
-							<p class="mt-2 text-sm text-gray-500 dark:text-gray-400">Langganan kamu berlaku sampai 15 Juni 2026, 14:39.</p>
+							<h1 class="text-2xl font-extrabold text-gray-900 dark:text-white">Langganan Kamu Aktif 🎉</h1>
+							<p class="mt-2 text-sm text-gray-500 dark:text-gray-400">Akses semua materi selama langganan aktif.</p>
 
 							<div class="mt-5 flex flex-wrap gap-3">
-								<a href="/e-learning" class="inline-flex items-center gap-2 rounded-xl border border-primary-500 dark:border-primary-600 px-5 py-2.5 text-sm font-semibold text-primary-600 dark:text-primary-400 transition-all hover:bg-primary-50 dark:hover:bg-primary-900/20 active:scale-[0.98]">
+								<a href="/subscription" class="inline-flex items-center gap-2 rounded-xl border border-primary-500 dark:border-primary-600 px-5 py-2.5 text-sm font-semibold text-primary-600 dark:text-primary-400 transition-all hover:bg-primary-50 dark:hover:bg-primary-900/20 active:scale-[0.98]">
 									<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
 									Perpanjang Langganan
 								</a>
-								<a href="/e-learning" class="inline-flex items-center gap-2 rounded-xl bg-primary-600 px-5 py-2.5 text-sm font-semibold text-white transition-all hover:bg-primary-700 active:scale-[0.98] orange-glow">
+								<a href="/subscription" class="inline-flex items-center gap-2 rounded-xl bg-primary-600 px-5 py-2.5 text-sm font-semibold text-white transition-all hover:bg-primary-700 active:scale-[0.98] orange-glow">
 									<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
 									Akses Semua Materi
 								</a>
 							</div>
 						</div>
+						</div>
 
-						<!-- Aktivitas E-learning -->
+						<!-- Aktivitas Subscription -->
 						<div class="mt-10">
-							<h2 class="text-xl font-extrabold text-gray-900 dark:text-white mb-5">Aktivitas E-learning Kamu</h2>
+							<h2 class="text-xl font-extrabold text-gray-900 dark:text-white mb-5">Aktivitas Belajar Kamu</h2>
 
 							<!-- Tabs -->
 							{#snippet tabBtn(id: string, label: string, active: boolean)}
@@ -344,7 +345,6 @@
 								{@render tabBtn('selesai', 'Materi Selesai', elearningTab === 'selesai')}
 							</div>
 
-							<!-- Tab content -->
 							<div class="py-8">
 								{#if elearningTab === 'terakhir'}
 									<p class="italic text-gray-400 dark:text-gray-500 text-sm">Belum ada materi untuk ditampilkan.</p>
@@ -355,13 +355,12 @@
 								{/if}
 							</div>
 
-							<!-- Pagination -->
 							<div class="flex items-center justify-between">
-								<button class="inline-flex items-center gap-1.5 rounded-lg border border-gray-200 dark:border-gray-700 px-4 py-2 text-sm font-medium text-gray-500 dark:text-gray-400 transition-all hover:bg-gray-50 dark:hover:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-200">
+								<button class="inline-flex items-center gap-1.5 rounded-lg border border-gray-200 dark:border-gray-700 px-4 py-2 text-sm font-medium text-gray-500 dark:text-gray-400 transition-all hover:bg-gray-50 dark:hover:bg-gray-800">
 									<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
 									Sebelumnya
 								</button>
-								<button class="inline-flex items-center gap-1.5 rounded-lg border border-gray-200 dark:border-gray-700 px-4 py-2 text-sm font-medium text-gray-500 dark:text-gray-400 transition-all hover:bg-gray-50 dark:hover:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-200">
+								<button class="inline-flex items-center gap-1.5 rounded-lg border border-gray-200 dark:border-gray-700 px-4 py-2 text-sm font-medium text-gray-500 dark:text-gray-400 transition-all hover:bg-gray-50 dark:hover:bg-gray-800">
 									Selanjutnya
 									<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
 								</button>
@@ -380,8 +379,8 @@
 							<div class="text-center py-16">
 								<div class="text-4xl mb-3">📭</div>
 								<p class="text-sm text-gray-500 dark:text-gray-400 mb-4">Belum ada transaksi.</p>
-								<a href="/e-learning" class="inline-flex items-center gap-2 rounded-xl bg-primary-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-primary-700 orange-glow">
-									Lihat Paket E-learning
+								<a href="/subscription" class="inline-flex items-center gap-2 rounded-xl bg-primary-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-primary-700 orange-glow">
+									Lihat Paket Subscription
 								</a>
 							</div>
 						{:else}
