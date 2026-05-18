@@ -13,8 +13,7 @@
 		onSnapshot,
 		Timestamp
 	} from 'firebase/firestore';
-	import { updatePassword, EmailAuthProvider, reauthenticateWithCredential } from 'firebase/auth';
-	import { db, auth } from '$lib/firebase';
+	import { db } from '$lib/firebase';
 
 	let activeMenu = $state('profil');
 	let isLoading = $state(true);
@@ -179,44 +178,6 @@
 		}
 	}
 
-	async function changePassword() {
-		if (!auth.currentUser || !userAuth.user?.email) return;
-		if (newPassword !== confirmPassword) {
-			passwordError = 'Password baru tidak cocok!';
-			return;
-		}
-		if (newPassword.length < 6) {
-			passwordError = 'Password minimal 6 karakter!';
-			return;
-		}
-
-		isChangingPassword = true;
-		passwordError = '';
-		passwordSuccess = '';
-
-		try {
-			// Re-authenticate user first
-			const credential = EmailAuthProvider.credential(userAuth.user.email, currentPassword);
-			await reauthenticateWithCredential(auth.currentUser, credential);
-
-			// Update password
-			await updatePassword(auth.currentUser, newPassword);
-
-			passwordSuccess = 'Password berhasil diubah!';
-			currentPassword = '';
-			newPassword = '';
-			confirmPassword = '';
-		} catch (error: any) {
-			console.error('Gagal mengganti password:', error);
-			if (error.code === 'auth/invalid-credential' || error.code === 'auth/wrong-password') {
-				passwordError = 'Password saat ini salah!';
-			} else {
-				passwordError = 'Gagal mengganti password. Silakan coba lagi nanti.';
-			}
-		} finally {
-			isChangingPassword = false;
-		}
-	}
 
 	function getUserInitial(): string {
 		if (namaLengkap) return namaLengkap[0].toUpperCase();
@@ -625,7 +586,7 @@
 							<div class="fixed inset-0 z-50 flex items-center justify-center">
 								<div
 									class="absolute inset-0 bg-black/50"
-									on:click={() => (showChangePasswordModal = false)}
+									onclick={() => (showChangePasswordModal = false)}
 								></div>
 								<div class="relative z-10 w-full max-w-md rounded-xl bg-white p-6 dark:bg-gray-800">
 									<h3 class="mb-3 text-lg font-bold text-gray-900 dark:text-white">
@@ -645,7 +606,7 @@
 											Password berhasil diubah
 										</div>
 									{/if}
-									<form on:submit|preventDefault={submitChangePassword} class="space-y-3">
+									<form onsubmit={(e) => { e.preventDefault(); submitChangePassword(); }} class="space-y-3">
 										<div>
 											<label class="mb-2 block text-sm font-semibold text-gray-900 dark:text-white"
 												>Password Saat Ini</label
@@ -720,93 +681,6 @@
 									Saya bersedia menerima update informasi dari CryptoSharia
 								</span>
 							</label>
-						</div>
-
-						<!-- Ubah Password Section -->
-						<div class="mt-10 border-t border-gray-200 pt-10 dark:border-gray-700">
-							<h3 class="mb-4 text-lg font-bold text-gray-900 dark:text-white">Ubah Password</h3>
-							<div class="max-w-md space-y-4">
-								{#if passwordError}
-									<div
-										class="rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-600 dark:border-red-800 dark:bg-red-900/30"
-									>
-										{passwordError}
-									</div>
-								{/if}
-								{#if passwordSuccess}
-									<div
-										class="rounded-lg border border-green-200 bg-green-50 p-3 text-sm text-green-600 dark:border-green-800 dark:bg-green-900/30"
-									>
-										{passwordSuccess}
-									</div>
-								{/if}
-
-								<div>
-									<label class="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300"
-										>Password Saat Ini</label
-									>
-									<input
-										type="password"
-										bind:value={currentPassword}
-										class="focus:ring-primary-500 focus:border-primary-500 w-full rounded-lg border border-gray-300 bg-gray-50 px-4 py-2.5 text-gray-900 transition-all outline-none focus:ring-2 dark:border-gray-600 dark:bg-gray-800 dark:text-white"
-										placeholder="Masukkan password saat ini"
-									/>
-								</div>
-								<div>
-									<label class="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300"
-										>Password Baru</label
-									>
-									<input
-										type="password"
-										bind:value={newPassword}
-										class="focus:ring-primary-500 focus:border-primary-500 w-full rounded-lg border border-gray-300 bg-gray-50 px-4 py-2.5 text-gray-900 transition-all outline-none focus:ring-2 dark:border-gray-600 dark:bg-gray-800 dark:text-white"
-										placeholder="Minimal 6 karakter"
-									/>
-								</div>
-								<div>
-									<label class="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300"
-										>Konfirmasi Password Baru</label
-									>
-									<input
-										type="password"
-										bind:value={confirmPassword}
-										class="focus:ring-primary-500 focus:border-primary-500 w-full rounded-lg border border-gray-300 bg-gray-50 px-4 py-2.5 text-gray-900 transition-all outline-none focus:ring-2 dark:border-gray-600 dark:bg-gray-800 dark:text-white"
-										placeholder="Ulangi password baru"
-									/>
-								</div>
-								<button
-									onclick={changePassword}
-									disabled={isChangingPassword ||
-										!currentPassword ||
-										!newPassword ||
-										!confirmPassword}
-									class="mt-2 flex min-w-[150px] items-center justify-center rounded-lg bg-gray-900 px-5 py-2.5 font-semibold text-white transition-colors hover:bg-gray-800 disabled:opacity-50 dark:bg-white dark:text-gray-900 dark:hover:bg-gray-100"
-								>
-									{#if isChangingPassword}
-										<svg
-											class="mr-2 -ml-1 h-4 w-4 animate-spin"
-											xmlns="http://www.w3.org/2000/svg"
-											fill="none"
-											viewBox="0 0 24 24"
-											><circle
-												class="opacity-25"
-												cx="12"
-												cy="12"
-												r="10"
-												stroke="currentColor"
-												stroke-width="4"
-											></circle><path
-												class="opacity-75"
-												fill="currentColor"
-												d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-											></path></svg
-										>
-										Memproses...
-									{:else}
-										Simpan Password
-									{/if}
-								</button>
-							</div>
 						</div>
 					{:else if activeMenu === 'subscription'}
 						<!-- Subscription Section -->
