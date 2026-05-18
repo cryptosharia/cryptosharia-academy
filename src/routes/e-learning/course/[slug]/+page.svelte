@@ -197,7 +197,7 @@
 			<p class="text-sm text-gray-500 dark:text-gray-400 mb-6">Pelajari skill melalui serial short video + mini quiz dengan learning path dan topik yang terstruktur.</p>
 			<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
 				{#each course.relatedCourses as related, i}
-					<a href="/e-learning" class="group block bg-white dark:bg-gray-900 rounded-xl border border-gray-100 dark:border-gray-800 overflow-hidden hover:shadow-lg transition-all hover:-translate-y-1">
+					<a href="/subscription" class="group block bg-white dark:bg-gray-900 rounded-xl border border-gray-100 dark:border-gray-800 overflow-hidden hover:shadow-lg transition-all hover:-translate-y-1">
 						<div class="aspect-[4/3] bg-gradient-to-br {related.color} p-5 flex flex-col justify-end">
 							<h3 class="text-white font-extrabold text-lg leading-tight">{related.title}</h3>
 						</div>
