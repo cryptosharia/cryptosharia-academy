@@ -607,17 +607,23 @@
 										</div>
 									{/if}
 									<form onsubmit={(e) => { e.preventDefault(); submitChangePassword(); }} class="space-y-3">
-										<div>
-											<label class="mb-2 block text-sm font-semibold text-gray-900 dark:text-white"
-												>Password Saat Ini</label
-											>
-											<input
-												type="password"
-												bind:value={currentPassword}
-												placeholder="Masukkan password lama"
-												class="w-full rounded-xl border border-gray-200 bg-white px-3 py-2 text-sm text-gray-900 dark:border-gray-700 dark:bg-gray-800 dark:text-white"
-											/>
-										</div>
+										{#if !userAuth.hasPasswordProvider}
+											<div class="mb-2 rounded-lg border border-blue-200 bg-blue-50 px-3 py-2 text-sm text-blue-700 dark:border-blue-800 dark:bg-blue-900/20 dark:text-blue-400">
+												Akun kamu terhubung via Google. Buat password baru untuk login dengan email juga.
+											</div>
+										{:else}
+											<div>
+												<label class="mb-2 block text-sm font-semibold text-gray-900 dark:text-white"
+													>Password Saat Ini</label
+												>
+												<input
+													type="password"
+													bind:value={currentPassword}
+													placeholder="Masukkan password lama"
+													class="w-full rounded-xl border border-gray-200 bg-white px-3 py-2 text-sm text-gray-900 dark:border-gray-700 dark:bg-gray-800 dark:text-white"
+												/>
+											</div>
+										{/if}
 										<div>
 											<label class="mb-2 block text-sm font-semibold text-gray-900 dark:text-white"
 												>Password Baru</label
