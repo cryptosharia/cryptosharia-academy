@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/state';
 	import { userAuth } from '$lib/auth.svelte';
-	import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+	import { collection, addDoc, serverTimestamp, query, where, getDocs } from 'firebase/firestore';
 	import { db } from '$lib/firebase';
 
 	// Pick plan from URL param
@@ -48,14 +48,54 @@
 	let orderId = $state('');
 	let copied = $state(false);
 
+	// Voucher state
+	let voucherCode = $state('');
+	let voucherLoading = $state(false);
+	let voucherError = $state('');
+	let appliedVoucher = $state<{ code: string; discount: number; type: 'percent' | 'fixed' } | null>(null);
+
 	const formatCurrency = (amount: number) => new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(amount).replace('Rp', 'Rp ');
 
 	const savings = $derived(Math.round((1 - packageData.price / packageData.originalPrice) * 100));
+
+	// Final price after voucher
+	const discountAmount = $derived(
+		appliedVoucher
+			? appliedVoucher.type === 'percent'
+				? Math.round(packageData.price * appliedVoucher.discount / 100)
+				: appliedVoucher.discount
+			: 0
+	);
+	const finalPrice = $derived(Math.max(0, packageData.price - discountAmount));
 
 	function copyAccountNumber() {
 		navigator.clipboard.writeText(bankInfo.accountNumber.replace(/\s/g, ''));
 		copied = true;
 		setTimeout(() => { copied = false; }, 2000);
+	}
+
+	async function applyVoucher() {
+		if (!voucherCode.trim()) return;
+		voucherLoading = true;
+		voucherError = '';
+		try {
+			const q = query(collection(db, 'vouchers'), where('code', '==', voucherCode.trim().toUpperCase()));
+			const snap = await getDocs(q);
+			if (snap.empty) { voucherError = 'Kode voucher tidak ditemukan.'; return; }
+			const v = snap.docs[0].data();
+			if (v.applicableTo && v.applicableTo !== 'all' && v.applicableTo !== 'subscription') { voucherError = 'Voucher ini tidak berlaku untuk subscription.'; return; }
+			if (v.expiryDate && new Date(v.expiryDate) < new Date()) { voucherError = 'Voucher sudah kedaluwarsa.'; return; }
+			if (v.maxUses && v.maxUses > 0 && (v.usedCount || 0) >= v.maxUses) { voucherError = 'Voucher sudah habis dipakai.'; return; }
+			appliedVoucher = { code: v.code, discount: v.discount, type: v.type };
+		} catch (e) {
+			voucherError = 'Gagal memvalidasi voucher.';
+		} finally { voucherLoading = false; }
+	}
+
+	function removeVoucher() {
+		appliedVoucher = null;
+		voucherCode = '';
+		voucherError = '';
 	}
 
 	async function submitOrder() {
@@ -69,7 +109,10 @@
 				userName: userAuth.user.displayName || '',
 				packageId: packageData.id,
 				packageTitle: packageData.name,
-				amount: packageData.price,
+				amount: finalPrice,
+			originalAmount: packageData.price,
+			voucherCode: appliedVoucher?.code || '',
+			voucherDiscount: discountAmount,
 				type: 'subscription',
 				planId: planId,
 				status: 'pending',
@@ -82,7 +125,7 @@
 				`🔔 *Pembayaran Subscription CryptoSharia Academy*\n\n` +
 				`👤 ${userAuth.user.displayName || userAuth.user.email}\n` +
 				`📦 ${packageData.name}\n` +
-				`💰 ${formatCurrency(packageData.price)}\n` +
+				`💰 ${formatCurrency(finalPrice)}${appliedVoucher ? ' (voucher: ' + appliedVoucher.code + ')' : ''}\n` +
 				`📋 Order ID: ${orderRef.id}\n\n` +
 				`Mohon kirimkan bukti transfer di chat ini. Admin akan mengkonfirmasi dalam 1x24 jam.`
 			);
@@ -204,14 +247,41 @@
 								</button>
 							</div>
 						</div>
+						<!-- Voucher Input -->
+						<div class="rounded-xl border border-gray-200 dark:border-gray-700 p-4 mb-6">
+							<label class="text-xs font-bold text-gray-500 dark:text-gray-400 mb-2 block">🏷️ Punya Kode Voucher?</label>
+							{#if appliedVoucher}
+								<div class="flex items-center justify-between bg-emerald-50 dark:bg-emerald-900/20 rounded-lg px-3 py-2">
+									<span class="text-sm font-bold text-emerald-700 dark:text-emerald-400">✅ {appliedVoucher.code} (-{appliedVoucher.type === 'percent' ? appliedVoucher.discount + '%' : formatCurrency(appliedVoucher.discount)})</span>
+									<button onclick={removeVoucher} class="text-xs text-red-500 hover:text-red-700 font-bold">Hapus</button>
+								</div>
+							{:else}
+								<div class="flex gap-2">
+									<input type="text" bind:value={voucherCode} placeholder="Masukkan kode" class="flex-1 rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-primary-500 uppercase" />
+									<button onclick={applyVoucher} disabled={voucherLoading || !voucherCode.trim()} class="px-4 py-2 bg-primary-600 text-white text-xs font-bold rounded-lg hover:bg-primary-700 disabled:opacity-50 transition-all">
+										{voucherLoading ? '...' : 'Pakai'}
+									</button>
+								</div>
+								{#if voucherError}
+									<p class="text-xs text-red-500 mt-1">{voucherError}</p>
+								{/if}
+							{/if}
+						</div>
+
 						<div class="space-y-2 pt-4 border-t border-gray-100 dark:border-gray-700 mb-6">
 							<div class="flex justify-between text-sm text-gray-500 dark:text-gray-400">
 								<span>{packageData.name}</span>
 								<span>{formatCurrency(packageData.price)}</span>
 							</div>
+							{#if appliedVoucher}
+								<div class="flex justify-between text-sm text-emerald-600">
+									<span>Diskon voucher ({appliedVoucher.code})</span>
+									<span>-{formatCurrency(discountAmount)}</span>
+								</div>
+							{/if}
 							<div class="flex justify-between items-center pt-3 mt-2 border-t border-gray-100 dark:border-gray-700">
 								<span class="font-bold text-gray-900 dark:text-white">Total Transfer</span>
-								<span class="text-xl font-black text-primary-600">{formatCurrency(packageData.price)}</span>
+								<span class="text-xl font-black text-primary-600">{formatCurrency(finalPrice)}</span>
 							</div>
 						</div>
 						<div class="bg-amber-50 dark:bg-amber-900/10 border border-amber-200 dark:border-amber-800 rounded-xl px-4 py-3 mb-6">

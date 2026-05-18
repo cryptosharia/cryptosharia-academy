@@ -14,7 +14,11 @@
 
 	const navLinks = $derived(
 		isAdmin
-			? [{ label: 'Kelola Materi', href: '/admin/courses' }]
+			? [
+				{ label: 'Kelola Materi', href: '/admin/courses' },
+				{ label: 'Voucher', href: '/admin/vouchers' },
+				{ label: 'Pesanan', href: '/admin/orders' }
+			]
 			: [
 					{ label: 'Subscription', href: '/subscription' },
 					{ label: 'Units', href: '/units' }
