@@ -25,6 +25,8 @@
 		duration: '',
 		category: 'Blockchain',
 		image: '',
+		price: 49000,
+		originalPrice: 299000,
 		lessons: [] as { title: string; videoUrl: string; type: string; duration: string }[]
 	});
 
@@ -81,6 +83,8 @@
 				duration: '',
 				category: 'Blockchain',
 				image: '',
+				price: 49000,
+				originalPrice: 299000,
 				lessons: []
 			};
 		}
@@ -100,6 +104,8 @@
 				duration: formData.duration,
 				category: formData.category,
 				image: formData.image,
+				price: formData.price || 0,
+				originalPrice: formData.originalPrice || 0,
 				lessons: formData.lessons || [],
 				updatedAt: serverTimestamp()
 			};
@@ -285,6 +291,20 @@
 					<div>
 						<label class="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-1">Deskripsi Materi</label>
 						<textarea bind:value={formData.description} rows="3" class="w-full rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 px-3 py-2 text-sm text-gray-900 dark:text-white outline-none focus:ring-2 focus:ring-primary-500 resize-none" placeholder="Jelaskan isi materi secara singkat..."></textarea>
+					</div>
+
+					<!-- Harga Satuan (Units) -->
+					<div class="grid grid-cols-2 gap-4">
+						<div>
+							<label class="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-1">💰 Harga Satuan (Rp)</label>
+							<input type="number" bind:value={formData.price} class="w-full rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 px-3 py-2 text-sm text-gray-900 dark:text-white outline-none focus:ring-2 focus:ring-primary-500" placeholder="e.g. 49000" />
+							<p class="mt-1 text-[10px] text-gray-400">Harga jual materi satuan di /units</p>
+						</div>
+						<div>
+							<label class="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-1">🏷️ Harga Coret (Rp)</label>
+							<input type="number" bind:value={formData.originalPrice} class="w-full rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 px-3 py-2 text-sm text-gray-900 dark:text-white outline-none focus:ring-2 focus:ring-primary-500" placeholder="e.g. 299000" />
+							<p class="mt-1 text-[10px] text-gray-400">Harga coret (sebelum diskon)</p>
+						</div>
 					</div>
 
 					<div>
