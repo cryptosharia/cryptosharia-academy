@@ -56,14 +56,29 @@
 				approvedBy: userAuth.user?.email
 			});
 
-			// Activate user subscription (30 days from now)
-			const expiry = new Date();
-			expiry.setDate(expiry.getDate() + 30);
-			await updateDoc(doc(db, 'users', order.userId), {
-				subscriptionStatus: 'active',
-				subscriptionExpiry: Timestamp.fromDate(expiry),
-				subscriptionPackage: order.packageId
-			});
+			if (order.type === 'unit') {
+				// Unit purchase: grant access to specific unit
+				const userSnap = await import('firebase/firestore').then(({ getDoc }) =>
+					getDoc(doc(db, 'users', order.userId))
+				);
+				const existing = userSnap.exists() ? (userSnap.data().purchasedUnits || []) : [];
+				await updateDoc(doc(db, 'users', order.userId), {
+					purchasedUnits: [...new Set([...existing, order.unitId])]
+				});
+			} else {
+				// Subscription: set expiry based on plan
+				const expiry = new Date();
+				const planId = order.planId || '1-bulan';
+				if (planId === '12-bulan') expiry.setDate(expiry.getDate() + 365);
+				else if (planId === '6-bulan') expiry.setDate(expiry.getDate() + 180);
+				else expiry.setDate(expiry.getDate() + 30);
+
+				await updateDoc(doc(db, 'users', order.userId), {
+					subscriptionStatus: 'active',
+					subscriptionExpiry: Timestamp.fromDate(expiry),
+					subscriptionPackage: order.packageId
+				});
+			}
 
 			selectedOrder = null;
 		} catch (e) {
