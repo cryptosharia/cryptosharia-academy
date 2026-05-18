@@ -5,6 +5,9 @@ import {
 	createUserWithEmailAndPassword,
 	GoogleAuthProvider,
 	signOut,
+	updatePassword,
+	EmailAuthProvider,
+	reauthenticateWithCredential,
 	type User
 } from 'firebase/auth';
 import { doc, setDoc, getDoc, serverTimestamp } from 'firebase/firestore';
@@ -97,6 +100,33 @@ export async function registerWithEmail(email: string, password: string) {
 	}
 }
 
+/** Change password for current user (requires reauthentication) */
+export async function changePassword(currentPassword: string, newPassword: string) {
+	error = null;
+	if (!auth.currentUser) throw new Error('Not authenticated');
+	const user = auth.currentUser as User;
+	const hasPasswordProvider = (user.providerData || []).some(p => p.providerId === 'password');
+	if (!hasPasswordProvider) {
+		throw new Error('Akun ini menggunakan login pihak ketiga. Ubah password melalui provider (mis. Google).');
+	}
+	try {
+		const credential = EmailAuthProvider.credential(user.email || '', currentPassword);
+		await reauthenticateWithCredential(user, credential);
+		await updatePassword(user, newPassword);
+		const userRef = doc(db, 'users', user.uid);
+		await setDoc(userRef, { updatedAt: serverTimestamp() }, { merge: true });
+	} catch (e: any) {
+		if (e.code === 'auth/wrong-password') {
+			error = 'Password lama salah';
+		} else if (e.code === 'auth/weak-password') {
+			error = 'Password baru terlalu lemah (minimal 6 karakter)';
+		} else {
+			error = e.message || 'Gagal mengubah password';
+		}
+		throw e;
+	}
+}
+
 /** Logout */
 export async function logout() {
 	await signOut(auth);
@@ -112,5 +142,6 @@ export const userAuth = {
 	loginWithGoogle,
 	loginWithEmail,
 	registerWithEmail,
+	changePassword,
 	logout
 };

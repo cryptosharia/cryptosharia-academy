@@ -20,6 +20,13 @@
 	let linkResume = $state('');
 	let notifikasi = $state(true);
 	let elearningTab = $state('terakhir');
+	let showChangePasswordModal = $state(false);
+	let currentPassword = $state('');
+	let newPassword = $state('');
+	let confirmNewPassword = $state('');
+	let pwdLoading = $state(false);
+	let pwdError = $state('');
+	let pwdSuccess = $state(false);
 	let userOrders = $state<any[]>([]);
 	let ordersLoading = $state(false);
 
@@ -105,6 +112,31 @@
 			console.error('Failed to save profile:', e);
 		} finally {
 			isSaving = false;
+		}
+	}
+
+	async function submitChangePassword() {
+		pwdError = '';
+		if (!newPassword || newPassword.length < 6) {
+			pwdError = 'Password baru minimal 6 karakter';
+			return;
+		}
+		if (newPassword !== confirmNewPassword) {
+			pwdError = 'Konfirmasi password tidak cocok';
+			return;
+		}
+		pwdLoading = true;
+		try {
+			await userAuth.changePassword(currentPassword, newPassword);
+			pwdSuccess = true;
+			setTimeout(() => {
+				pwdSuccess = false;
+				showChangePasswordModal = false;
+			}, 1500);
+		} catch (e) {
+			pwdError = userAuth.error || e?.message || 'Gagal mengubah password';
+		} finally {
+			pwdLoading = false;
 		}
 	}
 
@@ -290,12 +322,51 @@
 									<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
 									Ubah Email
 								</button>
-								<button class="inline-flex items-center gap-2 rounded-xl border border-gray-200 dark:border-gray-700 px-5 py-2.5 text-sm font-semibold text-primary-600 dark:text-primary-400 transition-all hover:bg-primary-50 dark:hover:bg-primary-900/20 hover:border-primary-300 dark:hover:border-primary-700">
+								<button type="button" onclick={() => { pwdError=''; pwdSuccess=false; currentPassword=''; newPassword=''; confirmNewPassword=''; showChangePasswordModal = true; }} class="inline-flex items-center gap-2 rounded-xl border border-gray-200 dark:border-gray-700 px-5 py-2.5 text-sm font-semibold text-primary-600 dark:text-primary-400 transition-all hover:bg-primary-50 dark:hover:bg-primary-900/20 hover:border-primary-300 dark:hover:border-primary-700">
 									<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
 									Ubah Password
 								</button>
 							</div>
 						</div>
+
+						{#if showChangePasswordModal}
+							<div class="fixed inset-0 z-50 flex items-center justify-center">
+								<div class="absolute inset-0 bg-black/50" on:click={() => (showChangePasswordModal = false)}></div>
+								<div class="relative bg-white dark:bg-gray-800 rounded-xl p-6 w-full max-w-md z-10">
+									<h3 class="text-lg font-bold mb-3 text-gray-900 dark:text-white">Ubah Password</h3>
+									{#if pwdError}
+										<div class="mb-3 rounded-md bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 px-3 py-2 text-sm text-red-700 dark:text-red-400">{pwdError}</div>
+									{/if}
+									{#if pwdSuccess}
+										<div class="mb-3 rounded-md bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 px-3 py-2 text-sm text-green-700 dark:text-green-400">Password berhasil diubah</div>
+									{/if}
+									<form on:submit|preventDefault={submitChangePassword} class="space-y-3">
+										<div>
+											<label class="block text-sm font-semibold text-gray-900 dark:text-white mb-2">Password Saat Ini</label>
+											<input type="password" bind:value={currentPassword} placeholder="Masukkan password lama" class="w-full rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 px-3 py-2 text-sm text-gray-900 dark:text-white" />
+										</div>
+										<div>
+											<label class="block text-sm font-semibold text-gray-900 dark:text-white mb-2">Password Baru</label>
+											<input type="password" bind:value={newPassword} placeholder="Masukkan password baru" class="w-full rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 px-3 py-2 text-sm text-gray-900 dark:text-white" />
+										</div>
+										<div>
+											<label class="block text-sm font-semibold text-gray-900 dark:text-white mb-2">Konfirmasi Password Baru</label>
+											<input type="password" bind:value={confirmNewPassword} placeholder="Konfirmasi password baru" class="w-full rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 px-3 py-2 text-sm text-gray-900 dark:text-white" />
+										</div>
+										<div class="flex justify-end gap-2 mt-2">
+											<button type="button" onclick={() => (showChangePasswordModal = false)} class="rounded-xl px-4 py-2 text-sm border border-gray-200 dark:border-gray-700">Batal</button>
+											<button type="submit" disabled={pwdLoading} class="rounded-xl bg-primary-600 px-4 py-2 text-sm font-bold text-white disabled:opacity-40">
+												{#if pwdLoading}
+													Mengubah...
+												{:else}
+													Simpan
+												{/if}
+											</button>
+										</div>
+									</form>
+								</div>
+							</div>
+						{/if}
 
 						<!-- Pengaturan Notifikasi -->
 						<div>
