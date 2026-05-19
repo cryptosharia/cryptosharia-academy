@@ -18,8 +18,11 @@
 
 	let courses = $state<Course[]>([]);
 	let isLoadingCourses = $state(true);
+	let loadError = $state<string | null>(null);
 
-	onMount(async () => {
+	async function loadCourses() {
+		isLoadingCourses = true;
+		loadError = null;
 		try {
 			const q = query(collection(db, 'elearning_courses'), orderBy('createdAt', 'desc'));
 			const snap = await getDocs(q);
@@ -27,12 +30,19 @@
 				id: doc.id,
 				...doc.data()
 			})) as Course[];
-		} catch (error) {
+		} catch (error: any) {
 			console.error("Failed to load courses:", error);
+			if (error?.code === 'permission-denied' || error?.message?.includes('permission')) {
+				loadError = 'Akses ditolak. Silakan hubungi admin untuk memperbaiki konfigurasi database.';
+			} else {
+				loadError = 'Gagal memuat materi. Silakan coba lagi.';
+			}
 		} finally {
 			isLoadingCourses = false;
 		}
-	});
+	}
+
+	onMount(loadCourses);
 
 	const learningPaths: { title: string; courses: number; hours: number; emoji: string; gradient: string }[] = [
 		{ title: 'Blockchain & Crypto', courses: 8, hours: 32, emoji: '⛓️', gradient: 'from-orange-500 to-orange-700' },
@@ -144,6 +154,14 @@
 			<div class="text-center py-16">
 				<svg class="animate-spin w-8 h-8 mx-auto text-primary-600 mb-4" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"/></svg>
 				<p class="text-sm font-medium text-gray-500 dark:text-gray-400">Memuat materi e-learning...</p>
+			</div>
+		{:else if loadError}
+			<div class="text-center py-16 bg-red-50 dark:bg-red-900/20 rounded-2xl border border-red-200 dark:border-red-800">
+				<div class="text-4xl mb-2">⚠️</div>
+				<p class="text-sm font-medium text-red-600 dark:text-red-400 mb-3">{loadError}</p>
+				<button onclick={loadCourses} class="inline-flex items-center gap-2 rounded-full bg-red-600 px-5 py-2 text-sm font-bold text-white hover:bg-red-700 transition-all">
+					🔄 Coba Lagi
+				</button>
 			</div>
 		{:else if filteredCourses.length === 0}
 			<div class="text-center py-16 bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700">
