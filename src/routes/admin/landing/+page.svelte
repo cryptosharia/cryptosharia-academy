@@ -120,7 +120,32 @@
 
 	function sectionMeta(id: SectionId) {
 		const comp = sectionCompleteness(content, id);
-		return { filled: comp.filled, total: comp.total, complete: comp.filled === comp.total, visible: isSectionVisible(id) };
+		return {
+			filled: comp.filled,
+			total: comp.total,
+			complete: comp.filled === comp.total,
+			visible: isSectionVisible(id),
+			missingMedia: sectionMissingMedia(id)
+		};
+	}
+
+	/**
+	 * Counts media slots (image/video URLs) that are still empty for a section.
+	 * Used to flag "media belum lengkap" without opening the editor.
+	 */
+	function sectionMissingMedia(id: SectionId): number {
+		if (id === 'hero') {
+			return content.hero.videoUrl.trim() ? 0 : 1;
+		}
+		if (id === 'authority') {
+			return content.authority.activities.filter((a) => !a.image.trim()).length;
+		}
+		if (id === 'valueProps') {
+			const imgs = content.valueProps.docImages;
+			if (imgs.length === 0) return 1;
+			return imgs.filter((u) => !u.trim()).length;
+		}
+		return 0;
 	}
 
 	function matchesSearch(id: SectionId) {
@@ -378,13 +403,19 @@
 							<h2 class="text-lg font-extrabold text-gray-900 dark:text-white">{activeTitle}</h2>
 							{#if isContentSection}
 								{@const m = sectionMeta(activeView as SectionId)}
-								<div class="mt-1 flex items-center gap-2 text-xs">
+								<div class="mt-1 flex flex-wrap items-center gap-2 text-xs">
 									<span class="inline-flex items-center gap-1 rounded-full px-2 py-0.5 font-semibold {m.visible ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400' : 'bg-gray-200 text-gray-500 dark:bg-gray-700 dark:text-gray-400'}">
 										{m.visible ? '● Aktif' : '○ Hidden'}
 									</span>
 									<span class="inline-flex items-center gap-1 rounded-full px-2 py-0.5 font-semibold {m.complete ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400' : 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400'}">
 										{m.complete ? '✓' : '!'} {m.filled}/{m.total} terisi
 									</span>
+									{#if m.missingMedia > 0}
+										<span class="inline-flex items-center gap-1 rounded-full bg-amber-100 px-2 py-0.5 font-semibold text-amber-700 dark:bg-amber-900/30 dark:text-amber-400">
+											<svg class="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+											{m.missingMedia} media belum ada
+										</span>
+									{/if}
 								</div>
 							{/if}
 						</div>
@@ -491,8 +522,16 @@
 			<span class="shrink-0 {m.complete ? 'text-emerald-500' : 'text-amber-500'}">{m.complete ? '✓' : '!'}</span>
 			<span class="truncate {!m.visible ? 'text-gray-400 dark:text-gray-500' : ''}">{SECTION_LABELS[id]}</span>
 		</span>
-		<span class="shrink-0 text-[10px] font-bold {m.visible ? 'text-gray-400' : 'text-gray-400'}">
-			{#if !m.visible}Hidden{:else}{m.filled}/{m.total}{/if}
+		<span class="flex shrink-0 items-center gap-1">
+			{#if m.missingMedia > 0}
+				<span class="inline-flex items-center gap-0.5 rounded-full bg-amber-100 px-1.5 py-0.5 text-[9px] font-bold text-amber-700 dark:bg-amber-900/30 dark:text-amber-400" title="{m.missingMedia} media belum ada">
+					<svg class="h-2.5 w-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+					{m.missingMedia}
+				</span>
+			{/if}
+			<span class="text-[10px] font-bold text-gray-400">
+				{#if !m.visible}Hidden{:else}{m.filled}/{m.total}{/if}
+			</span>
 		</span>
 	</button>
 {/snippet}
@@ -512,6 +551,12 @@
 				<span class="flex items-center gap-2">
 					{#if !m.visible}
 						<span class="rounded-full bg-gray-200 px-2 py-0.5 text-[10px] font-bold text-gray-500 dark:bg-gray-700 dark:text-gray-400">Hidden</span>
+					{/if}
+					{#if m.missingMedia > 0}
+						<span class="inline-flex items-center gap-1 rounded-full bg-amber-100 px-2 py-0.5 text-[10px] font-bold text-amber-700 dark:bg-amber-900/30 dark:text-amber-400">
+							<svg class="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+							{m.missingMedia} media kosong
+						</span>
 					{/if}
 					<span class="rounded-full px-2 py-0.5 text-[10px] font-bold {m.complete ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400' : 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400'}">{m.filled}/{m.total}</span>
 					<svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
@@ -595,7 +640,18 @@
 <!-- Single image field: URL input + upload button + preview/clear -->
 {#snippet imageField(label: string, key: string, getVal: () => string, setVal: (v: string) => void)}
 	<div>
-		<span class={labelClass}>{label}</span>
+		<div class="mb-1 flex items-center gap-2">
+			<span class="text-xs font-bold text-gray-700 dark:text-gray-300">{label}</span>
+			{#if getVal().trim()}
+				<span class="inline-flex items-center gap-1 rounded-full bg-emerald-100 px-2 py-0.5 text-[10px] font-bold text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400">
+					<span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span> Ada gambar
+				</span>
+			{:else}
+				<span class="inline-flex items-center gap-1 rounded-full bg-amber-100 px-2 py-0.5 text-[10px] font-bold text-amber-700 dark:bg-amber-900/30 dark:text-amber-400">
+					<span class="h-1.5 w-1.5 rounded-full bg-amber-500"></span> Belum ada gambar
+				</span>
+			{/if}
+		</div>
 		<div class="flex gap-2">
 			<input type="text" value={getVal()} oninput={(e) => setVal(e.currentTarget.value)} placeholder="Tempel URL gambar atau unggah" class={inputClass} />
 			<label class="relative flex cursor-pointer items-center justify-center rounded-lg bg-gray-200 px-4 text-sm font-semibold text-gray-700 transition-colors hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600">
@@ -612,14 +668,40 @@
 				<img src={getVal()} alt="Preview" class="h-16 w-24 rounded-md border border-gray-200 object-cover dark:border-gray-700" />
 				<button type="button" onclick={() => setVal('')} class="text-xs font-semibold text-red-500 hover:text-red-700">Hapus gambar</button>
 			</div>
+		{:else}
+			<div class="mt-2 flex h-16 w-24 flex-col items-center justify-center rounded-md border border-dashed border-amber-300 bg-amber-50 text-amber-500 dark:border-amber-700/60 dark:bg-amber-950/20">
+				<svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+				<span class="mt-0.5 text-[9px] font-bold">Kosong</span>
+			</div>
 		{/if}
 	</div>
 {/snippet}
 
 <!-- Multi-image gallery field -->
 {#snippet galleryField(label: string, key: string, getList: () => string[], setList: (v: string[]) => void)}
+	{@const filled = getList().filter((u) => u.trim()).length}
+	{@const total = getList().length}
 	<div>
-		{@render listHeader(label, () => setList([...getList(), '']))}
+		<div class="mb-1 flex items-center gap-2">
+			<span class="text-xs font-bold tracking-wide text-gray-500 uppercase dark:text-gray-400">{label}</span>
+			{#if total === 0}
+				<span class="inline-flex items-center gap-1 rounded-full bg-amber-100 px-2 py-0.5 text-[10px] font-bold text-amber-700 dark:bg-amber-900/30 dark:text-amber-400">
+					<span class="h-1.5 w-1.5 rounded-full bg-amber-500"></span> Belum ada gambar
+				</span>
+			{:else if filled < total}
+				<span class="inline-flex items-center gap-1 rounded-full bg-amber-100 px-2 py-0.5 text-[10px] font-bold text-amber-700 dark:bg-amber-900/30 dark:text-amber-400">
+					<span class="h-1.5 w-1.5 rounded-full bg-amber-500"></span> {filled}/{total} terisi
+				</span>
+			{:else}
+				<span class="inline-flex items-center gap-1 rounded-full bg-emerald-100 px-2 py-0.5 text-[10px] font-bold text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400">
+					<span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span> {total} gambar
+				</span>
+			{/if}
+			<button type="button" onclick={() => setList([...getList(), ''])} class="text-primary-600 hover:text-primary-700 ml-auto flex cursor-pointer items-center gap-1 text-xs font-semibold">
+				<svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" /></svg>
+				Tambah URL
+			</button>
+		</div>
 		<label class="mt-2 flex w-full cursor-pointer items-center justify-center gap-2 rounded-lg border border-dashed border-gray-300 bg-gray-50 px-4 py-3 text-sm font-semibold text-gray-600 transition-colors hover:border-primary-400 hover:bg-primary-50/40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-primary-600">
 			{#if uploadingKey === key}
 				<svg class="h-4 w-4 animate-spin" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" /><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" /></svg>
@@ -631,18 +713,23 @@
 			<input type="file" accept="image/*" multiple class="hidden" onchange={(e) => handleMultiUpload(e, key, (url) => setList([...getList(), url]))} disabled={uploadingKey === key} />
 		</label>
 		{#if getList().length === 0}
-			<div class="mt-3 rounded-lg border border-dashed border-gray-300 bg-gray-50 py-6 text-center dark:border-gray-700 dark:bg-gray-900">
-				<p class="text-xs text-gray-400">Belum ada gambar. Unggah atau tambah URL manual.</p>
+			<div class="mt-3 flex flex-col items-center gap-1 rounded-lg border border-dashed border-amber-300 bg-amber-50 py-6 text-center dark:border-amber-700/60 dark:bg-amber-950/20">
+				<svg class="h-6 w-6 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+				<p class="text-xs font-semibold text-amber-600 dark:text-amber-400">Belum ada gambar dokumentasi</p>
+				<p class="text-[11px] text-amber-500/80">Halaman publik akan menampilkan kotak placeholder.</p>
 			</div>
 		{:else}
 			<div class="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-3">
 				{#each getList() as _, i}
 					<div class="space-y-2 rounded-lg border border-gray-200 bg-gray-50 p-2 dark:border-gray-700 dark:bg-gray-900">
-						<div class="relative aspect-[4/3] overflow-hidden rounded-md border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-950">
-							{#if getList()[i]}
+						<div class="relative aspect-[4/3] overflow-hidden rounded-md border bg-white dark:bg-gray-950 {getList()[i].trim() ? 'border-gray-200 dark:border-gray-700' : 'border-dashed border-amber-300 dark:border-amber-700/60'}">
+							{#if getList()[i].trim()}
 								<img src={getList()[i]} alt="Dokumentasi {i + 1}" class="h-full w-full object-cover" />
 							{:else}
-								<div class="flex h-full items-center justify-center text-[10px] text-gray-400">Kosong</div>
+								<div class="flex h-full flex-col items-center justify-center gap-0.5 bg-amber-50 text-amber-500 dark:bg-amber-950/20">
+									<svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+									<span class="text-[9px] font-bold">URL kosong</span>
+								</div>
 							{/if}
 							<button type="button" onclick={() => setList(removeItem(getList(), i))} class="absolute top-1 right-1 flex h-6 w-6 items-center justify-center rounded-full bg-black/60 text-white hover:bg-red-600" aria-label="Hapus gambar">
 								<svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
@@ -657,7 +744,7 @@
 								setList(next);
 							}}
 							placeholder="URL gambar"
-							class="w-full rounded border border-gray-200 bg-white px-2 py-1 text-[11px] text-gray-900 outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-white"
+							class="w-full rounded border bg-white px-2 py-1 text-[11px] text-gray-900 outline-none dark:bg-gray-800 dark:text-white {getList()[i].trim() ? 'border-gray-200 dark:border-gray-700' : 'border-amber-300 dark:border-amber-700/60'}"
 						/>
 					</div>
 				{/each}
@@ -700,7 +787,18 @@
 		{@render textField('Tombol Kedua (link)', () => content.hero.secondaryCta.href, (v) => (content.hero.secondaryCta.href = v))}
 	</div>
 	<div class="border-t border-gray-100 pt-4 dark:border-gray-700">
-		<p class="mb-3 text-xs font-bold tracking-wide text-gray-500 uppercase dark:text-gray-400">Video Perkenalan Program</p>
+		<div class="mb-3 flex items-center gap-2">
+			<p class="text-xs font-bold tracking-wide text-gray-500 uppercase dark:text-gray-400">Video Perkenalan Program</p>
+			{#if content.hero.videoUrl.trim()}
+				<span class="inline-flex items-center gap-1 rounded-full bg-emerald-100 px-2 py-0.5 text-[10px] font-bold text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400">
+					<span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span> Video aktif
+				</span>
+			{:else}
+				<span class="inline-flex items-center gap-1 rounded-full bg-amber-100 px-2 py-0.5 text-[10px] font-bold text-amber-700 dark:bg-amber-900/30 dark:text-amber-400">
+					<span class="h-1.5 w-1.5 rounded-full bg-amber-500"></span> Belum ada video
+				</span>
+			{/if}
+		</div>
 		{@render textField('Link Video (YouTube, Vimeo, atau file .mp4)', () => content.hero.videoUrl, (v) => (content.hero.videoUrl = v))}
 		<p class="mt-1 text-[11px] text-gray-400">Tempel link YouTube/Vimeo atau URL file video. Kosongkan untuk menampilkan placeholder.</p>
 		{#if content.hero.videoUrl.trim()}
@@ -714,6 +812,12 @@
 						<video class="h-full w-full" src={embed.src} controls></video>
 					{/if}
 				</div>
+			</div>
+		{:else}
+			<div class="mt-3 flex aspect-video flex-col items-center justify-center gap-1 rounded-lg border border-dashed border-amber-300 bg-amber-50 text-amber-500 dark:border-amber-700/60 dark:bg-amber-950/20">
+				<svg class="h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
+				<p class="text-xs font-semibold">Belum ada video</p>
+				<p class="text-[11px] text-amber-500/80">Halaman publik menampilkan placeholder (judul & deskripsi di bawah).</p>
 			</div>
 		{/if}
 		<div class="mt-3 space-y-4">
