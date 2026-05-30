@@ -24,6 +24,7 @@ export type SectionId =
 export type Highlight = { symbol: string; performance: string };
 export type Feature = { label: string; title: string; description: string };
 export type ProofItem = { meta: string; title: string; description: string };
+export type Activity = { meta: string; title: string; description: string; image: string };
 export type Faq = { question: string; answer: string };
 export type Cta = { label: string; href: string };
 export type BenefitCard = { title: string; items: string[] };
@@ -45,6 +46,7 @@ export type LandingContent = {
 		description: string;
 		primaryCtaLabel: string;
 		secondaryCta: Cta;
+		videoUrl: string;
 		videoLabel: string;
 		videoTitle: string;
 		videoDescription: string;
@@ -55,7 +57,7 @@ export type LandingContent = {
 		eyebrow: string;
 		title: string;
 		description: string;
-		activities: ProofItem[];
+		activities: Activity[];
 		cards: { label: string; description: string }[];
 	};
 
@@ -66,6 +68,7 @@ export type LandingContent = {
 		docEyebrow: string;
 		docTitle: string;
 		docDescription: string;
+		docImages: string[];
 	};
 
 	testimonials: {
@@ -165,6 +168,7 @@ export const defaultLandingContent: LandingContent = {
 			'Terbukti membantu banyak member Premium Crypto Sharia membangun strategi profit di market crypto tanpa leverage dan tetap berpegang pada prinsip syariah.',
 		primaryCtaLabel: 'Join Now / Gabung Sekarang',
 		secondaryCta: { label: 'Lihat Kurikulum', href: '#curriculum' },
+		videoUrl: '',
 		videoLabel: 'intro-masterclass.mp4',
 		videoTitle: 'Video Perkenalan Program',
 		videoDescription: 'Placeholder upload-ready untuk memperkenalkan visi program dan mentor utama.',
@@ -185,23 +189,27 @@ export const defaultLandingContent: LandingContent = {
 				meta: 'Live mentoring',
 				title: 'QnA Session',
 				description:
-					'Forum tanya jawab rutin untuk membahas market, portofolio, dan fiqih muamalah.'
+					'Forum tanya jawab rutin untuk membahas market, portofolio, dan fiqih muamalah.',
+				image: ''
 			},
 			{
 				meta: 'Community event',
 				title: 'Nushafest',
 				description:
-					'Dokumentasi edukasi publik bersama komunitas yang tertarik pada aset digital halal.'
+					'Dokumentasi edukasi publik bersama komunitas yang tertarik pada aset digital halal.',
+				image: ''
 			},
 			{
 				meta: 'Offline activity',
 				title: 'Halal Kulture Market',
-				description: 'Aktivasi edukasi crypto syariah untuk memperluas literasi investor Muslim.'
+				description: 'Aktivasi edukasi crypto syariah untuk memperluas literasi investor Muslim.',
+				image: ''
 			},
 			{
 				meta: 'Member circle',
 				title: 'Gathering Komunitas',
-				description: 'Diskusi kecil dan networking antar member untuk memperkuat proses belajar.'
+				description: 'Diskusi kecil dan networking antar member untuk memperkuat proses belajar.',
+				image: ''
 			}
 		],
 		cards: [
@@ -245,7 +253,8 @@ export const defaultLandingContent: LandingContent = {
 		docEyebrow: 'Dokumentasi Kegiatan',
 		docTitle: 'Seminar, mentoring, QnA Session, dan aktivitas komunitas offline.',
 		docDescription:
-			'Area ini disiapkan untuk foto-foto kegiatan asli ketika materi campaign final tersedia.'
+			'Area ini disiapkan untuk foto-foto kegiatan asli ketika materi campaign final tersedia.',
+		docImages: []
 	},
 	testimonials: {
 		eyebrow: 'Social Proof & Testimoni',
@@ -387,6 +396,43 @@ export function buildWhatsappUrl(whatsapp: { phone: string; message: string }): 
 	return `https://api.whatsapp.com/send?phone=${whatsapp.phone}&text=${encodeURIComponent(
 		whatsapp.message
 	)}`;
+}
+
+export type VideoEmbed =
+	| { kind: 'iframe'; src: string }
+	| { kind: 'file'; src: string }
+	| { kind: 'none' };
+
+/**
+ * Normalize a user-provided video link into something the page can render.
+ * Supports YouTube (watch, youtu.be, shorts, embed), Vimeo, and direct video
+ * files (mp4/webm/ogg). Unknown links fall back to an iframe.
+ */
+export function resolveVideoEmbed(url: string): VideoEmbed {
+	const raw = (url ?? '').trim();
+	if (!raw) return { kind: 'none' };
+
+	// Direct video file
+	if (/\.(mp4|webm|ogg)(\?.*)?$/i.test(raw)) {
+		return { kind: 'file', src: raw };
+	}
+
+	// YouTube
+	const yt = raw.match(
+		/(?:youtube\.com\/(?:watch\?(?:.*&)?v=|embed\/|shorts\/)|youtu\.be\/)([\w-]{11})/i
+	);
+	if (yt) {
+		return { kind: 'iframe', src: `https://www.youtube.com/embed/${yt[1]}` };
+	}
+
+	// Vimeo
+	const vimeo = raw.match(/vimeo\.com\/(?:video\/)?(\d+)/i);
+	if (vimeo) {
+		return { kind: 'iframe', src: `https://player.vimeo.com/video/${vimeo[1]}` };
+	}
+
+	// Fallback: assume it is already an embeddable URL
+	return { kind: 'iframe', src: raw };
 }
 
 /**

@@ -4,6 +4,7 @@
 		defaultLandingContent,
 		subscribeLandingContent,
 		buildWhatsappUrl,
+		resolveVideoEmbed,
 		type LandingContent,
 		type SectionId
 	} from '$lib/landingContent';
@@ -11,6 +12,7 @@
 	let content = $state<LandingContent>(structuredClone(defaultLandingContent));
 
 	const whatsappUrl = $derived(buildWhatsappUrl(content.whatsapp));
+	const heroVideo = $derived(resolveVideoEmbed(content.hero.videoUrl));
 
 	// Only render sections that are marked visible, in the admin-defined order.
 	const sections = $derived(content.layout.filter((s) => s.visible).map((s) => s.id));
@@ -115,27 +117,44 @@
 							>
 						</div>
 						<div class="relative aspect-video bg-slate-900 p-6">
-							<div
-								class="absolute inset-0 [background-image:linear-gradient(120deg,rgba(249,115,22,0.26),transparent_42%),linear-gradient(45deg,rgba(20,184,166,0.2),transparent_56%)] opacity-40"
-							></div>
-							<div class="relative flex h-full flex-col items-center justify-center text-center">
+							{#if heroVideo.kind === 'iframe'}
+								<iframe
+									class="absolute inset-0 h-full w-full"
+									src={heroVideo.src}
+									title={content.hero.videoTitle}
+									frameborder="0"
+									allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+									referrerpolicy="strict-origin-when-cross-origin"
+									allowfullscreen
+								></iframe>
+							{:else if heroVideo.kind === 'file'}
+								<!-- svelte-ignore a11y_media_has_caption -->
+								<video class="absolute inset-0 h-full w-full bg-black" src={heroVideo.src} controls>
+									Browser Anda tidak mendukung pemutaran video.
+								</video>
+							{:else}
 								<div
-									class="mb-5 flex h-16 w-16 items-center justify-center rounded-full border border-white/20 bg-white/10"
-								>
-									<svg
-										class="ml-1 h-8 w-8 text-white"
-										fill="currentColor"
-										viewBox="0 0 24 24"
-										aria-hidden="true"
+									class="absolute inset-0 [background-image:linear-gradient(120deg,rgba(249,115,22,0.26),transparent_42%),linear-gradient(45deg,rgba(20,184,166,0.2),transparent_56%)] opacity-40"
+								></div>
+								<div class="relative flex h-full flex-col items-center justify-center text-center">
+									<div
+										class="mb-5 flex h-16 w-16 items-center justify-center rounded-full border border-white/20 bg-white/10"
 									>
-										<path d="M8 5v14l11-7z" />
-									</svg>
+										<svg
+											class="ml-1 h-8 w-8 text-white"
+											fill="currentColor"
+											viewBox="0 0 24 24"
+											aria-hidden="true"
+										>
+											<path d="M8 5v14l11-7z" />
+										</svg>
+									</div>
+									<p class="text-lg font-bold text-white">{content.hero.videoTitle}</p>
+									<p class="mt-2 max-w-sm text-sm leading-6 text-slate-300">
+										{content.hero.videoDescription}
+									</p>
 								</div>
-								<p class="text-lg font-bold text-white">{content.hero.videoTitle}</p>
-								<p class="mt-2 max-w-sm text-sm leading-6 text-slate-300">
-									{content.hero.videoDescription}
-								</p>
-							</div>
+							{/if}
 						</div>
 					</div>
 
@@ -173,11 +192,19 @@
 							<div
 								class="rounded-lg border border-slate-200 bg-slate-50 p-5 dark:border-slate-800 dark:bg-slate-900"
 							>
-								<div
-									class="mb-4 flex aspect-video items-center justify-center rounded-md border border-dashed border-slate-300 bg-white text-xs font-bold tracking-wider text-slate-400 uppercase dark:border-slate-700 dark:bg-slate-950"
-								>
-									{item.meta}
-								</div>
+								{#if item.image}
+									<div
+										class="mb-4 aspect-video overflow-hidden rounded-md border border-slate-200 dark:border-slate-700"
+									>
+										<img src={item.image} alt={item.title} class="h-full w-full object-cover" />
+									</div>
+								{:else}
+									<div
+										class="mb-4 flex aspect-video items-center justify-center rounded-md border border-dashed border-slate-300 bg-white text-xs font-bold tracking-wider text-slate-400 uppercase dark:border-slate-700 dark:bg-slate-950"
+									>
+										{item.meta}
+									</div>
+								{/if}
 								<h3 class="text-lg font-bold text-slate-900 dark:text-white">{item.title}</h3>
 								<p class="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-400">
 									{item.description}
@@ -243,18 +270,28 @@
 							</p>
 						</div>
 						<div class="grid grid-cols-2 gap-3 bg-slate-100 p-4 dark:bg-slate-900">
-							<div
-								class="aspect-[4/3] rounded-md border border-dashed border-slate-300 bg-white dark:border-slate-700 dark:bg-slate-950"
-							></div>
-							<div
-								class="aspect-[4/3] rounded-md border border-dashed border-slate-300 bg-white dark:border-slate-700 dark:bg-slate-950"
-							></div>
-							<div
-								class="aspect-[4/3] rounded-md border border-dashed border-slate-300 bg-white dark:border-slate-700 dark:bg-slate-950"
-							></div>
-							<div
-								class="aspect-[4/3] rounded-md border border-dashed border-slate-300 bg-white dark:border-slate-700 dark:bg-slate-950"
-							></div>
+							{#if content.valueProps.docImages.length > 0}
+								{#each content.valueProps.docImages as img}
+									<div
+										class="aspect-[4/3] overflow-hidden rounded-md border border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-950"
+									>
+										<img src={img} alt={content.valueProps.docTitle} class="h-full w-full object-cover" />
+									</div>
+								{/each}
+							{:else}
+								<div
+									class="aspect-[4/3] rounded-md border border-dashed border-slate-300 bg-white dark:border-slate-700 dark:bg-slate-950"
+								></div>
+								<div
+									class="aspect-[4/3] rounded-md border border-dashed border-slate-300 bg-white dark:border-slate-700 dark:bg-slate-950"
+								></div>
+								<div
+									class="aspect-[4/3] rounded-md border border-dashed border-slate-300 bg-white dark:border-slate-700 dark:bg-slate-950"
+								></div>
+								<div
+									class="aspect-[4/3] rounded-md border border-dashed border-slate-300 bg-white dark:border-slate-700 dark:bg-slate-950"
+								></div>
+							{/if}
 						</div>
 					</div>
 				</div>

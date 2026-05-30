@@ -1,6 +1,8 @@
 <script lang="ts">
 	import { goto, beforeNavigate } from '$app/navigation';
 	import { onMount } from 'svelte';
+	import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+	import { storage } from '$lib/firebase';
 	import { userAuth } from '$lib/auth.svelte';
 	import {
 		defaultLandingContent,
@@ -8,6 +10,7 @@
 		saveLandingContent,
 		sectionCompleteness,
 		seoCompleteness,
+		resolveVideoEmbed,
 		SECTION_LABELS,
 		type LandingContent,
 		type SectionId
@@ -147,6 +150,46 @@
 	}
 	function removeItem<T>(arr: T[], index: number) {
 		return arr.filter((_, i) => i !== index);
+	}
+
+	// ---- Image upload to Firebase Storage ----
+	// Tracks which upload slot is busy (keyed by an arbitrary id) for spinners.
+	let uploadingKey = $state<string | null>(null);
+
+	async function uploadImage(file: File, key: string, onDone: (url: string) => void) {
+		uploadingKey = key;
+		try {
+			const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, '');
+			const filename = `${Date.now()}-${safeName}`;
+			const storageRef = ref(storage, `landing/${filename}`);
+			await uploadBytes(storageRef, file);
+			const url = await getDownloadURL(storageRef);
+			onDone(url);
+		} catch (e) {
+			console.error('Upload error:', e);
+			alert('Gagal mengunggah gambar. Coba lagi.');
+		} finally {
+			uploadingKey = null;
+		}
+	}
+
+	function handleUpload(event: Event, key: string, onDone: (url: string) => void) {
+		const target = event.target as HTMLInputElement;
+		const file = target.files?.[0];
+		if (file) uploadImage(file, key, onDone);
+		target.value = '';
+	}
+
+	function handleMultiUpload(event: Event, key: string, onDone: (url: string) => void) {
+		const target = event.target as HTMLInputElement;
+		const files = Array.from(target.files ?? []);
+		target.value = '';
+		// Upload sequentially so each finished URL is appended in order.
+		(async () => {
+			for (const file of files) {
+				await uploadImage(file, key, onDone);
+			}
+		})();
 	}
 
 	async function save() {
@@ -549,6 +592,80 @@
 	</button>
 {/snippet}
 
+<!-- Single image field: URL input + upload button + preview/clear -->
+{#snippet imageField(label: string, key: string, getVal: () => string, setVal: (v: string) => void)}
+	<div>
+		<span class={labelClass}>{label}</span>
+		<div class="flex gap-2">
+			<input type="text" value={getVal()} oninput={(e) => setVal(e.currentTarget.value)} placeholder="Tempel URL gambar atau unggah" class={inputClass} />
+			<label class="relative flex cursor-pointer items-center justify-center rounded-lg bg-gray-200 px-4 text-sm font-semibold text-gray-700 transition-colors hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600">
+				{#if uploadingKey === key}
+					<svg class="h-4 w-4 animate-spin" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" /><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" /></svg>
+				{:else}
+					Upload
+				{/if}
+				<input type="file" accept="image/*" class="absolute inset-0 h-full w-full cursor-pointer opacity-0" onchange={(e) => handleUpload(e, key, setVal)} disabled={uploadingKey === key} />
+			</label>
+		</div>
+		{#if getVal()}
+			<div class="mt-2 flex items-center gap-3">
+				<img src={getVal()} alt="Preview" class="h-16 w-24 rounded-md border border-gray-200 object-cover dark:border-gray-700" />
+				<button type="button" onclick={() => setVal('')} class="text-xs font-semibold text-red-500 hover:text-red-700">Hapus gambar</button>
+			</div>
+		{/if}
+	</div>
+{/snippet}
+
+<!-- Multi-image gallery field -->
+{#snippet galleryField(label: string, key: string, getList: () => string[], setList: (v: string[]) => void)}
+	<div>
+		{@render listHeader(label, () => setList([...getList(), '']))}
+		<label class="mt-2 flex w-full cursor-pointer items-center justify-center gap-2 rounded-lg border border-dashed border-gray-300 bg-gray-50 px-4 py-3 text-sm font-semibold text-gray-600 transition-colors hover:border-primary-400 hover:bg-primary-50/40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-primary-600">
+			{#if uploadingKey === key}
+				<svg class="h-4 w-4 animate-spin" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" /><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" /></svg>
+				Mengunggah...
+			{:else}
+				<svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" /></svg>
+				Unggah Gambar (bisa pilih banyak)
+			{/if}
+			<input type="file" accept="image/*" multiple class="hidden" onchange={(e) => handleMultiUpload(e, key, (url) => setList([...getList(), url]))} disabled={uploadingKey === key} />
+		</label>
+		{#if getList().length === 0}
+			<div class="mt-3 rounded-lg border border-dashed border-gray-300 bg-gray-50 py-6 text-center dark:border-gray-700 dark:bg-gray-900">
+				<p class="text-xs text-gray-400">Belum ada gambar. Unggah atau tambah URL manual.</p>
+			</div>
+		{:else}
+			<div class="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-3">
+				{#each getList() as _, i}
+					<div class="space-y-2 rounded-lg border border-gray-200 bg-gray-50 p-2 dark:border-gray-700 dark:bg-gray-900">
+						<div class="relative aspect-[4/3] overflow-hidden rounded-md border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-950">
+							{#if getList()[i]}
+								<img src={getList()[i]} alt="Dokumentasi {i + 1}" class="h-full w-full object-cover" />
+							{:else}
+								<div class="flex h-full items-center justify-center text-[10px] text-gray-400">Kosong</div>
+							{/if}
+							<button type="button" onclick={() => setList(removeItem(getList(), i))} class="absolute top-1 right-1 flex h-6 w-6 items-center justify-center rounded-full bg-black/60 text-white hover:bg-red-600" aria-label="Hapus gambar">
+								<svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+							</button>
+						</div>
+						<input
+							type="text"
+							value={getList()[i]}
+							oninput={(e) => {
+								const next = [...getList()];
+								next[i] = e.currentTarget.value;
+								setList(next);
+							}}
+							placeholder="URL gambar"
+							class="w-full rounded border border-gray-200 bg-white px-2 py-1 text-[11px] text-gray-900 outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-white"
+						/>
+					</div>
+				{/each}
+			</div>
+		{/if}
+	</div>
+{/snippet}
+
 <!-- ============ Section forms ============ -->
 {#snippet globalForm()}
 	{@render textField('Nomor WhatsApp (cth. 6281234567890)', () => content.whatsapp.phone, (v) => (content.whatsapp.phone = v))}
@@ -582,9 +699,29 @@
 		{@render textField('Tombol Kedua (label)', () => content.hero.secondaryCta.label, (v) => (content.hero.secondaryCta.label = v))}
 		{@render textField('Tombol Kedua (link)', () => content.hero.secondaryCta.href, (v) => (content.hero.secondaryCta.href = v))}
 	</div>
-	{@render textField('Label Video', () => content.hero.videoLabel, (v) => (content.hero.videoLabel = v))}
-	{@render textField('Judul Video', () => content.hero.videoTitle, (v) => (content.hero.videoTitle = v))}
-	{@render areaField('Deskripsi Video', () => content.hero.videoDescription, (v) => (content.hero.videoDescription = v))}
+	<div class="border-t border-gray-100 pt-4 dark:border-gray-700">
+		<p class="mb-3 text-xs font-bold tracking-wide text-gray-500 uppercase dark:text-gray-400">Video Perkenalan Program</p>
+		{@render textField('Link Video (YouTube, Vimeo, atau file .mp4)', () => content.hero.videoUrl, (v) => (content.hero.videoUrl = v))}
+		<p class="mt-1 text-[11px] text-gray-400">Tempel link YouTube/Vimeo atau URL file video. Kosongkan untuk menampilkan placeholder.</p>
+		{#if content.hero.videoUrl.trim()}
+			{@const embed = resolveVideoEmbed(content.hero.videoUrl)}
+			<div class="mt-3 overflow-hidden rounded-lg border border-gray-200 dark:border-gray-700">
+				<div class="aspect-video bg-black">
+					{#if embed.kind === 'iframe'}
+						<iframe class="h-full w-full" src={embed.src} title="Preview video" frameborder="0" allowfullscreen></iframe>
+					{:else if embed.kind === 'file'}
+						<!-- svelte-ignore a11y_media_has_caption -->
+						<video class="h-full w-full" src={embed.src} controls></video>
+					{/if}
+				</div>
+			</div>
+		{/if}
+		<div class="mt-3 space-y-4">
+			{@render textField('Label Video (cth. intro.mp4)', () => content.hero.videoLabel, (v) => (content.hero.videoLabel = v))}
+			{@render textField('Judul Video (saat kosong)', () => content.hero.videoTitle, (v) => (content.hero.videoTitle = v))}
+			{@render areaField('Deskripsi Video (saat kosong)', () => content.hero.videoDescription, (v) => (content.hero.videoDescription = v))}
+		</div>
+	</div>
 	<div class="border-t border-gray-100 pt-4 dark:border-gray-700">
 		{@render listHeader('Highlight Aset', () => (content.hero.highlights = addItem(content.hero.highlights, { symbol: '', performance: '' })))}
 		<div class="mt-3 space-y-2">
@@ -604,7 +741,7 @@
 	{@render textField('Judul', () => content.authority.title, (v) => (content.authority.title = v))}
 	{@render areaField('Deskripsi', () => content.authority.description, (v) => (content.authority.description = v))}
 	<div class="border-t border-gray-100 pt-4 dark:border-gray-700">
-		{@render listHeader('Aktivitas Komunitas', () => (content.authority.activities = addItem(content.authority.activities, { meta: '', title: '', description: '' })))}
+		{@render listHeader('Aktivitas Komunitas', () => (content.authority.activities = addItem(content.authority.activities, { meta: '', title: '', description: '', image: '' })))}
 		<div class="mt-3 space-y-3">
 			{#each content.authority.activities as a, i}
 				<div class="space-y-2 {cardClass}">
@@ -615,6 +752,7 @@
 					<input bind:value={a.meta} placeholder="Label (cth. Live mentoring)" class={inputClass} />
 					<input bind:value={a.title} placeholder="Judul" class={inputClass} />
 					<textarea bind:value={a.description} rows="2" placeholder="Deskripsi" class="{inputClass} resize-none"></textarea>
+					{@render imageField('Gambar', `activity-${i}`, () => a.image, (v) => (a.image = v))}
 				</div>
 			{/each}
 		</div>
@@ -659,6 +797,10 @@
 		{@render textField('Dokumentasi — Eyebrow', () => content.valueProps.docEyebrow, (v) => (content.valueProps.docEyebrow = v))}
 		{@render textField('Dokumentasi — Judul', () => content.valueProps.docTitle, (v) => (content.valueProps.docTitle = v))}
 		{@render areaField('Dokumentasi — Deskripsi', () => content.valueProps.docDescription, (v) => (content.valueProps.docDescription = v))}
+	</div>
+	<div class="border-t border-gray-100 pt-4 dark:border-gray-700">
+		{@render galleryField('Galeri Foto Dokumentasi', 'doc-gallery', () => content.valueProps.docImages, (v) => (content.valueProps.docImages = v))}
+		<p class="mt-2 text-[11px] text-gray-400">Kosongkan untuk menampilkan placeholder kotak. Tampil di grid samping teks dokumentasi.</p>
 	</div>
 {/snippet}
 
