@@ -1,5 +1,6 @@
 <script lang="ts">
 	import ThemeToggle from './ThemeToggle.svelte';
+	import { page } from '$app/state';
 	import { userAuth } from '$lib/auth.svelte';
 
 	let scrolled = $state(false);
@@ -75,9 +76,13 @@
 			</a>
 			<nav class="hidden items-center gap-1 md:flex">
 				{#each navLinks as link}
+					{@const active = page.url.pathname === link.href}
 					<a
 						href={link.href}
-						class="hover:text-primary-600 dark:hover:text-primary-400 hover:bg-primary-50 dark:hover:bg-primary-900/30 rounded-lg px-4 py-2 text-sm font-medium text-gray-600 transition-colors dark:text-gray-300"
+						aria-current={active ? 'page' : undefined}
+						class="rounded-lg px-4 py-2 text-sm font-medium transition-colors {active
+							? 'bg-primary-50 text-primary-700 dark:bg-primary-900/40 dark:text-primary-300 ring-1 ring-primary-200 dark:ring-primary-800'
+							: 'hover:text-primary-600 dark:hover:text-primary-400 hover:bg-primary-50 dark:hover:bg-primary-900/30 text-gray-600 dark:text-gray-300'}"
 						>{link.label}</a
 					>
 				{/each}
@@ -218,10 +223,14 @@
 		>
 			<div class="space-y-1 px-4 py-3">
 				{#each navLinks as link}
+					{@const active = page.url.pathname === link.href}
 					<a
 						href={link.href}
 						onclick={() => (mobileMenuOpen = false)}
-						class="hover:bg-primary-50 dark:hover:bg-primary-900/30 hover:text-primary-600 dark:hover:text-primary-400 block rounded-lg px-3 py-2.5 text-sm font-medium text-gray-600 dark:text-gray-300"
+						aria-current={active ? 'page' : undefined}
+						class="block rounded-lg px-3 py-2.5 text-sm font-medium {active
+							? 'bg-primary-50 text-primary-700 dark:bg-primary-900/40 dark:text-primary-300'
+							: 'hover:bg-primary-50 dark:hover:bg-primary-900/30 hover:text-primary-600 dark:hover:text-primary-400 text-gray-600 dark:text-gray-300'}"
 						>{link.label}</a
 					>
 				{/each}

@@ -1,0 +1,675 @@
+Berikut kritik tajam untuk halaman Admin Editor Landing Page CryptoSharia ini. Aku bagi jadi beberapa bagian: UI/UX admin, struktur konten, visual, copywriting, footer, sticky bar, dan prioritas perbaikan.
+
+Nilai sementara
+
+Admin UI: 8.1/10
+Kerapian visual: 8.4/10
+Kemudahan penggunaan: 7.4/10
+Profesionalitas brand: 8.2/10
+Kesiapan production: 7.2/10
+
+Secara visual sudah rapi, dark mode-nya terasa premium, spacing cukup lega, dan konsisten dengan nuansa CryptoSharia. Tapi sebagai halaman admin/editor, ini masih terasa terlalu “kosong”, kurang informatif, dan belum cukup membantu user untuk mengedit landing page dengan cepat.
+
+1. Kritik terbesar: halaman editor terlalu pasif
+
+Masalah utama halaman ini: semua section tertutup accordion. Secara tampilan memang bersih, tapi dari sisi admin experience, user tidak langsung tahu:
+
+Section mana yang aktif/nonaktif.
+Section mana yang belum lengkap.
+Section mana yang terakhir diedit.
+Ada error atau tidak.
+Apakah konten landing page sudah siap publish.
+Bagian mana yang sedang tampil di halaman publik.
+Section mana yang disembunyikan.
+
+Sekarang semua item terlihat sama rata. Padahal dalam editor landing page, tiap section seharusnya punya status yang jelas.
+
+Contoh saat ini:
+
+Hero / Banner Utama
+Otoritas & Kredibilitas
+Value Proposition
+dst.
+
+Masalahnya: tidak ada konteks. Admin harus buka satu per satu untuk tahu isinya.
+
+Saran tajam
+
+Tambahkan status kecil di kanan setiap accordion:
+
+Aktif
+Nonaktif
+Belum Lengkap
+Draft
+Hidden
+Last edited 2 jam lalu
+
+Contoh:
+
+1. Hero / Banner Utama
+Aktif · 6 field terisi · Terakhir diedit 09:10
+
+4. Testimoni
+Belum lengkap · 2 testimoni aktif
+
+8. Urgency / Scarcity
+Hidden
+
+Ini akan membuat editor terasa jauh lebih profesional.
+
+2. Tombol “Lihat Halaman” kurang kuat
+
+Tombol Lihat Halaman di kanan atas bagus, tapi kurang menonjol. Padahal ini salah satu action penting dalam editor.
+
+Masalahnya:
+
+Tombol terlalu kecil.
+Posisinya agak jauh dari konteks utama.
+Tidak ada tombol “Preview” yang lebih jelas.
+Icon external link bagus, tapi teksnya dipisah dua baris sehingga terlihat kurang elegan.
+Saran
+
+Ubah menjadi 2 tombol:
+
+Preview Landing Page
+Buka Halaman Publik
+
+Atau minimal:
+
+Preview Halaman ↗
+
+Letakkan sejajar dengan judul utama, bukan mengambang terlalu jauh.
+
+Contoh layout:
+
+Editor Landing Page                         [Preview] [Simpan Perubahan]
+Edit teks, gambar, section, SEO...
+
+Saat ini tombol “Simpan Perubahan” ada di sticky bar bawah. Itu bagus, tapi tombol preview sebaiknya lebih dekat dengan area kerja.
+
+3. Header halaman terlalu sederhana
+
+Bagian atas:
+
+Editor Landing Page
+Edit teks, tambah/kurang item, sembunyikan & urutkan section. Perubahan tampil setelah disimpan.
+
+Ini sudah fungsional, tapi kurang memberi rasa kontrol.
+
+Untuk admin page yang serius, header sebaiknya menampilkan ringkasan status.
+
+Tambahkan mini dashboard kecil
+
+Contoh:
+
+Editor Landing Page
+
+10 Section
+8 Aktif
+2 Hidden
+SEO 80% lengkap
+Terakhir disimpan: 30 Mei 2026, 09:11
+
+Ini penting supaya user langsung tahu kondisi landing page.
+
+4. Accordion terlalu monoton
+
+Semua accordion memiliki warna, ukuran, border, radius, dan berat visual yang sama. Akibatnya halaman terlihat rapi tapi datar.
+
+Tidak ada hirarki visual antara:
+
+Pengaturan umum
+Hero
+Harga
+CTA
+FAQ
+Section penting
+Section pendukung
+
+Padahal tidak semua section punya prioritas sama. Hero, harga, CTA akhir, dan SEO jauh lebih penting dibanding FAQ atau testimoni.
+
+Saran
+
+Beri pengelompokan visual:
+
+Grup 1 — Pengaturan Utama
+Urutan & Tampilan Section
+Pengaturan Umum WhatsApp & SEO
+Grup 2 — Konten Landing Page
+Hero
+Otoritas
+Value Proposition
+Testimoni
+USP
+Harga
+Kurikulum
+Urgency
+FAQ
+CTA Akhir
+Grup 3 — Publikasi
+Preview
+Simpan
+Reset
+Publish status
+
+Bisa dibuat seperti ini:
+
+Pengaturan
+[Urutan & Tampilan Section]
+[SEO & WhatsApp]
+
+Konten Landing Page
+[Hero]
+[Otoritas]
+[Value Proposition]
+...
+
+Publikasi
+[Status Publish]
+[Preview]
+[Simpan]
+
+Sekarang semuanya dicampur dalam satu list panjang, sehingga admin terasa seperti form mentah, bukan CMS mini.
+
+5. “Reset ke Bawaan” posisinya berbahaya
+
+Tombol Reset ke Bawaan berada di bawah daftar accordion, tampil kecil, dan warnanya tidak terlalu berbahaya. Ini problem UX.
+
+Reset adalah action destruktif. Kalau user klik tidak sengaja, sangat berisiko.
+
+Saran
+
+Jadikan tombol reset sebagai secondary dangerous action:
+
+Letakkan di area “Advanced Settings”
+Tambahkan confirmation modal
+Ubah label menjadi lebih jelas:
+
+Reset Semua Konten ke Default
+
+Lalu di modal:
+
+Tindakan ini akan menghapus perubahan landing page saat ini dan mengembalikan konten ke bawaan sistem. Tindakan ini tidak bisa dibatalkan.
+
+Tombol:
+
+Batal
+Ya, Reset Semua
+
+Jangan hanya “Reset ke Bawaan”. Terlalu ringan untuk action yang sebenarnya berat.
+
+6. Sticky bottom bar bagus, tapi kurang informatif
+
+Bagian bawah ada status:
+
+Belum disimpan
+Simpan Perubahan
+
+Ini bagus. Tapi masih kurang kuat.
+
+Masalahnya:
+
+“Belum disimpan” terlalu kecil dan kurang kelihatan.
+Tidak ada info jumlah perubahan.
+Tidak ada tombol batal perubahan.
+Tidak ada indikasi auto-save atau last saved.
+Tombol WhatsApp floating bertabrakan secara visual dengan area sticky bar.
+Saran
+
+Ubah sticky bar menjadi lebih jelas:
+
+3 perubahan belum disimpan
+[Batalkan Perubahan] [Simpan Perubahan]
+
+Setelah tersimpan:
+
+Semua perubahan tersimpan · 09:12
+
+Kalau gagal:
+
+Gagal menyimpan. Coba lagi.
+
+Ini akan membuat admin jauh lebih aman dipakai.
+
+7. Floating WhatsApp sebaiknya tidak muncul di halaman admin
+
+Di kanan bawah ada tombol WhatsApp. Untuk landing page publik, oke. Tapi untuk halaman admin, ini mengganggu.
+
+Masalah:
+
+Mengganggu sticky save bar.
+Tidak relevan untuk admin.
+Bisa dianggap bagian dari editor padahal bukan.
+Visualnya terlalu mencolok dibanding tombol Simpan.
+Saran tegas
+
+Sembunyikan floating WhatsApp di semua halaman admin.
+
+WhatsApp hanya tampil di landing page publik, bukan di dashboard/editor.
+
+8. Footer terlalu besar untuk halaman admin
+
+Footer publik muncul lengkap di halaman admin: CTA strip, footer brand, link, metode pembayaran, disclaimer risiko.
+
+Ini membuat halaman admin terasa seperti gabungan antara dashboard dan landing page publik.
+
+Untuk admin editor, footer publik tidak perlu tampil penuh. Justru membuat user scroll terlalu jauh dan membingungkan.
+
+Kritik tajam
+
+Saat ini admin editor terlihat seperti “halaman publik yang ditempeli panel editor”, bukan halaman admin murni.
+
+Saran
+
+Untuk route /admin/landing, footer publik sebaiknya:
+
+Disembunyikan sepenuhnya, atau
+Diganti dengan footer admin sederhana:
+CryptoSharia Admin · Landing Page Editor
+
+Kalau tujuannya adalah preview langsung, lebih baik buat mode split:
+
+Kiri: editor
+Kanan: live preview
+
+Bukan menampilkan footer publik di bawah editor.
+
+9. Navbar admin masih terasa ambigu
+
+Navbar atas berisi:
+
+Landing Page
+Kelola Materi
+Voucher
+Pesanan
+
+Ini cukup jelas. Tapi tidak ada indikator aktif yang kuat. “Landing Page” memang terlihat putih, tapi masih kurang tegas.
+
+Saran
+
+Tambahkan active state:
+
+Background soft orange/dark card
+Border bottom orange
+Dot kecil orange
+Text orange/white lebih bold
+
+Contoh:
+
+[Landing Page]  Kelola Materi  Voucher  Pesanan
+
+Dengan Landing Page punya background rgba(234, 88, 12, 0.14) dan border orange.
+
+10. Icon kanan atas membingungkan
+
+Di kanan atas ada icon seperti laptop/dark mode dan logo bulat CryptoSharia. Masalahnya:
+
+Tidak jelas fungsi icon laptop.
+Logo bulat kanan atas terlihat seperti avatar, tapi tidak ada dropdown.
+Kalau itu tombol theme, icon-nya kurang komunikatif.
+Tidak ada tooltip.
+Saran
+
+Tambahkan tooltip saat hover:
+
+“Ganti Tampilan”
+“Admin Menu”
+“Buka Dashboard”
+“Logout”
+
+Kalau icon logo adalah profile menu, jadikan dropdown:
+
+Naufal / Admin
+- Dashboard
+- Pengaturan
+- Logout
+
+Kalau hanya dekorasi, hapus. Dalam admin UI, dekorasi yang terlihat seperti tombol akan membingungkan.
+
+11. Typography cukup bagus, tapi body text terlalu redup
+
+Teks deskripsi:
+
+Edit teks, tambah/kurang item, sembunyikan & urutkan section...
+
+Warnanya terlalu redup. Di dark mode memang elegan, tapi ini sudah mendekati susah dibaca, terutama untuk admin yang bekerja lama.
+
+Saran:
+
+Body secondary jangan terlalu abu-abu gelap.
+Naikkan contrast sedikit.
+Gunakan text-slate-400 bukan text-slate-500/600.
+
+Admin panel harus nyaman dibaca, bukan hanya cantik.
+
+12. Ukuran area editor terlalu sempit di desktop
+
+Konten utama berada di tengah dengan width yang cukup terbatas. Untuk halaman admin, ini membuat space kanan-kiri terlalu kosong.
+
+Landing editor biasanya butuh ruang lebih besar, apalagi kalau nanti accordion dibuka dan banyak field muncul.
+
+Saran layout desktop
+
+Gunakan layout 2 kolom:
+
+Kiri: daftar section / navigasi
+Kanan: form editor section yang sedang dibuka
+
+Atau:
+
+Kiri: Editor
+Kanan: Live Preview
+
+Saat ini desain cocok untuk mobile/tablet, tapi untuk desktop terasa belum memanfaatkan layar.
+
+13. Section “Urutan & Tampilan Section” seharusnya lebih dominan
+
+Ini section penting karena mengatur visibility dan order. Tapi tampilannya sama dengan section lain.
+
+Padahal secara fungsi, ini seperti control panel utama.
+
+Saran
+
+Jadikan section pertama sebagai card khusus:
+
+Urutan & Tampilan Section
+Atur urutan section dengan drag & drop, aktif/nonaktifkan tampilan.
+
+[Hero] [Aktif] [Drag]
+[Otoritas] [Aktif] [Drag]
+[Testimoni] [Hidden] [Drag]
+
+Kalau tetap pakai accordion, minimal tambahkan badge:
+
+Control
+
+14. Section SEO & WhatsApp terlalu tersembunyi
+
+SEO dan WhatsApp sangat krusial untuk landing page. Tapi saat ini hanya menjadi accordion biasa.
+
+Untuk bisnis, SEO title, meta description, OG image, WhatsApp number, dan default message itu penting.
+
+Saran
+
+Beri status kelengkapan:
+
+🌐 Pengaturan Umum (WhatsApp & SEO)
+SEO 75% lengkap · WhatsApp aktif
+
+Di dalamnya sebaiknya ada preview:
+
+Google Preview
+CryptoSharia Academy - Belajar Crypto Syariah
+https://cryptosharia...
+Deskripsi singkat...
+
+WhatsApp Preview
+Halo CryptoSharia, saya ingin daftar Masterclass...
+
+Ini akan membuat admin jauh lebih bernilai.
+
+15. Label section masih bisa lebih menjual
+
+Beberapa label section bagus, tapi terasa terlalu teknis. Untuk admin internal boleh, tapi masih bisa dibuat lebih jelas.
+
+Saat ini:
+
+Value Proposition
+Unique Selling Proposition
+Urgency / Scarcity
+
+Campuran Indonesia dan Inggris. Ini kurang konsisten.
+
+Saran pakai bahasa Indonesia penuh
+Hero / Banner Utama
+Otoritas & Kredibilitas
+Manfaat Utama
+Testimoni
+Keunggulan Program
+Harga & Jadwal
+Kurikulum
+Urgensi & Kuota
+FAQ
+Penutup / CTA Akhir
+
+Atau kalau mau Inggris, semuanya Inggris. Jangan campur terlalu banyak.
+
+Untuk user admin Indonesia, aku sarankan pakai bahasa Indonesia.
+
+16. CTA strip di bawah bagus, tapi copy kurang kuat
+
+Bagian bawah:
+
+Ilmu Dulu. Cuan Kemudian.
+Gabung Crypto Sharia Masterclass dan belajar investasi crypto secara sistematis.
+
+Ini lumayan, tapi masih terasa generik. “Cuan” bisa terasa terlalu trading/quick profit, padahal brand kamu ingin Syariah, edukatif, amanah, dan profesional.
+
+Kritik copy
+
+“Ilmu Dulu. Cuan Kemudian.” catchy, tapi ada risiko persepsi:
+
+Terlalu money-oriented.
+Kurang “syariah”.
+Bisa berbenturan dengan disclaimer risiko.
+Brand bisa terlihat seperti kelas cari cuan, bukan akademi serius.
+Alternatif lebih kuat
+
+Ilmu Dulu. Keputusan Investasi Lebih Terarah.
+
+Atau:
+
+Pahami Ilmunya Sebelum Masuk Pasarnya.
+
+Atau:
+
+Belajar Crypto dengan Prinsip, Bukan Sekadar Ikut Tren.
+
+CTA:
+
+Daftar Masterclass
+
+Ini sudah bagus. Tapi bisa dites juga:
+
+Mulai Belajar Sekarang
+Ikuti Masterclass
+Konsultasi Program
+17. Footer brand masih kurang premium
+
+Footer sudah rapi, tapi masih terasa agak template. Beberapa hal yang bisa diperbaiki:
+
+Masalah
+Social icon hanya teks kecil: IG, X, in, YT, TT. Ini terlihat kurang premium.
+“Rintis Karir Impian Bersama CryptoSharia Academy” agak generik.
+Kolom footer terlalu banyak untuk halaman yang masih belum besar.
+Link “Blog” padahal mungkin belum ada konten, bisa menurunkan trust kalau kosong.
+“PT Kripto Syariah Indonesia” kalau belum legal resmi sebagai PT, hati-hati. Jangan tampilkan kalau belum benar-benar terdaftar.
+Saran
+
+Kalau legalitas belum final, pakai:
+
+CryptoSharia Academy
+
+Bukan “PT Kripto Syariah Indonesia”.
+
+Untuk tagline:
+
+Platform edukasi crypto berbasis prinsip syariah untuk membantu pemula memahami aset digital secara lebih terarah, aman, dan bertanggung jawab.
+
+Social icon lebih baik pakai icon asli, bukan teks.
+
+18. Disclaimer terlalu kecil dan terlalu panjang
+
+Disclaimer risiko di bawah bagus secara compliance, tapi:
+
+Terlalu panjang.
+Font terlalu kecil.
+Kontras rendah.
+Sulit dibaca.
+Dalam card sempit dan padat.
+
+Ini bisa terlihat seperti “sekadar formalitas”, bukan edukasi risiko yang jujur.
+
+Saran
+
+Buat versi lebih rapi:
+
+Judul tebal:
+
+Disclaimer Risiko Crypto
+
+Isi dipisah 3–4 kalimat pendek.
+
+Contoh:
+
+Perdagangan dan investasi aset kripto memiliki risiko tinggi. Nilai aset dapat berubah secara signifikan dalam waktu singkat. Materi di CryptoSharia Academy hanya untuk edukasi dan bukan nasihat investasi, keuangan, atau hukum. Seluruh keputusan investasi menjadi tanggung jawab masing-masing peserta.
+
+Lebih ringkas, lebih terbaca, lebih profesional.
+
+19. Metode pembayaran terlalu banyak tampil sebagai badge kecil
+
+Metode pembayaran:
+
+BCA, BNI, BSI, Mandiri, GoPay, OVO, DANA, QRIS, Visa, MC
+
+Bagus, tapi tampil terlalu datar. Kalau ini di halaman publik, sebaiknya terlihat lebih meyakinkan.
+
+Saran
+
+Pakai teks:
+
+Metode Pembayaran
+
+Lalu badge lebih rapi, spacing lebih lega.
+
+Untuk Visa/MC, kalau belum benar-benar aktif, jangan tampilkan. Jangan sampai user klik lalu ternyata belum bisa.
+
+20. Dark mode sudah bagus, tapi butuh sedikit aksen orange
+
+Halaman ini sangat gelap dan rapi, tapi aksen orange hanya terlihat di logo dan tombol. Untuk brand CryptoSharia, orange adalah identitas utama. Saat ini halaman admin agak terlalu “generic SaaS dark dashboard”.
+
+Saran
+
+Tambahkan orange halus pada:
+
+Active nav
+Focus state input
+Badge aktif
+Border kiri accordion yang sedang dibuka
+Status “belum disimpan”
+Highlight section penting
+
+Jangan berlebihan. Cukup 5–10% aksen orange.
+
+21. Perlu fitur “collapse all / expand all”
+
+Karena ada banyak accordion, admin akan butuh kontrol cepat.
+
+Tambahkan di atas list:
+
+[Expand Semua] [Collapse Semua]
+
+Atau:
+
+Tampilkan: Semua | Aktif | Hidden | Belum Lengkap
+
+Ini akan sangat membantu saat konten makin banyak.
+
+22. Perlu search section
+
+Untuk saat ini 10 section masih oke. Tapi kalau nanti landing page makin panjang, tambahkan search kecil:
+
+Cari section...
+
+Misalnya user ketik “harga”, langsung tampil section Harga & Jadwal.
+
+Ini sederhana tapi membuat CMS terasa matang.
+
+23. Perlu autosave atau draft state
+
+Sekarang sistemnya “Simpan Perubahan” manual. Itu oke, tapi sebaiknya ada:
+
+Draft state
+Last saved timestamp
+Warning kalau mau keluar halaman saat belum disimpan
+
+Contoh:
+
+Ada perubahan yang belum disimpan. Yakin ingin meninggalkan halaman?
+
+Ini penting sekali untuk admin landing page.
+
+24. Perlu preview perubahan sebelum simpan
+
+Karena landing page adalah halaman marketing, admin butuh melihat hasil perubahan.
+
+Saran ideal:
+
+Tombol Preview Draft
+Tombol Publish
+Tombol Simpan Draft
+
+Kalau sekarang semua langsung “Simpan Perubahan”, user mungkin bingung: apakah ini langsung mengubah halaman publik?
+
+Lebih bagus
+[Simpan Draft] [Preview] [Publish]
+
+Kalau sistem kamu memang sederhana, minimal ubah microcopy:
+
+Simpan Perubahan ke Landing Page
+
+Supaya jelas.
+
+25. Struktur landing page sudah cukup, tapi ada section yang kurang
+
+Section yang ada:
+
+Hero
+Otoritas
+Value Proposition
+Testimoni
+USP
+Harga
+Kurikulum
+Urgency
+FAQ
+CTA Akhir
+
+Ini sudah kuat. Tapi untuk produk edukasi crypto syariah, aku sarankan tambah section:
+
+A. “Untuk Siapa Program Ini?”
+
+Penting untuk filter audience.
+
+Contoh:
+
+Pemula yang ingin memahami crypto dari nol.
+Muslim yang ingin belajar aset digital dengan pertimbangan syariah.
+Profesional yang ingin memahami peluang Web3.
+Investor pemula yang ingin lebih hati-hati sebelum mengambil keputusan.
+B. “Apa yang Tidak Kami Janjikan”
+
+Ini sangat penting untuk trust.
+
+Contoh:
+
+Kami tidak menjanjikan profit.
+Kami tidak memberi sinyal trading cepat kaya.
+Kami tidak mengelola dana peserta.
+Kami fokus pada edukasi, prinsip, dan pemahaman risiko.
+
+Ini justru akan membuat brand kamu lebih kredibel.
+
+C. “Metode Belajar”
+
+Misalnya:
+
+Materi terstruktur
+Studi kasus
+Live session
+Rekaman
+Komunitas
+Worksheet/checklist
+D. “Instruktur / Mentor”
+
+Kalau belum ada, landing page terasa kurang manusiawi. Minimal tampilkan profil pengajar atau tim.

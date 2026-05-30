@@ -124,12 +124,12 @@ export type LandingContent = {
 export const SECTION_LABELS: Record<SectionId, string> = {
 	hero: 'Hero / Banner Utama',
 	authority: 'Otoritas & Kredibilitas',
-	valueProps: 'Value Proposition',
+	valueProps: 'Manfaat Utama',
 	testimonials: 'Testimoni',
-	usp: 'Unique Selling Proposition',
+	usp: 'Keunggulan Program',
 	pricing: 'Harga & Jadwal',
 	curriculum: 'Kurikulum',
-	urgency: 'Urgency / Scarcity',
+	urgency: 'Urgensi & Kuota',
 	faq: 'FAQ',
 	finalCta: 'Penutup / CTA Akhir'
 };
@@ -447,4 +447,91 @@ export async function saveLandingContent(content: LandingContent): Promise<void>
 		{ ...content, updatedAt: serverTimestamp() },
 		{ merge: false }
 	);
+}
+
+// ---------------------------------------------------------------------------
+// Editor helpers — used by the admin UI to show status/completeness badges.
+// ---------------------------------------------------------------------------
+
+function allFilled(values: (string | undefined)[]): boolean {
+	return values.every((v) => typeof v === 'string' && v.trim().length > 0);
+}
+
+/**
+ * Returns the completeness of a section as filled/total field counts.
+ * "Filled" means a non-empty string for the section's key text fields.
+ */
+export function sectionCompleteness(
+	content: LandingContent,
+	id: SectionId
+): { filled: number; total: number } {
+	switch (id) {
+		case 'hero': {
+			const c = content.hero;
+			const fields = [c.badge, c.title, c.subtitle, c.description, c.primaryCtaLabel];
+			const arr = c.highlights.map((h) => (allFilled([h.symbol, h.performance]) ? 'x' : ''));
+			return countFields([...fields, c.highlights.length ? arr.join('') : '']);
+		}
+		case 'authority': {
+			const c = content.authority;
+			return countFields([
+				c.eyebrow,
+				c.title,
+				c.description,
+				c.activities.length ? 'x' : '',
+				c.cards.length ? 'x' : ''
+			]);
+		}
+		case 'valueProps': {
+			const c = content.valueProps;
+			return countFields([c.eyebrow, c.title, c.items.length ? 'x' : '', c.docTitle]);
+		}
+		case 'testimonials': {
+			const c = content.testimonials;
+			return countFields([c.eyebrow, c.title, c.description, c.items.length ? 'x' : '']);
+		}
+		case 'usp': {
+			const c = content.usp;
+			return countFields([c.eyebrow, c.title, c.quote, c.items.length ? 'x' : '']);
+		}
+		case 'pricing': {
+			const c = content.pricing;
+			return countFields([c.eyebrow, c.title, c.price, c.ctaLabel, c.benefitCards.length ? 'x' : '']);
+		}
+		case 'curriculum': {
+			const c = content.curriculum;
+			return countFields([c.eyebrow, c.title, c.topics.length ? 'x' : '']);
+		}
+		case 'urgency': {
+			const c = content.urgency;
+			return countFields([c.eyebrow, c.title, c.description, c.ctaLabel]);
+		}
+		case 'faq': {
+			const c = content.faq;
+			return countFields([c.eyebrow, c.title, c.items.length ? 'x' : '']);
+		}
+		case 'finalCta': {
+			const c = content.finalCta;
+			return countFields([c.eyebrow, c.title, c.description, c.ctaLabel]);
+		}
+	}
+}
+
+function countFields(values: string[]): { filled: number; total: number } {
+	return {
+		filled: values.filter((v) => typeof v === 'string' && v.trim().length > 0).length,
+		total: values.length
+	};
+}
+
+/** SEO completeness as a 0-100 percentage based on title + description quality. */
+export function seoCompleteness(content: LandingContent): number {
+	let score = 0;
+	const title = content.seo.title?.trim() ?? '';
+	const desc = content.seo.description?.trim() ?? '';
+	if (title.length > 0) score += 25;
+	if (title.length >= 30 && title.length <= 65) score += 25;
+	if (desc.length > 0) score += 25;
+	if (desc.length >= 80 && desc.length <= 160) score += 25;
+	return score;
 }
