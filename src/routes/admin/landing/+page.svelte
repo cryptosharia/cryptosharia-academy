@@ -32,6 +32,9 @@
 		'finalCta'
 	];
 
+	// A "view" is either a settings panel, a content section id, or advanced.
+	type View = 'overview' | 'layout' | 'global' | SectionId | 'reset';
+
 	let content = $state<LandingContent>(structuredClone(defaultLandingContent));
 	// Snapshot of last-saved content, used for dirty tracking + discard.
 	let savedSnapshot = $state<string>('');
@@ -39,7 +42,7 @@
 	let isSaving = $state(false);
 	let savedAt = $state<string | null>(null);
 	let saveError = $state(false);
-	let openSections = $state<Set<string>>(new Set(['layout']));
+	let activeView = $state<View>('overview');
 	let searchQuery = $state('');
 	let showResetModal = $state(false);
 
@@ -84,18 +87,10 @@
 		return () => window.removeEventListener('beforeunload', handler);
 	});
 
-	function toggleSection(id: string) {
-		const next = new Set(openSections);
-		if (next.has(id)) next.delete(id);
-		else next.add(id);
-		openSections = next;
-	}
-
-	function expandAll() {
-		openSections = new Set(['layout', 'global', ...SECTION_ORDER]);
-	}
-	function collapseAll() {
-		openSections = new Set();
+	function go(view: View) {
+		activeView = view;
+		// Scroll editor to top on section switch for a clean context.
+		if (typeof window !== 'undefined') window.scrollTo({ top: 0, behavior: 'smooth' });
 	}
 
 	// ---- Layout (order + visibility) ----
@@ -115,10 +110,36 @@
 		return content.layout.find((s) => s.id === id)?.visible ?? false;
 	}
 
+	function toggleVisibleById(id: SectionId) {
+		const idx = content.layout.findIndex((s) => s.id === id);
+		if (idx >= 0) toggleVisible(idx);
+	}
+
+	function sectionMeta(id: SectionId) {
+		const comp = sectionCompleteness(content, id);
+		return { filled: comp.filled, total: comp.total, complete: comp.filled === comp.total, visible: isSectionVisible(id) };
+	}
+
 	function matchesSearch(id: SectionId) {
 		if (!searchQuery.trim()) return true;
 		return SECTION_LABELS[id].toLowerCase().includes(searchQuery.trim().toLowerCase());
 	}
+
+	const visibleSections = $derived(SECTION_ORDER.filter((id) => matchesSearch(id)));
+
+	const activeTitle = $derived(
+		activeView === 'overview'
+			? 'Overview'
+			: activeView === 'layout'
+				? 'Urutan & Tampilan Section'
+				: activeView === 'global'
+					? 'Pengaturan Umum (WhatsApp & SEO)'
+					: activeView === 'reset'
+						? 'Reset Konten'
+						: SECTION_LABELS[activeView as SectionId]
+	);
+
+	const isContentSection = $derived(SECTION_ORDER.includes(activeView as SectionId));
 
 	// ---- Generic list helpers ----
 	function addItem<T>(arr: T[], template: T) {
@@ -152,6 +173,7 @@
 	function confirmReset() {
 		content = structuredClone(defaultLandingContent);
 		showResetModal = false;
+		activeView = 'overview';
 	}
 
 	const inputClass =
@@ -177,8 +199,8 @@
 	</div>
 {:else if isAdmin}
 	<div class="min-h-screen bg-gray-50 pt-20 pb-28 dark:bg-gray-950">
-		<div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-			<!-- ===== Header + mini dashboard ===== -->
+		<div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+			<!-- ===== Header ===== -->
 			<div class="mb-6 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
 				<div>
 					<h1 class="text-2xl font-extrabold text-gray-900 dark:text-white">Editor Landing Page</h1>
@@ -186,23 +208,21 @@
 						Edit teks, gambar, item, urutan & SEO. Perubahan tampil di halaman publik setelah disimpan.
 					</p>
 				</div>
-				<div class="flex shrink-0 gap-2">
-					<a
-						href="/"
-						target="_blank"
-						class="inline-flex items-center gap-1.5 rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm font-semibold text-gray-700 transition-all hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-700"
+				<a
+					href="/"
+					target="_blank"
+					class="inline-flex shrink-0 items-center gap-1.5 rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm font-semibold text-gray-700 transition-all hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-700"
+				>
+					Preview
+					<svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+						><path
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							stroke-width="2"
+							d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+						/></svg
 					>
-						Preview
-						<svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-							><path
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								stroke-width="2"
-								d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
-							/></svg
-						>
-					</a>
-				</div>
+				</a>
 			</div>
 
 			<!-- Stat strip -->
@@ -240,96 +260,122 @@
 				</div>
 			</div>
 
-			<!-- Toolbar: search + expand/collapse -->
-			<div class="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-				<div class="relative max-w-xs flex-1">
-					<svg class="pointer-events-none absolute top-2.5 left-3 h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
-					<input bind:value={searchQuery} placeholder="Cari section..." class="{inputClass} pl-9" />
-				</div>
-				<div class="flex gap-2">
-					<button type="button" onclick={expandAll} class="rounded-lg border border-gray-200 bg-white px-3 py-2 text-xs font-semibold text-gray-600 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700">Buka Semua</button>
-					<button type="button" onclick={collapseAll} class="rounded-lg border border-gray-200 bg-white px-3 py-2 text-xs font-semibold text-gray-600 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700">Tutup Semua</button>
-				</div>
+			<!-- Mobile section picker -->
+			<div class="mb-4 lg:hidden">
+				<label class="mb-1 block text-xs font-bold text-gray-700 dark:text-gray-300" for="mobile-section">Pilih Section</label>
+				<select id="mobile-section" value={activeView} onchange={(e) => go(e.currentTarget.value as View)} class={inputClass}>
+					<optgroup label="Pengaturan">
+						<option value="overview">Overview</option>
+						<option value="layout">Urutan Section</option>
+						<option value="global">SEO & WhatsApp</option>
+					</optgroup>
+					<optgroup label="Konten Landing Page">
+						{#each SECTION_ORDER as id, idx}
+							<option value={id}>{idx + 1}. {SECTION_LABELS[id]}</option>
+						{/each}
+					</optgroup>
+					<optgroup label="Lanjutan">
+						<option value="reset">Reset Konten</option>
+					</optgroup>
+				</select>
 			</div>
 
-			<!-- ===== GROUP 1: Pengaturan Utama ===== -->
-			<h2 class="mt-6 mb-3 text-xs font-bold tracking-wider text-gray-400 uppercase">Pengaturan Utama</h2>
-
-			<!-- Section order / visibility (control panel — emphasised) -->
-			<div class="mb-4 overflow-hidden rounded-xl border-l-4 border-primary-500 border-y border-r border-y-gray-200 border-r-gray-200 bg-white dark:border-y-gray-700 dark:border-r-gray-700 dark:bg-gray-800">
-				<button type="button" onclick={() => toggleSection('layout')} class="flex w-full items-center justify-between px-5 py-4 text-left">
-					<span class="flex items-center gap-2 font-bold text-gray-900 dark:text-white">
-						<span class="rounded-md bg-primary-100 px-2 py-0.5 text-[10px] font-bold tracking-wide text-primary-700 uppercase dark:bg-primary-900/40 dark:text-primary-300">Kontrol</span>
-						Urutan & Tampilan Section
-					</span>
-					<span class="text-gray-400">{openSections.has('layout') ? '−' : '+'}</span>
-				</button>
-				{#if openSections.has('layout')}
-					<div class="border-t border-gray-100 p-5 dark:border-gray-700">
-						<p class="mb-4 text-xs text-gray-500 dark:text-gray-400">
-							Atur urutan tampil dengan tombol panah, dan matikan toggle untuk menyembunyikan section dari halaman publik.
-						</p>
-						<div class="space-y-2">
-							{#each content.layout as entry, i (entry.id)}
-								<div class="flex items-center gap-3 rounded-lg border px-3 py-2.5 {entry.visible ? 'border-gray-200 bg-gray-50 dark:border-gray-700 dark:bg-gray-900' : 'border-dashed border-gray-300 bg-gray-100/50 dark:border-gray-600 dark:bg-gray-900/40'}">
-									<div class="flex flex-col">
-										<button type="button" onclick={() => moveSection(i, -1)} disabled={i === 0} class="cursor-pointer text-gray-400 hover:text-primary-600 disabled:opacity-20" aria-label="Naik">
-											<svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 15l7-7 7 7" /></svg>
-										</button>
-										<button type="button" onclick={() => moveSection(i, 1)} disabled={i === content.layout.length - 1} class="cursor-pointer text-gray-400 hover:text-primary-600 disabled:opacity-20" aria-label="Turun">
-											<svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7" /></svg>
-										</button>
-									</div>
-									<span class="flex-1 text-sm font-semibold {entry.visible ? 'text-gray-800 dark:text-gray-200' : 'text-gray-400 dark:text-gray-500'}">
-										{i + 1}. {SECTION_LABELS[entry.id]}
-									</span>
-									<label class="inline-flex cursor-pointer items-center gap-2">
-										<input type="checkbox" checked={entry.visible} onchange={() => toggleVisible(i)} class="peer sr-only" />
-										<span class="relative h-5 w-9 rounded-full bg-gray-300 transition peer-checked:bg-primary-600 dark:bg-gray-600 after:absolute after:top-0.5 after:left-0.5 after:h-4 after:w-4 after:rounded-full after:bg-white after:transition peer-checked:after:translate-x-4"></span>
-										<span class="w-14 text-xs font-medium {entry.visible ? 'text-primary-600 dark:text-primary-400' : 'text-gray-400'}">{entry.visible ? 'Tampil' : 'Sembunyi'}</span>
-									</label>
-								</div>
-							{/each}
+			<!-- ===== 2-column workspace ===== -->
+			<div class="grid gap-6 lg:grid-cols-[280px_minmax(0,1fr)]">
+				<!-- Sidebar (desktop) -->
+				<aside class="hidden lg:block">
+					<div class="lg:sticky lg:top-24">
+						<!-- Search -->
+						<div class="relative mb-3">
+							<svg class="pointer-events-none absolute top-2.5 left-3 h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+							<input bind:value={searchQuery} placeholder="Cari section..." class="{inputClass} pl-9" />
 						</div>
+
+						<nav class="space-y-5 rounded-xl border border-gray-200 bg-white p-3 dark:border-gray-700 dark:bg-gray-800">
+							<!-- Pengaturan -->
+							<div>
+								<p class="mb-1.5 px-2 text-[10px] font-bold tracking-wider text-gray-400 uppercase">Pengaturan</p>
+								<div class="space-y-0.5">
+									{@render navItem('overview', 'Overview')}
+									{@render navItem('layout', 'Urutan Section')}
+									{@render navItemSeo()}
+								</div>
+							</div>
+
+							<!-- Konten -->
+							<div>
+								<p class="mb-1.5 px-2 text-[10px] font-bold tracking-wider text-gray-400 uppercase">Konten Landing Page</p>
+								<div class="space-y-0.5">
+									{#each visibleSections as id (id)}
+										{@render navItemSection(id)}
+									{/each}
+									{#if visibleSections.length === 0}
+										<p class="px-2 py-2 text-xs text-gray-400">Tidak ada yang cocok.</p>
+									{/if}
+								</div>
+							</div>
+
+							<!-- Lanjutan -->
+							<div>
+								<p class="mb-1.5 px-2 text-[10px] font-bold tracking-wider text-gray-400 uppercase">Lanjutan</p>
+								<button type="button" onclick={() => go('reset')} class="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-left text-sm font-medium transition-colors {activeView === 'reset' ? 'bg-red-50 text-red-700 dark:bg-red-900/30 dark:text-red-300' : 'text-red-500 hover:bg-red-50 dark:text-red-400 dark:hover:bg-red-900/20'}">
+									<svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg>
+									Reset Konten
+								</button>
+							</div>
+						</nav>
 					</div>
-				{/if}
-			</div>
+				</aside>
 
-			<!-- Global / SEO + WhatsApp -->
-			{@render accordion('global', '🌐 Pengaturan Umum (WhatsApp & SEO)', globalForm, seoPct === 100 ? 'lengkap' : `SEO ${seoPct}%`, seoPct === 100)}
-
-			<!-- ===== GROUP 2: Konten Landing Page ===== -->
-			<h2 class="mt-8 mb-3 text-xs font-bold tracking-wider text-gray-400 uppercase">Konten Landing Page</h2>
-
-			{#each SECTION_ORDER as id, idx (id)}
-				{#if matchesSearch(id)}
-					{@const comp = sectionCompleteness(content, id)}
-					{@render accordion(
-						id,
-						`${idx + 1}. ${SECTION_LABELS[id]}`,
-						sectionForm,
-						`${comp.filled}/${comp.total} terisi`,
-						comp.filled === comp.total,
-						id
-					)}
-				{/if}
-			{/each}
-
-			{#if searchQuery.trim() && !SECTION_ORDER.some((id) => matchesSearch(id))}
-				<p class="py-8 text-center text-sm text-gray-400">Tidak ada section yang cocok dengan "{searchQuery}".</p>
-			{/if}
-
-			<!-- ===== GROUP 3: Lanjutan ===== -->
-			<h2 class="mt-8 mb-3 text-xs font-bold tracking-wider text-gray-400 uppercase">Lanjutan</h2>
-			<div class="rounded-xl border border-red-200 bg-red-50/50 p-4 dark:border-red-900/40 dark:bg-red-950/20">
-				<div class="flex items-center justify-between gap-4">
-					<div>
-						<p class="text-sm font-bold text-red-700 dark:text-red-300">Reset Semua Konten ke Default</p>
-						<p class="mt-0.5 text-xs text-red-500/80 dark:text-red-400/80">Mengembalikan seluruh konten ke bawaan sistem. Tidak bisa dibatalkan.</p>
+				<!-- Main editor -->
+				<div class="min-w-0 rounded-xl border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800">
+					<!-- Panel header -->
+					<div class="flex flex-col gap-2 border-b border-gray-100 p-5 sm:flex-row sm:items-center sm:justify-between dark:border-gray-700">
+						<div>
+							<h2 class="text-lg font-extrabold text-gray-900 dark:text-white">{activeTitle}</h2>
+							{#if isContentSection}
+								{@const m = sectionMeta(activeView as SectionId)}
+								<div class="mt-1 flex items-center gap-2 text-xs">
+									<span class="inline-flex items-center gap-1 rounded-full px-2 py-0.5 font-semibold {m.visible ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400' : 'bg-gray-200 text-gray-500 dark:bg-gray-700 dark:text-gray-400'}">
+										{m.visible ? '● Aktif' : '○ Hidden'}
+									</span>
+									<span class="inline-flex items-center gap-1 rounded-full px-2 py-0.5 font-semibold {m.complete ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400' : 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400'}">
+										{m.complete ? '✓' : '!'} {m.filled}/{m.total} terisi
+									</span>
+								</div>
+							{/if}
+						</div>
+						{#if isContentSection}
+							<label class="inline-flex cursor-pointer items-center gap-2 self-start">
+								<span class="text-xs font-medium text-gray-500 dark:text-gray-400">Tampilkan</span>
+								<input type="checkbox" checked={isSectionVisible(activeView as SectionId)} onchange={() => toggleVisibleById(activeView as SectionId)} class="peer sr-only" />
+								<span class="relative h-5 w-9 rounded-full bg-gray-300 transition peer-checked:bg-primary-600 dark:bg-gray-600 after:absolute after:top-0.5 after:left-0.5 after:h-4 after:w-4 after:rounded-full after:bg-white after:transition peer-checked:after:translate-x-4"></span>
+							</label>
+						{/if}
 					</div>
-					<button type="button" onclick={() => (showResetModal = true)} class="shrink-0 cursor-pointer rounded-lg border border-red-300 px-4 py-2 text-sm font-semibold text-red-600 hover:bg-red-100 dark:border-red-800 dark:text-red-400 dark:hover:bg-red-900/30">
-						Reset
-					</button>
+
+					<!-- Panel body -->
+					<div class="space-y-4 p-5">
+						{#if activeView === 'overview'}
+							{@render overviewPanel()}
+						{:else if activeView === 'layout'}
+							{@render layoutPanel()}
+						{:else if activeView === 'global'}
+							{@render globalForm()}
+						{:else if activeView === 'reset'}
+							{@render resetPanel()}
+						{:else if activeView === 'hero'}{@render heroForm()}
+						{:else if activeView === 'authority'}{@render authorityForm()}
+						{:else if activeView === 'valueProps'}{@render valuePropsForm()}
+						{:else if activeView === 'testimonials'}{@render testimonialsForm()}
+						{:else if activeView === 'usp'}{@render uspForm()}
+						{:else if activeView === 'pricing'}{@render pricingForm()}
+						{:else if activeView === 'curriculum'}{@render curriculumForm()}
+						{:else if activeView === 'urgency'}{@render urgencyForm()}
+						{:else if activeView === 'faq'}{@render faqForm()}
+						{:else if activeView === 'finalCta'}{@render finalCtaForm()}
+						{/if}
+					</div>
 				</div>
 			</div>
 		</div>
@@ -337,7 +383,7 @@
 
 	<!-- Sticky save bar -->
 	<div class="fixed inset-x-0 bottom-0 z-40 border-t border-gray-200 bg-white/95 backdrop-blur-md dark:border-gray-700 dark:bg-gray-900/95">
-		<div class="mx-auto flex max-w-5xl items-center justify-between gap-4 px-4 py-3 sm:px-6 lg:px-8">
+		<div class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3 sm:px-6 lg:px-8">
 			<span class="text-sm font-medium {saveError ? 'text-red-600 dark:text-red-400' : isDirty ? 'text-amber-600 dark:text-amber-400' : 'text-emerald-600 dark:text-emerald-400'}">
 				{#if saveError}
 					⚠️ Gagal menyimpan. Coba lagi.
@@ -378,51 +424,98 @@
 	{/if}
 {/if}
 
-<!-- ============ Reusable accordion wrapper ============ -->
-{#snippet accordion(
-	id: string,
-	title: string,
-	body: (sid?: SectionId) => any,
-	statusLabel: string,
-	statusOk: boolean,
-	sectionId?: SectionId
-)}
-	{@const open = openSections.has(id)}
-	{@const hidden = sectionId ? !isSectionVisible(sectionId) : false}
-	<div class="mb-4 overflow-hidden rounded-xl border bg-white transition-all dark:bg-gray-800 {open ? 'border-l-4 border-l-primary-500 border-y-gray-200 border-r-gray-200 dark:border-y-gray-700 dark:border-r-gray-700' : 'border-gray-200 dark:border-gray-700'}">
-		<button type="button" onclick={() => toggleSection(id)} class="flex w-full items-center justify-between gap-3 px-5 py-4 text-left">
-			<span class="font-bold text-gray-900 dark:text-white">{title}</span>
-			<span class="flex items-center gap-2">
-				{#if hidden}
-					<span class="rounded-full bg-gray-200 px-2 py-0.5 text-[10px] font-bold tracking-wide text-gray-500 uppercase dark:bg-gray-700 dark:text-gray-400">Hidden</span>
-				{/if}
-				<span class="hidden items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-semibold sm:inline-flex {statusOk ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400' : 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400'}">
-					{statusOk ? '✓' : '!'} {statusLabel}
+<!-- ============ Sidebar nav item snippets ============ -->
+{#snippet navItem(view: View, label: string)}
+	{@const active = activeView === view}
+	<button type="button" onclick={() => go(view)} class="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-left text-sm font-medium transition-colors {active ? 'bg-primary-50 text-primary-700 ring-1 ring-primary-200 dark:bg-primary-900/40 dark:text-primary-300 dark:ring-primary-800' : 'text-gray-600 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700/50'}">
+		{label}
+	</button>
+{/snippet}
+
+{#snippet navItemSeo()}
+	{@const active = activeView === 'global'}
+	<button type="button" onclick={() => go('global')} class="flex w-full items-center justify-between gap-2 rounded-lg px-3 py-2 text-left text-sm font-medium transition-colors {active ? 'bg-primary-50 text-primary-700 ring-1 ring-primary-200 dark:bg-primary-900/40 dark:text-primary-300 dark:ring-primary-800' : 'text-gray-600 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700/50'}">
+		<span>SEO & WhatsApp</span>
+		<span class="rounded-full px-1.5 py-0.5 text-[10px] font-bold {seoPct === 100 ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400' : 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400'}">{seoPct}%</span>
+	</button>
+{/snippet}
+
+{#snippet navItemSection(id: SectionId)}
+	{@const active = activeView === id}
+	{@const m = sectionMeta(id)}
+	<button type="button" onclick={() => go(id)} class="flex w-full items-center justify-between gap-2 rounded-lg px-3 py-2 text-left text-sm font-medium transition-colors {active ? 'bg-primary-50 text-primary-700 ring-1 ring-primary-200 dark:bg-primary-900/40 dark:text-primary-300 dark:ring-primary-800' : 'text-gray-600 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700/50'}">
+		<span class="flex min-w-0 items-center gap-1.5">
+			<span class="shrink-0 {m.complete ? 'text-emerald-500' : 'text-amber-500'}">{m.complete ? '✓' : '!'}</span>
+			<span class="truncate {!m.visible ? 'text-gray-400 dark:text-gray-500' : ''}">{SECTION_LABELS[id]}</span>
+		</span>
+		<span class="shrink-0 text-[10px] font-bold {m.visible ? 'text-gray-400' : 'text-gray-400'}">
+			{#if !m.visible}Hidden{:else}{m.filled}/{m.total}{/if}
+		</span>
+	</button>
+{/snippet}
+
+<!-- ============ Settings panels ============ -->
+{#snippet overviewPanel()}
+	<p class="text-sm text-gray-500 dark:text-gray-400">
+		Ringkasan kondisi landing page. Klik salah satu section untuk mulai mengedit.
+	</p>
+	<div class="space-y-2">
+		{#each SECTION_ORDER as id, idx (id)}
+			{@const m = sectionMeta(id)}
+			<button type="button" onclick={() => go(id)} class="flex w-full items-center justify-between gap-3 rounded-lg border border-gray-200 bg-gray-50 px-4 py-3 text-left transition-colors hover:border-primary-300 hover:bg-primary-50/40 dark:border-gray-700 dark:bg-gray-900 dark:hover:border-primary-700 dark:hover:bg-primary-900/10">
+				<span class="flex items-center gap-2">
+					<span class="text-sm font-semibold text-gray-800 dark:text-gray-100">{idx + 1}. {SECTION_LABELS[id]}</span>
 				</span>
-				<span class="text-gray-400">{open ? '−' : '+'}</span>
-			</span>
-		</button>
-		{#if open}
-			<div class="space-y-4 border-t border-gray-100 p-5 dark:border-gray-700">
-				{@render body(sectionId)}
-			</div>
-		{/if}
+				<span class="flex items-center gap-2">
+					{#if !m.visible}
+						<span class="rounded-full bg-gray-200 px-2 py-0.5 text-[10px] font-bold text-gray-500 dark:bg-gray-700 dark:text-gray-400">Hidden</span>
+					{/if}
+					<span class="rounded-full px-2 py-0.5 text-[10px] font-bold {m.complete ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400' : 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400'}">{m.filled}/{m.total}</span>
+					<svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
+				</span>
+			</button>
+		{/each}
 	</div>
 {/snippet}
 
-<!-- Dispatcher so each content section renders its own form -->
-{#snippet sectionForm(sid?: SectionId)}
-	{#if sid === 'hero'}{@render heroForm()}
-	{:else if sid === 'authority'}{@render authorityForm()}
-	{:else if sid === 'valueProps'}{@render valuePropsForm()}
-	{:else if sid === 'testimonials'}{@render testimonialsForm()}
-	{:else if sid === 'usp'}{@render uspForm()}
-	{:else if sid === 'pricing'}{@render pricingForm()}
-	{:else if sid === 'curriculum'}{@render curriculumForm()}
-	{:else if sid === 'urgency'}{@render urgencyForm()}
-	{:else if sid === 'faq'}{@render faqForm()}
-	{:else if sid === 'finalCta'}{@render finalCtaForm()}
-	{/if}
+{#snippet layoutPanel()}
+	<p class="text-sm text-gray-500 dark:text-gray-400">
+		Atur urutan tampil dengan tombol panah, dan matikan toggle untuk menyembunyikan section dari halaman publik.
+	</p>
+	<div class="space-y-2">
+		{#each content.layout as entry, i (entry.id)}
+			<div class="flex items-center gap-3 rounded-lg border px-3 py-2.5 {entry.visible ? 'border-gray-200 bg-gray-50 dark:border-gray-700 dark:bg-gray-900' : 'border-dashed border-gray-300 bg-gray-100/50 dark:border-gray-600 dark:bg-gray-900/40'}">
+				<div class="flex flex-col">
+					<button type="button" onclick={() => moveSection(i, -1)} disabled={i === 0} class="cursor-pointer text-gray-400 hover:text-primary-600 disabled:opacity-20" aria-label="Naik">
+						<svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 15l7-7 7 7" /></svg>
+					</button>
+					<button type="button" onclick={() => moveSection(i, 1)} disabled={i === content.layout.length - 1} class="cursor-pointer text-gray-400 hover:text-primary-600 disabled:opacity-20" aria-label="Turun">
+						<svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7" /></svg>
+					</button>
+				</div>
+				<button type="button" onclick={() => go(entry.id)} class="flex-1 text-left text-sm font-semibold hover:underline {entry.visible ? 'text-gray-800 dark:text-gray-200' : 'text-gray-400 dark:text-gray-500'}">
+					{i + 1}. {SECTION_LABELS[entry.id]}
+				</button>
+				<label class="inline-flex cursor-pointer items-center gap-2">
+					<input type="checkbox" checked={entry.visible} onchange={() => toggleVisible(i)} class="peer sr-only" />
+					<span class="relative h-5 w-9 rounded-full bg-gray-300 transition peer-checked:bg-primary-600 dark:bg-gray-600 after:absolute after:top-0.5 after:left-0.5 after:h-4 after:w-4 after:rounded-full after:bg-white after:transition peer-checked:after:translate-x-4"></span>
+					<span class="w-14 text-xs font-medium {entry.visible ? 'text-primary-600 dark:text-primary-400' : 'text-gray-400'}">{entry.visible ? 'Tampil' : 'Sembunyi'}</span>
+				</label>
+			</div>
+		{/each}
+	</div>
+{/snippet}
+
+{#snippet resetPanel()}
+	<div class="rounded-xl border border-red-200 bg-red-50/50 p-4 dark:border-red-900/40 dark:bg-red-950/20">
+		<p class="text-sm font-bold text-red-700 dark:text-red-300">Reset Semua Konten ke Default</p>
+		<p class="mt-1 text-xs leading-relaxed text-red-500/80 dark:text-red-400/80">
+			Mengembalikan seluruh konten landing page ke bawaan sistem. Tindakan ini tidak bisa dibatalkan dan tetap perlu disimpan agar berlaku di halaman publik.
+		</p>
+		<button type="button" onclick={() => (showResetModal = true)} class="mt-4 cursor-pointer rounded-lg border border-red-300 px-4 py-2 text-sm font-semibold text-red-600 hover:bg-red-100 dark:border-red-800 dark:text-red-400 dark:hover:bg-red-900/30">
+			Reset Semua Konten
+		</button>
+	</div>
 {/snippet}
 
 <!-- ============ Field snippets ============ -->

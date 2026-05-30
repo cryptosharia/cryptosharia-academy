@@ -1,0 +1,348 @@
+Rekomendasi utama: ganti accordion menjadi sidebar navigation
+
+Daripada semua section ditumpuk ke bawah, buat sidebar kiri berisi menu section.
+
+Contoh:
+
+Landing Page
+- Overview
+- Urutan Section
+- SEO & WhatsApp
+
+Konten
+- Hero / Banner Utama
+- Otoritas & Kredibilitas
+- Manfaat Utama
+- Testimoni
+- Keunggulan Program
+- Harga & Jadwal
+- Kurikulum
+- Urgensi & Kuota
+- FAQ
+- CTA Akhir
+
+Lanjutan
+- Reset Konten
+
+Lalu area kanan hanya menampilkan form dari menu yang sedang dipilih.
+
+Misalnya user klik Hero / Banner Utama, maka kanan menampilkan:
+
+Hero / Banner Utama
+Status: Aktif
+6/6 field terisi
+
+Judul Utama
+[ input ]
+
+Subjudul
+[ textarea ]
+
+CTA Utama
+[ input ]
+
+CTA Sekunder
+[ input ]
+
+Gambar Hero
+[ upload / preview ]
+
+Badge / Highlight
+[ input ]
+
+Ini jauh lebih enak daripada user harus scroll panjang dan buka-tutup accordion.
+
+Kenapa sidebar lebih cocok?
+
+Karena halaman ini bukan halaman baca, tapi halaman kerja.
+
+Accordion cocok kalau kontennya sedikit. Tapi editor landing page punya banyak field. Kalau pakai accordion terus, nanti user akan mengalami:
+
+Terlalu banyak scroll.
+Harus buka-tutup section berkali-kali.
+Susah tahu posisi sekarang.
+Susah lompat dari Hero ke Harga.
+Sulit membandingkan antar section.
+Area desktop kanan-kiri terbuang.
+
+Dengan sidebar, admin terasa seperti CMS sungguhan.
+
+Layout yang aku sarankan
+Desktop
+┌─────────────────────────────────────────────────────────────┐
+│ Navbar Admin                                                │
+├───────────────┬───────────────────────────────┬─────────────┤
+│ Sidebar       │ Main Editor                   │ Right Panel │
+│               │                               │             │
+│ Overview      │ Hero / Banner Utama           │ Status      │
+│ Urutan        │ [form fields...]              │ Preview     │
+│ SEO           │                               │ Tips        │
+│ Hero          │                               │             │
+│ Otoritas      │                               │             │
+│ Harga         │                               │             │
+└───────────────┴───────────────────────────────┴─────────────┘
+
+Kalau ingin lebih simpel, cukup 2 kolom:
+
+┌───────────────┬──────────────────────────────────────────────┐
+│ Sidebar       │ Main Editor                                  │
+│ 280px         │ max-width 800-960px                          │
+└───────────────┴──────────────────────────────────────────────┘
+Ukuran yang ideal
+
+Untuk layar desktop:
+
+admin-layout {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 24px;
+}
+
+Kalau mau ada panel kanan:
+
+grid-template-columns: 260px minmax(0, 1fr) 280px;
+
+Tapi untuk tahap sekarang, aku sarankan jangan 3 kolom dulu. Pakai 2 kolom sudah cukup kuat dan lebih mudah diimplementasikan.
+
+Bentuk sidebar yang bagus
+
+Sidebar jangan cuma daftar link polos. Buat informatif.
+
+Contoh item sidebar:
+
+✓ Overview
+✓ Urutan Section
+✓ SEO & WhatsApp
+
+Konten Landing Page
+✓ Hero / Banner Utama        6/6
+✓ Otoritas & Kredibilitas    5/5
+✓ Manfaat Utama              4/4
+✓ Testimoni                  4/4
+✓ Keunggulan Program         4/4
+✓ Harga & Jadwal             5/5
+✓ Kurikulum                  3/3
+✓ Urgensi & Kuota            4/4
+✓ FAQ                        3/3
+✓ CTA Akhir                  4/4
+
+Kalau ada yang belum lengkap:
+
+! Testimoni                  2/4
+
+Kalau hidden:
+
+○ Testimoni                  Hidden
+
+Kalau aktif:
+
+✓ Hero                       Aktif
+
+Ini membuat sidebar bukan hanya navigasi, tapi juga status map.
+
+Bagian atas sekarang tetap dipakai
+
+Bagian statistik di atas sudah bagus:
+
+Total Section
+Tampil/Sembunyi
+SEO Lengkap
+Status Tersimpan
+
+Tapi setelah pakai sidebar, posisinya bisa jadi seperti ini:
+
+Editor Landing Page                         [Preview]
+Edit teks, gambar, item, urutan & SEO.
+
+[Total Section] [Tampil/Sembunyi] [SEO Lengkap] [Status]
+
+Lalu di bawahnya baru layout 2 kolom.
+
+Bagian “Urutan & Tampilan Section” sebaiknya jadi menu sendiri
+
+Yang sekarang terbuka panjang di atas itu bagus, tapi kalau tetap ditaruh di main page, dia memakan tinggi layar terlalu banyak.
+
+Lebih bagus jadikan menu sidebar:
+
+Urutan Section
+
+Saat diklik, kanan menampilkan daftar drag/sort/toggle:
+
+Urutan & Tampilan Section
+
+[≡] Hero / Banner Utama          [Tampil]
+[≡] Otoritas & Kredibilitas      [Tampil]
+[≡] Manfaat Utama                [Tampil]
+[≡] Testimoni                    [Tampil]
+...
+
+Jadi bukan tampil permanen di atas. Ini membuat halaman lebih ringan.
+
+Search section tetap berguna, tapi pindahkan ke sidebar
+
+Search saat ini berada di area utama. Kalau pakai sidebar, search lebih cocok di atas menu sidebar.
+
+[ Cari section... ]
+
+Pengaturan
+- Overview
+- Urutan Section
+- SEO & WhatsApp
+
+Konten
+- Hero
+- Otoritas
+- Manfaat
+...
+
+Saat user ketik “harga”, sidebar filter ke “Harga & Jadwal”.
+
+Tombol “Buka Semua / Tutup Semua” tidak dibutuhkan lagi
+
+Kalau sudah tidak pakai accordion, tombol:
+
+Buka Semua
+Tutup Semua
+
+bisa dihapus.
+
+Gantinya:
+
+Simpan
+Preview
+Reset
+Status section
+
+Karena alurnya bukan buka-tutup lagi, tapi pindah tab/section.
+
+Untuk mobile tetap boleh pakai accordion
+
+Penting: jangan paksa sidebar di mobile.
+
+Untuk desktop:
+
+Sidebar kiri + editor kanan
+
+Untuk mobile:
+
+Dropdown pilih section
+atau accordion
+
+Contoh mobile:
+
+Pilih Section
+[ Hero / Banner Utama v ]
+
+[Form Hero]
+
+Atau tetap accordion seperti sekarang. Jadi:
+
+Desktop: sidebar editor
+Tablet: sidebar kecil atau top tabs
+Mobile: select dropdown / accordion
+
+Ini responsif dan realistis.
+
+Saran struktur final halaman
+Desktop final yang paling ideal
+Navbar Admin
+
+Editor Landing Page                                  [Preview]
+Edit teks, gambar, item, urutan & SEO.
+
+[10 Section] [10/0 Tampil/Sembunyi] [SEO 100%] [Tersimpan]
+
+┌────────────────────────┬─────────────────────────────────────┐
+│ Cari section...         │ Hero / Banner Utama                 │
+│                        │ Status: Aktif · 6/6 terisi           │
+│ PENGATURAN             │                                     │
+│ Overview               │ Judul Utama                         │
+│ Urutan Section         │ [input]                             │
+│ SEO & WhatsApp         │                                     │
+│                        │ Subjudul                            │
+│ KONTEN LANDING PAGE    │ [textarea]                          │
+│ Hero                   │                                     │
+│ Otoritas               │ CTA Utama                           │
+│ Manfaat                │ [input]                             │
+│ Testimoni              │                                     │
+│ Keunggulan             │ [Simpan Section]                    │
+│ Harga                  │                                     │
+│ Kurikulum              │                                     │
+│ Urgensi                │                                     │
+│ FAQ                    │                                     │
+│ CTA Akhir              │                                     │
+│                        │                                     │
+│ LANJUTAN               │                                     │
+│ Reset Konten           │                                     │
+└────────────────────────┴─────────────────────────────────────┘
+
+Sticky bottom:
+Belum ada perubahan                 [Batalkan] [Simpan ke Landing Page]
+Apakah accordion harus dihapus total?
+
+Menurutku: untuk desktop, iya, sebaiknya tidak lagi bergantung pada accordion utama.
+
+Tapi di dalam setiap section, kamu masih boleh pakai accordion kecil.
+
+Contoh di menu Hero:
+
+Hero / Banner Utama
+
+[Konten Teks]
+[Gambar / Visual]
+[CTA Button]
+[Pengaturan Tampilan]
+
+Jadi accordion tetap ada, tapi hanya untuk sub-bagian kecil, bukan untuk seluruh halaman.
+
+Kekurangan kalau pakai sidebar
+
+Biar objektif, ada beberapa konsekuensi:
+
+Implementasi lebih kompleks.
+Perlu state activeSection.
+Form harus dirender berdasarkan section yang dipilih.
+Perlu desain responsive tambahan.
+Kalau user ingin melihat semua field sekaligus, sidebar membuatnya tidak langsung terlihat.
+
+Tapi untuk admin profesional, kekurangan itu masih sangat layak.
+
+Rekomendasi paling praktis untuk implementasi
+
+Jangan langsung rombak semua. Lakukan bertahap.
+
+Tahap 1
+
+Buat layout 2 kolom:
+
+Kiri: sidebar menu section
+Kanan: tetap tampilkan accordion/form section terpilih
+Tahap 2
+
+Hapus accordion utama di konten landing page.
+
+Tahap 3
+
+Setiap menu sidebar menampilkan form spesifik.
+
+Tahap 4
+
+Tambahkan preview kecil atau status panel.
+
+Keputusan desain yang aku sarankan
+
+Gunakan ini:
+
+Desktop:
+Sidebar kiri sticky + form editor kanan
+
+Mobile:
+Dropdown pilih section + form section
+
+Jangan gunakan:
+
+Semua section dalam accordion panjang
+
+Karena desain sekarang memang sudah rapi, tapi masih terasa seperti admin sederhana. Dengan sidebar, naik kelas jadi seperti mini CMS / professional landing page builder.
