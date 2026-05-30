@@ -15,6 +15,7 @@
 	const navLinks = $derived(
 		isAdmin
 			? [
+					{ label: 'Landing Page', href: '/admin/landing' },
 					{ label: 'Kelola Materi', href: '/admin/courses' },
 					{ label: 'Voucher', href: '/admin/vouchers' },
 					{ label: 'Pesanan', href: '/admin/orders' }
