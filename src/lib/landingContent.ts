@@ -163,7 +163,7 @@ export const defaultLandingContent: LandingContent = {
 		get badge() {
 			return `Crypto Sharia Masterclass ${new Date().getFullYear()}`;
 		},
-		title: 'Learn Systematic Crypto Investing Aligned with Islamic Values',
+		title: '',
 		subtitle:
 			'Belajar langsung bersama para praktisi berpengalaman yang telah tersertifikasi standar BNSP & internasional dalam bidang investasi dan industri crypto.',
 		description:
@@ -173,7 +173,8 @@ export const defaultLandingContent: LandingContent = {
 		videoUrl: '',
 		videoLabel: 'intro-masterclass.mp4',
 		videoTitle: 'Video Perkenalan Program',
-		videoDescription: 'Placeholder upload-ready untuk memperkenalkan visi program dan mentor utama.',
+		videoDescription:
+			'Placeholder upload-ready untuk memperkenalkan visi program dan mentor utama.',
 		highlights: [
 			{ symbol: 'FHE', performance: '+400%' },
 			{ symbol: 'UMBRA', performance: '+280%' },
@@ -237,8 +238,7 @@ export const defaultLandingContent: LandingContent = {
 			{
 				label: '01',
 				title: 'Strategi Cuan Halal di Crypto',
-				description:
-					'Memahami strategi investasi crypto yang terukur dan sesuai prinsip syariah.'
+				description: 'Memahami strategi investasi crypto yang terukur dan sesuai prinsip syariah.'
 			},
 			{
 				label: '02',
@@ -287,8 +287,7 @@ export const defaultLandingContent: LandingContent = {
 	usp: {
 		eyebrow: 'Unique Selling Proposition',
 		title: 'Kenapa Harus Crypto Sharia Masterclass?',
-		quote:
-			'"The best investment you can make is an investment in yourself." - Warren Buffett',
+		quote: '"The best investment you can make is an investment in yourself." - Warren Buffett',
 		items: [
 			{
 				label: 'Practice',
@@ -490,11 +489,7 @@ export function subscribeLandingContent(cb: (content: LandingContent) => void): 
 
 /** Persist the full content document (admin only). */
 export async function saveLandingContent(content: LandingContent): Promise<void> {
-	await setDoc(
-		CONTENT_REF(),
-		{ ...content, updatedAt: serverTimestamp() },
-		{ merge: false }
-	);
+	await setDoc(CONTENT_REF(), { ...content, updatedAt: serverTimestamp() }, { merge: false });
 }
 
 // ---------------------------------------------------------------------------
@@ -544,7 +539,13 @@ export function sectionCompleteness(
 		}
 		case 'pricing': {
 			const c = content.pricing;
-			return countFields([c.eyebrow, c.title, c.price, c.ctaLabel, c.benefitCards.length ? 'x' : '']);
+			return countFields([
+				c.eyebrow,
+				c.title,
+				c.price,
+				c.ctaLabel,
+				c.benefitCards.length ? 'x' : ''
+			]);
 		}
 		case 'curriculum': {
 			const c = content.curriculum;

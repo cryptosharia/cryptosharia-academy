@@ -58,11 +58,6 @@
 					>
 						{content.hero.badge}
 					</h1>
-					<p
-						class="mt-5 max-w-2xl text-lg leading-8 font-semibold text-orange-100 sm:text-2xl lg:text-3xl"
-					>
-						{content.hero.title}
-					</p>
 					<p class="mt-6 max-w-2xl text-base leading-8 text-slate-300 sm:text-lg">
 						{content.hero.subtitle}
 					</p>
