@@ -169,10 +169,7 @@
 			<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 				<div class="grid gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:items-start">
 					<div>
-						<p class="text-sm font-bold tracking-wider text-orange-600 uppercase">
-							{content.authority.eyebrow}
-						</p>
-						<h2 class="mt-3 text-3xl font-extrabold text-slate-900 sm:text-4xl dark:text-white">
+						<h2 class="text-3xl font-extrabold text-slate-900 sm:text-4xl dark:text-white">
 							{content.authority.title}
 						</h2>
 						<p class="mt-5 text-base leading-8 text-slate-600 dark:text-slate-300">
@@ -193,10 +190,8 @@
 									</div>
 								{:else}
 									<div
-										class="mb-4 flex aspect-video items-center justify-center rounded-md border border-dashed border-slate-300 bg-white text-xs font-bold tracking-wider text-slate-400 uppercase dark:border-slate-700 dark:bg-slate-950"
-									>
-										{item.meta}
-									</div>
+										class="mb-4 aspect-video rounded-md border border-dashed border-slate-300 bg-white dark:border-slate-700 dark:bg-slate-950"
+									></div>
 								{/if}
 								<h3 class="text-lg font-bold text-slate-900 dark:text-white">{item.title}</h3>
 								<p class="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-400">
@@ -225,10 +220,7 @@
 		<section class="bg-slate-50 py-20 dark:bg-slate-900" id="program">
 			<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 				<div class="mx-auto mb-12 max-w-3xl text-center">
-					<p class="text-sm font-bold tracking-wider text-orange-600 uppercase">
-						{content.valueProps.eyebrow}
-					</p>
-					<h2 class="mt-3 text-3xl font-extrabold text-slate-900 sm:text-4xl dark:text-white">
+					<h2 class="text-3xl font-extrabold text-slate-900 sm:text-4xl dark:text-white">
 						{content.valueProps.title}
 					</h2>
 				</div>
@@ -238,7 +230,6 @@
 						<div
 							class="rounded-lg border border-slate-200 bg-white p-6 dark:border-slate-800 dark:bg-slate-950"
 						>
-							<div class="mb-8 text-sm font-black text-orange-600">{item.label}</div>
 							<h3 class="text-xl font-bold text-slate-900 dark:text-white">{item.title}</h3>
 							<p class="mt-4 text-sm leading-7 text-slate-600 dark:text-slate-400">
 								{item.description}
@@ -252,10 +243,7 @@
 				>
 					<div class="grid gap-0 lg:grid-cols-[0.9fr_1.1fr]">
 						<div class="p-6 sm:p-8">
-							<p class="text-sm font-bold tracking-wider text-slate-500 uppercase">
-								{content.valueProps.docEyebrow}
-							</p>
-							<h3 class="mt-3 text-2xl font-extrabold text-slate-900 dark:text-white">
+							<h3 class="text-2xl font-extrabold text-slate-900 dark:text-white">
 								{content.valueProps.docTitle}
 							</h3>
 							<p class="mt-4 text-sm leading-7 text-slate-600 dark:text-slate-400">
@@ -300,10 +288,7 @@
 		<section class="bg-white py-20 dark:bg-gray-950" id="testimonials">
 			<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 				<div class="mb-12 max-w-3xl">
-					<p class="text-sm font-bold tracking-wider text-orange-600 uppercase">
-						{content.testimonials.eyebrow}
-					</p>
-					<h2 class="mt-3 text-3xl font-extrabold text-slate-900 sm:text-4xl dark:text-white">
+					<h2 class="text-3xl font-extrabold text-slate-900 sm:text-4xl dark:text-white">
 						{content.testimonials.title}
 					</h2>
 					<p class="mt-4 text-base leading-8 text-slate-600 dark:text-slate-300">
@@ -324,8 +309,7 @@
 								<div class="mt-3 h-3 w-3/4 rounded bg-slate-200 dark:bg-slate-800"></div>
 								<div class="mt-5 h-8 w-24 rounded bg-emerald-100 dark:bg-emerald-950"></div>
 							</div>
-							<p class="text-xs font-bold tracking-wider text-orange-600 uppercase">{item.meta}</p>
-							<h3 class="mt-3 text-lg font-bold text-slate-900 dark:text-white">"{item.title}"</h3>
+							<h3 class="text-lg font-bold text-slate-900 dark:text-white">"{item.title}"</h3>
 							<p class="mt-3 text-sm leading-7 text-slate-600 dark:text-slate-400">
 								{item.description}
 							</p>
@@ -341,10 +325,7 @@
 			<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 				<div class="grid gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:items-center">
 					<div>
-						<p class="text-sm font-bold tracking-wider text-orange-300 uppercase">
-							{content.usp.eyebrow}
-						</p>
-						<h2 class="mt-3 text-3xl font-extrabold sm:text-4xl">
+						<h2 class="text-3xl font-extrabold sm:text-4xl">
 							{content.usp.title}
 						</h2>
 						<blockquote
@@ -357,10 +338,7 @@
 					<div class="grid gap-4 sm:grid-cols-2">
 						{#each content.usp.items as item}
 							<div class="rounded-lg border border-white/10 bg-white/[0.04] p-5">
-								<p class="text-xs font-bold tracking-wider text-orange-300 uppercase">
-									{item.label}
-								</p>
-								<h3 class="mt-3 text-lg font-bold text-white">{item.title}</h3>
+								<h3 class="text-lg font-bold text-white">{item.title}</h3>
 								<p class="mt-3 text-sm leading-6 text-slate-400">{item.description}</p>
 							</div>
 						{/each}
@@ -375,10 +353,7 @@
 			<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 				<div class="grid gap-10 lg:grid-cols-[1fr_0.9fr] lg:items-center">
 					<div>
-						<p class="text-sm font-bold tracking-wider text-orange-600 uppercase">
-							{content.pricing.eyebrow}
-						</p>
-						<h2 class="mt-3 text-3xl font-extrabold text-slate-900 sm:text-4xl dark:text-white">
+						<h2 class="text-3xl font-extrabold text-slate-900 sm:text-4xl dark:text-white">
 							{content.pricing.title}
 						</h2>
 						<p class="mt-5 text-base leading-8 text-slate-600 dark:text-slate-300">
@@ -408,12 +383,7 @@
 					<div
 						class="rounded-lg border border-orange-200 bg-orange-50 p-6 shadow-xl shadow-orange-950/10 dark:border-orange-900/60 dark:bg-orange-950/20"
 					>
-						<p
-							class="text-sm font-bold tracking-wider text-orange-700 uppercase dark:text-orange-300"
-						>
-							{content.pricing.priceBadge}
-						</p>
-						<div class="mt-5 flex items-end gap-3">
+						<div class="flex items-end gap-3">
 							<span class="text-lg font-bold text-slate-500 line-through"
 								>{content.pricing.originalPrice}</span
 							>
@@ -456,10 +426,7 @@
 		<section class="bg-slate-50 py-20 dark:bg-slate-900" id="curriculum">
 			<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 				<div class="mx-auto mb-12 max-w-3xl text-center">
-					<p class="text-sm font-bold tracking-wider text-orange-600 uppercase">
-						{content.curriculum.eyebrow}
-					</p>
-					<h2 class="mt-3 text-3xl font-extrabold text-slate-900 sm:text-4xl dark:text-white">
+					<h2 class="text-3xl font-extrabold text-slate-900 sm:text-4xl dark:text-white">
 						{content.curriculum.title}
 					</h2>
 				</div>
@@ -493,10 +460,7 @@
 				class="mx-auto flex max-w-7xl flex-col items-start justify-between gap-6 px-4 sm:px-6 lg:flex-row lg:items-center lg:px-8"
 			>
 				<div>
-					<p class="text-sm font-black tracking-wider text-orange-100 uppercase">
-						{content.urgency.eyebrow}
-					</p>
-					<h2 class="mt-2 text-3xl font-extrabold sm:text-4xl">{content.urgency.title}</h2>
+					<h2 class="text-3xl font-extrabold sm:text-4xl">{content.urgency.title}</h2>
 					<p class="mt-3 max-w-2xl text-sm leading-7 text-orange-50">
 						{content.urgency.description}
 					</p>
@@ -531,10 +495,7 @@
 		<section class="bg-white py-20 dark:bg-gray-950" id="faq">
 			<div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
 				<div class="mb-10 text-center">
-					<p class="text-sm font-bold tracking-wider text-orange-600 uppercase">
-						{content.faq.eyebrow}
-					</p>
-					<h2 class="mt-3 text-3xl font-extrabold text-slate-900 sm:text-4xl dark:text-white">
+					<h2 class="text-3xl font-extrabold text-slate-900 sm:text-4xl dark:text-white">
 						{content.faq.title}
 					</h2>
 				</div>
@@ -581,10 +542,7 @@
 	{#if sectionId === 'finalCta'}
 		<section class="bg-slate-950 py-20 text-white">
 			<div class="mx-auto max-w-5xl px-4 text-center sm:px-6 lg:px-8">
-				<p class="text-sm font-bold tracking-wider text-orange-300 uppercase">
-					{content.finalCta.eyebrow}
-				</p>
-				<h2 class="mt-4 text-4xl leading-tight font-black sm:text-5xl">
+				<h2 class="text-4xl leading-tight font-black sm:text-5xl">
 					{content.finalCta.title}
 				</h2>
 				<p class="mx-auto mt-5 max-w-2xl text-base leading-8 text-slate-300">

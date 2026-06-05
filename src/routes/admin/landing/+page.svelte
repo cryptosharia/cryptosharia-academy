@@ -841,7 +841,6 @@
 {/snippet}
 
 {#snippet authorityForm()}
-	{@render textField('Eyebrow', () => content.authority.eyebrow, (v) => (content.authority.eyebrow = v))}
 	{@render textField('Judul', () => content.authority.title, (v) => (content.authority.title = v))}
 	{@render areaField('Deskripsi', () => content.authority.description, (v) => (content.authority.description = v))}
 	<div class="border-t border-gray-100 pt-4 dark:border-gray-700">
@@ -853,7 +852,6 @@
 						<span class="text-[10px] font-bold text-gray-400">ITEM {i + 1}</span>
 						{@render removeBtn(() => (content.authority.activities = removeItem(content.authority.activities, i)))}
 					</div>
-					<input bind:value={a.meta} placeholder="Label (cth. Live mentoring)" class={inputClass} />
 					<input bind:value={a.title} placeholder="Judul" class={inputClass} />
 					<textarea bind:value={a.description} rows="2" placeholder="Deskripsi" class="{inputClass} resize-none"></textarea>
 					{@render imageField('Gambar', `activity-${i}`, () => a.image, (v) => (a.image = v))}
@@ -879,7 +877,6 @@
 {/snippet}
 
 {#snippet valuePropsForm()}
-	{@render textField('Eyebrow', () => content.valueProps.eyebrow, (v) => (content.valueProps.eyebrow = v))}
 	{@render textField('Judul', () => content.valueProps.title, (v) => (content.valueProps.title = v))}
 	<div class="border-t border-gray-100 pt-4 dark:border-gray-700">
 		{@render listHeader('Item Manfaat', () => (content.valueProps.items = addItem(content.valueProps.items, { label: '', title: '', description: '' })))}
@@ -890,7 +887,6 @@
 						<span class="text-[10px] font-bold text-gray-400">ITEM {i + 1}</span>
 						{@render removeBtn(() => (content.valueProps.items = removeItem(content.valueProps.items, i)))}
 					</div>
-					<input bind:value={item.label} placeholder="Nomor/label (cth. 01)" class={inputClass} />
 					<input bind:value={item.title} placeholder="Judul" class={inputClass} />
 					<textarea bind:value={item.description} rows="2" placeholder="Deskripsi" class="{inputClass} resize-none"></textarea>
 				</div>
@@ -898,7 +894,6 @@
 		</div>
 	</div>
 	<div class="border-t border-gray-100 pt-4 dark:border-gray-700">
-		{@render textField('Dokumentasi — Eyebrow', () => content.valueProps.docEyebrow, (v) => (content.valueProps.docEyebrow = v))}
 		{@render textField('Dokumentasi — Judul', () => content.valueProps.docTitle, (v) => (content.valueProps.docTitle = v))}
 		{@render areaField('Dokumentasi — Deskripsi', () => content.valueProps.docDescription, (v) => (content.valueProps.docDescription = v))}
 	</div>
@@ -909,7 +904,6 @@
 {/snippet}
 
 {#snippet testimonialsForm()}
-	{@render textField('Eyebrow', () => content.testimonials.eyebrow, (v) => (content.testimonials.eyebrow = v))}
 	{@render textField('Judul', () => content.testimonials.title, (v) => (content.testimonials.title = v))}
 	{@render areaField('Deskripsi', () => content.testimonials.description, (v) => (content.testimonials.description = v))}
 	<div class="border-t border-gray-100 pt-4 dark:border-gray-700">
@@ -921,7 +915,6 @@
 						<span class="text-[10px] font-bold text-gray-400">ITEM {i + 1}</span>
 						{@render removeBtn(() => (content.testimonials.items = removeItem(content.testimonials.items, i)))}
 					</div>
-					<input bind:value={item.meta} placeholder="Label (cth. Discord Community)" class={inputClass} />
 					<input bind:value={item.title} placeholder="Kutipan singkat" class={inputClass} />
 					<textarea bind:value={item.description} rows="2" placeholder="Deskripsi" class="{inputClass} resize-none"></textarea>
 				</div>
@@ -931,7 +924,6 @@
 {/snippet}
 
 {#snippet uspForm()}
-	{@render textField('Eyebrow', () => content.usp.eyebrow, (v) => (content.usp.eyebrow = v))}
 	{@render textField('Judul', () => content.usp.title, (v) => (content.usp.title = v))}
 	{@render areaField('Kutipan / Quote', () => content.usp.quote, (v) => (content.usp.quote = v))}
 	<div class="border-t border-gray-100 pt-4 dark:border-gray-700">
@@ -943,7 +935,6 @@
 						<span class="text-[10px] font-bold text-gray-400">ITEM {i + 1}</span>
 						{@render removeBtn(() => (content.usp.items = removeItem(content.usp.items, i)))}
 					</div>
-					<input bind:value={item.label} placeholder="Label (cth. Practice)" class={inputClass} />
 					<input bind:value={item.title} placeholder="Judul" class={inputClass} />
 					<textarea bind:value={item.description} rows="2" placeholder="Deskripsi" class="{inputClass} resize-none"></textarea>
 				</div>
@@ -953,11 +944,9 @@
 {/snippet}
 
 {#snippet pricingForm()}
-	{@render textField('Eyebrow', () => content.pricing.eyebrow, (v) => (content.pricing.eyebrow = v))}
 	{@render textField('Judul', () => content.pricing.title, (v) => (content.pricing.title = v))}
 	{@render areaField('Deskripsi', () => content.pricing.description, (v) => (content.pricing.description = v))}
 	<div class="grid grid-cols-2 gap-4">
-		{@render textField('Badge Harga', () => content.pricing.priceBadge, (v) => (content.pricing.priceBadge = v))}
 		{@render textField('Label Tombol', () => content.pricing.ctaLabel, (v) => (content.pricing.ctaLabel = v))}
 	</div>
 	<div class="grid grid-cols-2 gap-4">
@@ -991,7 +980,6 @@
 {/snippet}
 
 {#snippet curriculumForm()}
-	{@render textField('Eyebrow', () => content.curriculum.eyebrow, (v) => (content.curriculum.eyebrow = v))}
 	{@render textField('Judul', () => content.curriculum.title, (v) => (content.curriculum.title = v))}
 	<div class="border-t border-gray-100 pt-4 dark:border-gray-700">
 		{@render listHeader('Materi / Topik', () => (content.curriculum.topics = [...content.curriculum.topics, '']))}
@@ -1008,14 +996,12 @@
 {/snippet}
 
 {#snippet urgencyForm()}
-	{@render textField('Eyebrow', () => content.urgency.eyebrow, (v) => (content.urgency.eyebrow = v))}
 	{@render textField('Judul', () => content.urgency.title, (v) => (content.urgency.title = v))}
 	{@render areaField('Deskripsi', () => content.urgency.description, (v) => (content.urgency.description = v))}
 	{@render textField('Label Tombol', () => content.urgency.ctaLabel, (v) => (content.urgency.ctaLabel = v))}
 {/snippet}
 
 {#snippet faqForm()}
-	{@render textField('Eyebrow', () => content.faq.eyebrow, (v) => (content.faq.eyebrow = v))}
 	{@render textField('Judul', () => content.faq.title, (v) => (content.faq.title = v))}
 	<div class="border-t border-gray-100 pt-4 dark:border-gray-700">
 		{@render listHeader('Pertanyaan', () => (content.faq.items = addItem(content.faq.items, { question: '', answer: '' })))}
@@ -1035,7 +1021,6 @@
 {/snippet}
 
 {#snippet finalCtaForm()}
-	{@render textField('Eyebrow', () => content.finalCta.eyebrow, (v) => (content.finalCta.eyebrow = v))}
 	{@render textField('Judul', () => content.finalCta.title, (v) => (content.finalCta.title = v))}
 	{@render areaField('Deskripsi', () => content.finalCta.description, (v) => (content.finalCta.description = v))}
 	{@render textField('Label Tombol', () => content.finalCta.ctaLabel, (v) => (content.finalCta.ctaLabel = v))}

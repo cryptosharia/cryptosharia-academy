@@ -126,7 +126,7 @@ export type LandingContent = {
 
 export const SECTION_LABELS: Record<SectionId, string> = {
 	hero: 'Hero / Banner Utama',
-	authority: 'Otoritas & Kredibilitas',
+	authority: 'Kredibilitas',
 	valueProps: 'Manfaat Utama',
 	testimonials: 'Testimoni',
 	usp: 'Keunggulan Program',
@@ -183,33 +183,33 @@ export const defaultLandingContent: LandingContent = {
 		]
 	},
 	authority: {
-		eyebrow: 'Otoritas & Kredibilitas',
+		eyebrow: '',
 		title: 'Dibangun dari pengalaman edukasi dan komunitas nyata.',
 		description:
 			'Program ini menggabungkan pengalaman praktisi, standar sertifikasi, dan proses belajar komunitas agar peserta memahami crypto secara sistematis, bukan sekadar mengikuti hype.',
 		activities: [
 			{
-				meta: 'Live mentoring',
+				meta: '',
 				title: 'QnA Session',
 				description:
 					'Forum tanya jawab rutin untuk membahas market, portofolio, dan fiqih muamalah.',
 				image: ''
 			},
 			{
-				meta: 'Community event',
+				meta: '',
 				title: 'Nushafest',
 				description:
 					'Dokumentasi edukasi publik bersama komunitas yang tertarik pada aset digital halal.',
 				image: ''
 			},
 			{
-				meta: 'Offline activity',
+				meta: '',
 				title: 'Halal Kulture Market',
 				description: 'Aktivasi edukasi crypto syariah untuk memperluas literasi investor Muslim.',
 				image: ''
 			},
 			{
-				meta: 'Member circle',
+				meta: '',
 				title: 'Gathering Komunitas',
 				description: 'Diskusi kecil dan networking antar member untuk memperkuat proses belajar.',
 				image: ''
@@ -232,52 +232,52 @@ export const defaultLandingContent: LandingContent = {
 		]
 	},
 	valueProps: {
-		eyebrow: 'Value Proposition',
+		eyebrow: '',
 		title: 'Apa yang Akan Dipelajari?',
 		items: [
 			{
-				label: '01',
+				label: '',
 				title: 'Strategi Cuan Halal di Crypto',
 				description: 'Memahami strategi investasi crypto yang terukur dan sesuai prinsip syariah.'
 			},
 			{
-				label: '02',
+				label: '',
 				title: 'Build Your Sharia Wealth',
 				description:
 					'Membangun aset dan kekayaan jangka panjang dengan pendekatan yang sehat dan berkelanjutan.'
 			},
 			{
-				label: '03',
+				label: '',
 				title: 'Strategi Bertahan di Bear Market',
 				description: 'Belajar menjaga portofolio dan mengambil peluang saat market sedang turun.'
 			}
 		],
-		docEyebrow: 'Dokumentasi Kegiatan',
+		docEyebrow: '',
 		docTitle: 'Seminar, mentoring, QnA Session, dan aktivitas komunitas offline.',
 		docDescription:
 			'Area ini disiapkan untuk foto-foto kegiatan asli ketika materi campaign final tersedia.',
 		docImages: []
 	},
 	testimonials: {
-		eyebrow: 'Social Proof & Testimoni',
+		eyebrow: '',
 		title: 'Member Premium Crypto Sharia yang Sudah Bertumbuh Bersama',
 		description:
 			'Placeholder untuk screenshot testimoni Discord, ucapan terima kasih, dokumentasi profit member, dan sharing pengalaman belajar.',
 		items: [
 			{
-				meta: 'Discord Community',
+				meta: '',
 				title: 'Thanks to you my mentor!',
 				description:
 					'Member membagikan hasil belajar, eksekusi strategi spot, dan progres portofolio di Discord Premium.'
 			},
 			{
-				meta: 'Member feedback',
+				meta: '',
 				title: 'Akhirnya lebih paham cara analisa market tanpa gambling.',
 				description:
 					'Pendekatan riset, manajemen risiko, dan screening syariah membantu member lebih disiplin.'
 			},
 			{
-				meta: 'Portfolio story',
+				meta: '',
 				title: 'Profit tanpa leverage, tetap pakai rencana.',
 				description:
 					'Dokumentasi hasil member ditampilkan sebagai studi kasus edukasi, bukan janji keuntungan.'
@@ -285,35 +285,35 @@ export const defaultLandingContent: LandingContent = {
 		]
 	},
 	usp: {
-		eyebrow: 'Unique Selling Proposition',
+		eyebrow: '',
 		title: 'Kenapa Harus Crypto Sharia Masterclass?',
 		quote: '"The best investment you can make is an investment in yourself." - Warren Buffett',
 		items: [
 			{
-				label: 'Practice',
+				label: '',
 				title: 'Tugas Praktek Langsung',
 				description:
 					'Setiap materi dilengkapi penugasan agar peserta langsung mempraktekkan ilmunya.'
 			},
 			{
-				label: 'Certificate',
+				label: '',
 				title: 'Sertifikat Kelulusan',
 				description:
 					'Peserta mendapatkan sertifikat setelah menyelesaikan evaluasi akhir sebagai bukti kompetensi.'
 			},
 			{
-				label: 'Mentoring',
+				label: '',
 				title: 'FGD & Mentoring',
 				description:
 					'Diskusi kelompok kecil 5-10 orang bersama mentor untuk pendampingan yang lebih personal.'
 			},
 			{
-				label: 'Sharia',
+				label: '',
 				title: 'Sharia Compliant',
 				description: 'Belajar fiqih muamalah serta metode analisa crypto sesuai prinsip syariah.'
 			},
 			{
-				label: 'Network',
+				label: '',
 				title: 'Komunitas Global',
 				description:
 					'Akses networking eksklusif bersama ratusan member dari berbagai industri dan profesi.'
@@ -321,7 +321,7 @@ export const defaultLandingContent: LandingContent = {
 		]
 	},
 	pricing: {
-		eyebrow: 'Jadwal & Harga Program',
+		eyebrow: '',
 		title: 'Gabung Programnya Sekarang',
 		description:
 			'Pelaksanaan program direncanakan pada akhir Juni 2026 atau awal Juli 2026. Tanggal final akan diumumkan segera.',
@@ -335,14 +335,14 @@ export const defaultLandingContent: LandingContent = {
 				items: ['Kelas terstruktur bersama praktisi', 'FGD kecil untuk pendampingan intensif']
 			}
 		],
-		priceBadge: 'Special Price',
+		priceBadge: '',
 		originalPrice: 'Rp3.000.000',
 		price: 'Rp2.000.000',
 		note: 'Harga promo untuk peserta awal dengan kuota mentoring terbatas.',
 		ctaLabel: 'Gabung Sekarang'
 	},
 	curriculum: {
-		eyebrow: 'Detail Kurikulum',
+		eyebrow: '',
 		title: 'Materi Pembelajaran',
 		topics: [
 			'Peta Industri Crypto & Web3',
@@ -355,13 +355,13 @@ export const defaultLandingContent: LandingContent = {
 		]
 	},
 	urgency: {
-		eyebrow: 'Urgency / Scarcity',
+		eyebrow: '',
 		title: 'Special Price for 10 Pax Only',
 		description: 'Kuota terbatas untuk menjaga kualitas mentoring dan diskusi tetap optimal.',
 		ctaLabel: 'Daftar Sekarang'
 	},
 	faq: {
-		eyebrow: 'Frequently Asked Questions',
+		eyebrow: '',
 		title: 'Pertanyaan yang Sering Diajukan',
 		items: [
 			{
@@ -382,7 +382,7 @@ export const defaultLandingContent: LandingContent = {
 		]
 	},
 	finalCta: {
-		eyebrow: 'Crypto Sharia Masterclass',
+		eyebrow: '',
 		title: 'Ilmu Dulu. Cuan Kemudian. Berkah Selamanya.',
 		description:
 			'Mulai dari ilmu yang benar, bangun strategi yang disiplin, dan tetap berpegang pada prinsip syariah.',
@@ -511,14 +511,13 @@ export function sectionCompleteness(
 	switch (id) {
 		case 'hero': {
 			const c = content.hero;
-			const fields = [c.badge, c.title, c.subtitle, c.description, c.primaryCtaLabel];
+			const fields = [c.badge, c.subtitle, c.description, c.primaryCtaLabel];
 			const arr = c.highlights.map((h) => (allFilled([h.symbol, h.performance]) ? 'x' : ''));
 			return countFields([...fields, c.highlights.length ? arr.join('') : '']);
 		}
 		case 'authority': {
 			const c = content.authority;
 			return countFields([
-				c.eyebrow,
 				c.title,
 				c.description,
 				c.activities.length ? 'x' : '',
@@ -527,41 +526,35 @@ export function sectionCompleteness(
 		}
 		case 'valueProps': {
 			const c = content.valueProps;
-			return countFields([c.eyebrow, c.title, c.items.length ? 'x' : '', c.docTitle]);
+			return countFields([c.title, c.items.length ? 'x' : '', c.docTitle]);
 		}
 		case 'testimonials': {
 			const c = content.testimonials;
-			return countFields([c.eyebrow, c.title, c.description, c.items.length ? 'x' : '']);
+			return countFields([c.title, c.description, c.items.length ? 'x' : '']);
 		}
 		case 'usp': {
 			const c = content.usp;
-			return countFields([c.eyebrow, c.title, c.quote, c.items.length ? 'x' : '']);
+			return countFields([c.title, c.quote, c.items.length ? 'x' : '']);
 		}
 		case 'pricing': {
 			const c = content.pricing;
-			return countFields([
-				c.eyebrow,
-				c.title,
-				c.price,
-				c.ctaLabel,
-				c.benefitCards.length ? 'x' : ''
-			]);
+			return countFields([c.title, c.price, c.ctaLabel, c.benefitCards.length ? 'x' : '']);
 		}
 		case 'curriculum': {
 			const c = content.curriculum;
-			return countFields([c.eyebrow, c.title, c.topics.length ? 'x' : '']);
+			return countFields([c.title, c.topics.length ? 'x' : '']);
 		}
 		case 'urgency': {
 			const c = content.urgency;
-			return countFields([c.eyebrow, c.title, c.description, c.ctaLabel]);
+			return countFields([c.title, c.description, c.ctaLabel]);
 		}
 		case 'faq': {
 			const c = content.faq;
-			return countFields([c.eyebrow, c.title, c.items.length ? 'x' : '']);
+			return countFields([c.title, c.items.length ? 'x' : '']);
 		}
 		case 'finalCta': {
 			const c = content.finalCta;
-			return countFields([c.eyebrow, c.title, c.description, c.ctaLabel]);
+			return countFields([c.title, c.description, c.ctaLabel]);
 		}
 	}
 }
