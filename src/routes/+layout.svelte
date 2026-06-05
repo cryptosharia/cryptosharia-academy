@@ -10,6 +10,7 @@
 
 	// On admin routes we hide the public marketing footer + WhatsApp FAB and
 	// show a slim admin footer instead, so the editor feels like a real CMS.
+	const currentYear = new Date().getFullYear();
 	const isAdminRoute = $derived(page.url.pathname.startsWith('/admin'));
 
 	$effect(() => {
@@ -29,7 +30,7 @@
 				class="mx-auto flex max-w-7xl items-center justify-between px-4 text-xs text-gray-400 sm:px-6 lg:px-8 dark:text-gray-500"
 			>
 				<span>CryptoSharia Admin · Landing Page Editor</span>
-				<span>© 2026</span>
+				<span>© {currentYear}</span>
 			</div>
 		</footer>
 	{:else}

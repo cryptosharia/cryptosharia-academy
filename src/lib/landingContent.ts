@@ -160,7 +160,9 @@ export const defaultLandingContent: LandingContent = {
 			'Learn systematic crypto investing aligned with Islamic values bersama praktisi tersertifikasi, mentoring, komunitas, dan kurikulum crypto syariah terstruktur.'
 	},
 	hero: {
-		badge: 'Crypto Sharia Masterclass 2026',
+		get badge() {
+			return `Crypto Sharia Masterclass ${new Date().getFullYear()}`;
+		},
 		title: 'Learn Systematic Crypto Investing Aligned with Islamic Values',
 		subtitle:
 			'Belajar langsung bersama para praktisi berpengalaman yang telah tersertifikasi standar BNSP & internasional dalam bidang investasi dan industri crypto.',

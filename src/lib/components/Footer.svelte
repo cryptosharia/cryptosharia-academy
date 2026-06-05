@@ -1,4 +1,6 @@
 <script lang="ts">
+	const currentYear = new Date().getFullYear();
+
 	const whatsappUrl = `https://api.whatsapp.com/send?phone=6281234567890&text=${encodeURIComponent(
 		'Assalamualaikum CryptoSharia, saya mau daftar Crypto Sharia Masterclass.'
 	)}`;
@@ -158,7 +160,7 @@
 
 			<div class="flex flex-col items-center justify-between gap-4 sm:flex-row">
 				<p class="text-xs font-medium text-slate-500">
-					Copyright © Crypto Sharia Masterclass 2026. All Rights Reserved.
+					Copyright © Crypto Sharia Masterclass {currentYear}. All Rights Reserved.
 				</p>
 				<div class="flex items-center gap-1 text-xs text-slate-500">
 					<span>Terdaftar Resmi di</span>
