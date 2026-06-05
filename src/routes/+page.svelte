@@ -53,18 +53,16 @@
 				class="relative mx-auto grid max-w-7xl gap-12 px-4 py-16 sm:px-6 lg:grid-cols-[1fr_0.9fr] lg:px-8 lg:py-24"
 			>
 				<div class="flex max-w-3xl min-w-0 flex-col justify-center">
-					<div
-						class="mb-6 inline-flex w-fit items-center gap-2 rounded-full border border-orange-400/40 bg-orange-500/10 px-4 py-2 text-sm font-semibold text-orange-200"
-					>
-						<span class="h-2 w-2 rounded-full bg-orange-400"></span>
-						{content.hero.badge}
-					</div>
-
 					<h1
-						class="font-display text-3xl leading-tight font-extrabold tracking-normal break-words sm:text-5xl lg:text-6xl"
+						class="font-display text-4xl leading-tight font-extrabold tracking-normal break-words sm:text-6xl lg:text-7xl"
+					>
+						{content.hero.badge}
+					</h1>
+					<p
+						class="mt-5 max-w-2xl text-lg leading-8 font-semibold text-orange-100 sm:text-2xl lg:text-3xl"
 					>
 						{content.hero.title}
-					</h1>
+					</p>
 					<p class="mt-6 max-w-2xl text-base leading-8 text-slate-300 sm:text-lg">
 						{content.hero.subtitle}
 					</p>
@@ -275,7 +273,11 @@
 									<div
 										class="aspect-[4/3] overflow-hidden rounded-md border border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-950"
 									>
-										<img src={img} alt={content.valueProps.docTitle} class="h-full w-full object-cover" />
+										<img
+											src={img}
+											alt={content.valueProps.docTitle}
+											class="h-full w-full object-cover"
+										/>
 									</div>
 								{/each}
 							{:else}
