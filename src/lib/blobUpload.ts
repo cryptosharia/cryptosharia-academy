@@ -25,6 +25,50 @@ export function sanitizeBlobFileName(fileName: string) {
 	return fileName.replace(/[^a-zA-Z0-9._-]/g, '') || 'image';
 }
 
+async function getBlobUploadClientToken({
+	pathname,
+	scope,
+	idToken,
+	multipart,
+	abortSignal
+}: {
+	pathname: string;
+	scope: BlobUploadScope;
+	idToken: string;
+	multipart: boolean;
+	abortSignal?: AbortSignal;
+}) {
+	const response = await fetch('/api/blob/upload', {
+		method: 'POST',
+		headers: {
+			'content-type': 'application/json',
+			Authorization: `Bearer ${idToken}`
+		},
+		body: JSON.stringify({
+			type: 'blob.generate-client-token',
+			payload: {
+				pathname,
+				clientPayload: JSON.stringify({ scope, idToken }),
+				multipart
+			}
+		}),
+		signal: abortSignal
+	});
+
+	let data: { clientToken?: string; error?: string } = {};
+	try {
+		data = (await response.json()) as { clientToken?: string; error?: string };
+	} catch {
+		// Keep the generic message below when the server does not return JSON.
+	}
+
+	if (!response.ok || !data.clientToken) {
+		throw new Error(data.error || 'Gagal mengambil token upload dari Vercel Blob.');
+	}
+
+	return data.clientToken;
+}
+
 export async function uploadImageToVercelBlob({
 	file,
 	scope,
@@ -32,18 +76,23 @@ export async function uploadImageToVercelBlob({
 	abortSignal,
 	onProgress
 }: UploadImageOptions) {
-	const { upload } = await import('@vercel/blob/client');
+	const { put } = await import('@vercel/blob/client');
 	const pathname = `${scope}/${Date.now()}-${sanitizeBlobFileName(file.name)}`;
+	const multipart = file.size > 4 * 1024 * 1024;
 
-	const blob = await upload(pathname, file, {
+	const token = await getBlobUploadClientToken({
+		pathname,
+		scope,
+		idToken,
+		multipart,
+		abortSignal
+	});
+
+	const blob = await put(pathname, file, {
 		access: 'public',
 		contentType: file.type,
-		handleUploadUrl: '/api/blob/upload',
-		headers: {
-			Authorization: `Bearer ${idToken}`
-		},
-		clientPayload: JSON.stringify({ scope, idToken }),
-		multipart: file.size > 4 * 1024 * 1024,
+		token,
+		multipart,
 		abortSignal,
 		onUploadProgress: ({ percentage }) => {
 			onProgress?.(Math.round(percentage));

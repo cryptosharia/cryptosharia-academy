@@ -65,9 +65,8 @@ function getErrorMessage(error: unknown) {
 }
 
 export const POST: RequestHandler = async ({ request }) => {
-	const body = (await request.json()) as HandleUploadBody;
-
 	try {
+		const body = (await request.json()) as HandleUploadBody;
 		const response = await handleUpload({
 			body,
 			request,
@@ -101,4 +100,8 @@ export const POST: RequestHandler = async ({ request }) => {
 	} catch (error) {
 		return json({ error: getErrorMessage(error) }, { status: 400 });
 	}
+};
+
+export const GET: RequestHandler = async () => {
+	return json({ ok: true, route: 'blob-upload' });
 };
