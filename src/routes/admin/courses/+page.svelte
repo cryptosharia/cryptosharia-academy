@@ -1,6 +1,12 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
+	import { ADMIN_EMAILS } from '$lib/admin';
 	import { userAuth } from '$lib/auth.svelte';
+	import {
+		MAX_IMAGE_SIZE_BYTES,
+		isAllowedImageFile,
+		uploadImageToVercelBlob
+	} from '$lib/blobUpload';
 	import {
 		collection,
 		query,
@@ -12,16 +18,14 @@
 		serverTimestamp,
 		writeBatch
 	} from 'firebase/firestore';
-	import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-	import { db, storage } from '$lib/firebase';
+	import { db } from '$lib/firebase';
 	import { onMount } from 'svelte';
-
-	const ADMIN_EMAILS = ['admin@cryptosharia.id'];
 
 	let courses = $state<any[]>([]);
 	let isLoading = $state(true);
 	let isProcessing = $state(false);
 	let isUploading = $state(false);
+	let uploadProgress = $state(0);
 
 	let isModalOpen = $state(false);
 	let modalMode = $state<'add' | 'edit'>('add');
@@ -256,18 +260,36 @@
 		const file = target.files?.[0];
 		if (!file) return;
 
+		if (!isAllowedImageFile(file)) {
+			alert('File harus berupa gambar JPG, PNG, WebP, GIF, atau AVIF.');
+			target.value = '';
+			return;
+		}
+		if (file.size > MAX_IMAGE_SIZE_BYTES) {
+			alert('Ukuran gambar maksimal 5 MB. Kompres gambar dulu lalu coba lagi.');
+			target.value = '';
+			return;
+		}
+
 		isUploading = true;
+		uploadProgress = 0;
 		try {
-			const filename = `${Date.now()}-${file.name.replace(/[^a-zA-Z0-9._-]/g, '')}`;
-			const storageRef = ref(storage, `courses/${filename}`);
-			await uploadBytes(storageRef, file);
-			const url = await getDownloadURL(storageRef);
+			const idToken = await userAuth.user?.getIdToken();
+			if (!idToken) throw new Error('Sesi admin tidak ditemukan. Login ulang lalu coba upload.');
+
+			const url = await uploadImageToVercelBlob({
+				file,
+				scope: 'courses',
+				idToken,
+				onProgress: (percentage) => (uploadProgress = percentage)
+			});
 			formData.image = url;
 		} catch (error) {
 			console.error('Upload error:', error);
-			alert('Terjadi kesalahan saat upload gambar');
+			alert(error instanceof Error ? error.message : 'Terjadi kesalahan saat upload gambar');
 		} finally {
 			isUploading = false;
+			uploadProgress = 0;
 			target.value = '';
 		}
 	}
@@ -587,7 +609,7 @@
 											d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
 										/></svg
 									>
-									Loading...
+									Loading... {uploadProgress}%
 								{:else}
 									<svg class="mr-1.5 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
 										><path
