@@ -1,5 +1,6 @@
 import { json } from '@sveltejs/kit';
 import { handleUpload, type HandleUploadBody } from '@vercel/blob/client';
+import { env } from '$env/dynamic/private';
 import type { RequestHandler } from './$types';
 import { ADMIN_EMAILS } from '$lib/admin';
 import { ALLOWED_IMAGE_TYPES, MAX_IMAGE_SIZE_BYTES } from '$lib/blobUpload';
@@ -64,12 +65,23 @@ function getErrorMessage(error: unknown) {
 	return error instanceof Error ? error.message : 'Gagal memproses upload gambar.';
 }
 
+function getBlobReadWriteToken() {
+	const token = env.BLOB_READ_WRITE_TOKEN?.trim();
+	if (!token) {
+		throw new Error(
+			'Vercel Blob belum dikonfigurasi. Tambahkan BLOB_READ_WRITE_TOKEN di Environment Variables Vercel, lalu redeploy.'
+		);
+	}
+	return token;
+}
+
 export const POST: RequestHandler = async ({ request }) => {
 	try {
 		const body = (await request.json()) as HandleUploadBody;
 		const response = await handleUpload({
 			body,
 			request,
+			token: getBlobReadWriteToken(),
 			onBeforeGenerateToken: async (pathname, clientPayload) => {
 				const pathScope = getUploadScope(pathname);
 				const payload = getClientPayload(clientPayload);
