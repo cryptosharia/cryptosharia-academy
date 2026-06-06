@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { goto, beforeNavigate } from '$app/navigation';
 	import { onMount } from 'svelte';
-	import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+	import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 	import { storage } from '$lib/firebase';
 	import { userAuth } from '$lib/auth.svelte';
 	import {
@@ -180,21 +180,81 @@
 	// ---- Image upload to Firebase Storage ----
 	// Tracks which upload slot is busy (keyed by an arbitrary id) for spinners.
 	let uploadingKey = $state<string | null>(null);
+	let uploadProgress = $state(0);
+	let uploadError = $state<string | null>(null);
+
+	const MAX_IMAGE_SIZE_BYTES = 5 * 1024 * 1024;
+	const UPLOAD_TIMEOUT_MS = 60_000;
+
+	function formatUploadError(error: unknown) {
+		const code =
+			typeof error === 'object' && error !== null && 'code' in error ? String(error.code) : '';
+		if (code === 'storage/unauthorized') {
+			return 'Upload ditolak Firebase Storage. Cek Storage Rules untuk email admin yang sedang login.';
+		}
+		if (code === 'storage/retry-limit-exceeded') {
+			return 'Upload terlalu lama dan dihentikan. Coba koneksi lain atau kecilkan ukuran gambar.';
+		}
+		if (code === 'storage/canceled') {
+			return 'Upload dibatalkan karena terlalu lama. Coba ulangi dengan gambar yang lebih kecil.';
+		}
+		if (error instanceof Error && error.message) return error.message;
+		return 'Gagal mengunggah gambar. Coba lagi.';
+	}
+
+	function uploadFile(storageRef: ReturnType<typeof ref>, file: File) {
+		return new Promise<void>((resolve, reject) => {
+			const task = uploadBytesResumable(storageRef, file, { contentType: file.type });
+			const timeout = window.setTimeout(() => {
+				task.cancel();
+				reject(new Error('Upload melebihi 60 detik. Coba ulangi dengan gambar yang lebih kecil.'));
+			}, UPLOAD_TIMEOUT_MS);
+
+			task.on(
+				'state_changed',
+				(snapshot) => {
+					uploadProgress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+				},
+				(error) => {
+					window.clearTimeout(timeout);
+					reject(error);
+				},
+				() => {
+					window.clearTimeout(timeout);
+					resolve();
+				}
+			);
+		});
+	}
 
 	async function uploadImage(file: File, key: string, onDone: (url: string) => void) {
+		if (!file.type.startsWith('image/')) {
+			alert('File harus berupa gambar.');
+			return;
+		}
+		if (file.size > MAX_IMAGE_SIZE_BYTES) {
+			alert('Ukuran gambar maksimal 5 MB. Kompres gambar dulu lalu coba lagi.');
+			return;
+		}
+
 		uploadingKey = key;
+		uploadProgress = 0;
+		uploadError = null;
 		try {
-			const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, '');
+			const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, '') || 'image';
 			const filename = `${Date.now()}-${safeName}`;
 			const storageRef = ref(storage, `landing/${filename}`);
-			await uploadBytes(storageRef, file);
+			await uploadFile(storageRef, file);
 			const url = await getDownloadURL(storageRef);
 			onDone(url);
 		} catch (e) {
+			const message = formatUploadError(e);
 			console.error('Upload error:', e);
-			alert('Gagal mengunggah gambar. Coba lagi.');
+			uploadError = message;
+			alert(message);
 		} finally {
 			uploadingKey = null;
+			uploadProgress = 0;
 		}
 	}
 
@@ -657,12 +717,16 @@
 			<label class="relative flex cursor-pointer items-center justify-center rounded-lg bg-gray-200 px-4 text-sm font-semibold text-gray-700 transition-colors hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600">
 				{#if uploadingKey === key}
 					<svg class="h-4 w-4 animate-spin" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" /><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" /></svg>
+					<span class="ml-1.5">{uploadProgress}%</span>
 				{:else}
 					Upload
 				{/if}
 				<input type="file" accept="image/*" class="absolute inset-0 h-full w-full cursor-pointer opacity-0" onchange={(e) => handleUpload(e, key, setVal)} disabled={uploadingKey === key} />
 			</label>
 		</div>
+		{#if uploadError && uploadingKey === null}
+			<p class="mt-2 text-[11px] font-semibold text-red-500">{uploadError}</p>
+		{/if}
 		{#if getVal()}
 			<div class="mt-2 flex items-center gap-3">
 				<img src={getVal()} alt="Preview" class="h-16 w-24 rounded-md border border-gray-200 object-cover dark:border-gray-700" />
@@ -705,13 +769,16 @@
 		<label class="mt-2 flex w-full cursor-pointer items-center justify-center gap-2 rounded-lg border border-dashed border-gray-300 bg-gray-50 px-4 py-3 text-sm font-semibold text-gray-600 transition-colors hover:border-primary-400 hover:bg-primary-50/40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-primary-600">
 			{#if uploadingKey === key}
 				<svg class="h-4 w-4 animate-spin" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" /><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" /></svg>
-				Mengunggah...
+				Mengunggah... {uploadProgress}%
 			{:else}
 				<svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" /></svg>
 				Unggah Gambar (bisa pilih banyak)
 			{/if}
 			<input type="file" accept="image/*" multiple class="hidden" onchange={(e) => handleMultiUpload(e, key, (url) => setList([...getList(), url]))} disabled={uploadingKey === key} />
 		</label>
+		{#if uploadError && uploadingKey === null}
+			<p class="mt-2 text-[11px] font-semibold text-red-500">{uploadError}</p>
+		{/if}
 		{#if getList().length === 0}
 			<div class="mt-3 flex flex-col items-center gap-1 rounded-lg border border-dashed border-amber-300 bg-amber-50 py-6 text-center dark:border-amber-700/60 dark:bg-amber-950/20">
 				<svg class="h-6 w-6 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
