@@ -42,7 +42,7 @@ export async function uploadImageToVercelBlob({
 		headers: {
 			Authorization: `Bearer ${idToken}`
 		},
-		clientPayload: JSON.stringify({ scope }),
+		clientPayload: JSON.stringify({ scope, idToken }),
 		multipart: file.size > 4 * 1024 * 1024,
 		abortSignal,
 		onUploadProgress: ({ percentage }) => {

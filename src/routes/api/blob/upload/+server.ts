@@ -7,13 +7,15 @@ import { getFirebaseUserFromIdToken } from '$lib/server/firebaseAuth';
 
 const BLOB_PATH_PATTERN = /^(landing|courses)\/[a-zA-Z0-9._-]+$/;
 
+type BlobUploadPayload = {
+	scope: 'landing' | 'courses';
+	idToken?: string;
+};
+
 function getBearerToken(request: Request) {
 	const authorization = request.headers.get('authorization');
 	const token = authorization?.match(/^Bearer\s+(.+)$/i)?.[1];
-	if (!token) {
-		throw new Error('Login admin dibutuhkan untuk upload gambar.');
-	}
-	return token;
+	return token || null;
 }
 
 function getUploadScope(pathname: string) {
@@ -21,7 +23,41 @@ function getUploadScope(pathname: string) {
 	if (!match) {
 		throw new Error('Path upload gambar tidak valid.');
 	}
-	return match[1];
+	return match[1] as BlobUploadPayload['scope'];
+}
+
+function getClientPayload(clientPayload: string | null | undefined): BlobUploadPayload {
+	if (!clientPayload) {
+		throw new Error('Login admin dibutuhkan untuk upload gambar.');
+	}
+
+	let payload: unknown;
+	try {
+		payload = JSON.parse(clientPayload);
+	} catch {
+		throw new Error('Payload upload gambar tidak valid.');
+	}
+
+	if (
+		!payload ||
+		typeof payload !== 'object' ||
+		!('scope' in payload) ||
+		(payload.scope !== 'landing' && payload.scope !== 'courses') ||
+		('idToken' in payload &&
+			(typeof payload.idToken !== 'string' || payload.idToken.trim().length === 0))
+	) {
+		throw new Error('Payload upload gambar tidak valid.');
+	}
+
+	return payload as BlobUploadPayload;
+}
+
+function getUploadIdToken(request: Request, payload: BlobUploadPayload) {
+	const token = getBearerToken(request) || payload.idToken;
+	if (!token) {
+		throw new Error('Login admin dibutuhkan untuk upload gambar.');
+	}
+	return token;
 }
 
 function getErrorMessage(error: unknown) {
@@ -35,15 +71,19 @@ export const POST: RequestHandler = async ({ request }) => {
 		const response = await handleUpload({
 			body,
 			request,
-			onBeforeGenerateToken: async (pathname) => {
-				const token = getBearerToken(request);
+			onBeforeGenerateToken: async (pathname, clientPayload) => {
+				const pathScope = getUploadScope(pathname);
+				const payload = getClientPayload(clientPayload);
+				if (payload.scope !== pathScope) {
+					throw new Error('Scope upload gambar tidak sesuai.');
+				}
+
+				const token = getUploadIdToken(request, payload);
 				const user = await getFirebaseUserFromIdToken(token);
 
 				if (!ADMIN_EMAILS.includes(user.email)) {
 					throw new Error('Akun ini tidak punya akses upload admin.');
 				}
-
-				getUploadScope(pathname);
 
 				return {
 					allowedContentTypes: [...ALLOWED_IMAGE_TYPES],
@@ -51,6 +91,9 @@ export const POST: RequestHandler = async ({ request }) => {
 					addRandomSuffix: true,
 					cacheControlMaxAge: 60 * 60 * 24 * 365
 				};
+			},
+			onUploadCompleted: async () => {
+				return;
 			}
 		});
 
