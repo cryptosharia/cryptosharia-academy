@@ -452,7 +452,7 @@ export const defaultLandingContent: LandingContent = {
 		secondaryCta: { label: 'Tanya Program', href: '' }
 	},
 	instructors: {
-		eyebrow: 'Pemateri Bootcamp',
+		eyebrow: '',
 		title: 'Tiga Perspektif Kredibel dalam Satu Bootcamp',
 		description:
 			'Crypto syariah tidak cukup dipahami hanya dari sisi peluang aset digital. Di bootcamp ini, peserta akan memahami industri crypto, strategi keuangan, dan prinsip fiqih muamalah dari pemateri dengan kredensial yang relevan di bidangnya.',
