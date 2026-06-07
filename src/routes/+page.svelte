@@ -15,7 +15,9 @@
 	const heroVideo = $derived(resolveVideoEmbed(content.hero.videoUrl));
 
 	// Only render sections that are marked visible, in the admin-defined order.
-	const sections = $derived(content.layout.filter((s) => s.visible).map((s) => s.id));
+	const sections = $derived(
+		content.layout.filter((s) => s.visible && s.id !== 'testimonials').map((s) => s.id)
+	);
 
 	function isVisible(id: SectionId) {
 		return sections.includes(id);
@@ -25,12 +27,6 @@
 
 	function toggleFaq(index: number) {
 		openFaqIndex = openFaqIndex === index ? null : index;
-	}
-
-	function hasRealTestimonials() {
-		return (
-			JSON.stringify(content.testimonials) !== JSON.stringify(defaultLandingContent.testimonials)
-		);
 	}
 
 	onMount(() => {
@@ -266,7 +262,7 @@
 		</section>
 	{/if}
 
-	{#if sectionId === 'testimonials' && hasRealTestimonials()}
+	{#if sectionId === 'testimonials'}
 		<section class="bg-white py-20 dark:bg-gray-950" id="testimonials">
 			<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 				<div class="mb-12 max-w-3xl">
