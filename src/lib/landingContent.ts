@@ -183,8 +183,8 @@ export const defaultLandingContent: LandingContent = {
 		{ id: 'authority', visible: true },
 		{ id: 'usp', visible: true },
 		{ id: 'valueProps', visible: true },
-		{ id: 'curriculum', visible: true },
 		{ id: 'instructors', visible: true },
+		{ id: 'curriculum', visible: true },
 		{ id: 'pricing', visible: true },
 		{ id: 'urgency', visible: true },
 		{ id: 'faq', visible: true },
@@ -1152,6 +1152,7 @@ function shouldUseConversionOrder(layout: LayoutEntry[]): boolean {
 
 	return (
 		(valuePropsIndex !== -1 && uspIndex !== -1 && valuePropsIndex < uspIndex) ||
+		(curriculumIndex !== -1 && instructorsIndex !== -1 && curriculumIndex < instructorsIndex) ||
 		(pricingIndex !== -1 && curriculumIndex !== -1 && pricingIndex < curriculumIndex) ||
 		(pricingIndex !== -1 && instructorsIndex !== -1 && pricingIndex < instructorsIndex) ||
 		(pricingIndex !== -1 && urgencyIndex !== -1 && urgencyIndex !== pricingIndex + 1)
