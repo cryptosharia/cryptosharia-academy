@@ -442,12 +442,12 @@
 						<div
 							class="pointer-events-none absolute top-16 right-10 left-10 hidden h-px bg-gradient-to-r from-orange-200 via-slate-300 to-teal-200 xl:block dark:from-orange-900/70 dark:via-slate-700 dark:to-teal-900/60"
 						></div>
-						<div class="relative grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+						<div class="relative grid items-stretch gap-6 md:grid-cols-2 xl:grid-cols-4">
 							{#each content.curriculum.schedule as day, dayIndex}
 								<div
 									class="flex h-full flex-col rounded-lg border border-slate-200 bg-white p-6 shadow-sm shadow-slate-950/5 dark:border-slate-700 dark:bg-slate-950"
 								>
-									<div class="flex items-start justify-between gap-4">
+									<div class="flex min-h-[8.75rem] items-start justify-between gap-4">
 										<div class="min-w-0">
 											<p class="text-xs font-black tracking-[0.18em] text-orange-600 uppercase">
 												Hari {dayIndex + 1}
