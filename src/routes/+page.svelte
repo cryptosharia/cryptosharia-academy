@@ -309,26 +309,37 @@
 	{#if sectionId === 'usp'}
 		<section class="bg-slate-950 py-20 text-white">
 			<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-				<div class="grid gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:items-center">
-					<div>
-						<h2 class="text-3xl font-extrabold sm:text-4xl">
-							{content.usp.title}
-						</h2>
-						<blockquote
-							class="mt-8 border-l-4 border-orange-500 pl-5 text-lg leading-8 font-semibold text-slate-200"
-						>
-							{content.usp.quote}
-						</blockquote>
-					</div>
+				<div class="mx-auto max-w-4xl text-center">
+					<h2 class="text-3xl leading-tight font-extrabold sm:text-4xl">
+						{content.usp.title}
+					</h2>
+					{#if content.usp.description}
+						<p class="mx-auto mt-5 max-w-3xl text-base leading-8 text-slate-300 sm:text-lg">
+							{content.usp.description}
+						</p>
+					{/if}
+				</div>
 
-					<div class="grid gap-4 sm:grid-cols-2">
-						{#each content.usp.items as item}
-							<div class="rounded-lg border border-white/10 bg-white/[0.04] p-5">
-								<h3 class="text-lg font-bold text-white">{item.title}</h3>
-								<p class="mt-3 text-sm leading-6 text-slate-400">{item.description}</p>
-							</div>
-						{/each}
-					</div>
+				<div class="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+					{#each content.usp.items as item}
+						<div class="rounded-lg border border-white/10 bg-white/[0.04] p-6">
+							<h3 class="text-xl leading-snug font-extrabold text-white">{item.title}</h3>
+							<p class="mt-3 text-[15px] leading-7 text-slate-300">{item.description}</p>
+						</div>
+					{/each}
+				</div>
+
+				<div
+					class="mx-auto mt-12 max-w-4xl rounded-lg border border-orange-500/25 bg-white/[0.04] p-6 text-center sm:p-8"
+				>
+					<blockquote class="text-xl leading-8 font-extrabold text-white">
+						{content.usp.quote}
+					</blockquote>
+					{#if content.usp.quoteNote}
+						<p class="mx-auto mt-4 max-w-2xl text-sm leading-7 text-slate-300 sm:text-base">
+							{content.usp.quoteNote}
+						</p>
+					{/if}
 				</div>
 			</div>
 		</section>

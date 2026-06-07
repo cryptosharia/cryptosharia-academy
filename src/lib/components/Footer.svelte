@@ -127,8 +127,8 @@
 					aset kripto merupakan aktivitas berisiko tinggi (high-risk). Nilai aset kripto sangat fluktuatif
 					dan dapat berubah secara signifikan dalam waktu singkat. CryptoSharia Academy adalah platform
 					edukasi murni dan tidak menyediakan saran keuangan profesional, layanan penasihat investasi,
-					manajemen portofolio, pialang, atau pertukaran aset (exchange). Semua materi, analisa, dan studi
-					kasus yang disampaikan bertujuan semata-mata untuk pembelajaran. Keputusan investasi sepenuhnya
+					manajemen portofolio, pialang, atau pertukaran aset (exchange). Semua materi, analisis, dan
+					studi kasus yang disampaikan bertujuan semata-mata untuk pembelajaran. Keputusan investasi sepenuhnya
 					merupakan tanggung jawab pribadi masing-masing individu. Selalu lakukan riset mandiri (DYOR)
 					dan pastikan untuk hanya mengalokasikan dana yang Anda siap untuk kehilangan.
 				</p>

@@ -1629,9 +1629,19 @@
 		(v) => (content.usp.title = v)
 	)}
 	{@render areaField(
+		'Deskripsi',
+		() => content.usp.description,
+		(v) => (content.usp.description = v)
+	)}
+	{@render areaField(
 		'Kutipan / Quote',
 		() => content.usp.quote,
 		(v) => (content.usp.quote = v)
+	)}
+	{@render areaField(
+		'Catatan Quote',
+		() => content.usp.quoteNote,
+		(v) => (content.usp.quoteNote = v)
 	)}
 	<div class="border-t border-gray-100 pt-4 dark:border-gray-700">
 		{@render listHeader(

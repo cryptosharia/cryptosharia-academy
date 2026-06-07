@@ -98,7 +98,9 @@ export type LandingContent = {
 	usp: {
 		eyebrow: string;
 		title: string;
+		description: string;
 		quote: string;
+		quoteNote: string;
 		items: Feature[];
 	};
 
@@ -202,7 +204,7 @@ export const defaultLandingContent: LandingContent = {
 		badge: 'Crypto Sharia Masterclass Learning',
 		title: '',
 		subtitle:
-			'Bootcamp intensif 4 hari untuk memahami industri crypto, manajemen risiko, analisa market, screening syariah, dan portfolio building.',
+			'Bootcamp intensif 4 hari untuk memahami industri crypto, manajemen risiko, analisis market, screening syariah, dan portfolio building.',
 		description:
 			'Belajar langsung bersama founder Crypto Sharia, founder Qualifin, dan pakar fiqih muamalah dengan pendekatan sistematis, praktis, dan sesuai prinsip syariah.',
 		primaryCtaLabel: 'Join Now / Gabung Sekarang',
@@ -254,8 +256,8 @@ export const defaultLandingContent: LandingContent = {
 		],
 		cards: [
 			{
-				label: 'Analisa Market',
-				description: 'Placeholder screenshot hasil analisa market dan thesis aset pilihan.'
+				label: 'Analisis Market',
+				description: 'Placeholder screenshot hasil analisis market dan thesis aset pilihan.'
 			},
 			{
 				label: 'Pencapaian Member',
@@ -309,7 +311,7 @@ export const defaultLandingContent: LandingContent = {
 			},
 			{
 				meta: '',
-				title: 'Akhirnya lebih paham cara analisa market tanpa gambling.',
+				title: 'Akhirnya lebih paham cara analisis market tanpa gambling.',
 				description:
 					'Pendekatan riset, manajemen risiko, dan screening syariah membantu member lebih disiplin.'
 			},
@@ -324,13 +326,17 @@ export const defaultLandingContent: LandingContent = {
 	usp: {
 		eyebrow: '',
 		title: 'Kenapa Harus Crypto Sharia Masterclass?',
-		quote: '"The best investment you can make is an investment in yourself." - Warren Buffett',
+		description:
+			'Program ini tidak hanya membahas teori crypto, tetapi dirancang agar peserta belajar secara lebih terarah melalui praktik, mentoring, evaluasi, dan pendekatan sesuai prinsip syariah.',
+		quote: '"The best investment you can make is an investment in yourself." — Warren Buffett',
+		quoteNote:
+			'Sebelum masuk ke market yang volatile, peserta perlu membangun ilmu, cara berpikir, dan manajemen risiko yang lebih matang.',
 		items: [
 			{
 				label: '',
-				title: 'Tugas Praktek Langsung',
+				title: 'Tugas Praktik Langsung',
 				description:
-					'Setiap materi dilengkapi penugasan agar peserta langsung mempraktekkan ilmunya.'
+					'Setiap materi dilengkapi penugasan agar peserta langsung mempraktikkan ilmu yang dipelajari.'
 			},
 			{
 				label: '',
@@ -342,18 +348,23 @@ export const defaultLandingContent: LandingContent = {
 				label: '',
 				title: 'FGD & Mentoring',
 				description:
-					'Diskusi kelompok kecil 5-10 orang bersama mentor untuk pendampingan yang lebih personal.'
+					'Diskusi kelompok kecil bersama mentor untuk membantu peserta memahami materi secara lebih personal.'
 			},
 			{
 				label: '',
 				title: 'Sharia Compliant',
-				description: 'Belajar fiqih muamalah serta metode analisa crypto sesuai prinsip syariah.'
+				description: 'Belajar fiqih muamalah dan metode analisis crypto sesuai prinsip syariah.'
 			},
 			{
 				label: '',
 				title: 'Komunitas Global',
+				description: 'Akses networking bersama member dari berbagai industri dan profesi.'
+			},
+			{
+				label: '',
+				title: 'Materi Terstruktur',
 				description:
-					'Akses networking eksklusif bersama ratusan member dari berbagai industri dan profesi.'
+					'Alur belajar disusun bertahap dari dasar industri crypto, analisis pasar, prinsip syariah, hingga strategi portfolio.'
 			}
 		]
 	},
@@ -476,7 +487,7 @@ export const defaultLandingContent: LandingContent = {
 					'Certified International Business Coach dari ICF'
 				],
 				description:
-					'Membawakan perspektif industri crypto, Web3, analisa koin syariah, dan strategi investasi yang sesuai dengan prinsip syariah.',
+					'Membawakan perspektif industri crypto, Web3, analisis koin syariah, dan strategi investasi yang sesuai dengan prinsip syariah.',
 				photo: '/instructors/sholahuddin-al-ayyubi.jpeg'
 			},
 			{
@@ -662,6 +673,7 @@ export function mergeContent(stored: Partial<LandingContent> | null | undefined)
 function normalizeContent(content: LandingContent): LandingContent {
 	content.layout = normalizeLayout(content.layout);
 	content.valueProps = normalizeValueProps(content.valueProps);
+	content.usp = normalizeUsp(content.usp);
 	content.curriculum = normalizeCurriculum(content.curriculum);
 	content.instructors = normalizeInstructors(content.instructors);
 	content.pricing = normalizePricing(content.pricing);
@@ -704,6 +716,81 @@ function normalizeFeatures(
 			description: item.description?.trim() || fallbackItem.description
 		};
 	});
+}
+
+function normalizeBakuCopy(value: string): string {
+	return value
+		.replace(new RegExp(`\\b${'Prak' + 'tek'}\\b`, 'g'), 'Praktik')
+		.replace(new RegExp(`\\b${'prak' + 'tek'}\\b`, 'g'), 'praktik')
+		.replace(new RegExp(`\\b${'mem' + 'prak' + 'tekkan'}\\b`, 'g'), 'mempraktikkan')
+		.replace(new RegExp(`\\b${'Anal' + 'isa'}\\b`, 'g'), 'Analisis')
+		.replace(new RegExp(`\\b${'anal' + 'isa'}\\b`, 'g'), 'analisis');
+}
+
+function normalizeUsp(usp: LandingContent['usp']): LandingContent['usp'] {
+	const defaults = defaultLandingContent.usp;
+	const oldTitles = new Map([
+		['Komunitas Pembelajar', 'Komunitas Global'],
+		['Akses Komunitas CryptoSharia', 'Komunitas Global'],
+		['Networking Komunitas', 'Komunitas Global']
+	]);
+	const oldDescriptions = new Map([
+		[
+			'Setiap materi dilengkapi penugasan agar peserta langsung mempraktikkan ilmunya.',
+			'Setiap materi dilengkapi penugasan agar peserta langsung mempraktikkan ilmu yang dipelajari.'
+		],
+		[
+			'Diskusi kelompok kecil 5-10 orang bersama mentor untuk pendampingan yang lebih personal.',
+			'Diskusi kelompok kecil bersama mentor untuk membantu peserta memahami materi secara lebih personal.'
+		],
+		[
+			'Belajar fiqih muamalah serta metode analisis crypto sesuai prinsip syariah.',
+			'Belajar fiqih muamalah dan metode analisis crypto sesuai prinsip syariah.'
+		],
+		[
+			'Akses networking eksklusif bersama ratusan member dari berbagai industri dan profesi.',
+			'Akses networking bersama member dari berbagai industri dan profesi.'
+		]
+	]);
+	const oldQuotes = new Set([
+		'"The best investment you can make is an investment in yourself." - Warren Buffett'
+	]);
+
+	if (!usp.title?.trim()) usp.title = defaults.title;
+	if (!usp.description?.trim()) usp.description = defaults.description;
+	if (!usp.quote?.trim() || oldQuotes.has(usp.quote.trim())) usp.quote = defaults.quote;
+	if (!usp.quoteNote?.trim()) usp.quoteNote = defaults.quoteNote;
+	usp.items = normalizeUspItems(usp.items, defaults.items, oldTitles, oldDescriptions);
+
+	return usp;
+}
+
+function normalizeUspItems(
+	items: Feature[] | undefined,
+	fallback: Feature[],
+	oldTitles: Map<string, string>,
+	oldDescriptions: Map<string, string>
+): Feature[] {
+	const sourceItems = Array.isArray(items) && items.length > 0 ? items : fallback;
+	const normalized = sourceItems.map((item, index) => {
+		const fallbackItem = fallback[index] ?? fallback[0];
+		const title = normalizeBakuCopy(item.title?.trim() ?? '');
+		const description = normalizeBakuCopy(item.description?.trim() ?? '');
+		return {
+			label: item.label?.trim() || fallbackItem.label,
+			title: (oldTitles.get(title) ?? title) || fallbackItem.title,
+			description: (oldDescriptions.get(description) ?? description) || fallbackItem.description
+		};
+	});
+	const existingTitles = new Set(normalized.map((item) => item.title));
+
+	for (const fallbackItem of fallback) {
+		if (!existingTitles.has(fallbackItem.title)) {
+			normalized.push({ ...fallbackItem });
+		}
+	}
+
+	return normalized;
 }
 
 function normalizeCurriculum(
@@ -934,9 +1021,9 @@ function normalizeInstructorDescription(
 	description: string | undefined,
 	fallback: Instructor
 ): string {
-	const value = description?.trim() ?? '';
+	const value = normalizeBakuCopy(description?.trim() ?? '');
 	const oldDescriptions = new Set([
-		'Membawakan perspektif industri crypto, Web3, analisa koin syariah, dan strategi investasi yang sesuai prinsip syariah.',
+		'Membawakan perspektif industri crypto, Web3, analisis koin syariah, dan strategi investasi yang sesuai prinsip syariah.',
 		'Membawakan financial planning, risk management, fundamental analysis, narrative analysis, dan global macro analysis.',
 		'Membantu peserta mengelola risiko, membaca fundamental aset, mengenali narasi pasar, dan melihat pengaruh kondisi makro global terhadap keputusan investasi.',
 		'Membantu peserta memahami cara mengelola risiko, membaca fundamental aset, mengenali narasi pasar, dan melihat pengaruh kondisi makro global terhadap keputusan investasi.',
@@ -1158,7 +1245,7 @@ export function sectionCompleteness(
 		}
 		case 'usp': {
 			const c = content.usp;
-			return countFields([c.title, c.quote, c.items.length ? 'x' : '']);
+			return countFields([c.title, c.description, c.quote, c.quoteNote, c.items.length ? 'x' : '']);
 		}
 		case 'pricing': {
 			const c = content.pricing;

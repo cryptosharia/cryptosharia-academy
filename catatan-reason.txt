@@ -1,0 +1,187 @@
+Judul section
+
+Kenapa Harus Crypto Sharia Masterclass?
+
+Subjudul
+
+Program ini tidak hanya membahas teori crypto, tetapi dirancang agar peserta belajar secara lebih terarah melalui praktik, mentoring, evaluasi, dan pendekatan sesuai prinsip syariah.
+
+Card 1
+
+Tugas Praktik Langsung
+Setiap materi dilengkapi penugasan agar peserta langsung mempraktikkan ilmu yang dipelajari.
+
+Catatan: pakai Praktik, bukan Praktek. Dalam bahasa Indonesia baku, yang benar adalah praktik.
+
+Card 2
+
+Sertifikat Kelulusan
+Peserta mendapatkan sertifikat setelah menyelesaikan evaluasi akhir sebagai bukti kompetensi.
+
+Card 3
+
+FGD & Mentoring
+Diskusi kelompok kecil bersama mentor untuk membantu peserta memahami materi secara lebih personal.
+
+Saya sarankan hilangkan “5–10 orang” dari card jika belum pasti. Kalau memang pasti, boleh tetap ditulis.
+
+Card 4
+
+Sharia Compliant
+Belajar fiqih muamalah dan metode analisis crypto sesuai prinsip syariah.
+
+Lebih natural daripada:
+
+Belajar fiqih muamalah serta metode analisa crypto sesuai prinsip syariah.
+
+Gunakan “analisis”, bukan “analisa”, kalau ingin lebih baku.
+
+Card 5
+
+Komunitas Global
+Akses networking bersama member dari berbagai industri dan profesi.
+
+Kalau “ratusan member” benar dan bisa dibuktikan, boleh:
+
+Akses networking bersama ratusan member dari berbagai industri dan profesi.
+
+Kalau tidak ingin terlalu klaim, pakai versi aman.
+
+Quote penutup
+
+“The best investment you can make is an investment in yourself.”
+— Warren Buffett
+
+Sebelum masuk ke market yang volatile, peserta perlu membangun ilmu, cara berpikir, dan manajemen risiko yang lebih matang.
+
+Kritik terhadap 5 card saat ini
+1. “Tugas Praktek Langsung” sebaiknya diganti
+
+Gunakan:
+
+Tugas Praktik Langsung
+
+Karena bentuk baku bahasa Indonesia adalah praktik.
+
+2. “FGD & Mentoring” bagus, tapi perlu lebih jelas
+
+FGD adalah istilah yang tidak semua orang awam langsung paham. Kalau targetnya umum, bisa ditulis:
+
+Diskusi Kelompok & Mentoring
+
+Atau:
+
+FGD & Mentoring Terarah
+
+Kalau tetap ingin terlihat profesional, “FGD & Mentoring” masih boleh.
+
+3. “Sharia Compliant” agak campur bahasa
+
+Karena section lain cukup banyak bahasa Indonesia, bisa dipertimbangkan:
+
+Sesuai Prinsip Syariah
+
+Atau:
+
+Pendekatan Sharia Compliant
+
+Kalau ingin tetap modern, “Sharia Compliant” boleh. Tapi isi deskripsinya harus natural.
+
+4. “Komunitas Global” perlu hati-hati
+
+Kalau komunitasnya memang global, bagus. Tapi kalau mayoritas masih Indonesia/Malaysia, kata “global” bisa terasa terlalu besar.
+
+Alternatif lebih aman:
+
+Komunitas Pembelajar
+
+Atau:
+
+Akses Komunitas CryptoSharia
+
+Atau:
+
+Networking Komunitas
+
+Kalau memang ada member lintas negara, “Komunitas Global” aman.
+
+Saran visual untuk section ini
+1. Jangan pakai layout 5 card dengan satu kosong terlalu terlihat
+
+Sekarang kanan terlihat seperti grid 2 kolom, tapi baris terakhir hanya ada 1 card. Ini tidak terlalu buruk, tapi agak terasa tidak selesai.
+
+Solusi:
+
+Opsi A
+
+Buat 5 card dalam layout:
+
+3 card di atas
+2 card di bawah, center
+Opsi B
+
+Buat card terakhir melebar:
+
+2 card
+2 card
+1 card full width
+
+Contoh:
+
+[Tugas Praktik] [Sertifikat]
+[FGD] [Sharia Compliant]
+[Komunitas Global full width]
+
+Ini cocok kalau tetap menggunakan area kanan.
+
+Opsi C
+
+Tambah satu benefit keenam supaya grid sempurna.
+
+Misalnya:
+Materi Terstruktur
+Alur belajar disusun dari fondasi, analisis, syariah, hingga strategi portfolio.
+
+Dengan 6 card, layout 2x3 akan jauh lebih rapi.
+
+Menurut saya, opsi C menarik karena memang benefit keenam relevan.
+
+Kalau mau tambah card keenam
+
+Tambahkan:
+
+Materi Terstruktur
+Alur belajar disusun bertahap dari dasar industri crypto, analisis pasar, prinsip syariah, hingga strategi portfolio.
+
+Maka grid jadi:
+
+Tugas Praktik Langsung
+Sertifikat Kelulusan
+FGD & Mentoring
+Sharia Compliant
+Komunitas Global
+Materi Terstruktur
+
+Ini akan membuat layout jauh lebih rapi dan menghilangkan “card sendirian”.
+
+Rekomendasi final saya
+
+Untuk section ini, saya sarankan lakukan 4 perubahan:
+
+Pindahkan quote Warren Buffett ke bawah 5 card.
+Ganti quote area di kiri dengan subjudul/pengantar yang menjelaskan manfaat program.
+Pertimbangkan tambah 1 card benefit agar grid jadi 6 card dan rapi.
+Ubah “Praktek” menjadi “Praktik”, dan “analisa” menjadi “analisis”.
+
+Urutan isi final:
+
+Kenapa Harus Crypto Sharia Masterclass?
+
+Program ini tidak hanya membahas teori crypto, tetapi dirancang agar peserta belajar secara lebih terarah melalui praktik, mentoring, evaluasi, dan pendekatan sesuai prinsip syariah.
+
+[6 card benefit]
+
+“The best investment you can make is an investment in yourself.”
+— Warren Buffett
+
+Sebelum masuk ke market yang volatile, peserta perlu membangun ilmu, cara berpikir, dan manajemen risiko yang lebih matang.
