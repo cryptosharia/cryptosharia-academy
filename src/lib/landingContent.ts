@@ -196,12 +196,12 @@ export const defaultLandingContent: LandingContent = {
 		message: 'Assalamualaikum CryptoSharia, saya mau daftar Crypto Sharia Masterclass.'
 	},
 	seo: {
-		title: 'Crypto Sharia Masterclass Learning | Bootcamp Crypto Syariah 4 Hari',
+		title: 'Crypto Sharia Masterclass | Bootcamp Crypto Syariah 4 Hari',
 		description:
 			'Bootcamp crypto syariah 4 hari bersama founder Crypto Sharia, founder Qualifin, dan pakar fiqih muamalah untuk belajar market, risk, technical, dan portofolio.'
 	},
 	hero: {
-		badge: 'Crypto Sharia Masterclass Learning',
+		badge: 'Crypto Sharia Masterclass',
 		title: '',
 		subtitle:
 			'Bootcamp intensif 4 hari untuk memahami industri crypto, manajemen risiko, analisis market, screening syariah, dan portfolio building.',
