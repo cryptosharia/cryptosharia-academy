@@ -667,24 +667,28 @@
 								/>
 							</div>
 							<div class="flex flex-1 flex-col p-6">
-								<p
-									class="mb-5 inline-flex w-fit rounded-full border border-orange-300 bg-orange-50 px-4 py-2 text-sm leading-5 font-bold text-orange-700 dark:border-orange-700/70 dark:bg-orange-500/10 dark:text-orange-200"
-								>
-									{instructor.badge}
-								</p>
-								<h3
-									class="text-2xl leading-snug font-extrabold break-words text-slate-900 dark:text-white"
-								>
-									{instructor.name}
-								</h3>
-								<p class="mt-2 text-sm font-bold text-slate-500 dark:text-slate-400">
-									{instructor.credentials}
-								</p>
-								<p class="mt-2 text-base font-bold text-orange-600 dark:text-orange-400">
-									{instructor.role}
-								</p>
+								<div class="flex flex-col xl:min-h-[12.25rem]">
+									<p
+										class="mb-5 inline-flex min-h-12 w-fit items-center rounded-full border border-orange-300 bg-orange-50 px-4 py-2 text-sm leading-5 font-bold text-orange-700 dark:border-orange-700/70 dark:bg-orange-500/10 dark:text-orange-200"
+									>
+										{instructor.badge}
+									</p>
+									<h3
+										class="text-2xl leading-snug font-extrabold break-words text-slate-900 xl:min-h-[4.25rem] dark:text-white"
+									>
+										{instructor.name}
+									</h3>
+									<p class="mt-2 min-h-6 text-sm font-bold text-slate-500 dark:text-slate-400">
+										{instructor.credentials}
+									</p>
+									<p class="mt-2 min-h-7 text-base font-bold text-orange-600 dark:text-orange-400">
+										{instructor.role}
+									</p>
+								</div>
 
-								<div class="mt-5 border-t border-slate-100 pt-5 dark:border-slate-800">
+								<div
+									class="mt-5 border-t border-slate-100 pt-5 xl:min-h-[18rem] dark:border-slate-800"
+								>
 									<h4
 										class="text-xs font-black tracking-[0.14em] text-slate-600 uppercase dark:text-slate-300"
 									>
