@@ -27,15 +27,15 @@
 	const SECTION_ORDER: SectionId[] = [
 		'hero',
 		'authority',
+		'usp',
 		'valueProps',
 		'curriculum',
 		'instructors',
-		'testimonials',
-		'usp',
 		'pricing',
 		'urgency',
 		'faq',
-		'finalCta'
+		'finalCta',
+		'testimonials'
 	];
 
 	// A "view" is either a settings panel, a content section id, or advanced.

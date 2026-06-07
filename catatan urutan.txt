@@ -1,0 +1,443 @@
+Menurut saya, urutan landing page ini sudah cukup masuk akal, tapi belum paling optimal untuk conversion. Secara garis besar, halaman ini sudah punya semua elemen penting: hero, proof, benefit, problem/reason, offer, kurikulum, pemateri, promo, FAQ, closing CTA, footer. Namun susunannya masih bisa dibuat lebih “mengalir” supaya calon peserta tidak terlalu cepat bertemu harga sebelum benar-benar merasa yakin.
+
+Nilai urutan sekarang: 8/10.
+Dengan sedikit penyesuaian, bisa naik ke 8.7–9/10.
+
+Urutan sekarang
+
+Dari screenshot, urutannya kira-kira:
+
+Hero
+Dibangun dari pengalaman edukasi dan komunitas nyata
+Apa yang Akan Dipelajari?
+Kenapa Harus Crypto Sharia Masterclass?
+Gabung Programnya Sekarang / Harga
+Detail Kurikulum
+Pemateri
+Special Price for 10 Pax Only
+FAQ
+Closing CTA
+Footer
+
+Secara struktur, ini tidak salah. Tapi ada satu problem besar: harga muncul terlalu cepat.
+
+Kritik utama: harga muncul sebelum trust maksimal terbentuk
+
+Bagian “Gabung Programnya Sekarang” muncul sebelum:
+
+detail kurikulum lengkap,
+pemateri lengkap,
+kredensial pemateri,
+outcome bootcamp,
+FAQ,
+penjelasan risiko/investasi,
+alasan kenapa program ini beda.
+
+Akibatnya, user melihat harga Rp2.000.000 ketika mereka belum sepenuhnya merasa:
+
+“Oh, kurikulumnya memang lengkap.”
+“Oh, pematerinya memang kredibel.”
+“Oh, ini bukan kelas crypto biasa.”
+“Oh, ada aspek syariah dan risk management yang serius.”
+
+Harga 2 juta bukan harga kecil untuk banyak orang. Maka sebelum harga muncul, halaman perlu membangun perceived value lebih kuat.
+
+Jadi masalahnya bukan harganya, tapi timing kemunculan harga.
+
+Urutan yang saya sarankan
+
+Menurut saya, urutan terbaik untuk landing page ini:
+
+1. Hero
+
+Tetap di paling atas.
+
+Hero sekarang sudah tepat karena langsung menampilkan:
+
+nama program,
+positioning,
+CTA,
+video preview,
+statistik.
+
+Tapi pastikan CTA hero tidak terlalu “daftar sekarang” saja. Bisa tetap ada dua CTA:
+
+Daftar Sekarang
+Lihat Kurikulum
+
+Ini sudah bagus.
+
+2. Dibangun dari pengalaman edukasi dan komunitas nyata
+
+Bagian ini sudah tepat diletakkan setelah hero.
+
+Kenapa? Karena setelah user melihat klaim di hero, mereka butuh bukti bahwa program ini bukan dadakan.
+
+Bagian ini menjawab:
+
+“Ini program beneran atau cuma landing page jualan?”
+
+Jadi posisi section ini sudah benar.
+
+Namun saya sarankan judulnya sedikit dibuat lebih kuat:
+
+Dibangun dari Pengalaman Edukasi dan Komunitas Nyata
+
+Sudah bagus, jangan banyak diubah. Bisa tambahkan sedikit bukti seperti:
+
+jumlah event,
+dokumentasi,
+nama komunitas,
+“berbasis pengalaman edukasi sejak …” kalau datanya ada.
+3. Kenapa Harus Crypto Sharia Masterclass?
+
+Saya justru akan naikkan bagian ini sebelum “Apa yang Akan Dipelajari?”.
+
+Urutan sekarang:
+
+Apa yang Akan Dipelajari?
+Kenapa Harus Crypto Sharia Masterclass?
+
+Menurut saya lebih kuat kalau dibalik:
+
+Kenapa program ini perlu?
+Baru apa yang akan dipelajari?
+
+Karena user perlu dibuat sadar dulu bahwa ada masalah/peluang:
+
+crypto ramai, tapi banyak yang masuk tanpa ilmu,
+investasi tanpa risk management berbahaya,
+aspek syariah sering tidak dipahami,
+banyak orang hanya ikut tren.
+
+Setelah itu baru masuk ke “Apa yang Akan Dipelajari?”
+
+Jadi urutannya lebih natural:
+
+Problem/urgency → Solution/learning promise.
+
+4. Apa yang Akan Dipelajari?
+
+Bagian ini cocok setelah “Kenapa Harus”.
+
+Ini menjadi preview singkat sebelum masuk kurikulum detail.
+
+Fungsinya seperti ringkasan 3 pilar:
+
+Strategi cuan halal di crypto
+Build your sharia wealth
+Strategi bertahan di bear market
+
+Namun menurut saya copy judul card-nya perlu hati-hati, terutama “cuan halal”. Ini kuat secara marketing, tapi untuk konteks crypto syariah sebaiknya jangan terlalu menjanjikan kesan “profit halal”. Lebih aman:
+
+Strategi Investasi Crypto Sesuai Prinsip Syariah
+Membangun Wealth Plan yang Lebih Terarah
+Strategi Bertahan di Market Volatil
+
+Kalau ingin tetap catchy, “cuan halal” boleh, tapi jangan terlalu dominan agar tidak terasa gimmick.
+
+5. Detail Kurikulum
+
+Ini sebaiknya muncul sebelum harga.
+
+Alasannya sederhana: kurikulum adalah bukti value. User harus melihat dulu apa isi programnya, baru harga.
+
+Bagian kurikulum sekarang sudah cukup kuat. Jadi saya sarankan naikkan posisinya sebelum pricing.
+
+Urutan ideal:
+
+Apa yang akan dipelajari
+Detail Kurikulum
+Outcome setelah mengikuti bootcamp
+
+Setelah user melihat isi dan hasilnya, barulah harga muncul.
+
+6. Pemateri
+
+Ada dua opsi untuk posisi pemateri.
+
+Opsi A — Pemateri setelah Kurikulum
+
+Ini seperti sekarang, dan masih masuk akal.
+
+Alurnya:
+
+Ini kurikulumnya → ini orang yang membawakannya.
+
+Ini cocok kalau fokus utama halaman adalah isi program.
+
+Opsi B — Pemateri sebelum Kurikulum
+
+Ini juga kuat, karena pemateri adalah sumber trust.
+
+Alurnya:
+
+Ini orang-orang kredibel → ini materi yang akan mereka ajarkan.
+
+Untuk CryptoSharia, karena founder memberi perhatian besar pada kredensial pemateri, saya cenderung pilih:
+
+Pemateri sebelum harga, setelah kurikulum
+
+Jadi:
+
+user lihat isi program,
+lalu lihat siapa yang mengajar,
+lalu baru harga.
+
+Ini membuat harga terasa lebih masuk akal.
+
+7. Pricing / Gabung Programnya Sekarang
+
+Bagian harga sebaiknya dipindah ke setelah:
+
+proof,
+reason,
+learning preview,
+detail kurikulum,
+pemateri.
+
+Dengan begitu, saat user melihat Rp2.000.000, mereka sudah tahu:
+
+programnya 4 hari,
+materinya komprehensif,
+ada crypto, finance, syariah,
+pematerinya kredibel,
+ada CFA, WMI, AWP, AAOIFI, DPS MUI,
+ada output/kemampuan yang didapat.
+
+Harga akan terasa lebih “beralasan”.
+
+Judul pricing juga bisa diperbaiki.
+
+Sekarang:
+
+Gabung Programnya Sekarang
+
+Bisa dibuat lebih kuat:
+
+Investasi Belajar untuk Memahami Crypto Syariah dengan Lebih Terarah
+
+Atau lebih simple:
+
+Biaya Program Crypto Sharia Masterclass
+
+Atau:
+
+Gabung Crypto Sharia Masterclass 2026
+
+Saya sarankan yang aman:
+
+Gabung Crypto Sharia Masterclass 2026
+
+Lalu tampilkan harga.
+
+8. Special Price for 10 Pax Only
+
+Bagian ini posisinya sekarang setelah pemateri dan sebelum FAQ. Ini oke, tapi kalau pricing utama dipindah ke bawah, section special price harus ditempatkan dekat pricing.
+
+Jangan biarkan ada dua CTA harga yang terpisah jauh tanpa konteks.
+
+Idealnya:
+
+Pricing utama
+Special Price 10 Pax
+FAQ
+
+Atau special price menjadi bagian dari pricing card, bukan section sendiri.
+
+Contoh:
+
+Di pricing card:
+Rp2.000.000
+Special price tersedia untuk 10 pax pertama.
+
+CTA:
+Daftar Sekarang
+
+Lalu kalau ingin tetap ada banner orange:
+letakkan tepat setelah pricing untuk memperkuat urgency.
+
+9. FAQ
+
+FAQ sudah tepat berada setelah harga/promo.
+
+Karena FAQ biasanya menjawab keraguan terakhir sebelum action:
+
+apakah cocok untuk pemula?
+apakah ada rekaman?
+apakah bisa cicilan?
+apakah ini nasihat investasi?
+apakah materinya syariah?
+apakah dapat sertifikat?
+bagaimana sistem kelasnya?
+
+Namun FAQ sekarang terlihat masih terlalu sedikit. Untuk program 2 juta, FAQ perlu lebih lengkap.
+
+Tambahkan pertanyaan seperti:
+
+Apakah bootcamp ini cocok untuk pemula?
+Apakah ini rekomendasi beli coin tertentu?
+Apakah kelas dilakukan live atau rekaman?
+Apakah peserta mendapatkan rekaman?
+Apakah ada sertifikat?
+Apakah ada grup komunitas setelah kelas?
+Apakah materi membahas coin halal/haram?
+Apakah ada praktik analisis?
+Apakah cocok untuk yang belum pernah investasi crypto?
+Apakah pembayaran bisa transfer?
+
+FAQ sangat penting untuk mengurangi keberatan.
+
+10. Closing CTA
+
+Bagian:
+
+Ilmu Dulu. Cuan Kemudian. Berkah Selamanya.
+
+Ini bagus sebagai closing. Posisinya sudah benar setelah FAQ.
+
+Namun saya akan hati-hati dengan frasa “Cuan Kemudian”. Secara marketing catchy, tapi karena ini crypto dan syariah, jangan sampai terasa terlalu menjanjikan hasil finansial.
+
+Alternatif yang lebih aman:
+
+Ilmu Dulu. Strategi Kemudian. Berkah Selamanya.
+
+Atau:
+
+Pahami Ilmunya. Kelola Risikonya. Jaga Prinsipnya.
+
+Atau:
+
+Belajar Dulu. Kelola Risiko. Jaga Prinsip Syariah.
+
+Kalau brand memang ingin tetap lebih populer dan berani, “Cuan Kemudian” masih bisa dipakai, tapi saya pribadi akan pilih versi yang lebih aman dan dewasa.
+
+Urutan final yang paling saya rekomendasikan
+
+Ini urutan terbaik menurut saya:
+
+1. Hero
+
+Crypto Sharia Masterclass 2026
+CTA + video preview + statistik.
+
+2. Social Proof / Pengalaman Nyata
+
+Dibangun dari pengalaman edukasi dan komunitas nyata.
+
+3. Problem & Urgency
+
+Kenapa Harus Crypto Sharia Masterclass?
+
+4. Learning Preview
+
+Apa yang Akan Dipelajari?
+
+5. Detail Kurikulum
+
+Kurikulum 4 Hari: Dari Dasar Crypto hingga Portfolio Syariah.
+
+6. Outcome
+
+Setelah mengikuti bootcamp, peserta diharapkan mampu.
+
+Bagian outcome bisa tetap digabung dengan kurikulum seperti sekarang.
+
+7. Pemateri
+
+Tiga Perspektif Kredibel dalam Satu Bootcamp.
+
+8. Pricing
+
+Gabung Crypto Sharia Masterclass 2026.
+
+9. Special Price / Urgency
+
+Special Price for 10 Pax Only.
+
+10. FAQ
+
+Pertanyaan yang Sering Diajukan.
+
+11. Closing CTA
+
+CTA emosional terakhir.
+
+12. Footer
+Versi ringkas flow-nya
+
+Flow idealnya seperti ini:
+
+Attention
+Hero
+
+Trust awal
+Pengalaman nyata
+
+Problem awareness
+Kenapa harus ikut
+
+Value preview
+Apa yang dipelajari
+
+Value proof
+Detail kurikulum + outcome
+
+Authority proof
+Pemateri + kredensial
+
+Offer
+Harga + bonus + CTA
+
+Objection handling
+FAQ
+
+Final push
+Closing CTA
+
+Ini flow yang lebih kuat untuk conversion.
+
+Yang menurut saya sudah tepat dari urutan sekarang
+
+Beberapa hal jangan diubah:
+
+Hero tetap paling atas.
+Social proof tetap setelah hero.
+FAQ tetap dekat akhir.
+Closing CTA tetap setelah FAQ.
+Footer tetap terakhir.
+Kurikulum dan pemateri sebaiknya tetap berdekatan.
+Special price harus dekat dengan pricing.
+Yang paling perlu diubah
+
+Kalau hanya mau ubah sedikit, lakukan ini:
+
+1. Pindahkan pricing ke bawah pemateri
+
+Ini perubahan paling penting.
+
+Dari sekarang:
+
+Pricing → Kurikulum → Pemateri
+
+Menjadi:
+
+Kurikulum → Pemateri → Pricing
+
+Ini akan membuat harga terasa lebih masuk akal.
+
+2. Tukar posisi “Kenapa Harus” dan “Apa yang Akan Dipelajari”
+
+Dari:
+
+Apa yang Akan Dipelajari → Kenapa Harus
+
+Menjadi:
+
+Kenapa Harus → Apa yang Akan Dipelajari
+
+Ini membuat alur problem → solution lebih natural.
+
+3. Satukan Special Price dekat pricing
+
+Jangan biarkan special price berdiri terlalu jauh dari harga.

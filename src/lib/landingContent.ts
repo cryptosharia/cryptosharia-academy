@@ -179,15 +179,15 @@ export const defaultLandingContent: LandingContent = {
 	layout: [
 		{ id: 'hero', visible: true },
 		{ id: 'authority', visible: true },
+		{ id: 'usp', visible: true },
 		{ id: 'valueProps', visible: true },
 		{ id: 'curriculum', visible: true },
 		{ id: 'instructors', visible: true },
-		{ id: 'testimonials', visible: true },
-		{ id: 'usp', visible: true },
 		{ id: 'pricing', visible: true },
 		{ id: 'urgency', visible: true },
 		{ id: 'faq', visible: true },
-		{ id: 'finalCta', visible: true }
+		{ id: 'finalCta', visible: true },
+		{ id: 'testimonials', visible: true }
 	],
 	whatsapp: {
 		phone: '6281234567890',
@@ -274,18 +274,18 @@ export const defaultLandingContent: LandingContent = {
 		items: [
 			{
 				label: '',
-				title: 'Strategi Cuan Halal di Crypto',
+				title: 'Strategi Investasi Crypto Sesuai Prinsip Syariah',
 				description: 'Memahami strategi investasi crypto yang terukur dan sesuai prinsip syariah.'
 			},
 			{
 				label: '',
-				title: 'Build Your Sharia Wealth',
+				title: 'Membangun Wealth Plan yang Lebih Terarah',
 				description:
 					'Membangun aset dan kekayaan jangka panjang dengan pendekatan yang sehat dan berkelanjutan.'
 			},
 			{
 				label: '',
-				title: 'Strategi Bertahan di Bear Market',
+				title: 'Strategi Bertahan di Market Volatil',
 				description: 'Belajar menjaga portofolio dan mengambil peluang saat market sedang turun.'
 			}
 		],
@@ -359,7 +359,7 @@ export const defaultLandingContent: LandingContent = {
 	},
 	pricing: {
 		eyebrow: '',
-		title: 'Gabung Programnya Sekarang',
+		title: 'Gabung Crypto Sharia Masterclass 2026',
 		description:
 			'Bootcamp berlangsung 4 hari pada 27-28 Juni 2026 dan 4-5 Juli 2026 dengan dua sesi materi di setiap hari belajar.',
 		benefitCards: [
@@ -527,9 +527,49 @@ export const defaultLandingContent: LandingContent = {
 					'Ya. Materi disusun dari dasar hingga advanced sehingga dapat diikuti oleh pemula maupun yang sudah berpengalaman.'
 			},
 			{
+				question: 'Apakah bootcamp ini berisi rekomendasi beli coin tertentu?',
+				answer:
+					'Tidak. Program ini bersifat edukasi untuk membantu peserta memahami analisis, risiko, dan prinsip syariah. Keputusan investasi tetap menjadi tanggung jawab masing-masing peserta.'
+			},
+			{
+				question: 'Apakah kelas dilakukan live atau rekaman?',
+				answer:
+					'Bootcamp dirancang sebagai kelas live terstruktur agar peserta bisa mengikuti penjelasan, diskusi, dan tanya jawab secara langsung.'
+			},
+			{
 				question: 'Bagaimana jika tidak bisa hadir di salah satu sesi?',
 				answer:
 					'Peserta akan mendapatkan akses rekaman materi sehingga tetap dapat mengikuti pembelajaran.'
+			},
+			{
+				question: 'Apakah peserta mendapatkan sertifikat?',
+				answer:
+					'Ya. Peserta mendapatkan sertifikat setelah mengikuti rangkaian bootcamp dan menyelesaikan ketentuan program.'
+			},
+			{
+				question: 'Apakah ada grup komunitas setelah kelas?',
+				answer:
+					'Ya. Peserta mendapatkan akses komunitas untuk diskusi, networking, dan pendampingan lanjutan sesuai format program.'
+			},
+			{
+				question: 'Apakah materi membahas coin halal dan haram?',
+				answer:
+					'Materi membahas prinsip dasar analisis aset crypto dari perspektif bisnis, utilitas, risiko, dan syariah agar peserta memiliki kerangka penilaian yang lebih terarah.'
+			},
+			{
+				question: 'Apakah ada praktik analisis?',
+				answer:
+					'Ya. Peserta akan diarahkan memahami praktik analisis fundamental, narasi pasar, teknikal dasar, manajemen risiko, dan penyusunan portfolio.'
+			},
+			{
+				question: 'Apakah cocok untuk yang belum pernah investasi crypto?',
+				answer:
+					'Cocok, selama peserta siap belajar dari dasar dan memahami bahwa aset crypto memiliki risiko tinggi serta membutuhkan manajemen risiko yang disiplin.'
+			},
+			{
+				question: 'Apakah pembayaran bisa transfer?',
+				answer:
+					'Bisa. Detail pembayaran dan konfirmasi pendaftaran dapat dikonsultasikan melalui WhatsApp admin CryptoSharia.'
 			},
 			{
 				question: 'Apa yang membedakan program ini dengan masterclass lain?',
@@ -540,7 +580,7 @@ export const defaultLandingContent: LandingContent = {
 	},
 	finalCta: {
 		eyebrow: '',
-		title: 'Ilmu Dulu. Cuan Kemudian. Berkah Selamanya.',
+		title: 'Pahami Ilmunya. Kelola Risikonya. Jaga Prinsipnya.',
 		description:
 			'Mulai dari ilmu yang benar, bangun strategi yang disiplin, dan tetap berpegang pada prinsip syariah.',
 		ctaLabel: 'Daftar Sekarang'
@@ -621,9 +661,49 @@ export function mergeContent(stored: Partial<LandingContent> | null | undefined)
 
 function normalizeContent(content: LandingContent): LandingContent {
 	content.layout = normalizeLayout(content.layout);
+	content.valueProps = normalizeValueProps(content.valueProps);
 	content.curriculum = normalizeCurriculum(content.curriculum);
 	content.instructors = normalizeInstructors(content.instructors);
+	content.pricing = normalizePricing(content.pricing);
+	content.faq = normalizeFaq(content.faq);
+	content.finalCta = normalizeFinalCta(content.finalCta);
 	return content;
+}
+
+function normalizeValueProps(
+	valueProps: LandingContent['valueProps']
+): LandingContent['valueProps'] {
+	const defaults = defaultLandingContent.valueProps;
+	const oldTitles = new Map([
+		['Strategi Cuan Halal di Crypto', 'Strategi Investasi Crypto Sesuai Prinsip Syariah'],
+		['Build Your Sharia Wealth', 'Membangun Wealth Plan yang Lebih Terarah'],
+		['Strategi Bertahan di Bear Market', 'Strategi Bertahan di Market Volatil']
+	]);
+
+	if (!valueProps.title?.trim()) valueProps.title = defaults.title;
+	valueProps.items = normalizeFeatures(valueProps.items, defaults.items, oldTitles);
+	if (!valueProps.docTitle?.trim()) valueProps.docTitle = defaults.docTitle;
+	if (!valueProps.docDescription?.trim()) valueProps.docDescription = defaults.docDescription;
+
+	return valueProps;
+}
+
+function normalizeFeatures(
+	items: Feature[] | undefined,
+	fallback: Feature[],
+	oldTitles: Map<string, string>
+): Feature[] {
+	const sourceItems = Array.isArray(items) && items.length > 0 ? items : fallback;
+
+	return sourceItems.map((item, index) => {
+		const fallbackItem = fallback[index] ?? fallback[0];
+		const title = item.title?.trim() ?? '';
+		return {
+			label: item.label?.trim() || fallbackItem.label,
+			title: (oldTitles.get(title) ?? title) || fallbackItem.title,
+			description: item.description?.trim() || fallbackItem.description
+		};
+	});
 }
 
 function normalizeCurriculum(
@@ -877,6 +957,66 @@ function findInstructorFallback(item: Partial<Instructor>, index: number): Instr
 	return match ?? defaultItems[index] ?? defaultItems[0];
 }
 
+function normalizePricing(pricing: LandingContent['pricing']): LandingContent['pricing'] {
+	const defaults = defaultLandingContent.pricing;
+	const oldTitles = new Set([
+		'Gabung Programnya Sekarang',
+		'Biaya Program Crypto Sharia Masterclass'
+	]);
+
+	if (!pricing.title?.trim() || oldTitles.has(pricing.title.trim())) {
+		pricing.title = defaults.title;
+	}
+	if (!pricing.description?.trim()) pricing.description = defaults.description;
+	if (!pricing.originalPrice?.trim()) pricing.originalPrice = defaults.originalPrice;
+	if (!pricing.price?.trim()) pricing.price = defaults.price;
+	if (!pricing.note?.trim()) pricing.note = defaults.note;
+	if (!pricing.ctaLabel?.trim()) pricing.ctaLabel = defaults.ctaLabel;
+	pricing.benefitCards =
+		Array.isArray(pricing.benefitCards) && pricing.benefitCards.length > 0
+			? pricing.benefitCards
+			: defaults.benefitCards;
+
+	return pricing;
+}
+
+function normalizeFaq(faq: LandingContent['faq']): LandingContent['faq'] {
+	const defaults = defaultLandingContent.faq;
+	const oldDefaultQuestions = new Set([
+		'Apakah program ini cocok untuk pemula?',
+		'Bagaimana jika tidak bisa hadir di salah satu sesi?',
+		'Apa yang membedakan program ini dengan masterclass lain?'
+	]);
+
+	if (!faq.title?.trim()) faq.title = defaults.title;
+	if (
+		!Array.isArray(faq.items) ||
+		faq.items.length === 0 ||
+		(faq.items.length <= 3 && faq.items.every((item) => oldDefaultQuestions.has(item.question)))
+	) {
+		faq.items = defaults.items;
+	}
+
+	return faq;
+}
+
+function normalizeFinalCta(finalCta: LandingContent['finalCta']): LandingContent['finalCta'] {
+	const defaults = defaultLandingContent.finalCta;
+	const oldTitles = new Set([
+		'Ilmu Dulu. Cuan Kemudian. Berkah Selamanya.',
+		'Ilmu Dulu. Strategi Kemudian. Berkah Selamanya.',
+		'Belajar Dulu. Kelola Risiko. Jaga Prinsip Syariah.'
+	]);
+
+	if (!finalCta.title?.trim() || oldTitles.has(finalCta.title.trim())) {
+		finalCta.title = defaults.title;
+	}
+	if (!finalCta.description?.trim()) finalCta.description = defaults.description;
+	if (!finalCta.ctaLabel?.trim()) finalCta.ctaLabel = defaults.ctaLabel;
+
+	return finalCta;
+}
+
 function normalizeLayout(layout: LayoutEntry[]): LayoutEntry[] {
 	const defaultEntries = defaultLandingContent.layout;
 	const defaultIds = new Set(defaultEntries.map((entry) => entry.id));
@@ -898,7 +1038,37 @@ function normalizeLayout(layout: LayoutEntry[]): LayoutEntry[] {
 		seen.add(entry.id);
 	});
 
-	return normalized;
+	return reorderLayoutForConversion(normalized, defaultEntries);
+}
+
+function reorderLayoutForConversion(
+	layout: LayoutEntry[],
+	defaultEntries: LayoutEntry[]
+): LayoutEntry[] {
+	if (!shouldUseConversionOrder(layout)) return layout;
+
+	const visibility = new Map(layout.map((entry) => [entry.id, entry.visible]));
+	return defaultEntries.map((entry) => ({
+		id: entry.id,
+		visible: visibility.get(entry.id) ?? entry.visible
+	}));
+}
+
+function shouldUseConversionOrder(layout: LayoutEntry[]): boolean {
+	const indexOf = (id: SectionId) => layout.findIndex((entry) => entry.id === id);
+	const valuePropsIndex = indexOf('valueProps');
+	const uspIndex = indexOf('usp');
+	const curriculumIndex = indexOf('curriculum');
+	const instructorsIndex = indexOf('instructors');
+	const pricingIndex = indexOf('pricing');
+	const urgencyIndex = indexOf('urgency');
+
+	return (
+		(valuePropsIndex !== -1 && uspIndex !== -1 && valuePropsIndex < uspIndex) ||
+		(pricingIndex !== -1 && curriculumIndex !== -1 && pricingIndex < curriculumIndex) ||
+		(pricingIndex !== -1 && instructorsIndex !== -1 && pricingIndex < instructorsIndex) ||
+		(pricingIndex !== -1 && urgencyIndex !== -1 && urgencyIndex !== pricingIndex + 1)
+	);
 }
 
 function findDefaultInsertIndex(
