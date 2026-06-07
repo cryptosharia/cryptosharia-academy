@@ -470,7 +470,7 @@
 			<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 				<div class="mb-12 max-w-4xl">
 					{#if content.instructors.eyebrow}
-						<p class="mb-3 text-xs font-bold tracking-[0.2em] text-orange-600 uppercase">
+						<p class="mb-4 text-xs font-black tracking-[0.22em] text-orange-600 uppercase">
 							{content.instructors.eyebrow}
 						</p>
 					{/if}
@@ -487,20 +487,20 @@
 				<div class="grid items-stretch gap-6 md:grid-cols-2 xl:grid-cols-3">
 					{#each content.instructors.items as instructor}
 						<div
-							class="group flex h-full flex-col overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm transition hover:border-orange-200 hover:shadow-md dark:border-slate-800 dark:bg-slate-900 dark:hover:border-orange-900/70"
+							class="group flex h-full flex-col overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm transition hover:border-orange-200 hover:shadow-lg hover:shadow-orange-950/5 dark:border-slate-800 dark:bg-slate-900 dark:hover:border-orange-900/70"
 						>
 							<div
-								class="aspect-[4/3] overflow-hidden border-b border-slate-100 bg-slate-100 dark:border-slate-800 dark:bg-slate-800"
+								class="aspect-[4/3] overflow-hidden border-b border-slate-100 bg-gradient-to-br from-slate-50 via-orange-50/40 to-slate-100 dark:border-slate-800 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900"
 							>
 								<img
 									src={instructor.photo}
 									alt={instructor.name}
-									class="h-full w-full object-cover object-center"
+									class="h-full w-full object-cover object-[center_22%] brightness-[1.03] contrast-[1.04] saturate-[0.96]"
 								/>
 							</div>
 							<div class="flex flex-1 flex-col p-6">
 								<p
-									class="mb-4 inline-flex w-fit rounded-full border border-orange-200 bg-orange-50 px-3 py-1 text-xs leading-5 font-bold text-orange-700 dark:border-orange-900/60 dark:bg-orange-950/40 dark:text-orange-300"
+									class="mb-5 inline-flex w-fit rounded-full border border-orange-200 bg-orange-50 px-4 py-1.5 text-[13px] leading-5 font-bold text-orange-700 dark:border-orange-900/60 dark:bg-orange-950/40 dark:text-orange-300"
 								>
 									{instructor.badge}
 								</p>
@@ -517,14 +517,14 @@
 								</p>
 
 								<div class="mt-5 border-t border-slate-100 pt-5 dark:border-slate-800">
-									<h4 class="text-xs font-black tracking-[0.16em] text-slate-500 uppercase">
-										Highlight Kredensial
+									<h4 class="text-xs font-black tracking-[0.14em] text-slate-500 uppercase">
+										Kredensial Utama
 									</h4>
-									<ul class="mt-3 space-y-3">
+									<ul class="mt-3 space-y-2.5">
 										{#each instructor.highlights as highlight}
 											<li class="flex gap-3 text-sm leading-6 text-slate-700 dark:text-slate-300">
 												<svg
-													class="mt-1 h-4 w-4 shrink-0 text-orange-600 dark:text-orange-400"
+													class="mt-1 h-3.5 w-3.5 shrink-0 text-orange-600 dark:text-orange-400"
 													fill="none"
 													stroke="currentColor"
 													viewBox="0 0 24 24"
@@ -544,8 +544,8 @@
 								</div>
 
 								<div class="mt-5">
-									<h4 class="text-xs font-black tracking-[0.16em] text-slate-500 uppercase">
-										Fokus Bootcamp
+									<h4 class="text-xs font-black tracking-[0.14em] text-slate-500 uppercase">
+										Fokus Materi
 									</h4>
 									<p class="mt-3 text-sm leading-7 text-slate-600 dark:text-slate-400">
 										{instructor.description}
@@ -556,7 +556,9 @@
 					{/each}
 				</div>
 
-				<div class="mt-10 border-t border-slate-200 pt-8 dark:border-slate-800">
+				<div
+					class="mt-10 rounded-lg border border-orange-100 bg-orange-50/70 p-6 shadow-sm shadow-orange-950/5 sm:p-8 dark:border-orange-900/40 dark:bg-orange-950/20"
+				>
 					<div class="flex flex-col justify-between gap-6 lg:flex-row lg:items-center">
 						<div>
 							{#if content.instructors.closing}

@@ -1,0 +1,397 @@
+Apa yang sekarang sudah berhasil
+1. Judulnya sudah kuat
+
+“Tiga Perspektif Kredibel dalam Satu Bootcamp” adalah keputusan yang tepat.
+
+Judul ini:
+
+menjelaskan value,
+terasa profesional,
+punya nuansa otoritatif,
+dan langsung memberi positioning bahwa bootcamp ini tidak berdiri di atas satu sudut pandang saja.
+
+Ini jauh lebih kuat daripada “Pemateri Bootcamp”.
+
+2. Subjudulnya sudah jelas dan fungsional
+
+Subjudul sekarang sudah berhasil menjalankan tugasnya: menjelaskan bahwa crypto syariah dibahas dari tiga sisi:
+
+industri crypto,
+strategi keuangan,
+prinsip fiqih muamalah.
+
+Ini penting karena langsung membantu user memahami diferensiasi program.
+
+Walaupun masih bisa dipoles sedikit, secara umum sudah bagus dan cukup menjual.
+
+3. Card pemateri sekarang sudah punya struktur yang benar
+
+Ini salah satu improvement terbesar.
+
+Sekarang setiap card sudah punya:
+
+foto,
+badge bidang,
+nama,
+credential ringkas,
+role,
+section “highlight kredensial”,
+section “fokus bootcamp”.
+
+Secara UX ini bagus, karena user bisa scanning cepat.
+
+Jadi sekarang section ini sudah tidak lagi terasa seperti:
+
+“nama + jabatan + paragraf”
+
+tetapi sudah terasa seperti:
+
+“profil ahli yang benar-benar dibangun untuk meyakinkan.”
+
+Ini improvement yang besar.
+
+4. Kredensial sudah mulai “berbicara”
+
+Sebelumnya yang paling kurang adalah otoritas pemateri belum terasa.
+
+Sekarang:
+
+Sholahuddin punya B.B.A., WMI, AWP, dan ICF
+Ghithrif punya CFA, CFP, CSA, CTA
+Devin punya AAOIFI, DPS MUI, dan latar akademik
+
+Ini membuat section jauh lebih meyakinkan.
+
+Dan yang penting: sekarang pengunjung bisa langsung paham bahwa masing-masing pemateri bukan asal dipilih.
+
+5. CTA bawah sudah membantu conversion
+
+Bagian bawah sekarang sudah lebih hidup karena ada:
+
+statement penutup,
+pertanyaan pendorong,
+dua tombol CTA.
+
+Ini bagus, karena setelah orang selesai membaca profil pemateri, mereka tidak dibiarkan menggantung.
+
+Sekarang kritik tajamnya: apa yang masih kurang?
+
+Walaupun ini sudah bagus, ada beberapa hal yang menurut saya masih menahan section ini dari level “sangat kuat”.
+
+1. Card masih terasa sedikit terlalu padat
+
+Ini kritik terbesar saya untuk versi sekarang.
+
+Secara struktur memang bagus, tetapi isi tiap card masih agak kepadatan, khususnya:
+
+card Ghithrif,
+dan sebagian card Devin.
+
+Masalahnya bukan karena isinya jelek, tapi karena:
+
+bullet cukup panjang,
+line-height terasa agak rapat,
+nama panjang,
+credential banyak,
+fokus bootcamp juga lumayan panjang.
+
+Akibatnya, mata user bekerja cukup keras.
+
+Paling terasa di card Ghithrif
+
+Card tengah paling berat secara isi. Itu bisa membuat keseimbangan section agak terganggu, karena:
+
+nama panjang 2 baris,
+credential banyak,
+bullet cukup panjang,
+deskripsi fokus juga panjang.
+Saran
+
+Kalau mau naik level, saya sarankan ringkas beberapa bullet.
+
+Misalnya:
+
+Dari:
+
+“CFA, kredensial global bergengsi di bidang investasi dan keuangan”
+
+Bisa tetap, itu bagus.
+
+Tapi:
+
+“CSA dan CTA di bidang analisis pasar dan investasi”
+“Berpengalaman dalam financial planning, risk management, fundamental analysis, narrative analysis, dan global macro analysis”
+
+Ini mulai terasa panjang.
+
+Bisa diringkas menjadi:
+
+“CSA dan CTA di bidang analisis pasar”
+“Berpengalaman dalam financial planning, risk management, dan macro analysis”
+
+Lebih cepat dibaca.
+
+2. Foto masih belum konsisten secara kualitas visual
+
+Ini masih PR besar.
+
+Walaupun layout sudah lebih baik, foto pemateri masih belum satu kelas secara visual.
+
+Foto 1 — Sholahuddin
+cukup formal,
+cukup bersih,
+tapi masih terasa seperti foto sederhana,
+background dan lighting biasa saja.
+Foto 2 — Ghithrif
+ini yang paling lemah secara visual,
+terlalu kasual,
+pencahayaan lebih datar,
+background abu-abu,
+ekspresi dan pose terasa kurang premium,
+membuat card tengah turun secara “kelas visual”.
+Foto 3 — Devin
+paling formal,
+paling corporate,
+paling premium,
+tapi justru jadi terlalu berbeda dari dua lainnya.
+Dampaknya
+
+Section-nya jadi terlihat:
+
+secara informasi kuat,
+tapi secara visual identitas pemateri belum setara.
+Saran
+
+Kalau memungkinkan, lakukan salah satu dari dua ini:
+
+Opsi A — edit foto yang ada
+samakan crop,
+samakan exposure,
+samakan tone warna,
+buat background lebih seragam,
+naikkan kualitas visual foto kedua.
+Opsi B — foto ulang/kurasi ulang
+
+Ini solusi terbaik.
+
+Buat guideline:
+
+half body,
+background netral,
+pencahayaan depan lembut,
+outfit formal atau semi-formal yang setara,
+pose tenang dan profesional.
+
+Kalau foto diseragamkan, section ini akan naik kualitasnya secara drastis.
+
+3. Badge bidang masih terlalu kecil pengaruhnya
+
+Badge seperti:
+
+Crypto Syariah & Wealth Planning
+Investment & Financial Planning
+Fiqih Muamalah & Islamic Finance
+
+ini sebenarnya sangat penting, karena membantu user langsung memahami peran masing-masing pemateri.
+
+Tapi saat ini badge masih terasa seperti elemen kecil tambahan, bukan elemen yang benar-benar membantu scanning.
+
+Saran
+sedikit perbesar font badge,
+beri sedikit padding horizontal lebih lega,
+bisa dibuat sedikit lebih kontras,
+atau beri jarak bawah yang lebih mantap ke nama.
+
+Tujuannya supaya badge terasa lebih bermakna, bukan dekorasi.
+
+4. Hierarki tipografi sudah bagus, tapi masih bisa dipoles
+
+Secara umum tipografinya sudah cukup kuat. Namun ada beberapa area yang masih bisa diperhalus.
+
+Yang sudah bagus
+nama pemateri tebal,
+role orange cukup menonjol,
+heading section kuat.
+Yang masih bisa ditingkatkan
+a. Heading kecil “HIGHLIGHT KREDENSIAL” dan “FOKUS BOOTCAMP”
+
+Secara visual ini oke, tapi terasa agak terlalu formal dan kaku.
+
+Kalau brand voice ingin lebih natural, bisa diubah menjadi:
+
+Kredensial Utama
+Fokus Materi
+
+Tapi ini opsional.
+Kalau memang ingin terasa lebih formal-profesional, versi sekarang juga masih aman.
+
+b. Credential ringkas
+
+Contoh:
+
+B.B.A. · WMI · AWP
+S.E. · CFA · CFP · CSA · CTA
+AAOIFI · DPS MUI
+
+Ini sudah tepat. Tapi mungkin bisa diberi sedikit jarak visual lebih baik dengan role, supaya tidak terasa terlalu numpuk.
+
+5. Card tinggi seragam, tapi distribusi isi belum seimbang sempurna
+
+Saya suka bahwa card dibuat seragam tingginya. Ini penting dan secara visual rapi.
+
+Tetapi isi tiap card belum seimbang:
+
+card tengah paling berat,
+card pertama cukup penuh,
+card ketiga paling ringan.
+
+Akibatnya, meskipun tingginya sama, beban visualnya belum setara.
+
+Saran
+
+Buat isi tiap card lebih seimbang:
+
+maksimal 4 bullet, tapi usahakan tiap bullet tidak terlalu panjang,
+fokus bootcamp maksimal 3–4 baris nyaman,
+card yang ringan bisa ditambah poin fokus,
+card yang terlalu berat diringkas.
+
+Sekarang card Ghithrif perlu dipadatkan, sedangkan card Devin bisa dipoles sedikit agar lebih “berisi” tanpa menjadi berat.
+
+6. Bagian CTA bawah sudah bagus, tapi komposisinya belum sempurna
+
+Bagian bawah sudah bekerja dengan baik. Tetapi saya melihat dua hal:
+
+a. Kolom kiri dan tombol kanan terasa sedikit terpisah
+
+Teks di kiri dan tombol di kanan secara struktur bagus, tapi masih sedikit terasa seperti dua blok berbeda yang ditempelkan, bukan satu penutup section yang benar-benar menyatu.
+
+b. Tombol utama terlalu dominan dibanding teks CTA
+
+Tombol orange cukup kuat, itu bagus. Tapi hampir sedikit terlalu menarik perhatian sehingga area teks kiri terasa agak lebih lemah.
+
+Saran
+
+Bisa dipertimbangkan salah satu:
+
+tambahkan sedikit background lembut untuk seluruh area CTA,
+atau beri padding yang membuat area CTA terasa seperti satu “penutup section”.
+
+Contoh:
+
+background soft cream / orange sangat muda,
+border tipis,
+radius lembut.
+
+Ini bisa membuat bagian bawah terasa lebih premium.
+
+7. Copy CTA sudah cukup baik, tapi bisa lebih tajam
+
+Sekarang tertulis:
+
+“Siap belajar crypto syariah dari tiga perspektif utama?”
+
+Ini sudah bagus.
+
+Tapi kalau ingin lebih kuat, bisa juga pertimbangkan:
+
+Siap memahami crypto syariah secara lebih utuh?
+Pelajari crypto syariah dari sisi industri, keuangan, dan fiqih muamalah
+Mulai belajar crypto syariah dari tiga perspektif utama
+
+Namun jujur, versi sekarang sudah cukup kuat. Ini bukan prioritas tinggi.
+
+8. Tombol secondary masih terasa agak generic
+
+Tombol:
+“Konsultasi via WhatsApp”
+
+Sudah jelas, tapi terasa agak generik.
+
+Bisa dipertajam menjadi:
+
+Konsultasi via WhatsApp
+Tanya Tim Kami
+Diskusi via WhatsApp
+Konsultasi Sekarang
+
+Kalau objektif, versi sekarang masih aman. Hanya saja belum terlalu “punya karakter”.
+
+9. Belum ada elemen kecil yang membuat section terasa lebih “editorial”
+
+Sekarang section sudah bagus, bersih, dan profesional. Tapi masih bisa dibuat lebih premium dengan satu elemen kecil tambahan di atas heading, misalnya:
+
+PEMATERI BOOTCAMP
+
+dalam huruf kecil uppercase, warna abu/orange tipis.
+
+Kenapa ini membantu?
+
+memberi identitas section,
+membuat heading terasa lebih terkurasi,
+menambah rasa “landing page premium”.
+
+Ini detail kecil, tapi sering sangat membantu.
+
+10. Masih terasa sangat “aman”, belum punya satu elemen wow
+
+Ini bukan kritik keras, tapi pengamatan penting.
+
+Section ini sekarang:
+
+rapi,
+bersih,
+profesional,
+informatif.
+
+Tetapi belum punya satu elemen yang membuat orang merasa:
+
+“Wah, ini serius banget.”
+
+Elemen wow itu tidak harus ramai. Bisa datang dari:
+
+foto yang jauh lebih konsisten,
+card yang lebih premium,
+badge yang lebih hidup,
+CTA yang lebih polished,
+atau headline + eyebrow label yang lebih kuat.
+
+Jadi saat ini section sudah bagus, tapi masih belum “istimewa”.
+
+Mana yang paling perlu diperbaiki kalau waktunya terbatas?
+
+Kalau kamu ingin revisi efisien, ini prioritas saya:
+
+Prioritas 1 — Perbaiki konsistensi foto
+
+Ini dampaknya paling besar ke kesan premium.
+
+Prioritas 2 — Ringkas isi card Ghithrif
+
+Karena sekarang card tengah paling berat.
+
+Prioritas 3 — Poles area CTA bawah
+
+Buat lebih menyatu dan terasa sebagai penutup.
+
+Prioritas 4 — Tambahkan label kecil di atas heading
+
+Supaya section lebih editorial.
+
+Prioritas 5 — Sedikit perbesar/kuatkan badge bidang
+
+Agar scanning lebih mudah.
+
+Hal-hal yang jangan diubah besar-besaran lagi
+
+Menurut saya, beberapa hal sudah benar dan jangan diacak ulang kecuali ada alasan kuat:
+
+judul section,
+struktur card,
+adanya highlight kredensial,
+adanya fokus bootcamp,
+adanya CTA bawah,
+style warna orange-navy,
+layout tiga card desktop.
+
+Jadi revisi berikutnya sebaiknya bersifat polishing, bukan bongkar total.
