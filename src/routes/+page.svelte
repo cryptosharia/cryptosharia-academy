@@ -413,13 +413,13 @@
 			<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 				<div class="mx-auto mb-12 max-w-4xl text-center">
 					<h2
-						class="text-3xl leading-tight font-extrabold text-slate-900 sm:text-4xl dark:text-white"
+						class="text-3xl leading-tight font-extrabold text-slate-900 sm:text-5xl dark:text-white"
 					>
 						{content.curriculum.title}
 					</h2>
 					{#if content.curriculum.description}
 						<p
-							class="mx-auto mt-5 max-w-3xl text-base leading-8 text-slate-600 dark:text-slate-300"
+							class="mx-auto mt-5 max-w-3xl text-base leading-8 text-slate-600 sm:text-lg dark:text-slate-300"
 						>
 							{content.curriculum.description}
 						</p>
@@ -431,10 +431,10 @@
 						<div
 							class="pointer-events-none absolute top-16 right-10 left-10 hidden h-px bg-gradient-to-r from-orange-200 via-slate-300 to-teal-200 xl:block dark:from-orange-900/70 dark:via-slate-700 dark:to-teal-900/60"
 						></div>
-						<div class="relative grid gap-5 md:grid-cols-2 xl:grid-cols-4">
+						<div class="relative grid gap-6 md:grid-cols-2 xl:grid-cols-4">
 							{#each content.curriculum.schedule as day, dayIndex}
 								<div
-									class="flex h-full flex-col rounded-lg border border-slate-200 bg-white p-6 shadow-sm shadow-slate-950/5 dark:border-slate-800 dark:bg-slate-950"
+									class="flex h-full flex-col rounded-lg border border-slate-200 bg-white p-6 shadow-sm shadow-slate-950/5 dark:border-slate-700 dark:bg-slate-950"
 								>
 									<div class="flex items-start justify-between gap-4">
 										<div class="min-w-0">
@@ -442,7 +442,7 @@
 												Hari {dayIndex + 1}
 											</p>
 											<h3
-												class="mt-2 text-xl leading-snug font-extrabold break-words text-slate-900 dark:text-white"
+												class="mt-2 text-2xl leading-tight font-extrabold break-words text-slate-900 dark:text-white"
 											>
 												{day.stage}
 											</h3>
@@ -455,27 +455,27 @@
 									</div>
 
 									<p
-										class="mt-4 border-b border-slate-100 pb-4 text-sm font-bold text-slate-500 dark:border-slate-800 dark:text-slate-400"
+										class="mt-5 border-b border-slate-100 pb-5 text-[15px] leading-6 font-bold text-slate-600 dark:border-slate-800 dark:text-slate-300"
 									>
 										{day.date}
 									</p>
 
-									<ol class="mt-5 space-y-4">
+									<ol class="mt-6 space-y-5">
 										{#each day.sessions as session, sessionIndex}
 											<li class="flex gap-3">
 												<span
-													class="mt-0.5 inline-flex h-7 min-w-14 shrink-0 items-center justify-center rounded-md bg-slate-900 px-2 text-[11px] font-black text-white dark:bg-orange-600"
+													class="mt-0.5 inline-flex h-8 min-w-16 shrink-0 items-center justify-center rounded-md bg-slate-900 px-3 text-xs font-black text-white dark:bg-orange-600"
 												>
 													Sesi {sessionIndex + 1}
 												</span>
 												<div class="min-w-0">
 													<p
-														class="text-sm leading-6 font-bold break-words text-slate-800 dark:text-slate-200"
+														class="text-[15px] leading-7 font-bold break-words text-slate-800 dark:text-white"
 													>
 														{session}
 													</p>
 													{#if day.sessionSpeakers?.[sessionIndex]}
-														<p class="mt-1 text-xs leading-5 text-slate-500 dark:text-slate-500">
+														<p class="mt-1 text-sm leading-6 text-slate-500 dark:text-slate-400">
 															oleh {day.sessionSpeakers[sessionIndex]}
 														</p>
 													{/if}
@@ -485,13 +485,13 @@
 									</ol>
 
 									{#if day.outcome}
-										<div class="mt-auto border-t border-slate-100 pt-5 dark:border-slate-800">
+										<div class="mt-auto border-t border-slate-100 pt-6 dark:border-slate-800">
 											<p
 												class="text-[11px] font-black tracking-[0.16em] text-teal-700 uppercase dark:text-teal-300"
 											>
 												Outcome
 											</p>
-											<p class="mt-2 text-sm leading-7 text-slate-600 dark:text-slate-400">
+											<p class="mt-3 text-[15px] leading-8 text-slate-700 dark:text-slate-300">
 												{day.outcome}
 											</p>
 										</div>
@@ -522,20 +522,22 @@
 					</div>
 				{/if}
 
-				<div class="mt-12 border-t border-slate-200 pt-10 dark:border-slate-800">
+				<div class="mt-14 border-t border-slate-200 pt-12 dark:border-slate-800">
 					<div class="grid gap-8 lg:grid-cols-[1fr_0.9fr] lg:items-start">
 						{#if content.curriculum.outcomes.length > 0}
 							<div>
-								<h3 class="text-2xl font-extrabold text-slate-900 dark:text-white">
+								<h3
+									class="text-2xl leading-tight font-extrabold text-slate-900 sm:text-3xl dark:text-white"
+								>
 									Setelah mengikuti bootcamp, peserta diharapkan mampu:
 								</h3>
 								<ul
-									class="mt-6 grid gap-3 text-sm leading-7 text-slate-700 sm:grid-cols-2 dark:text-slate-300"
+									class="mt-7 grid gap-4 text-base leading-8 text-slate-700 sm:grid-cols-2 dark:text-slate-200"
 								>
 									{#each content.curriculum.outcomes as outcome}
 										<li class="flex gap-3">
 											<svg
-												class="mt-1 h-4 w-4 shrink-0 text-orange-600 dark:text-orange-400"
+												class="mt-1.5 h-5 w-5 shrink-0 text-orange-600 dark:text-orange-400"
 												fill="none"
 												stroke="currentColor"
 												viewBox="0 0 24 24"
@@ -561,12 +563,12 @@
 						{/if}
 
 						<div
-							class="rounded-lg border border-slate-200 bg-slate-950 p-6 text-white shadow-xl shadow-slate-950/10 dark:border-slate-800"
+							class="rounded-lg border border-slate-200 bg-slate-950 p-7 text-white shadow-xl shadow-slate-950/10 dark:border-orange-900/40"
 						>
 							<h3 class="text-2xl leading-snug font-extrabold">
 								{content.curriculum.ctaTitle}
 							</h3>
-							<p class="mt-3 text-sm leading-7 text-slate-300">
+							<p class="mt-3 text-[15px] leading-8 text-slate-300">
 								{content.curriculum.ctaDescription}
 							</p>
 							<div class="mt-6 flex flex-col gap-3 sm:flex-row lg:flex-col xl:flex-row">
@@ -578,7 +580,7 @@
 									rel={isExternalHref(resolveCtaHref(content.curriculum.primaryCta))
 										? 'noopener noreferrer'
 										: undefined}
-									class="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-orange-600 px-5 py-3.5 text-sm font-bold text-white transition hover:bg-orange-500 active:scale-95"
+									class="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-orange-600 px-5 py-3.5 text-sm font-bold whitespace-nowrap text-white transition hover:bg-orange-500 active:scale-95"
 								>
 									{content.curriculum.primaryCta.label}
 									<svg
@@ -604,7 +606,7 @@
 									rel={isExternalHref(resolveCtaHref(content.curriculum.secondaryCta))
 										? 'noopener noreferrer'
 										: undefined}
-									class="inline-flex w-full items-center justify-center rounded-lg border border-white/20 px-5 py-3.5 text-sm font-bold text-white transition hover:border-orange-300 hover:bg-white/10"
+									class="inline-flex w-full items-center justify-center rounded-lg border border-white/20 px-5 py-3.5 text-sm font-bold whitespace-nowrap text-white transition hover:border-orange-300 hover:bg-white/10"
 								>
 									{content.curriculum.secondaryCta.label}
 								</a>
@@ -630,7 +632,7 @@
 					>
 						{content.instructors.title}
 					</h2>
-					<p class="mt-4 text-base leading-8 text-slate-600 dark:text-slate-300">
+					<p class="mt-4 max-w-3xl text-base leading-8 text-slate-600 dark:text-slate-300">
 						{content.instructors.description}
 					</p>
 				</div>
@@ -651,7 +653,7 @@
 							</div>
 							<div class="flex flex-1 flex-col p-6">
 								<p
-									class="mb-5 inline-flex w-fit rounded-full border border-orange-200 bg-orange-50 px-4 py-1.5 text-[13px] leading-5 font-bold text-orange-700 dark:border-orange-900/60 dark:bg-orange-950/40 dark:text-orange-300"
+									class="mb-5 inline-flex w-fit rounded-full border border-orange-300 bg-orange-50 px-4 py-2 text-sm leading-5 font-bold text-orange-700 dark:border-orange-700/70 dark:bg-orange-500/10 dark:text-orange-200"
 								>
 									{instructor.badge}
 								</p>
@@ -668,12 +670,16 @@
 								</p>
 
 								<div class="mt-5 border-t border-slate-100 pt-5 dark:border-slate-800">
-									<h4 class="text-xs font-black tracking-[0.14em] text-slate-500 uppercase">
+									<h4
+										class="text-xs font-black tracking-[0.14em] text-slate-600 uppercase dark:text-slate-300"
+									>
 										Kredensial Utama
 									</h4>
 									<ul class="mt-3 space-y-2.5">
 										{#each instructor.highlights as highlight}
-											<li class="flex gap-3 text-sm leading-6 text-slate-700 dark:text-slate-300">
+											<li
+												class="flex gap-3 text-[15px] leading-7 text-slate-700 dark:text-slate-200"
+											>
 												<svg
 													class="mt-1 h-3.5 w-3.5 shrink-0 text-orange-600 dark:text-orange-400"
 													fill="none"
@@ -695,10 +701,12 @@
 								</div>
 
 								<div class="mt-5">
-									<h4 class="text-xs font-black tracking-[0.14em] text-slate-500 uppercase">
+									<h4
+										class="text-xs font-black tracking-[0.14em] text-slate-600 uppercase dark:text-slate-300"
+									>
 										Fokus Materi
 									</h4>
-									<p class="mt-3 text-sm leading-7 text-slate-600 dark:text-slate-400">
+									<p class="mt-3 text-[15px] leading-8 text-slate-600 dark:text-slate-300">
 										{instructor.description}
 									</p>
 								</div>
@@ -708,7 +716,7 @@
 				</div>
 
 				<div
-					class="mt-10 rounded-lg border border-orange-100 bg-orange-50/70 p-6 shadow-sm shadow-orange-950/5 sm:p-8 dark:border-orange-900/40 dark:bg-orange-950/20"
+					class="mt-10 rounded-lg border border-orange-100 bg-orange-50/70 p-6 shadow-sm shadow-orange-950/5 sm:p-8 dark:border-orange-900/50 dark:bg-slate-950"
 				>
 					<div class="flex flex-col justify-between gap-6 lg:flex-row lg:items-center">
 						<div>
@@ -720,14 +728,14 @@
 							<h3 class="mt-4 text-2xl font-extrabold text-slate-900 dark:text-white">
 								{content.instructors.ctaTitle}
 							</h3>
-							<p class="mt-2 text-sm leading-7 text-slate-600 dark:text-slate-400">
+							<p class="mt-2 text-[15px] leading-7 text-slate-600 dark:text-slate-300">
 								{content.instructors.ctaDescription}
 							</p>
 						</div>
 						<div class="flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
 							<a
 								href={content.instructors.primaryCta.href}
-								class="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-orange-600 px-6 py-4 text-sm font-bold text-white shadow-lg shadow-orange-950/20 transition hover:bg-orange-500 active:scale-95 sm:w-auto"
+								class="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-orange-600 px-6 py-4 text-sm font-bold whitespace-nowrap text-white shadow-lg shadow-orange-950/20 transition hover:bg-orange-500 active:scale-95 sm:w-auto sm:min-w-44"
 							>
 								{content.instructors.primaryCta.label}
 								<svg
@@ -749,7 +757,7 @@
 								href={content.instructors.secondaryCta.href || whatsappUrl}
 								target="_blank"
 								rel="noopener noreferrer"
-								class="inline-flex w-full items-center justify-center rounded-lg border border-slate-300 px-6 py-4 text-sm font-bold text-slate-900 transition hover:border-orange-300 hover:bg-orange-50 sm:w-auto dark:border-slate-700 dark:text-white dark:hover:border-orange-800 dark:hover:bg-orange-950/30"
+								class="inline-flex w-full items-center justify-center rounded-lg border border-slate-300 px-6 py-4 text-sm font-bold whitespace-nowrap text-slate-900 transition hover:border-orange-300 hover:bg-orange-50 sm:w-auto sm:min-w-44 dark:border-slate-700 dark:text-white dark:hover:border-orange-800 dark:hover:bg-orange-950/30"
 							>
 								{content.instructors.secondaryCta.label}
 							</a>

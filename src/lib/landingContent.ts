@@ -389,9 +389,9 @@ export const defaultLandingContent: LandingContent = {
 	},
 	curriculum: {
 		eyebrow: '',
-		title: 'Detail Kurikulum',
+		title: 'Kurikulum 4 Hari: Dari Dasar Crypto hingga Portfolio Syariah',
 		description:
-			'Peserta akan belajar memahami crypto dari peta industri, manajemen risiko, analisis pasar, prinsip syariah, hingga penyusunan portfolio jangka panjang yang lebih terarah.',
+			'Peserta akan memahami crypto dari peta industri, manajemen risiko, analisis pasar, prinsip syariah, hingga penyusunan portfolio jangka panjang yang lebih terarah.',
 		schedule: [
 			{
 				stage: 'Foundation',
@@ -415,12 +415,12 @@ export const defaultLandingContent: LandingContent = {
 				sessions: ['Analisis Teknikal Dasar', 'Analisis Coin Syariah'],
 				sessionSpeakers: ['Muhammad Ghithrif Gustomo Putra', 'Devin Halim'],
 				outcome:
-					'Peserta mulai memahami dasar membaca chart dan prinsip menilai aset crypto dari perspektif syariah.'
+					'Peserta memahami dasar membaca chart dan prinsip menilai aset crypto dari perspektif syariah.'
 			},
 			{
 				stage: 'Strategy & Portfolio',
 				date: 'Minggu, 5 Juli 2026',
-				sessions: ['Analisis Teknikal Lanjutan', 'Membangun Portfolio Jangka Panjang'],
+				sessions: ['Analisis Teknikal Lanjutan', 'Strategi Portfolio Jangka Panjang'],
 				sessionSpeakers: ['Muhammad Ghithrif Gustomo Putra', 'Sholahuddin Al Ayyubi'],
 				outcome:
 					'Peserta belajar menyusun strategi portfolio crypto dengan pendekatan jangka panjang dan manajemen risiko.'
@@ -433,7 +433,7 @@ export const defaultLandingContent: LandingContent = {
 			'Analisis Makro Global',
 			'Analisis Teknikal Dasar dan Lanjutan',
 			'Analisis Coin Syariah',
-			'Membangun Portfolio Jangka Panjang'
+			'Strategi Portfolio Jangka Panjang'
 		],
 		outcomes: [
 			'Memahami peta besar industri crypto dan Web3.',
@@ -445,23 +445,23 @@ export const defaultLandingContent: LandingContent = {
 		],
 		disclaimer:
 			'Materi bootcamp bersifat edukasi dan bukan merupakan ajakan membeli atau menjual aset crypto tertentu. Peserta tetap perlu memahami risiko dan mengambil keputusan secara mandiri.',
-		ctaTitle: 'Siap mengikuti alur belajar 4 hari ini?',
+		ctaTitle: 'Siap memahami crypto syariah secara lebih terstruktur?',
 		ctaDescription:
-			'Lihat detail benefit peserta atau konsultasikan kebutuhan belajar Anda sebelum mendaftar.',
-		primaryCta: { label: 'Daftar Bootcamp', href: '' },
+			'Ikuti alur belajar 4 hari dari peta industri, analisis pasar, prinsip syariah, hingga portfolio jangka panjang.',
+		primaryCta: { label: 'Daftar Sekarang', href: '' },
 		secondaryCta: { label: 'Tanya Program', href: '' }
 	},
 	instructors: {
 		eyebrow: '',
 		title: 'Tiga Perspektif Kredibel dalam Satu Bootcamp',
 		description:
-			'Crypto syariah tidak cukup dipahami hanya dari sisi peluang aset digital. Di bootcamp ini, peserta akan memahami industri crypto, strategi keuangan, dan prinsip fiqih muamalah dari pemateri dengan kredensial yang relevan di bidangnya.',
+			'Crypto syariah tidak cukup dipahami hanya dari sisi peluang aset digital. Di bootcamp ini, peserta akan belajar dari tiga perspektif penting: industri crypto, strategi keuangan, dan prinsip fiqih muamalah.',
 		closing:
 			'Dengan kombinasi tiga perspektif ini, peserta tidak hanya belajar melihat peluang crypto, tetapi juga memahami risiko dan batasan syariahnya secara lebih matang.',
 		ctaTitle: 'Siap memahami crypto syariah secara lebih utuh?',
 		ctaDescription:
-			'Lihat kurikulum bootcamp atau konsultasikan kebutuhan belajar Anda melalui WhatsApp.',
-		primaryCta: { label: 'Lihat Kurikulum Bootcamp', href: '#curriculum' },
+			'Belajar dari tiga perspektif: industri crypto, strategi keuangan, dan prinsip fiqih muamalah.',
+		primaryCta: { label: 'Lihat Kurikulum', href: '#curriculum' },
 		secondaryCta: { label: 'Diskusi via WhatsApp', href: '' },
 		items: [
 			{
@@ -486,12 +486,12 @@ export const defaultLandingContent: LandingContent = {
 				role: 'Founder of Qualifin',
 				highlights: [
 					'CFA, kredensial global bergengsi di bidang investasi dan keuangan',
-					'CFP, sertifikasi profesional di bidang perencanaan keuangan',
-					'CSA dan CTA di bidang analisis pasar',
-					'Berpengalaman dalam financial planning, risk management, dan macro analysis'
+					'CFP, sertifikasi profesional perencanaan keuangan',
+					'CSA & CTA di bidang analisis pasar',
+					'Berpengalaman dalam risk management, fundamental analysis, dan macro analysis'
 				],
 				description:
-					'Membantu peserta mengelola risiko, membaca fundamental aset, mengenali narasi pasar, dan melihat pengaruh kondisi makro global terhadap keputusan investasi.',
+					'Membantu peserta memahami cara membaca risiko, fundamental aset, narasi pasar, dan pengaruh kondisi makro terhadap keputusan investasi.',
 				photo: '/instructors/muhammad-ghithrif.jpeg'
 			},
 			{
@@ -633,23 +633,43 @@ function normalizeCurriculum(
 	const oldTitles = new Set([
 		'Jadwal & Materi Bootcamp',
 		'Materi Pembelajaran',
+		'Detail Kurikulum',
 		'Kurikulum 4 Hari: Dari Dasar Crypto hingga Portfolio Syariah'
 	]);
 	const oldEyebrows = new Set(['Detail Kurikulum', 'Kurikulum Bootcamp']);
+	const oldDescriptions = new Set([
+		'Peserta akan belajar memahami crypto dari peta industri, manajemen risiko, analisis pasar, prinsip syariah, hingga penyusunan portfolio jangka panjang yang lebih terarah.'
+	]);
+	const oldCtaTitles = new Set(['Siap mengikuti alur belajar 4 hari ini?']);
+	const oldCtaDescriptions = new Set([
+		'Lihat detail benefit peserta atau konsultasikan kebutuhan belajar Anda sebelum mendaftar.'
+	]);
 
 	if (oldEyebrows.has(curriculum.eyebrow?.trim() ?? '')) curriculum.eyebrow = '';
 	if (!curriculum.title?.trim() || oldTitles.has(curriculum.title.trim())) {
 		curriculum.title = defaults.title;
 	}
-	if (!curriculum.description?.trim()) curriculum.description = defaults.description;
+	if (!curriculum.description?.trim() || oldDescriptions.has(curriculum.description.trim())) {
+		curriculum.description = defaults.description;
+	}
 	curriculum.schedule = normalizeCurriculumSchedule(curriculum.schedule);
 	curriculum.topics = normalizeCurriculumTopics(curriculum.topics);
 	curriculum.outcomes = normalizeStringList(curriculum.outcomes, defaults.outcomes);
 	if (!curriculum.disclaimer?.trim()) curriculum.disclaimer = defaults.disclaimer;
-	if (!curriculum.ctaTitle?.trim()) curriculum.ctaTitle = defaults.ctaTitle;
-	if (!curriculum.ctaDescription?.trim()) curriculum.ctaDescription = defaults.ctaDescription;
+	if (!curriculum.ctaTitle?.trim() || oldCtaTitles.has(curriculum.ctaTitle.trim())) {
+		curriculum.ctaTitle = defaults.ctaTitle;
+	}
+	if (
+		!curriculum.ctaDescription?.trim() ||
+		oldCtaDescriptions.has(curriculum.ctaDescription.trim())
+	) {
+		curriculum.ctaDescription = defaults.ctaDescription;
+	}
 	curriculum.primaryCta = { ...defaults.primaryCta, ...(curriculum.primaryCta ?? {}) };
 	curriculum.secondaryCta = { ...defaults.secondaryCta, ...(curriculum.secondaryCta ?? {}) };
+	if ((curriculum.primaryCta.label ?? '').trim() === 'Daftar Bootcamp') {
+		curriculum.primaryCta.label = defaults.primaryCta.label;
+	}
 
 	return curriculum;
 }
@@ -677,8 +697,21 @@ function normalizeCurriculumDay(day: Partial<CurriculumDay>, index: number): Cur
 		sessionSpeakers: sessions.map((_, sessionIndex) => {
 			return speakers[sessionIndex] || fallback.sessionSpeakers[sessionIndex] || '';
 		}),
-		outcome: day.outcome?.trim() || fallback.outcome
+		outcome: normalizeCurriculumOutcome(day.outcome, fallback.outcome)
 	};
+}
+
+function normalizeCurriculumOutcome(outcome: string | undefined, fallback: string): string {
+	const oldCopy = new Map([
+		[
+			'Peserta mulai memahami dasar membaca chart dan prinsip menilai aset crypto dari perspektif syariah.',
+			'Peserta memahami dasar membaca chart dan prinsip menilai aset crypto dari perspektif syariah.'
+		]
+	]);
+	const value = outcome?.trim() ?? '';
+	const normalized = oldCopy.get(value) ?? value;
+
+	return normalized || fallback;
 }
 
 function normalizeCurriculumSessions(sessions: string[] | undefined, fallback: string[]): string[] {
@@ -690,7 +723,8 @@ function normalizeCurriculumSessions(sessions: string[] | undefined, fallback: s
 		['Technical Analysis (Session 1)', 'Analisis Teknikal Dasar'],
 		['Technical Analysis (Session 2)', 'Analisis Teknikal Lanjutan'],
 		['Sharia Coin Analysis', 'Analisis Coin Syariah'],
-		['Long-Term Portfolio Building', 'Membangun Portfolio Jangka Panjang']
+		['Long-Term Portfolio Building', 'Strategi Portfolio Jangka Panjang'],
+		['Membangun Portfolio Jangka Panjang', 'Strategi Portfolio Jangka Panjang']
 	]);
 	const values = Array.isArray(sessions)
 		? sessions
@@ -709,7 +743,8 @@ function normalizeCurriculumTopics(topics: string[] | undefined): string[] {
 		['Global Macro Analysis', 'Analisis Makro Global'],
 		['Technical Analysis', 'Analisis Teknikal Dasar dan Lanjutan'],
 		['Sharia Coin Analysis', 'Analisis Coin Syariah'],
-		['Long-Term Portfolio Building', 'Membangun Portfolio Jangka Panjang']
+		['Long-Term Portfolio Building', 'Strategi Portfolio Jangka Panjang'],
+		['Membangun Portfolio Jangka Panjang', 'Strategi Portfolio Jangka Panjang']
 	]);
 	const values = Array.isArray(topics)
 		? topics
@@ -733,24 +768,37 @@ function normalizeInstructors(
 ): LandingContent['instructors'] {
 	const defaults = defaultLandingContent.instructors;
 	const oldTitle = 'Pemateri Bootcamp';
-	const oldDescription =
-		'Belajar bersama tiga pemateri utama dari perspektif investasi crypto, financial planning, dan fiqih muamalah.';
+	const oldDescriptions = new Set([
+		'Belajar bersama tiga pemateri utama dari perspektif investasi crypto, financial planning, dan fiqih muamalah.',
+		'Crypto syariah tidak cukup dipahami hanya dari sisi peluang aset digital. Di bootcamp ini, peserta akan memahami industri crypto, strategi keuangan, dan prinsip fiqih muamalah dari pemateri dengan kredensial yang relevan di bidangnya.'
+	]);
 	const oldCtaTitle = 'Siap belajar crypto syariah dari tiga perspektif utama?';
+	const oldCtaDescriptions = new Set([
+		'Lihat kurikulum bootcamp atau konsultasikan kebutuhan belajar Anda melalui WhatsApp.'
+	]);
 
 	if (!instructors.eyebrow?.trim()) instructors.eyebrow = defaults.eyebrow;
 	if (!instructors.title?.trim() || instructors.title.trim() === oldTitle) {
 		instructors.title = defaults.title;
 	}
-	if (!instructors.description?.trim() || instructors.description.trim() === oldDescription) {
+	if (!instructors.description?.trim() || oldDescriptions.has(instructors.description.trim())) {
 		instructors.description = defaults.description;
 	}
 	if (!instructors.closing?.trim()) instructors.closing = defaults.closing;
 	if (!instructors.ctaTitle?.trim() || instructors.ctaTitle.trim() === oldCtaTitle) {
 		instructors.ctaTitle = defaults.ctaTitle;
 	}
-	if (!instructors.ctaDescription?.trim()) instructors.ctaDescription = defaults.ctaDescription;
+	if (
+		!instructors.ctaDescription?.trim() ||
+		oldCtaDescriptions.has(instructors.ctaDescription.trim())
+	) {
+		instructors.ctaDescription = defaults.ctaDescription;
+	}
 	instructors.primaryCta = { ...defaults.primaryCta, ...(instructors.primaryCta ?? {}) };
 	instructors.secondaryCta = { ...defaults.secondaryCta, ...(instructors.secondaryCta ?? {}) };
+	if ((instructors.primaryCta.label ?? '').trim() === 'Lihat Kurikulum Bootcamp') {
+		instructors.primaryCta.label = defaults.primaryCta.label;
+	}
 	if ((instructors.secondaryCta.label ?? '').trim() === 'Konsultasi via WhatsApp') {
 		instructors.secondaryCta.label = defaults.secondaryCta.label;
 	}
@@ -789,7 +837,10 @@ function normalizeInstructorHighlights(
 		: [];
 	const oldHighlightText = new Set([
 		'CSA dan CTA di bidang analisis pasar dan investasi',
-		'Berpengalaman dalam financial planning, risk management, fundamental analysis, narrative analysis, dan global macro analysis'
+		'Berpengalaman dalam financial planning, risk management, fundamental analysis, narrative analysis, dan global macro analysis',
+		'CFP, sertifikasi profesional di bidang perencanaan keuangan',
+		'CSA dan CTA di bidang analisis pasar',
+		'Berpengalaman dalam financial planning, risk management, dan macro analysis'
 	]);
 
 	if (values.length === 0 || values.some((highlight) => oldHighlightText.has(highlight))) {
@@ -807,6 +858,7 @@ function normalizeInstructorDescription(
 	const oldDescriptions = new Set([
 		'Membawakan perspektif industri crypto, Web3, analisa koin syariah, dan strategi investasi yang sesuai prinsip syariah.',
 		'Membawakan financial planning, risk management, fundamental analysis, narrative analysis, dan global macro analysis.',
+		'Membantu peserta mengelola risiko, membaca fundamental aset, mengenali narasi pasar, dan melihat pengaruh kondisi makro global terhadap keputusan investasi.',
 		'Membantu peserta memahami cara mengelola risiko, membaca fundamental aset, mengenali narasi pasar, dan melihat pengaruh kondisi makro global terhadap keputusan investasi.',
 		'Membawakan perspektif fiqih muamalah untuk membantu peserta memahami batasan dan prinsip syariah dalam aset crypto.'
 	]);

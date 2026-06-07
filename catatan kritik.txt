@@ -1,0 +1,548 @@
+1. Bagian Materi Pembelajaran / Detail Kurikulum
+Penilaian umum
+
+Bagian kurikulum sekarang jauh lebih baik daripada versi sebelumnya. Perubahan paling bagus adalah munculnya:
+
+label tahap per hari: Foundation, Market Analysis, Technical & Sharia Screening, Strategy & Portfolio
+outcome setelah tiap hari
+blok “Setelah mengikuti bootcamp, peserta diharapkan mampu”
+CTA “Siap mengikuti alur belajar 4 hari ini?”
+
+Ini membuat kurikulum tidak lagi sekadar daftar jadwal, tapi sudah terasa seperti alur belajar yang bertahap.
+
+Nilai saya untuk section kurikulum sekarang: 8.3/10
+
+Masih bisa naik ke 8.8/10 dengan beberapa perbaikan kecil.
+
+1.1 Judul “Detail Kurikulum” masih agak biasa
+
+Judul “Detail Kurikulum” sudah jelas, tapi masih agak administratif. Padahal section ini adalah salah satu bagian utama untuk meyakinkan calon peserta.
+
+Saya sarankan judul dibuat lebih menjual.
+
+Alternatif:
+
+Kurikulum 4 Hari: Dari Dasar Crypto hingga Portfolio Syariah
+
+Atau:
+
+Alur Belajar 4 Hari yang Terstruktur
+
+Atau:
+
+Dari Peta Industri hingga Strategi Portfolio
+
+Menurut saya yang paling kuat:
+
+Kurikulum 4 Hari: Dari Dasar Crypto hingga Portfolio Syariah
+
+Karena langsung menjelaskan progres belajar dari awal sampai akhir.
+
+Kalau tetap mau mempertahankan “Detail Kurikulum”, bisa diberi eyebrow kecil:
+
+KURIKULUM BOOTCAMP
+Detail Kurikulum 4 Hari
+
+Itu lebih baik daripada hanya “Detail Kurikulum”.
+
+1.2 Subjudul kurikulum sudah ada, tapi perlu diperjelas sedikit
+
+Sekarang subjudulnya tampak kecil dan cukup pendek. Secara visual rapi, tetapi belum terlalu menonjolkan nilai kurikulum.
+
+Saran copy:
+
+Dalam 4 hari, peserta akan memahami crypto dari peta industri, manajemen risiko, analisis pasar, prinsip syariah, hingga penyusunan portfolio jangka panjang.
+
+Kalimat ini lebih kuat karena langsung menyebut perjalanan belajar.
+
+1.3 Struktur 4 card sudah bagus
+
+Empat card sejajar untuk desktop sudah tepat karena programnya memang 4 hari. Card sekarang juga lebih informatif karena ada:
+
+Hari
+tahap
+tanggal
+sesi
+outcome
+
+Ini sudah benar.
+
+Namun ada satu masalah: isi di card terlihat agak padat dan kecil, terutama di dark mode. Karena section berada di tengah halaman panjang, orang kemungkinan melakukan scanning cepat. Teks kecil bisa membuat mereka melewati detail penting.
+
+Saran:
+
+Naikkan sedikit ukuran teks materi.
+Buat jarak antar sesi lebih lega.
+Outcome jangan terlalu kecil.
+Gunakan line-height lebih nyaman.
+
+Tidak perlu memperbesar banyak, cukup sedikit agar lebih “napas”.
+
+1.4 Label tahap per hari sudah bagus, tapi bisa dibuat lebih menonjol
+
+Label seperti:
+
+Foundation
+Market Analysis
+Technical & Sharia Screening
+Strategy & Portfolio
+
+adalah tambahan yang sangat bagus. Ini membantu calon peserta memahami alur.
+
+Namun secara visual, label tahap masih belum terlalu “berbicara”. Yang lebih dominan justru “HARI 1, HARI 2” dan tanggal.
+
+Saran:
+
+Buat tahapnya sedikit lebih jelas, misalnya:
+
+HARI 1
+Foundation
+Sabtu, 27 Juni 2026
+
+Atau buat label tahap dalam badge kecil.
+
+Kenapa ini penting? Karena “Foundation → Market Analysis → Technical & Sharia Screening → Strategy & Portfolio” adalah narasi utama kurikulum. Itu sebaiknya lebih terlihat.
+
+1.5 Materi per sesi sudah lebih baik, tapi beberapa istilah masih perlu dipoles
+
+Saya suka beberapa perubahan yang sudah dilakukan, tapi masih ada istilah yang bisa dibuat lebih natural.
+
+Hari 1
+
+Crypto Industry Map & Web3
+Saran: Peta Industri Crypto & Web3
+
+Financial Planning & Risk Management
+Saran: Financial Planning & Manajemen Risiko
+
+Ini lebih cocok untuk landing page Indonesia.
+
+Hari 2
+
+Fundamental & Narrative Analysis
+Saran: Analisis Fundamental & Narasi Pasar
+
+Global Macro Analysis
+Saran: Analisis Makro Global
+
+Lebih natural dan lebih mudah dipahami.
+
+Hari 3
+
+Technical Analysis Session 1
+Saran: Analisis Teknikal Dasar
+
+Sharia Coin Analysis
+Saran: Analisis Coin Syariah
+
+Hari 3 ini sangat penting karena ada diferensiasi “syariah”. Jangan biarkan “Sharia Coin Analysis” terlihat seperti materi kecil. Ini bisa menjadi salah satu selling point utama.
+
+Hari 4
+
+Technical Analysis Session 2
+Saran: Analisis Teknikal Lanjutan
+
+Long-Term Portfolio Building
+Saran: Membangun Portfolio Jangka Panjang
+
+Atau lebih kuat:
+
+Strategi Portfolio Jangka Panjang
+
+1.6 Istilah “Session 1/2” sebaiknya jangan dipakai
+
+Ini masih terasa kurang polished.
+
+“Technical Analysis Session 1” dan “Technical Analysis Session 2” terdengar seperti catatan internal kurikulum, bukan copy landing page.
+
+Lebih bagus:
+
+Analisis Teknikal Dasar
+Analisis Teknikal Lanjutan
+
+Atau kalau ingin lebih konkret:
+
+Analisis Teknikal: Dasar Membaca Chart
+Analisis Teknikal: Strategi Entry & Exit
+
+Kalau targetnya pemula, versi “Dasar” dan “Lanjutan” lebih aman.
+
+1.7 “Setelah mengikuti bootcamp…” sudah bagus, tapi tampilannya masih kurang kuat
+
+Bagian ini sangat penting karena menjawab:
+
+Setelah ikut bootcamp, saya bisa apa?
+
+Ini salah satu bagian yang paling menjual. Tapi secara visual, bagian ini masih terlihat seperti list tambahan di bawah card.
+
+Saran:
+
+Buat bagian ini lebih jelas sebagai outcome utama.
+
+Contoh heading:
+
+Setelah mengikuti bootcamp, peserta diharapkan mampu:
+
+Sudah bagus.
+
+Tapi visualnya bisa diperkuat:
+
+gunakan checklist yang lebih jelas,
+buat 2 kolom rapi,
+beri jarak atas yang lebih lega dari card,
+pastikan teks tidak terlalu kecil.
+
+Di dark mode, bagian ini perlu kontras yang lebih tinggi supaya tidak tenggelam.
+
+1.8 CTA kurikulum sudah tepat, tapi teksnya bisa lebih kuat
+
+Sekarang CTA:
+
+Siap mengikuti alur belajar 4 hari ini?
+
+Ini sudah cukup bagus.
+
+Tapi bisa dibuat lebih benefit-driven:
+
+Siap memahami crypto syariah secara lebih terstruktur?
+
+Atau:
+
+Mulai belajar crypto syariah dari dasar hingga portfolio
+
+Button:
+
+Daftar Sekarang
+Tanya Program
+
+Menurut saya CTA kurikulum bisa menjadi:
+
+Siap memahami crypto syariah secara lebih terstruktur?
+Ikuti alur belajar 4 hari dari peta industri, analisis pasar, prinsip syariah, hingga portfolio jangka panjang.
+
+Button:
+Daftar Sekarang
+Tanya Program
+
+Lebih kuat daripada hanya “alur belajar 4 hari”.
+
+1.9 Penempatan kurikulum di halaman sudah tepat
+
+Urutannya bagus: setelah offer/benefit, masuk ke detail kurikulum. Ini membantu orang memahami program sebelum melihat pemateri.
+
+Secara funnel, ini masuk akal:
+
+Hero
+Proof/experience
+What will be learned
+Why this program
+Pricing/register
+Detail curriculum
+Speakers
+
+Namun catatan: kalau pemateri adalah selling point besar, section pemateri juga boleh diletakkan sebelum harga atau sebelum detail kurikulum. Tapi struktur sekarang masih aman karena di bagian bawah pemateri muncul setelah user sudah paham isi program.
+
+2. Bagian Pemateri
+Penilaian umum
+
+Bagian pemateri sekarang sudah kuat dan jauh lebih baik dibanding versi awal. Kredensial tampil jelas, peran tiap orang sudah terlihat, dan CTA bawahnya sudah membantu conversion.
+
+Nilai section pemateri sekarang: 8.4/10
+
+Yang masih perlu diperbaiki terutama:
+
+foto belum konsisten,
+teks terlalu padat di beberapa card,
+card dark mode perlu kontras yang lebih nyaman,
+CTA bawah bisa dibuat lebih premium.
+2.1 Judul section sudah bagus
+
+“Tiga Perspektif Kredibel dalam Satu Bootcamp”
+
+Ini tetap sangat cocok. Jangan diganti.
+
+Judul ini sudah menekankan:
+
+jumlah perspektif,
+kredibilitas,
+integrasi dalam satu bootcamp.
+
+Ini jauh lebih kuat daripada “Pemateri Bootcamp”.
+
+2.2 Subjudul sudah oke, tapi masih bisa dibuat lebih smooth
+
+Subjudul sekarang secara makna sudah baik, tapi masih bisa sedikit dibuat lebih natural.
+
+Versi yang saya sarankan:
+
+Crypto syariah tidak cukup dipahami hanya dari sisi peluang aset digital. Di bootcamp ini, peserta akan belajar dari tiga perspektif penting: industri crypto, strategi keuangan, dan prinsip fiqih muamalah.
+
+Lebih ringkas dan lebih mudah dibaca.
+
+Kalimat “dari pemateri dengan kredensial yang relevan di bidangnya” sudah bagus, tapi karena card sudah menampilkan kredensial, subjudul tidak perlu terlalu panjang.
+
+2.3 Card pemateri sudah informatif, tapi agak padat
+
+Ini masih kritik utama.
+
+Karena tiap card memuat:
+
+foto,
+badge,
+nama,
+credential,
+role,
+kredensial utama,
+fokus materi,
+
+maka teks menjadi cukup banyak.
+
+Di desktop masih bisa dibaca. Tapi di dark mode, karena font kecil dan kontras lebih rendah, terasa sedikit berat.
+
+Saran:
+
+ringkas bullet terutama di card Ghithrif,
+pendekkan “Fokus Materi”,
+jangan semua detail sertifikasi dijelaskan panjang,
+gunakan maksimal 3–4 bullet per card.
+2.4 Card Ghithrif masih paling berat
+
+Card tengah masih paling padat karena:
+
+nama panjang,
+credential banyak,
+bullet panjang,
+fokus materi panjang.
+
+Ini membuat card tengah terasa lebih “berat” daripada dua card lain.
+
+Saran copy yang lebih ringan:
+
+Kredensial Utama
+
+CFA, kredensial global bergengsi di bidang investasi dan keuangan
+CFP, sertifikasi profesional perencanaan keuangan
+Berpengalaman dalam risk management, fundamental analysis, dan macro analysis
+
+Tidak perlu menjelaskan CSA dan CTA di bullet, karena sudah muncul di credential ringkas. Kalau tetap mau tampil, cukup:
+
+CSA & CTA di bidang analisis pasar
+
+Tapi jangan terlalu panjang.
+
+2.5 Card Devin sudah bagus, tapi bagian akademik masih terasa menggantung
+
+Pada card Devin tertulis:
+
+Latar belakang akademik S1 dan S2
+Sedang menempuh program S3
+
+Ini bagus, tapi terasa masih umum. Kalau memungkinkan, tambahkan nama universitas atau bidang studi. Karena untuk syariah/Islamic finance, latar akademik sangat berpengaruh terhadap trust.
+
+Contoh ideal:
+
+S1 [bidang/kampus]
+S2 [bidang/kampus]
+Sedang menempuh program S3 [bidang/kampus]
+
+Kalau belum ada datanya, versi sekarang boleh dipakai. Tapi secara trust-building, data kampus akan menaikkan kredibilitas.
+
+2.6 Foto pemateri masih PR terbesar
+
+Ini yang paling kelihatan.
+
+Masalah:
+foto Sholahuddin cukup formal tapi lighting sederhana,
+foto Ghithrif paling kasual dan paling tidak corporate,
+foto Devin paling formal dan paling clean,
+tone background tidak seragam.
+
+Karena section ini menjual kredibilitas, foto harus memperkuat rasa percaya. Saat ini foto masih belum sepenuhnya mendukung kualitas kredensial.
+
+Saran:
+
+samakan crop dan brightness,
+foto Ghithrif perlu dibuat lebih terang dan lebih profesional,
+kalau bisa gunakan background seragam,
+jika memungkinkan, minta foto ulang dengan guideline yang sama.
+
+Guideline foto:
+
+half body,
+background netral,
+lighting lembut dari depan,
+pakaian formal/semi-formal,
+ekspresi ramah profesional,
+posisi wajah sejajar.
+
+Kalau foto diperbaiki, section pemateri bisa naik drastis.
+
+2.7 Badge bidang sudah bagus, tapi bisa dibuat lebih konsisten
+
+Badge:
+
+Crypto Syariah & Wealth Planning
+Investment & Financial Planning
+Fiqih Muamalah & Islamic Finance
+
+Sudah bagus.
+
+Namun di dark mode, badge tampak agak kecil dan sedikit tenggelam. Bisa diperbesar sedikit atau diberi contrast lebih kuat.
+
+Saran:
+
+font badge naik sedikit,
+padding horizontal sedikit lebih lega,
+border orange lebih jelas,
+background tetap soft agar tidak norak.
+2.8 Heading “Highlight Kredensial” bisa diganti
+
+Sekarang memakai:
+
+HIGHLIGHT KREDENSIAL
+
+Ini cukup formal, tapi agak kaku.
+
+Saya lebih suka:
+
+Kredensial Utama
+
+Dan:
+
+Fokus Materi
+
+Daripada:
+
+Fokus Bootcamp
+
+Alasannya:
+
+lebih natural,
+lebih mudah dipahami,
+tidak terlalu seperti template corporate.
+
+Namun ini bukan masalah besar. Kalau style brand memang formal, boleh dipertahankan.
+
+2.9 CTA bawah pemateri sudah baik, tapi bisa lebih menyatu
+
+CTA di bawah pemateri versi light mode terlihat cukup bagus karena berada dalam box cream. Di dark mode juga sudah lumayan, tapi bisa dibuat lebih premium.
+
+Masalah kecil:
+
+CTA masih terasa seperti blok terpisah,
+tombol kanan agak kecil,
+teks di kiri bisa dibuat lebih tajam.
+
+Saran copy:
+
+Siap memahami crypto syariah secara lebih utuh?
+Belajar dari tiga perspektif: industri crypto, strategi keuangan, dan prinsip fiqih muamalah.
+
+Button:
+
+Lihat Kurikulum
+Diskusi via WhatsApp
+
+Ini lebih menyatu dengan section pemateri.
+
+3. Perbandingan Light Mode vs Dark Mode
+
+Untuk dua section ini, menurut saya dark mode lebih kuat secara brand. CryptoSharia terasa lebih premium, lebih fintech, dan lebih serius di dark mode.
+
+Namun ada catatan:
+
+Dark mode
+
+Kelebihan:
+
+lebih premium,
+lebih cocok untuk crypto,
+orange lebih hidup,
+section terasa lebih modern.
+
+Kekurangan:
+
+beberapa teks kecil kurang nyaman dibaca,
+card pemateri terlihat lebih berat,
+foto dengan background putih terasa agak kontras sendiri,
+bullet kecil perlu kontras lebih tinggi.
+Light mode
+
+Kelebihan:
+
+lebih mudah dibaca,
+card terlihat bersih,
+kredensial lebih nyaman dibaca.
+
+Kekurangan:
+
+kurang punya atmosfer crypto/fintech,
+kesan premium sedikit lebih rendah daripada dark mode,
+beberapa section terasa seperti dashboard edukasi biasa.
+
+Kalau harus pilih untuk landing page utama: dark mode lebih menjual untuk CryptoSharia, asal kontras teks kecil diperbaiki.
+
+4. Rekomendasi copy final yang lebih rapi
+Detail Kurikulum
+
+Ganti judul menjadi:
+
+Kurikulum 4 Hari: Dari Dasar Crypto hingga Portfolio Syariah
+
+Subjudul:
+
+Peserta akan memahami crypto dari peta industri, manajemen risiko, analisis pasar, prinsip syariah, hingga penyusunan portfolio jangka panjang yang lebih terarah.
+
+Card:
+
+Hari 1 — Foundation
+Sabtu, 27 Juni 2026
+Sesi 1: Peta Industri Crypto & Web3
+Sesi 2: Financial Planning & Manajemen Risiko
+Outcome: Peserta memahami gambaran besar industri crypto dan cara mengelola risiko sebelum mengambil keputusan investasi.
+
+Hari 2 — Market Analysis
+Minggu, 28 Juni 2026
+Sesi 1: Analisis Fundamental & Narasi Pasar
+Sesi 2: Analisis Makro Global
+Outcome: Peserta belajar membaca kualitas aset, narasi pasar, dan pengaruh kondisi makro terhadap pergerakan crypto.
+
+Hari 3 — Technical & Sharia Screening
+Sabtu, 4 Juli 2026
+Sesi 1: Analisis Teknikal Dasar
+Sesi 2: Analisis Coin Syariah
+Outcome: Peserta memahami dasar membaca chart dan prinsip menilai aset crypto dari perspektif syariah.
+
+Hari 4 — Strategy & Portfolio
+Minggu, 5 Juli 2026
+Sesi 1: Analisis Teknikal Lanjutan
+Sesi 2: Strategi Portfolio Jangka Panjang
+Outcome: Peserta belajar menyusun portfolio crypto dengan pendekatan jangka panjang dan manajemen risiko.
+
+Pemateri
+
+Judul tetap:
+
+Tiga Perspektif Kredibel dalam Satu Bootcamp
+
+Subjudul revisi:
+
+Crypto syariah tidak cukup dipahami hanya dari sisi peluang aset digital. Di bootcamp ini, peserta akan belajar dari tiga perspektif penting: industri crypto, strategi keuangan, dan prinsip fiqih muamalah.
+
+Heading dalam card:
+
+Kredensial Utama
+Fokus Materi
+
+Card Ghithrif diringkas:
+
+Kredensial Utama
+
+CFA, kredensial global bergengsi di bidang investasi dan keuangan
+CFP, sertifikasi profesional perencanaan keuangan
+CSA & CTA di bidang analisis pasar
+Berpengalaman dalam risk management, fundamental analysis, dan macro analysis
+
+Fokus:
+
+Membantu peserta memahami cara membaca risiko, fundamental aset, narasi pasar, dan pengaruh kondisi makro terhadap keputusan investasi.
