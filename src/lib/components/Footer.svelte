@@ -51,30 +51,6 @@
 <svelte:window bind:scrollY />
 
 <footer class="bg-slate-900 text-slate-300">
-	<!-- CTA Section -->
-	<div class="border-b border-slate-800 bg-slate-800/50">
-		<div
-			class="mx-auto flex max-w-7xl flex-col items-center justify-between gap-6 px-4 py-12 sm:px-6 md:flex-row lg:px-8"
-		>
-			<div>
-				<h2 class="mb-2 text-2xl font-bold text-white">Ilmu Dulu. Cuan Kemudian.</h2>
-				<p class="text-slate-400">
-					Gabung Crypto Sharia Masterclass dan belajar investasi crypto secara sistematis.
-				</p>
-			</div>
-			<div class="flex items-center gap-4">
-				<a
-					href={whatsappUrl}
-					target="_blank"
-					rel="noopener noreferrer"
-					class="bg-primary-600 hover:bg-primary-700 rounded-full px-8 py-3.5 text-sm font-bold text-white shadow-lg transition-all hover:-translate-y-0.5"
-				>
-					Daftar Masterclass
-				</a>
-			</div>
-		</div>
-	</div>
-
 	<!-- Main footer -->
 	<div class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
 		<div class="grid grid-cols-2 gap-10 md:grid-cols-4">

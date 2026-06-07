@@ -238,20 +238,20 @@
 					{/each}
 				</div>
 
-				<div
-					class="mt-10 overflow-hidden rounded-lg border border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-950"
-				>
-					<div class="grid gap-0 lg:grid-cols-[0.9fr_1.1fr]">
-						<div class="p-6 sm:p-8">
-							<h3 class="text-2xl font-extrabold text-slate-900 dark:text-white">
-								{content.valueProps.docTitle}
-							</h3>
-							<p class="mt-4 text-sm leading-7 text-slate-600 dark:text-slate-400">
-								{content.valueProps.docDescription}
-							</p>
-						</div>
-						<div class="grid grid-cols-2 gap-3 bg-slate-100 p-4 dark:bg-slate-900">
-							{#if content.valueProps.docImages.length > 0}
+				{#if content.valueProps.docImages.length > 0}
+					<div
+						class="mt-10 overflow-hidden rounded-lg border border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-950"
+					>
+						<div class="grid gap-0 lg:grid-cols-[0.9fr_1.1fr]">
+							<div class="p-6 sm:p-8">
+								<h3 class="text-2xl font-extrabold text-slate-900 dark:text-white">
+									{content.valueProps.docTitle}
+								</h3>
+								<p class="mt-4 text-sm leading-7 text-slate-600 dark:text-slate-400">
+									{content.valueProps.docDescription}
+								</p>
+							</div>
+							<div class="grid grid-cols-2 gap-3 bg-slate-100 p-4 dark:bg-slate-900">
 								{#each content.valueProps.docImages as img}
 									<div
 										class="aspect-[4/3] overflow-hidden rounded-md border border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-950"
@@ -263,23 +263,10 @@
 										/>
 									</div>
 								{/each}
-							{:else}
-								<div
-									class="aspect-[4/3] rounded-md border border-dashed border-slate-300 bg-white dark:border-slate-700 dark:bg-slate-950"
-								></div>
-								<div
-									class="aspect-[4/3] rounded-md border border-dashed border-slate-300 bg-white dark:border-slate-700 dark:bg-slate-950"
-								></div>
-								<div
-									class="aspect-[4/3] rounded-md border border-dashed border-slate-300 bg-white dark:border-slate-700 dark:bg-slate-950"
-								></div>
-								<div
-									class="aspect-[4/3] rounded-md border border-dashed border-slate-300 bg-white dark:border-slate-700 dark:bg-slate-950"
-								></div>
-							{/if}
+							</div>
 						</div>
 					</div>
-				</div>
+				{/if}
 			</div>
 		</section>
 	{/if}
