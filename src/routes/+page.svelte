@@ -201,17 +201,6 @@
 						{/each}
 					</div>
 				</div>
-
-				<div class="mt-10 grid gap-4 md:grid-cols-3">
-					{#each content.authority.cards as card}
-						<div class="rounded-lg border border-slate-200 p-5 dark:border-slate-800">
-							<p class="text-xs font-bold tracking-wider text-slate-500 uppercase">{card.label}</p>
-							<p class="mt-3 text-sm leading-6 text-slate-700 dark:text-slate-300">
-								{card.description}
-							</p>
-						</div>
-					{/each}
-				</div>
 			</div>
 		</section>
 	{/if}
