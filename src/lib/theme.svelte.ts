@@ -7,11 +7,11 @@ type ThemeMode = 'light' | 'dark' | 'system';
 
 const STORAGE_KEY = 'cryptosharia-theme';
 
-let mode = $state<ThemeMode>('system');
-let resolved = $state<'light' | 'dark'>('light');
+let mode = $state<ThemeMode>('dark');
+let resolved = $state<'light' | 'dark'>('dark');
 
 function getSystemPreference(): 'light' | 'dark' {
-	if (typeof window === 'undefined') return 'light';
+	if (typeof window === 'undefined') return 'dark';
 	return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
 }
 
@@ -60,8 +60,12 @@ export function getResolvedTheme(): 'light' | 'dark' {
 }
 
 export const theme = {
-	get mode() { return mode; },
-	get resolved() { return resolved; },
+	get mode() {
+		return mode;
+	},
+	get resolved() {
+		return resolved;
+	},
 	set: setTheme,
 	init: initTheme
 };
