@@ -15,14 +15,8 @@
 	<body data-sveltekit-preload-data="hover">
 		<script>
 			(function () {
-				var t = localStorage.getItem('cryptosharia-theme') || 'dark';
-				var d =
-					t === 'system'
-						? window.matchMedia('(prefers-color-scheme: dark)').matches
-							? 'dark'
-							: 'light'
-						: t;
-				if (d === 'dark') document.documentElement.classList.add('dark');
+				localStorage.setItem('cryptosharia-theme', 'dark');
+				document.documentElement.classList.add('dark');
 			})();
 		</script>
 		<div style="display: contents">%sveltekit.body%</div>

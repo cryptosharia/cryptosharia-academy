@@ -1,0 +1,820 @@
+MasyaAllah, update terakhir ini sudah naik jauh sekali dibanding versi awal. Sekarang landing page-nya sudah punya alur yang lebih masuk akal, lebih matang, lebih “produk serius”, dan terutama: harga sudah muncul setelah value, kurikulum, dan pemateri dijelaskan. Itu keputusan yang sangat tepat.
+
+Tapi kalau diminta kritik tajam dan menyeluruh, saya akan bilang begini:
+
+Landing page ini sekarang sudah layak dipakai, tapi belum sepenuhnya “premium-converting”.
+Artinya, secara struktur sudah benar, secara tampilan sudah rapi, tapi masih ada beberapa bagian yang terasa terlalu padat, beberapa copy masih kurang tajam, dan beberapa elemen visual belum sepenuhnya konsisten.
+
+Nilai keseluruhan saya:
+
+Light mode: 8.5/10
+Dark mode: 8.8/10
+Secara conversion: 8.3/10
+Secara trust-building: 8.7/10
+Secara premium feel: 8.4/10
+
+Dark mode menurut saya tetap lebih kuat untuk CryptoSharia karena lebih terasa fintech, crypto, serius, dan modern.
+
+1. Urutan section sekarang jauh lebih baik
+
+Urutan terbaru ini sudah jauh lebih natural:
+
+Hero
+Pengalaman edukasi dan komunitas nyata
+Kenapa Harus Crypto Sharia Masterclass
+Apa yang Akan Dipelajari
+Pemateri
+Kurikulum
+Pricing
+Special Price
+FAQ
+Closing CTA
+Footer/disclaimer
+
+Ini sudah jauh lebih baik daripada versi sebelumnya yang menampilkan harga terlalu cepat.
+
+Yang paling saya suka: pricing sekarang muncul setelah pemateri dan kurikulum. Ini membuat harga Rp2.000.000 terasa lebih masuk akal karena user sudah melihat:
+
+program punya konteks,
+ada pengalaman nyata,
+ada benefit,
+ada pemateri kredibel,
+ada kurikulum 4 hari,
+ada outcome,
+ada FAQ.
+
+Jadi urutannya sekarang sudah benar secara funnel.
+
+Namun ada satu catatan: Pemateri muncul sebelum kurikulum. Ini bukan salah. Bahkan untuk CryptoSharia cukup masuk akal, karena kredensial pemateri adalah trust besar. Tapi kalau target calon peserta lebih peduli “belajar apa dulu”, kurikulum bisa diletakkan sebelum pemateri.
+
+Menurut saya, urutan sekarang tetap aman karena:
+
+section “Apa yang Akan Dipelajari” sudah memberi preview materi,
+lalu pemateri membangun otoritas,
+lalu kurikulum menjelaskan detail.
+
+Jadi alurnya menjadi:
+
+Problem/benefit → preview materi → siapa yang mengajar → detail belajar → harga
+
+Ini bagus.
+
+2. Hero sudah kuat, tapi masih bisa lebih tajam
+
+Hero sekarang sudah cukup solid. Ada headline besar:
+
+Crypto Sharia Masterclass 2026
+
+Video preview di kanan, CTA di kiri, dan statistik di bawah video. Secara struktur ini bagus.
+
+Tapi secara copy, hero masih bisa lebih tajam. Saat ini hero terasa sudah profesional, tetapi belum sepenuhnya menekan pain point utama.
+
+Hal yang perlu dijawab di hero:
+
+Untuk siapa program ini?
+Masalah apa yang diselesaikan?
+Kenapa harus crypto syariah?
+Kenapa harus ikut sekarang?
+
+Kalimat hero perlu lebih menekankan bahwa ini bukan kelas crypto spekulatif, tapi kelas untuk memahami crypto secara lebih terarah, dengan risk management dan prinsip syariah.
+
+Contoh arah copy yang lebih kuat:
+
+Crypto Sharia Masterclass 2026
+Belajar memahami crypto dari sisi industri, analisis pasar, manajemen risiko, dan prinsip syariah agar tidak sekadar ikut tren.
+
+Atau:
+
+Belajar Crypto dengan Ilmu, Risiko yang Terukur, dan Prinsip Syariah
+Masterclass 4 hari untuk memahami peta industri crypto, analisis market, sharia screening, dan strategi portfolio jangka panjang.
+
+Saat ini headline sudah kuat karena nama programnya jelas, tapi subheadline perlu lebih “menusuk”.
+
+CTA “Join Now” atau “Daftar Sekarang” sebaiknya konsisten bahasa. Kalau halaman Indonesia, lebih baik gunakan:
+
+Daftar Sekarang
+Lihat Kurikulum
+
+Jangan campur terlalu banyak English di tombol utama kecuali memang targetnya bilingual.
+
+3. Visual hero di dark mode paling berhasil
+
+Dark mode hero terlihat paling cocok dengan karakter CryptoSharia. Nuansa navy gelap + orange memberi rasa:
+
+crypto,
+serius,
+eksklusif,
+fintech,
+modern.
+
+Light mode masih bagus, tapi terasa lebih seperti landing page edukasi umum. Dark mode punya karakter lebih kuat.
+
+Namun hati-hati: di dark mode, beberapa teks kecil tampak agak redup. Ini tidak terlalu parah, tapi kalau dibaca di layar kecil atau laptop dengan brightness rendah, bisa kurang nyaman.
+
+Saran:
+
+naikkan kontras body text sekitar 5–10%,
+jangan gunakan abu-abu terlalu gelap untuk teks penting,
+pastikan semua paragraph minimum masih nyaman dibaca.
+4. Section “Dibangun dari pengalaman edukasi dan komunitas nyata” sudah tepat, tapi masih kurang kuat sebagai proof
+
+Bagian ini penting karena menjadi social proof awal. Penempatannya setelah hero sudah benar.
+
+Tapi secara isi, section ini masih terasa agak ringan. Foto dokumentasi sudah membantu, tetapi belum cukup kuat menjual bukti.
+
+Masalahnya:
+
+teks kiri belum terlalu spesifik,
+dua card dokumentasi terlihat bagus tapi belum terasa “proof besar”,
+belum ada angka atau konteks yang membuat user merasa program ini sudah punya pengalaman nyata.
+
+Kalau memang ada data, tambahkan:
+
+jumlah event,
+jumlah peserta,
+jumlah komunitas,
+tahun pengalaman,
+lokasi acara,
+nama event yang lebih jelas,
+testimoni singkat.
+
+Contoh copy yang lebih kuat:
+
+Dibangun dari pengalaman edukasi dan komunitas nyata
+CryptoSharia tidak hadir dari teori semata. Materi masterclass ini disusun dari pengalaman edukasi, diskusi komunitas, dan kebutuhan nyata peserta dalam memahami crypto secara lebih terarah dan sesuai prinsip syariah.
+
+Kalau ada angka:
+
+Berbasis pengalaman edukasi bersama ratusan peserta dari berbagai latar belakang.
+
+Tapi jangan klaim angka kalau belum pasti.
+
+Secara visual, bagian ini sudah bersih. Namun proof-nya masih bisa dinaikkan.
+
+5. Section “Kenapa Harus Crypto Sharia Masterclass?” sudah jauh lebih baik
+
+Ini salah satu update yang paling berhasil.
+
+Sebelumnya quote Warren Buffett terlalu cepat muncul. Sekarang sudah lebih tepat karena card benefit muncul dulu, lalu quote muncul setelahnya. Itu perbaikan besar.
+
+Alur sekarang:
+
+Judul
+Subjudul
+Enam card benefit
+Quote Warren Buffett
+
+Ini jauh lebih benar.
+
+Sekarang user membaca alasan konkret dulu:
+
+tugas praktik,
+sertifikat,
+FGD & mentoring,
+sharia compliant,
+komunitas global,
+materi terstruktur,
+
+baru quote menjadi penguat.
+
+Ini sudah sesuai dengan komentar CEO.
+
+Kritik untuk section ini
+5.1 Enam card lebih rapi daripada lima card
+
+Keputusan menambah card keenam “Materi Terstruktur” sangat bagus. Grid jadi simetris dan tidak ada card yang sendirian. Layout terlihat lebih selesai.
+
+5.2 Copy card masih bisa dibuat lebih tajam
+
+Beberapa card masih terdengar generik. Contoh:
+
+Sertifikat Kelulusan
+Ini bagus, tapi sertifikat bukan alasan utama orang ikut kelas. Jangan sampai sertifikat terlihat sejajar dengan benefit yang lebih kuat seperti mentoring dan sharia compliant.
+
+Urutan card bisa dipertimbangkan ulang:
+
+Materi Terstruktur
+Sharia Compliant
+Tugas Praktik Langsung
+FGD & Mentoring
+Komunitas Global
+Sertifikat Kelulusan
+
+Kenapa? Karena alasan utama harusnya bukan sertifikat, tapi kualitas pembelajaran dan pendekatan syariah.
+
+Urutan sekarang masih oke, tapi jika mau lebih strategis, taruh benefit paling kuat di awal.
+
+5.3 Quote Warren Buffett sudah lebih pas, tapi perlu penghubung lebih kuat
+
+Quote sekarang sudah berada di bawah, bagus. Namun quote masih bisa terasa agak “tempelan” jika tidak diberi kalimat pengait yang kuat.
+
+Tambahkan satu kalimat kecil di bawah quote:
+
+Sebelum mengambil keputusan di market yang volatile, peserta perlu membangun ilmu, cara berpikir, dan manajemen risiko yang lebih matang.
+
+Ini membuat quote lebih nyambung dengan crypto dan investasi.
+
+6. Section “Apa yang Akan Dipelajari?” bagus sebagai preview, tapi masih terasa terlalu ringan
+
+Section ini berisi tiga card. Secara posisi setelah “Kenapa Harus” sudah pas. Ini menjadi preview sebelum pemateri dan kurikulum.
+
+Namun copy card-nya perlu sangat hati-hati.
+
+Saya lihat ada card seperti:
+
+Strategi Cuan Halal di Crypto
+Membangun Wealth Plan yang Lebih Terarah
+Strategi Bertahan di Bear or Volatil Market
+
+Secara marketing, “Cuan Halal” memang menarik. Tapi untuk brand syariah dan crypto, saya pribadi akan berhati-hati. Frasa ini bisa terasa terlalu “jualan profit” dan rawan dipahami sebagai janji keuntungan.
+
+Kalau ingin lebih dewasa dan aman, ganti menjadi:
+
+Strategi Investasi Crypto Sesuai Prinsip Syariah
+
+Atau:
+
+Memahami Peluang Crypto dengan Prinsip Syariah
+
+Untuk card kedua:
+
+Membangun Wealth Plan yang Lebih Terarah
+
+Ini bagus. Bisa tetap.
+
+Untuk card ketiga, ada typo/struktur bahasa:
+
+Strategi Bertahan di Bear or Volatil Market
+
+Ini sebaiknya diperbaiki. Jangan campur “or”.
+
+Lebih baik:
+
+Strategi Bertahan di Bear Market dan Market Volatil
+
+Atau lebih natural:
+
+Strategi Menghadapi Market yang Volatil
+
+Atau:
+
+Risk Management saat Market Turun
+
+Saya sarankan tiga card menjadi:
+
+Memahami Crypto Sesuai Prinsip Syariah
+Belajar melihat peluang crypto tanpa mengabaikan risiko dan prinsip fiqih muamalah.
+Membangun Wealth Plan yang Lebih Terarah
+Memahami cara mengatur alokasi, risiko, dan tujuan investasi dengan lebih matang.
+Strategi Menghadapi Market Volatil
+Belajar membaca kondisi market agar tidak mudah terbawa FOMO dan kepanikan.
+
+Ini lebih aman, lebih dewasa, dan lebih cocok untuk brand syariah.
+
+7. Section pemateri sekarang sudah kuat, tapi masih punya dua masalah utama
+
+Section pemateri sekarang termasuk salah satu bagian terkuat di halaman. Judulnya bagus:
+
+Tiga Perspektif Kredibel dalam Satu Bootcamp
+
+Ini jangan diganti. Ini sudah sangat cocok.
+
+Card sudah menampilkan:
+
+foto,
+badge bidang,
+nama,
+credential,
+role,
+kredensial utama,
+fokus materi.
+
+Ini sudah sangat membantu trust.
+
+Masalah utama pemateri #1: foto belum konsisten
+
+Ini masih PR terbesar secara visual.
+
+Foto Devin paling formal dan paling corporate.
+Foto Sholahuddin cukup formal tapi masih terasa sederhana.
+Foto Ghithrif paling kasual dan paling kurang premium.
+
+Efeknya: kredensialnya kuat, tapi visualnya belum sepenuhnya mendukung.
+
+Kalau halaman ini ingin terlihat premium, foto harus diseragamkan. Ini bukan detail kecil. Foto pemateri memengaruhi trust secara langsung.
+
+Saran:
+
+gunakan crop yang lebih seragam,
+samakan exposure,
+samakan background,
+naikkan brightness dan contrast foto tengah,
+jika memungkinkan, minta foto ulang dengan guideline yang sama.
+
+Guideline foto:
+
+half body,
+background polos/netral,
+lighting depan lembut,
+ekspresi ramah profesional,
+pakaian formal/semi-formal,
+posisi kepala sejajar.
+Masalah utama pemateri #2: card masih padat
+
+Card Ghithrif masih paling padat. Karena nama panjang, gelar banyak, dan bullet cukup panjang. Ini membuat card tengah terasa berat.
+
+Solusi:
+
+ringkas bullet,
+jangan semua sertifikasi dijelaskan panjang,
+gunakan “CFA” sebagai highlight utama,
+CSA/CTA cukup muncul di credential ringkas atau satu bullet pendek.
+
+Contoh ringkas:
+
+Kredensial Utama
+
+CFA, kredensial global bergengsi di bidang investasi dan keuangan
+CFP, sertifikasi profesional perencanaan keuangan
+CSA & CTA di bidang analisis pasar
+Berpengalaman dalam risk management, fundamental analysis, dan macro analysis
+
+Ini cukup.
+
+Masalah copy pemateri
+
+Saya tetap menyarankan mengganti heading:
+
+Highlight Kredensial → Kredensial Utama
+Fokus Bootcamp → Fokus Materi
+
+Lebih natural dan lebih mudah dipahami.
+
+8. Section kurikulum sudah sangat membaik
+
+Ini juga salah satu section yang sudah naik level besar.
+
+Judul:
+
+Kurikulum 4 Hari: Dari Dasar Crypto hingga Portfolio Syariah
+
+Ini bagus. Jauh lebih kuat daripada “Detail Kurikulum”.
+
+Kurikulum sekarang sudah punya:
+
+Hari 1 sampai 4,
+label tahap,
+tanggal,
+sesi,
+outcome,
+blok kemampuan setelah bootcamp,
+CTA.
+
+Secara struktur ini sudah benar.
+
+Yang masih perlu diperbaiki
+8.1 Card kurikulum masih cukup kecil dan padat
+
+Karena ada 4 card sejajar, teks di dalam card jadi kecil. Di desktop masih oke, tetapi untuk scanning cepat bisa terasa padat.
+
+Solusi:
+
+naikkan sedikit font materi,
+ringkas outcome,
+beri spacing antar item lebih lega,
+pastikan mobile jadi satu kolom yang nyaman.
+8.2 Label “Sesi 1 / Sesi 2” sudah lebih baik
+
+Ini jauh lebih baik daripada A/B atau Session 1/2. Pertahankan.
+
+8.3 Beberapa istilah masih bisa lebih natural
+
+Pastikan semua istilah sudah konsisten:
+
+Peta Industri Crypto & Web3
+Financial Planning & Manajemen Risiko
+Analisis Fundamental & Narasi Pasar
+Analisis Makro Global
+Analisis Teknikal Dasar
+Analisis Coin Syariah
+Analisis Teknikal Lanjutan
+Strategi Portfolio Jangka Panjang
+
+Ini sudah bagus.
+
+Jangan balik lagi ke istilah full-English jika target landing page Indonesia.
+
+8.4 Outcome setelah bootcamp sangat bagus
+
+Bagian:
+
+Setelah mengikuti bootcamp, peserta diharapkan mampu:
+
+Ini penting sekali. Jangan dihapus. Bahkan menurut saya ini salah satu bagian yang memperkuat value sebelum pricing.
+
+Namun visualnya bisa diperkuat. Di dark mode, teks kecilnya agak kurang terbaca. Di light mode lebih nyaman.
+
+Saran:
+
+buat checklist sedikit lebih besar,
+beri spacing lebih lega,
+gunakan kontras lebih kuat di dark mode.
+9. Pricing sekarang posisinya sudah benar
+
+Ini salah satu perbaikan paling penting.
+
+Sekarang harga muncul setelah:
+
+benefit,
+pembelajaran,
+pemateri,
+kurikulum,
+outcome.
+
+Ini sudah benar.
+
+Kritik pricing
+9.1 Harga sudah jelas, tapi value stack perlu lebih kuat
+
+Bagian harga menampilkan Rp2.000.000. Tapi sebelum harga, benefit yang termasuk perlu diperjelas secara lebih tajam.
+
+Misalnya:
+
+Termasuk:
+
+4 hari live masterclass
+materi terstruktur
+tugas praktik
+FGD & mentoring
+akses komunitas
+sertifikat kelulusan
+rekaman kelas, jika ada
+worksheet/template, jika ada
+
+Kalau ada yang tidak termasuk, jangan tulis. Tapi kalau ada, tampilkan karena membantu harga terasa lebih worth it.
+
+9.2 Coret harga lama bagus
+
+Ada harga lama yang dicoret. Ini bagus untuk anchoring.
+
+Tapi pastikan:
+
+harga lama memang valid,
+tidak terlihat manipulatif,
+ada konteks “Early bird” atau “Special price” yang jelas.
+9.3 CTA pricing sudah cukup kuat
+
+Tombol orange sudah menonjol. Bagus.
+
+Namun copy tombol bisa lebih konsisten:
+
+Daftar Sekarang
+bukan “Join Now” kalau halaman Indonesia.
+10. Special Price for 10 Pax Only sangat kuat, tapi bahasanya kurang konsisten
+
+Banner orange ini bagus untuk urgency. Warnanya kuat dan memecah halaman dengan baik.
+
+Namun frasanya English:
+
+Special Price for 10 Pax Only
+
+Kalau seluruh halaman Indonesia, sebaiknya dibuat:
+
+Harga Spesial untuk 10 Peserta Pertama
+
+Atau:
+
+Special Price untuk 10 Peserta Pertama
+
+Saya sarankan:
+
+Harga Spesial untuk 10 Peserta Pertama
+
+Ini lebih jelas dan lebih natural untuk audiens Indonesia.
+
+CTA di kanan juga sebaiknya:
+
+Daftar Sekarang
+
+11. FAQ sudah jauh lebih baik karena lebih banyak pertanyaan
+
+Ini perbaikan besar. FAQ sekarang terlihat lebih serius karena jumlah pertanyaannya banyak.
+
+Untuk harga Rp2.000.000, FAQ memang harus lengkap. Ini membantu mengurangi keraguan.
+
+Yang sudah bagus
+FAQ berada setelah pricing dan special price.
+Jumlah pertanyaan lebih banyak.
+Accordion rapi.
+Dark mode terlihat premium.
+Yang perlu diperhatikan
+
+Pastikan FAQ menjawab keberatan utama:
+
+Apakah cocok untuk pemula?
+Apakah ini rekomendasi beli coin?
+Apakah kelas live atau rekaman?
+Apakah dapat rekaman?
+Apakah ada sertifikat?
+Apakah ada tugas?
+Apakah ada mentoring?
+Apakah ada komunitas setelah kelas?
+Apakah membahas halal-haram coin tertentu?
+Apakah pembayaran bisa transfer?
+Apakah ada refund policy?
+Apakah cocok untuk yang belum pernah investasi crypto?
+
+FAQ adalah bagian objection handling. Jangan hanya isi pertanyaan teknis, tapi juga pertanyaan yang mengurangi rasa takut.
+
+Tambahkan disclaimer investasi di FAQ:
+
+Apakah bootcamp ini memberikan rekomendasi beli coin tertentu?
+Tidak. Materi bersifat edukasi dan membantu peserta memahami cara menganalisis aset, risiko, dan prinsip syariah. Keputusan investasi tetap menjadi tanggung jawab masing-masing peserta.
+
+Ini penting.
+
+12. Closing CTA sudah jauh lebih aman dan lebih dewasa
+
+Sebelumnya ada kalimat:
+
+Ilmu Dulu. Cuan Kemudian. Berkah Selamanya.
+
+Sekarang menjadi:
+
+Pahami Ilmunya. Kelola Risikonya. Jaga Prinsipnya.
+
+Ini jauh lebih baik.
+
+Kenapa? Karena:
+
+lebih sesuai dengan syariah,
+lebih aman secara investasi,
+tidak terlalu menjanjikan profit,
+lebih dewasa,
+lebih kredibel.
+
+Ini keputusan copywriting yang bagus. Pertahankan.
+
+CTA di bawahnya bisa dibuat:
+
+Daftar Sekarang
+
+Atau:
+
+Mulai Belajar Sekarang
+
+Kalau ingin lebih syariah dan edukatif:
+
+Mulai Belajar dengan Terarah
+
+Tapi Daftar Sekarang paling jelas untuk conversion.
+
+13. Footer dan disclaimer sudah membantu, tapi pastikan terbaca
+
+Saya lihat ada blok disclaimer panjang di footer. Ini bagus dan penting karena topiknya crypto/investasi.
+
+Namun masalahnya: disclaimer panjang biasanya tidak dibaca kalau terlalu kecil atau terlalu abu-abu.
+
+Pastikan disclaimer minimal mencakup:
+
+materi bersifat edukasi,
+bukan nasihat finansial,
+bukan ajakan membeli/menjual aset tertentu,
+crypto memiliki risiko tinggi,
+peserta bertanggung jawab atas keputusan masing-masing,
+kepatuhan syariah dibahas sebagai edukasi/metode analisis, bukan jaminan semua aset halal.
+
+Kalau bisa, buat disclaimer tidak terlalu “dinding teks”. Bisa dibuat lebih rapi dengan heading:
+
+Disclaimer Edukasi & Risiko
+
+Lalu paragraf singkat.
+
+14. Konsistensi bahasa masih perlu dirapikan
+
+Ini salah satu PR besar di seluruh landing page.
+
+Ada campuran:
+
+Crypto Sharia Masterclass
+Join Now
+Special Price for 10 Pax Only
+Sharia Compliant
+Build Your Sharia Wealth
+Bear Market
+Portfolio
+Financial Planning
+Risk Management
+
+Sebagian istilah English memang wajar karena crypto/finance. Tapi tombol dan heading utama sebaiknya konsisten.
+
+Saran:
+
+Gunakan bahasa Indonesia untuk:
+tombol,
+heading section,
+CTA,
+FAQ,
+penjelasan manfaat.
+Boleh gunakan English untuk:
+istilah teknis yang memang umum,
+nama konsep finance/crypto,
+badge tertentu seperti Sharia Compliant jika brand ingin modern.
+
+Contoh:
+
+“Join Now” → Daftar Sekarang
+“Special Price for 10 Pax Only” → Harga Spesial untuk 10 Peserta Pertama
+“Build Your Sharia Wealth” → Bangun Wealth Plan Syariah
+“Bear or Volatil Market” → Market Volatil / Bear Market
+
+Konsistensi bahasa akan membuat halaman terasa lebih matang.
+
+15. Light mode vs dark mode: mana yang lebih bagus?
+
+Menurut saya dark mode lebih kuat untuk landing page utama.
+
+Alasannya:
+
+lebih cocok dengan crypto,
+orange lebih keluar,
+terasa lebih premium,
+terasa seperti fintech/web3,
+section hero lebih dramatis,
+CTA lebih menonjol.
+
+Light mode:
+
+lebih nyaman dibaca,
+terasa lebih edukatif,
+lebih bersih,
+tapi kurang khas dan kurang premium dibanding dark.
+
+Jika CryptoSharia ingin terlihat sebagai brand modern crypto syariah, dark mode adalah pilihan utama. Tapi pastikan:
+
+kontras teks kecil diperbaiki,
+card tidak terlalu gelap,
+border tetap terlihat,
+foto tidak terlalu kontras dengan background.
+16. Masalah visual terbesar: kepadatan di bagian tengah halaman
+
+Landing page ini cukup panjang dan penuh informasi. Itu bagus karena produk Rp2 juta butuh penjelasan. Tapi ada risiko: user merasa halaman agak padat di tengah, terutama bagian pemateri dan kurikulum.
+
+Solusi bukan menghapus banyak isi, tapi memperbaiki ritme:
+
+beri spacing antar section lebih lega,
+jangan semua section berisi card kecil,
+gunakan beberapa section dengan layout berbeda,
+CTA box bisa jadi pemecah ritme,
+quote box bisa jadi pemecah ritme,
+banner special price sudah membantu.
+
+Saat ini halaman sudah punya variasi, tapi pemateri dan kurikulum masih sama-sama card-heavy. Itu tidak masalah, tapi perlu spacing yang nyaman.
+
+17. Hal yang paling berhasil dari update ini
+
+Ini penting dicatat supaya tidak diubah lagi:
+
+Jangan ubah besar-besaran:
+urutan baru secara umum,
+dark mode direction,
+judul kurikulum,
+judul pemateri,
+closing CTA baru,
+quote Warren Buffett setelah benefit,
+pricing setelah kurikulum/pemateri,
+FAQ yang lebih lengkap,
+banner special price,
+outcome setelah kurikulum.
+
+Hal-hal ini sudah benar.
+
+18. Prioritas revisi paling penting
+
+Kalau kamu mau revisi lagi, jangan bongkar total. Fokus polishing.
+
+Prioritas 1 — Rapikan konsistensi bahasa
+
+Ubah tombol dan heading yang masih English ke Indonesia.
+
+Paling penting:
+
+Join Now → Daftar Sekarang
+Special Price for 10 Pax Only → Harga Spesial untuk 10 Peserta Pertama
+Bear or Volatil Market → Strategi Menghadapi Market Volatil
+Prioritas 2 — Perbaiki foto pemateri
+
+Ini dampaknya besar ke trust dan premium feel.
+
+Prioritas 3 — Ringkas card pemateri
+
+Terutama Ghithrif. Jangan terlalu padat.
+
+Prioritas 4 — Naikkan kontras teks kecil di dark mode
+
+Banyak teks kecil yang sedikit redup.
+
+Prioritas 5 — Perkuat proof awal
+
+Section “Dibangun dari pengalaman…” bisa tambah angka/konteks jika ada.
+
+Prioritas 6 — Pastikan FAQ menjawab keberatan investasi
+
+Tambahkan pertanyaan tentang rekomendasi coin, risiko, dan sifat edukasi.
+
+Prioritas 7 — Perjelas value stack pricing
+
+Tampilkan apa saja yang didapat dengan Rp2.000.000.
+
+19. Catatan copy spesifik yang saya sarankan
+
+Beberapa perubahan copy langsung:
+
+Hero CTA
+
+Dari:
+Join Now / Daftar sekarang
+
+Menjadi:
+Daftar Sekarang
+Lihat Kurikulum
+
+Special price
+
+Dari:
+Special Price for 10 Pax Only
+
+Menjadi:
+Harga Spesial untuk 10 Peserta Pertama
+
+Closing CTA
+
+Pertahankan:
+Pahami Ilmunya. Kelola Risikonya. Jaga Prinsipnya.
+
+Ini bagus sekali.
+
+Apa yang Akan Dipelajari
+
+Ubah:
+Strategi Cuan Halal di Crypto
+
+Menjadi:
+Strategi Crypto Sesuai Prinsip Syariah
+
+Atau:
+Memahami Peluang Crypto secara Syariah
+
+Ubah:
+Strategi Bertahan di Bear or Volatil Market
+
+Menjadi:
+Strategi Menghadapi Market Volatil
+
+Pemateri heading
+
+Ubah:
+Highlight Kredensial
+
+Menjadi:
+Kredensial Utama
+
+Ubah:
+Fokus Bootcamp
+
+Menjadi:
+Fokus Materi
+
+Quote connector
+
+Tambahkan setelah quote:
+
+Sebelum masuk ke market yang volatile, peserta perlu membangun ilmu, cara berpikir, dan manajemen risiko yang lebih matang.
+
+20. Putusan akhir saya
+
+Versi terakhir ini sudah sangat jauh lebih matang. Kalau dibanding awal, ini bukan sekadar improvement kecil, tapi sudah berubah menjadi landing page yang punya alur, trust, value, pricing logic, dan objection handling.
+
+Kekuatan utamanya sekarang:
+
+struktur funnel sudah benar,
+harga muncul di timing yang tepat,
+benefit sudah rapi,
+pemateri sudah kredibel,
+kurikulum sudah jelas,
+closing CTA lebih aman dan dewasa,
+dark mode terasa cocok dengan brand.
+
+Kelemahan utamanya:
+
+beberapa copy masih campur bahasa,
+foto pemateri belum setara kualitasnya,
+beberapa teks kecil di dark mode kurang kontras,
+beberapa card masih padat,
+proof awal masih bisa dibuat lebih kuat,
+pricing perlu value stack lebih jelas.
+
+Kesimpulan jujur:
+
+Ini sudah layak dipakai untuk promosi.
+Tapi sebelum dipush serius atau dibawa ke traffic berbayar, saya sarankan lakukan polishing kecil di atas. Jangan bongkar total lagi. Fondasinya sudah benar. Sekarang tinggal membuatnya terasa lebih konsisten, lebih premium, dan lebih mudah dipercaya.

@@ -1,61 +1,41 @@
 /**
  * Theme store for CryptoSharia Academy
- * Supports 3 modes: 'light', 'dark', 'system'
+ * Dark mode only.
  */
 
-type ThemeMode = 'light' | 'dark' | 'system';
+type ThemeMode = 'dark';
 
 const STORAGE_KEY = 'cryptosharia-theme';
 
 let mode = $state<ThemeMode>('dark');
-let resolved = $state<'light' | 'dark'>('dark');
+let resolved = $state<'dark'>('dark');
 
-function getSystemPreference(): 'light' | 'dark' {
-	if (typeof window === 'undefined') return 'dark';
-	return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-}
-
-function applyTheme(m: ThemeMode) {
+function applyTheme() {
 	if (typeof document === 'undefined') return;
-	const effectiveTheme = m === 'system' ? getSystemPreference() : m;
-	resolved = effectiveTheme;
-
-	if (effectiveTheme === 'dark') {
-		document.documentElement.classList.add('dark');
-	} else {
-		document.documentElement.classList.remove('dark');
-	}
+	mode = 'dark';
+	resolved = 'dark';
+	document.documentElement.classList.add('dark');
 }
 
 export function initTheme() {
-	if (typeof window === 'undefined') return;
-
-	const saved = localStorage.getItem(STORAGE_KEY) as ThemeMode | null;
-	if (saved && ['light', 'dark', 'system'].includes(saved)) {
-		mode = saved;
+	if (typeof window !== 'undefined') {
+		localStorage.setItem(STORAGE_KEY, 'dark');
 	}
-	applyTheme(mode);
-
-	// Listen for OS preference changes (only matters when mode is 'system')
-	const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-	mediaQuery.addEventListener('change', () => {
-		if (mode === 'system') {
-			applyTheme('system');
-		}
-	});
+	applyTheme();
 }
 
-export function setTheme(newMode: ThemeMode) {
-	mode = newMode;
-	localStorage.setItem(STORAGE_KEY, newMode);
-	applyTheme(newMode);
+export function setTheme(_newMode: ThemeMode = 'dark') {
+	if (typeof window !== 'undefined') {
+		localStorage.setItem(STORAGE_KEY, 'dark');
+	}
+	applyTheme();
 }
 
 export function getThemeMode(): ThemeMode {
 	return mode;
 }
 
-export function getResolvedTheme(): 'light' | 'dark' {
+export function getResolvedTheme(): 'dark' {
 	return resolved;
 }
 

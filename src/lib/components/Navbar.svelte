@@ -1,5 +1,4 @@
 <script lang="ts">
-	import ThemeToggle from './ThemeToggle.svelte';
 	import { page } from '$app/state';
 	import { userAuth } from '$lib/auth.svelte';
 	import { buildWhatsappUrl, defaultLandingContent } from '$lib/landingContent';
@@ -101,8 +100,6 @@
 				{/each}
 			</nav>
 			<div class="flex items-center gap-2">
-				<ThemeToggle />
-
 				{#if userAuth.isLoggedIn}
 					<!-- User avatar + dropdown -->
 					<div class="relative">
