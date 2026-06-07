@@ -15,8 +15,9 @@ export type SectionId =
 	| 'valueProps'
 	| 'testimonials'
 	| 'usp'
-	| 'pricing'
 	| 'curriculum'
+	| 'instructors'
+	| 'pricing'
 	| 'urgency'
 	| 'faq'
 	| 'finalCta';
@@ -29,6 +30,8 @@ export type Faq = { question: string; answer: string };
 export type Cta = { label: string; href: string };
 export type BenefitCard = { title: string; items: string[] };
 export type LayoutEntry = { id: SectionId; visible: boolean };
+export type CurriculumDay = { date: string; sessions: string[] };
+export type Instructor = { name: string; role: string; description: string; photo: string };
 
 export type LandingContent = {
 	/** Order + visibility of sections (acts like a simple page builder). */
@@ -85,6 +88,20 @@ export type LandingContent = {
 		items: Feature[];
 	};
 
+	curriculum: {
+		eyebrow: string;
+		title: string;
+		schedule: CurriculumDay[];
+		topics: string[];
+	};
+
+	instructors: {
+		eyebrow: string;
+		title: string;
+		description: string;
+		items: Instructor[];
+	};
+
 	pricing: {
 		eyebrow: string;
 		title: string;
@@ -95,12 +112,6 @@ export type LandingContent = {
 		price: string;
 		note: string;
 		ctaLabel: string;
-	};
-
-	curriculum: {
-		eyebrow: string;
-		title: string;
-		topics: string[];
 	};
 
 	urgency: {
@@ -130,8 +141,9 @@ export const SECTION_LABELS: Record<SectionId, string> = {
 	valueProps: 'Manfaat Utama',
 	testimonials: 'Testimoni',
 	usp: 'Keunggulan Program',
-	pricing: 'Harga & Jadwal',
 	curriculum: 'Kurikulum',
+	instructors: 'Pemateri',
+	pricing: 'Harga & Jadwal',
 	urgency: 'Urgensi & Kuota',
 	faq: 'FAQ',
 	finalCta: 'Penutup / CTA Akhir'
@@ -142,10 +154,11 @@ export const defaultLandingContent: LandingContent = {
 		{ id: 'hero', visible: true },
 		{ id: 'authority', visible: true },
 		{ id: 'valueProps', visible: true },
+		{ id: 'curriculum', visible: true },
+		{ id: 'instructors', visible: true },
 		{ id: 'testimonials', visible: true },
 		{ id: 'usp', visible: true },
 		{ id: 'pricing', visible: true },
-		{ id: 'curriculum', visible: true },
 		{ id: 'urgency', visible: true },
 		{ id: 'faq', visible: true },
 		{ id: 'finalCta', visible: true }
@@ -155,19 +168,17 @@ export const defaultLandingContent: LandingContent = {
 		message: 'Assalamualaikum CryptoSharia, saya mau daftar Crypto Sharia Masterclass.'
 	},
 	seo: {
-		title: 'Crypto Sharia Masterclass | Systematic Crypto Investing',
+		title: 'Crypto Sharia Masterclass Learning | Bootcamp Crypto Syariah 4 Hari',
 		description:
-			'Learn systematic crypto investing aligned with Islamic values bersama praktisi tersertifikasi, mentoring, komunitas, dan kurikulum crypto syariah terstruktur.'
+			'Bootcamp crypto syariah 4 hari bersama founder Crypto Sharia, founder Qualifin, dan pakar fiqih muamalah untuk belajar market, risk, technical, dan portofolio.'
 	},
 	hero: {
-		get badge() {
-			return `Crypto Sharia Masterclass ${new Date().getFullYear()}`;
-		},
+		badge: 'Crypto Sharia Masterclass Learning',
 		title: '',
 		subtitle:
-			'Belajar langsung bersama para praktisi berpengalaman yang telah tersertifikasi standar BNSP & internasional dalam bidang investasi dan industri crypto.',
+			'Bootcamp intensif 4 hari untuk memahami industri crypto, manajemen risiko, analisa market, screening syariah, dan portfolio building.',
 		description:
-			'Terbukti membantu banyak member Premium Crypto Sharia membangun strategi profit di market crypto tanpa leverage dan tetap berpegang pada prinsip syariah.',
+			'Belajar langsung bersama founder Crypto Sharia, founder Qualifin, dan pakar fiqih muamalah dengan pendekatan sistematis, praktis, dan sesuai prinsip syariah.',
 		primaryCtaLabel: 'Join Now / Gabung Sekarang',
 		secondaryCta: { label: 'Lihat Kurikulum', href: '#curriculum' },
 		videoUrl: '',
@@ -324,15 +335,24 @@ export const defaultLandingContent: LandingContent = {
 		eyebrow: '',
 		title: 'Gabung Programnya Sekarang',
 		description:
-			'Pelaksanaan program direncanakan pada akhir Juni 2026 atau awal Juli 2026. Tanggal final akan diumumkan segera.',
+			'Bootcamp berlangsung 4 hari pada 27-28 Juni 2026 dan 4-5 Juli 2026 dengan dua sesi materi di setiap hari belajar.',
 		benefitCards: [
 			{
-				title: 'Benefit Tambahan',
-				items: ['Materi & rekaman kelas', 'Mentoring & networking komunitas']
+				title: 'Jadwal Bootcamp',
+				items: [
+					'Sabtu, 27 Juni 2026',
+					'Minggu, 28 Juni 2026',
+					'Sabtu, 4 Juli 2026',
+					'Minggu, 5 Juli 2026'
+				]
 			},
 			{
 				title: 'Format Belajar',
-				items: ['Kelas terstruktur bersama praktisi', 'FGD kecil untuk pendampingan intensif']
+				items: [
+					'2 sesi materi per hari',
+					'Kelas terstruktur bersama praktisi',
+					'FGD kecil untuk pendampingan intensif'
+				]
 			}
 		],
 		priceBadge: '',
@@ -343,15 +363,62 @@ export const defaultLandingContent: LandingContent = {
 	},
 	curriculum: {
 		eyebrow: '',
-		title: 'Materi Pembelajaran',
+		title: 'Jadwal & Materi Bootcamp',
+		schedule: [
+			{
+				date: 'Sabtu, 27 Juni 2026',
+				sessions: ['Crypto Industry Map & Web3', 'Financial Planning & Risk Management']
+			},
+			{
+				date: 'Minggu, 28 Juni 2026',
+				sessions: ['Fundamental & Narrative Analysis', 'Global Macro Analysis']
+			},
+			{
+				date: 'Sabtu, 4 Juli 2026',
+				sessions: ['Technical Analysis (Session 1)', 'Sharia Coin Analysis']
+			},
+			{
+				date: 'Minggu, 5 Juli 2026',
+				sessions: ['Technical Analysis (Session 2)', 'Long-Term Portfolio Building']
+			}
+		],
 		topics: [
-			'Peta Industri Crypto & Web3',
+			'Crypto Industry Map & Web3',
 			'Financial Planning & Risk Management',
-			'Analisa Fundamental & Narrative',
-			'Analisa Teknikal',
-			'Analisa Global Macro',
-			'Analisa Koin Syariah',
-			'Portfolio Building untuk Long Term Investment'
+			'Fundamental & Narrative Analysis',
+			'Global Macro Analysis',
+			'Technical Analysis',
+			'Sharia Coin Analysis',
+			'Long-Term Portfolio Building'
+		]
+	},
+	instructors: {
+		eyebrow: '',
+		title: 'Pemateri Bootcamp',
+		description:
+			'Belajar bersama tiga pemateri utama dari perspektif investasi crypto, financial planning, dan fiqih muamalah.',
+		items: [
+			{
+				name: 'Sholahuddin Al Ayyubi, B.B.A., WMI, AWP.',
+				role: 'Founder of Crypto Sharia',
+				description:
+					'Membawakan perspektif industri crypto, Web3, analisa koin syariah, dan strategi investasi yang sesuai prinsip syariah.',
+				photo: '/instructors/sholahuddin-al-ayyubi.jpeg'
+			},
+			{
+				name: 'Muhammad Ghithrif Gustomo Putra, S.E., CFA, CFP, CSA, CTA.',
+				role: 'Founder of Qualifin',
+				description:
+					'Membawakan financial planning, risk management, fundamental analysis, narrative analysis, dan global macro analysis.',
+				photo: '/instructors/muhammad-ghithrif.jpeg'
+			},
+			{
+				name: 'Devin Halim',
+				role: 'Pakar Fiqih Muamalah',
+				description:
+					'Membawakan perspektif fiqih muamalah untuk membantu peserta memahami batasan dan prinsip syariah dalam aset crypto.',
+				photo: '/instructors/devin-halim.jpeg'
+			}
 		]
 	},
 	urgency: {
@@ -442,7 +509,7 @@ export function resolveVideoEmbed(url: string): VideoEmbed {
  */
 export function mergeContent(stored: Partial<LandingContent> | null | undefined): LandingContent {
 	const base: LandingContent = structuredClone(defaultLandingContent);
-	if (!stored) return base;
+	if (!stored) return normalizeContent(base);
 
 	const merge = (target: any, source: any) => {
 		for (const key of Object.keys(source)) {
@@ -459,7 +526,51 @@ export function mergeContent(stored: Partial<LandingContent> | null | undefined)
 		return target;
 	};
 
-	return merge(base, stored);
+	return normalizeContent(merge(base, stored));
+}
+
+function normalizeContent(content: LandingContent): LandingContent {
+	content.layout = normalizeLayout(content.layout);
+	return content;
+}
+
+function normalizeLayout(layout: LayoutEntry[]): LayoutEntry[] {
+	const defaultEntries = defaultLandingContent.layout;
+	const defaultIds = new Set(defaultEntries.map((entry) => entry.id));
+	const seen = new Set<SectionId>();
+	const normalized: LayoutEntry[] = [];
+
+	for (const entry of Array.isArray(layout) ? layout : []) {
+		if (!entry || typeof entry.id !== 'string') continue;
+		const id = entry.id as SectionId;
+		if (!defaultIds.has(id) || seen.has(id)) continue;
+		normalized.push({ id, visible: entry.visible !== false });
+		seen.add(id);
+	}
+
+	defaultEntries.forEach((entry, defaultIndex) => {
+		if (seen.has(entry.id)) return;
+		const insertAt = findDefaultInsertIndex(normalized, defaultEntries, defaultIndex);
+		normalized.splice(insertAt, 0, { ...entry });
+		seen.add(entry.id);
+	});
+
+	return normalized;
+}
+
+function findDefaultInsertIndex(
+	layout: LayoutEntry[],
+	defaultEntries: LayoutEntry[],
+	defaultIndex: number
+): number {
+	const previousIds = new Set(defaultEntries.slice(0, defaultIndex).map((entry) => entry.id));
+	for (let i = layout.length - 1; i >= 0; i -= 1) {
+		if (previousIds.has(layout[i].id)) return i + 1;
+	}
+
+	const nextIds = new Set(defaultEntries.slice(defaultIndex + 1).map((entry) => entry.id));
+	const nextIndex = layout.findIndex((entry) => nextIds.has(entry.id));
+	return nextIndex === -1 ? layout.length : nextIndex;
 }
 
 /** One-shot fetch (used as initial load fallback). */
@@ -542,7 +653,12 @@ export function sectionCompleteness(
 		}
 		case 'curriculum': {
 			const c = content.curriculum;
-			return countFields([c.title, c.topics.length ? 'x' : '']);
+			return countFields([c.title, c.schedule.length ? 'x' : '', c.topics.length ? 'x' : '']);
+		}
+		case 'instructors': {
+			const c = content.instructors;
+			const arr = c.items.map((i) => (allFilled([i.name, i.role, i.photo]) ? 'x' : ''));
+			return countFields([c.title, c.description, c.items.length ? arr.join('') : '']);
 		}
 		case 'urgency': {
 			const c = content.urgency;

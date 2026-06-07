@@ -28,10 +28,11 @@
 		'hero',
 		'authority',
 		'valueProps',
+		'curriculum',
+		'instructors',
 		'testimonials',
 		'usp',
 		'pricing',
-		'curriculum',
 		'urgency',
 		'faq',
 		'finalCta'
@@ -146,6 +147,9 @@
 			const imgs = content.valueProps.docImages;
 			if (imgs.length === 0) return 1;
 			return imgs.filter((u) => !u.trim()).length;
+		}
+		if (id === 'instructors') {
+			return content.instructors.items.filter((i) => !i.photo.trim()).length;
 		}
 		return 0;
 	}
@@ -579,8 +583,9 @@
 						{:else if activeView === 'valueProps'}{@render valuePropsForm()}
 						{:else if activeView === 'testimonials'}{@render testimonialsForm()}
 						{:else if activeView === 'usp'}{@render uspForm()}
-						{:else if activeView === 'pricing'}{@render pricingForm()}
 						{:else if activeView === 'curriculum'}{@render curriculumForm()}
+						{:else if activeView === 'instructors'}{@render instructorsForm()}
+						{:else if activeView === 'pricing'}{@render pricingForm()}
 						{:else if activeView === 'urgency'}{@render urgencyForm()}
 						{:else if activeView === 'faq'}{@render faqForm()}
 						{:else if activeView === 'finalCta'}{@render finalCtaForm()}
@@ -1736,7 +1741,49 @@
 	)}
 	<div class="border-t border-gray-100 pt-4 dark:border-gray-700">
 		{@render listHeader(
-			'Materi / Topik',
+			'Jadwal Bootcamp',
+			() =>
+				(content.curriculum.schedule = addItem(content.curriculum.schedule, {
+					date: '',
+					sessions: ['', '']
+				}))
+		)}
+		<div class="mt-3 space-y-3">
+			{#each content.curriculum.schedule as day, i}
+				<div class="space-y-3 {cardClass}">
+					<div class="flex items-center justify-between">
+						<span class="text-[10px] font-bold text-gray-400">HARI {i + 1}</span>
+						{@render removeBtn(
+							() => (content.curriculum.schedule = removeItem(content.curriculum.schedule, i))
+						)}
+					</div>
+					<input
+						bind:value={day.date}
+						placeholder="Tanggal, contoh: Sabtu, 27 Juni 2026"
+						class={inputClass}
+					/>
+					<div class="space-y-2">
+						{#each day.sessions as _, j}
+							<div class="flex items-center gap-2">
+								<span class="text-xs font-bold text-gray-400">{j === 0 ? 'A' : 'B'}.</span>
+								<input bind:value={day.sessions[j]} placeholder="Judul sesi" class={inputClass} />
+								{@render removeBtn(() => (day.sessions = removeItem(day.sessions, j)))}
+							</div>
+						{/each}
+						<button
+							type="button"
+							onclick={() => (day.sessions = [...day.sessions, ''])}
+							class="text-primary-600 hover:text-primary-700 text-xs font-semibold"
+							>+ Tambah sesi</button
+						>
+					</div>
+				</div>
+			{/each}
+		</div>
+	</div>
+	<div class="border-t border-gray-100 pt-4 dark:border-gray-700">
+		{@render listHeader(
+			'Materi / Topik Ringkas',
 			() => (content.curriculum.topics = [...content.curriculum.topics, ''])
 		)}
 		<div class="mt-3 space-y-2">
@@ -1750,6 +1797,61 @@
 					/>
 					{@render removeBtn(
 						() => (content.curriculum.topics = removeItem(content.curriculum.topics, i))
+					)}
+				</div>
+			{/each}
+		</div>
+	</div>
+{/snippet}
+
+{#snippet instructorsForm()}
+	{@render textField(
+		'Judul',
+		() => content.instructors.title,
+		(v) => (content.instructors.title = v)
+	)}
+	{@render areaField(
+		'Deskripsi',
+		() => content.instructors.description,
+		(v) => (content.instructors.description = v)
+	)}
+	<div class="border-t border-gray-100 pt-4 dark:border-gray-700">
+		{@render listHeader(
+			'Pemateri',
+			() =>
+				(content.instructors.items = addItem(content.instructors.items, {
+					name: '',
+					role: '',
+					description: '',
+					photo: ''
+				}))
+		)}
+		<div class="mt-3 space-y-3">
+			{#each content.instructors.items as instructor, i}
+				<div class="space-y-3 {cardClass}">
+					<div class="flex items-center justify-between">
+						<span class="text-[10px] font-bold text-gray-400">PEMATERI {i + 1}</span>
+						{@render removeBtn(
+							() => (content.instructors.items = removeItem(content.instructors.items, i))
+						)}
+					</div>
+					<input
+						bind:value={instructor.name}
+						placeholder="Nama lengkap + gelar"
+						class={inputClass}
+					/>
+					<input bind:value={instructor.role} placeholder="Jabatan" class={inputClass} />
+					<textarea
+						bind:value={instructor.description}
+						rows="2"
+						placeholder="Deskripsi singkat"
+						class="{inputClass} resize-none"
+					></textarea>
+					{@render imageField(
+						'Foto',
+						`instructor-${i}`,
+						() => instructor.photo,
+						(v) => (instructor.photo = v)
 					)}
 				</div>
 			{/each}

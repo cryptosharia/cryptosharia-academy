@@ -431,20 +431,97 @@
 					</h2>
 				</div>
 
-				<div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-					{#each content.curriculum.topics as topic, index}
-						<div
-							class="flex gap-4 rounded-lg border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-950"
-						>
+				{#if content.curriculum.schedule.length > 0}
+					<div class="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
+						{#each content.curriculum.schedule as day, dayIndex}
 							<div
-								class="flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-slate-900 text-sm font-black text-white dark:bg-orange-600"
+								class="rounded-lg border border-slate-200 bg-white p-6 dark:border-slate-800 dark:bg-slate-950"
 							>
-								{index + 1}
+								<p class="text-xs font-bold tracking-wider text-orange-600 uppercase">
+									Hari {dayIndex + 1}
+								</p>
+								<h3 class="mt-2 text-xl leading-snug font-extrabold text-slate-900 dark:text-white">
+									{day.date}
+								</h3>
+								<ol class="mt-5 space-y-3">
+									{#each day.sessions as session, sessionIndex}
+										<li class="flex gap-3">
+											<span
+												class="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-slate-900 text-xs font-black text-white dark:bg-orange-600"
+											>
+												{sessionIndex === 0 ? 'A' : 'B'}
+											</span>
+											<span
+												class="text-sm leading-6 font-semibold text-slate-700 dark:text-slate-300"
+											>
+												{session}
+											</span>
+										</li>
+									{/each}
+								</ol>
 							</div>
-							<div>
-								<h3 class="font-bold text-slate-900 dark:text-white">{topic}</h3>
-								<p class="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-400">
-									Dipelajari melalui kerangka riset, studi kasus, dan diskusi penerapan.
+						{/each}
+					</div>
+				{:else}
+					<div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+						{#each content.curriculum.topics as topic, index}
+							<div
+								class="flex gap-4 rounded-lg border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-950"
+							>
+								<div
+									class="flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-slate-900 text-sm font-black text-white dark:bg-orange-600"
+								>
+									{index + 1}
+								</div>
+								<div>
+									<h3 class="font-bold text-slate-900 dark:text-white">{topic}</h3>
+									<p class="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-400">
+										Dipelajari melalui kerangka riset, studi kasus, dan diskusi penerapan.
+									</p>
+								</div>
+							</div>
+						{/each}
+					</div>
+				{/if}
+			</div>
+		</section>
+	{/if}
+
+	{#if sectionId === 'instructors'}
+		<section class="bg-white py-20 dark:bg-gray-950" id="instructors">
+			<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+				<div class="mb-12 max-w-3xl">
+					<h2 class="text-3xl font-extrabold text-slate-900 sm:text-4xl dark:text-white">
+						{content.instructors.title}
+					</h2>
+					<p class="mt-4 text-base leading-8 text-slate-600 dark:text-slate-300">
+						{content.instructors.description}
+					</p>
+				</div>
+
+				<div class="grid gap-5 md:grid-cols-3">
+					{#each content.instructors.items as instructor}
+						<div
+							class="overflow-hidden rounded-lg border border-slate-200 bg-slate-50 dark:border-slate-800 dark:bg-slate-900"
+						>
+							<div class="aspect-[4/3] overflow-hidden bg-slate-200 dark:bg-slate-800">
+								<img
+									src={instructor.photo}
+									alt={instructor.name}
+									class="h-full w-full object-cover object-center"
+								/>
+							</div>
+							<div class="p-6">
+								<h3
+									class="text-xl leading-snug font-extrabold break-words text-slate-900 dark:text-white"
+								>
+									{instructor.name}
+								</h3>
+								<p class="mt-2 text-sm font-bold text-orange-600 dark:text-orange-400">
+									{instructor.role}
+								</p>
+								<p class="mt-4 text-sm leading-7 text-slate-600 dark:text-slate-400">
+									{instructor.description}
 								</p>
 							</div>
 						</div>
