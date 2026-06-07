@@ -29,6 +29,14 @@
 		openFaqIndex = openFaqIndex === index ? null : index;
 	}
 
+	function resolveCtaHref(cta: { href: string }) {
+		return cta.href?.trim() || whatsappUrl;
+	}
+
+	function isExternalHref(href: string) {
+		return /^https?:\/\//.test(href);
+	}
+
 	onMount(() => {
 		return subscribeLandingContent((c) => {
 			content = c;
@@ -403,42 +411,99 @@
 	{#if sectionId === 'curriculum'}
 		<section class="bg-slate-50 py-20 dark:bg-slate-900" id="curriculum">
 			<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-				<div class="mx-auto mb-12 max-w-3xl text-center">
-					<h2 class="text-3xl font-extrabold text-slate-900 sm:text-4xl dark:text-white">
+				<div class="mx-auto mb-12 max-w-4xl text-center">
+					{#if content.curriculum.eyebrow}
+						<p class="mb-4 text-xs font-black tracking-[0.22em] text-orange-600 uppercase">
+							{content.curriculum.eyebrow}
+						</p>
+					{/if}
+					<h2
+						class="text-3xl leading-tight font-extrabold text-slate-900 sm:text-4xl dark:text-white"
+					>
 						{content.curriculum.title}
 					</h2>
+					{#if content.curriculum.description}
+						<p
+							class="mx-auto mt-5 max-w-3xl text-base leading-8 text-slate-600 dark:text-slate-300"
+						>
+							{content.curriculum.description}
+						</p>
+					{/if}
 				</div>
 
 				{#if content.curriculum.schedule.length > 0}
-					<div class="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
-						{#each content.curriculum.schedule as day, dayIndex}
-							<div
-								class="rounded-lg border border-slate-200 bg-white p-6 dark:border-slate-800 dark:bg-slate-950"
-							>
-								<p class="text-xs font-bold tracking-wider text-orange-600 uppercase">
-									Hari {dayIndex + 1}
-								</p>
-								<h3 class="mt-2 text-xl leading-snug font-extrabold text-slate-900 dark:text-white">
-									{day.date}
-								</h3>
-								<ol class="mt-5 space-y-3">
-									{#each day.sessions as session, sessionIndex}
-										<li class="flex gap-3">
-											<span
-												class="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-slate-900 text-xs font-black text-white dark:bg-orange-600"
+					<div class="relative">
+						<div
+							class="pointer-events-none absolute top-16 right-10 left-10 hidden h-px bg-gradient-to-r from-orange-200 via-slate-300 to-teal-200 xl:block dark:from-orange-900/70 dark:via-slate-700 dark:to-teal-900/60"
+						></div>
+						<div class="relative grid gap-5 md:grid-cols-2 xl:grid-cols-4">
+							{#each content.curriculum.schedule as day, dayIndex}
+								<div
+									class="flex h-full flex-col rounded-lg border border-slate-200 bg-white p-6 shadow-sm shadow-slate-950/5 dark:border-slate-800 dark:bg-slate-950"
+								>
+									<div class="flex items-start justify-between gap-4">
+										<div class="min-w-0">
+											<p class="text-xs font-black tracking-[0.18em] text-orange-600 uppercase">
+												Hari {dayIndex + 1}
+											</p>
+											<h3
+												class="mt-2 text-xl leading-snug font-extrabold break-words text-slate-900 dark:text-white"
 											>
-												{sessionIndex === 0 ? 'A' : 'B'}
-											</span>
-											<span
-												class="text-sm leading-6 font-semibold text-slate-700 dark:text-slate-300"
+												{day.stage}
+											</h3>
+										</div>
+										<span
+											class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-orange-200 bg-orange-50 text-sm font-black text-orange-700 dark:border-orange-900/60 dark:bg-orange-950/40 dark:text-orange-300"
+										>
+											{String(dayIndex + 1).padStart(2, '0')}
+										</span>
+									</div>
+
+									<p
+										class="mt-4 border-b border-slate-100 pb-4 text-sm font-bold text-slate-500 dark:border-slate-800 dark:text-slate-400"
+									>
+										{day.date}
+									</p>
+
+									<ol class="mt-5 space-y-4">
+										{#each day.sessions as session, sessionIndex}
+											<li class="flex gap-3">
+												<span
+													class="mt-0.5 inline-flex h-7 min-w-14 shrink-0 items-center justify-center rounded-md bg-slate-900 px-2 text-[11px] font-black text-white dark:bg-orange-600"
+												>
+													Sesi {sessionIndex + 1}
+												</span>
+												<div class="min-w-0">
+													<p
+														class="text-sm leading-6 font-bold break-words text-slate-800 dark:text-slate-200"
+													>
+														{session}
+													</p>
+													{#if day.sessionSpeakers?.[sessionIndex]}
+														<p class="mt-1 text-xs leading-5 text-slate-500 dark:text-slate-500">
+															oleh {day.sessionSpeakers[sessionIndex]}
+														</p>
+													{/if}
+												</div>
+											</li>
+										{/each}
+									</ol>
+
+									{#if day.outcome}
+										<div class="mt-auto border-t border-slate-100 pt-5 dark:border-slate-800">
+											<p
+												class="text-[11px] font-black tracking-[0.16em] text-teal-700 uppercase dark:text-teal-300"
 											>
-												{session}
-											</span>
-										</li>
-									{/each}
-								</ol>
-							</div>
-						{/each}
+												Outcome
+											</p>
+											<p class="mt-2 text-sm leading-7 text-slate-600 dark:text-slate-400">
+												{day.outcome}
+											</p>
+										</div>
+									{/if}
+								</div>
+							{/each}
+						</div>
 					</div>
 				{:else}
 					<div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
@@ -461,6 +526,97 @@
 						{/each}
 					</div>
 				{/if}
+
+				<div class="mt-12 border-t border-slate-200 pt-10 dark:border-slate-800">
+					<div class="grid gap-8 lg:grid-cols-[1fr_0.9fr] lg:items-start">
+						{#if content.curriculum.outcomes.length > 0}
+							<div>
+								<h3 class="text-2xl font-extrabold text-slate-900 dark:text-white">
+									Setelah mengikuti bootcamp, peserta diharapkan mampu:
+								</h3>
+								<ul
+									class="mt-6 grid gap-3 text-sm leading-7 text-slate-700 sm:grid-cols-2 dark:text-slate-300"
+								>
+									{#each content.curriculum.outcomes as outcome}
+										<li class="flex gap-3">
+											<svg
+												class="mt-1 h-4 w-4 shrink-0 text-orange-600 dark:text-orange-400"
+												fill="none"
+												stroke="currentColor"
+												viewBox="0 0 24 24"
+												aria-hidden="true"
+											>
+												<path
+													stroke-linecap="round"
+													stroke-linejoin="round"
+													stroke-width="2.5"
+													d="M5 13l4 4L19 7"
+												/>
+											</svg>
+											<span>{outcome}</span>
+										</li>
+									{/each}
+								</ul>
+								{#if content.curriculum.disclaimer}
+									<p class="mt-6 text-xs leading-6 text-slate-500 dark:text-slate-500">
+										{content.curriculum.disclaimer}
+									</p>
+								{/if}
+							</div>
+						{/if}
+
+						<div
+							class="rounded-lg border border-slate-200 bg-slate-950 p-6 text-white shadow-xl shadow-slate-950/10 dark:border-slate-800"
+						>
+							<h3 class="text-2xl leading-snug font-extrabold">
+								{content.curriculum.ctaTitle}
+							</h3>
+							<p class="mt-3 text-sm leading-7 text-slate-300">
+								{content.curriculum.ctaDescription}
+							</p>
+							<div class="mt-6 flex flex-col gap-3 sm:flex-row lg:flex-col xl:flex-row">
+								<a
+									href={resolveCtaHref(content.curriculum.primaryCta)}
+									target={isExternalHref(resolveCtaHref(content.curriculum.primaryCta))
+										? '_blank'
+										: undefined}
+									rel={isExternalHref(resolveCtaHref(content.curriculum.primaryCta))
+										? 'noopener noreferrer'
+										: undefined}
+									class="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-orange-600 px-5 py-3.5 text-sm font-bold text-white transition hover:bg-orange-500 active:scale-95"
+								>
+									{content.curriculum.primaryCta.label}
+									<svg
+										class="h-4 w-4"
+										fill="none"
+										stroke="currentColor"
+										viewBox="0 0 24 24"
+										aria-hidden="true"
+									>
+										<path
+											stroke-linecap="round"
+											stroke-linejoin="round"
+											stroke-width="2.5"
+											d="M17 8l4 4m0 0l-4 4m4-4H3"
+										/>
+									</svg>
+								</a>
+								<a
+									href={resolveCtaHref(content.curriculum.secondaryCta)}
+									target={isExternalHref(resolveCtaHref(content.curriculum.secondaryCta))
+										? '_blank'
+										: undefined}
+									rel={isExternalHref(resolveCtaHref(content.curriculum.secondaryCta))
+										? 'noopener noreferrer'
+										: undefined}
+									class="inline-flex w-full items-center justify-center rounded-lg border border-white/20 px-5 py-3.5 text-sm font-bold text-white transition hover:border-orange-300 hover:bg-white/10"
+								>
+									{content.curriculum.secondaryCta.label}
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
 		</section>
 	{/if}

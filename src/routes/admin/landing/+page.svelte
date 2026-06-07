@@ -1735,17 +1735,30 @@
 
 {#snippet curriculumForm()}
 	{@render textField(
+		'Eyebrow',
+		() => content.curriculum.eyebrow,
+		(v) => (content.curriculum.eyebrow = v)
+	)}
+	{@render textField(
 		'Judul',
 		() => content.curriculum.title,
 		(v) => (content.curriculum.title = v)
+	)}
+	{@render areaField(
+		'Deskripsi',
+		() => content.curriculum.description,
+		(v) => (content.curriculum.description = v)
 	)}
 	<div class="border-t border-gray-100 pt-4 dark:border-gray-700">
 		{@render listHeader(
 			'Jadwal Bootcamp',
 			() =>
 				(content.curriculum.schedule = addItem(content.curriculum.schedule, {
+					stage: '',
 					date: '',
-					sessions: ['', '']
+					sessions: ['', ''],
+					sessionSpeakers: ['', ''],
+					outcome: ''
 				}))
 		)}
 		<div class="mt-3 space-y-3">
@@ -1758,27 +1771,109 @@
 						)}
 					</div>
 					<input
+						bind:value={day.stage}
+						placeholder="Tahap, contoh: Foundation"
+						class={inputClass}
+					/>
+					<input
 						bind:value={day.date}
 						placeholder="Tanggal, contoh: Sabtu, 27 Juni 2026"
 						class={inputClass}
 					/>
 					<div class="space-y-2">
 						{#each day.sessions as _, j}
-							<div class="flex items-center gap-2">
-								<span class="text-xs font-bold text-gray-400">{j === 0 ? 'A' : 'B'}.</span>
+							<div class="grid gap-2 md:grid-cols-[72px_1fr_1fr_auto] md:items-center">
+								<span class="text-xs font-bold text-gray-400">Sesi {j + 1}</span>
 								<input bind:value={day.sessions[j]} placeholder="Judul sesi" class={inputClass} />
-								{@render removeBtn(() => (day.sessions = removeItem(day.sessions, j)))}
+								<input
+									bind:value={day.sessionSpeakers[j]}
+									placeholder="Pemateri sesi"
+									class={inputClass}
+								/>
+								{@render removeBtn(() => {
+									day.sessions = removeItem(day.sessions, j);
+									day.sessionSpeakers = removeItem(day.sessionSpeakers, j);
+								})}
 							</div>
 						{/each}
 						<button
 							type="button"
-							onclick={() => (day.sessions = [...day.sessions, ''])}
+							onclick={() => {
+								day.sessions = [...day.sessions, ''];
+								day.sessionSpeakers = [...day.sessionSpeakers, ''];
+							}}
 							class="text-primary-600 hover:text-primary-700 text-xs font-semibold"
 							>+ Tambah sesi</button
 						>
 					</div>
+					<textarea
+						bind:value={day.outcome}
+						rows="2"
+						placeholder="Outcome hari ini"
+						class="{inputClass} resize-none"
+					></textarea>
 				</div>
 			{/each}
+		</div>
+	</div>
+	<div class="border-t border-gray-100 pt-4 dark:border-gray-700">
+		{@render listHeader(
+			'Hasil Akhir Peserta',
+			() => (content.curriculum.outcomes = [...content.curriculum.outcomes, ''])
+		)}
+		<div class="mt-3 space-y-2">
+			{#each content.curriculum.outcomes as _, i}
+				<div class="flex items-center gap-2">
+					<span class="text-xs font-bold text-gray-400">{i + 1}.</span>
+					<input
+						bind:value={content.curriculum.outcomes[i]}
+						placeholder="Hasil akhir peserta"
+						class={inputClass}
+					/>
+					{@render removeBtn(
+						() => (content.curriculum.outcomes = removeItem(content.curriculum.outcomes, i))
+					)}
+				</div>
+			{/each}
+		</div>
+	</div>
+	<div class="border-t border-gray-100 pt-4 dark:border-gray-700">
+		{@render areaField(
+			'Disclaimer',
+			() => content.curriculum.disclaimer,
+			(v) => (content.curriculum.disclaimer = v)
+		)}
+		<div class="grid gap-3 md:grid-cols-2">
+			{@render textField(
+				'Judul CTA',
+				() => content.curriculum.ctaTitle,
+				(v) => (content.curriculum.ctaTitle = v)
+			)}
+			{@render textField(
+				'Deskripsi CTA',
+				() => content.curriculum.ctaDescription,
+				(v) => (content.curriculum.ctaDescription = v)
+			)}
+			{@render textField(
+				'Label CTA Utama',
+				() => content.curriculum.primaryCta.label,
+				(v) => (content.curriculum.primaryCta.label = v)
+			)}
+			{@render textField(
+				'Link CTA Utama',
+				() => content.curriculum.primaryCta.href,
+				(v) => (content.curriculum.primaryCta.href = v)
+			)}
+			{@render textField(
+				'Label CTA Kedua',
+				() => content.curriculum.secondaryCta.label,
+				(v) => (content.curriculum.secondaryCta.label = v)
+			)}
+			{@render textField(
+				'Link CTA Kedua',
+				() => content.curriculum.secondaryCta.href,
+				(v) => (content.curriculum.secondaryCta.href = v)
+			)}
 		</div>
 	</div>
 	<div class="border-t border-gray-100 pt-4 dark:border-gray-700">

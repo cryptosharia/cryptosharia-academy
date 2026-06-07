@@ -30,7 +30,13 @@ export type Faq = { question: string; answer: string };
 export type Cta = { label: string; href: string };
 export type BenefitCard = { title: string; items: string[] };
 export type LayoutEntry = { id: SectionId; visible: boolean };
-export type CurriculumDay = { date: string; sessions: string[] };
+export type CurriculumDay = {
+	stage: string;
+	date: string;
+	sessions: string[];
+	sessionSpeakers: string[];
+	outcome: string;
+};
 export type Instructor = {
 	badge: string;
 	name: string;
@@ -99,8 +105,15 @@ export type LandingContent = {
 	curriculum: {
 		eyebrow: string;
 		title: string;
+		description: string;
 		schedule: CurriculumDay[];
 		topics: string[];
+		outcomes: string[];
+		disclaimer: string;
+		ctaTitle: string;
+		ctaDescription: string;
+		primaryCta: Cta;
+		secondaryCta: Cta;
 	};
 
 	instructors: {
@@ -375,35 +388,68 @@ export const defaultLandingContent: LandingContent = {
 		ctaLabel: 'Gabung Sekarang'
 	},
 	curriculum: {
-		eyebrow: '',
-		title: 'Jadwal & Materi Bootcamp',
+		eyebrow: 'Kurikulum Bootcamp',
+		title: 'Kurikulum 4 Hari: Dari Dasar Crypto hingga Portfolio Syariah',
+		description:
+			'Peserta akan belajar memahami crypto dari peta industri, manajemen risiko, analisis pasar, prinsip syariah, hingga penyusunan portfolio jangka panjang yang lebih terarah.',
 		schedule: [
 			{
+				stage: 'Foundation',
 				date: 'Sabtu, 27 Juni 2026',
-				sessions: ['Crypto Industry Map & Web3', 'Financial Planning & Risk Management']
+				sessions: ['Peta Industri Crypto & Web3', 'Financial Planning & Manajemen Risiko'],
+				sessionSpeakers: ['Sholahuddin Al Ayyubi', 'Muhammad Ghithrif Gustomo Putra'],
+				outcome:
+					'Peserta memahami gambaran besar industri crypto serta cara mengelola risiko sebelum mengambil keputusan investasi.'
 			},
 			{
+				stage: 'Market Analysis',
 				date: 'Minggu, 28 Juni 2026',
-				sessions: ['Fundamental & Narrative Analysis', 'Global Macro Analysis']
+				sessions: ['Analisis Fundamental & Narasi Pasar', 'Analisis Makro Global'],
+				sessionSpeakers: ['Muhammad Ghithrif Gustomo Putra', 'Muhammad Ghithrif Gustomo Putra'],
+				outcome:
+					'Peserta belajar membaca kualitas aset, narasi pasar, dan pengaruh kondisi makro terhadap pergerakan crypto.'
 			},
 			{
+				stage: 'Technical & Sharia Screening',
 				date: 'Sabtu, 4 Juli 2026',
-				sessions: ['Technical Analysis (Session 1)', 'Sharia Coin Analysis']
+				sessions: ['Analisis Teknikal Dasar', 'Analisis Coin Syariah'],
+				sessionSpeakers: ['Muhammad Ghithrif Gustomo Putra', 'Devin Halim'],
+				outcome:
+					'Peserta mulai memahami dasar membaca chart dan prinsip menilai aset crypto dari perspektif syariah.'
 			},
 			{
+				stage: 'Strategy & Portfolio',
 				date: 'Minggu, 5 Juli 2026',
-				sessions: ['Technical Analysis (Session 2)', 'Long-Term Portfolio Building']
+				sessions: ['Analisis Teknikal Lanjutan', 'Membangun Portfolio Jangka Panjang'],
+				sessionSpeakers: ['Muhammad Ghithrif Gustomo Putra', 'Sholahuddin Al Ayyubi'],
+				outcome:
+					'Peserta belajar menyusun strategi portfolio crypto dengan pendekatan jangka panjang dan manajemen risiko.'
 			}
 		],
 		topics: [
-			'Crypto Industry Map & Web3',
-			'Financial Planning & Risk Management',
-			'Fundamental & Narrative Analysis',
-			'Global Macro Analysis',
-			'Technical Analysis',
-			'Sharia Coin Analysis',
-			'Long-Term Portfolio Building'
-		]
+			'Peta Industri Crypto & Web3',
+			'Financial Planning & Manajemen Risiko',
+			'Analisis Fundamental & Narasi Pasar',
+			'Analisis Makro Global',
+			'Analisis Teknikal Dasar dan Lanjutan',
+			'Analisis Coin Syariah',
+			'Membangun Portfolio Jangka Panjang'
+		],
+		outcomes: [
+			'Memahami peta besar industri crypto dan Web3.',
+			'Membaca risiko sebelum mengambil keputusan investasi.',
+			'Memahami analisis fundamental, narasi pasar, dan makro global.',
+			'Menggunakan dasar analisis teknikal secara lebih terarah.',
+			'Memahami prinsip dasar analisis coin dari sisi syariah.',
+			'Menyusun portfolio crypto jangka panjang dengan risk management.'
+		],
+		disclaimer:
+			'Materi bootcamp bersifat edukasi dan bukan merupakan ajakan membeli atau menjual aset crypto tertentu. Peserta tetap perlu memahami risiko dan mengambil keputusan secara mandiri.',
+		ctaTitle: 'Siap mengikuti alur belajar 4 hari ini?',
+		ctaDescription:
+			'Lihat detail benefit peserta atau konsultasikan kebutuhan belajar Anda sebelum mendaftar.',
+		primaryCta: { label: 'Daftar Bootcamp', href: '' },
+		secondaryCta: { label: 'Tanya Program', href: '' }
 	},
 	instructors: {
 		eyebrow: 'Pemateri Bootcamp',
@@ -575,8 +621,106 @@ export function mergeContent(stored: Partial<LandingContent> | null | undefined)
 
 function normalizeContent(content: LandingContent): LandingContent {
 	content.layout = normalizeLayout(content.layout);
+	content.curriculum = normalizeCurriculum(content.curriculum);
 	content.instructors = normalizeInstructors(content.instructors);
 	return content;
+}
+
+function normalizeCurriculum(
+	curriculum: LandingContent['curriculum']
+): LandingContent['curriculum'] {
+	const defaults = defaultLandingContent.curriculum;
+	const oldTitle = 'Jadwal & Materi Bootcamp';
+
+	if (!curriculum.eyebrow?.trim()) curriculum.eyebrow = defaults.eyebrow;
+	if (!curriculum.title?.trim() || curriculum.title.trim() === oldTitle) {
+		curriculum.title = defaults.title;
+	}
+	if (!curriculum.description?.trim()) curriculum.description = defaults.description;
+	curriculum.schedule = normalizeCurriculumSchedule(curriculum.schedule);
+	curriculum.topics = normalizeCurriculumTopics(curriculum.topics);
+	curriculum.outcomes = normalizeStringList(curriculum.outcomes, defaults.outcomes);
+	if (!curriculum.disclaimer?.trim()) curriculum.disclaimer = defaults.disclaimer;
+	if (!curriculum.ctaTitle?.trim()) curriculum.ctaTitle = defaults.ctaTitle;
+	if (!curriculum.ctaDescription?.trim()) curriculum.ctaDescription = defaults.ctaDescription;
+	curriculum.primaryCta = { ...defaults.primaryCta, ...(curriculum.primaryCta ?? {}) };
+	curriculum.secondaryCta = { ...defaults.secondaryCta, ...(curriculum.secondaryCta ?? {}) };
+
+	return curriculum;
+}
+
+function normalizeCurriculumSchedule(schedule: CurriculumDay[] | undefined): CurriculumDay[] {
+	const sourceDays = Array.isArray(schedule) ? schedule : [];
+	if (sourceDays.length === 0) return [...defaultLandingContent.curriculum.schedule];
+
+	return sourceDays.map((day, index) => normalizeCurriculumDay(day, index));
+}
+
+function normalizeCurriculumDay(day: Partial<CurriculumDay>, index: number): CurriculumDay {
+	const fallback =
+		defaultLandingContent.curriculum.schedule[index] ??
+		defaultLandingContent.curriculum.schedule[0];
+	const sessions = normalizeCurriculumSessions(day.sessions, fallback.sessions);
+	const speakers = Array.isArray(day.sessionSpeakers)
+		? day.sessionSpeakers.map((speaker) => speaker.trim()).filter((speaker) => speaker.length > 0)
+		: [];
+
+	return {
+		stage: day.stage?.trim() || fallback.stage,
+		date: day.date?.trim() || fallback.date,
+		sessions,
+		sessionSpeakers: sessions.map((_, sessionIndex) => {
+			return speakers[sessionIndex] || fallback.sessionSpeakers[sessionIndex] || '';
+		}),
+		outcome: day.outcome?.trim() || fallback.outcome
+	};
+}
+
+function normalizeCurriculumSessions(sessions: string[] | undefined, fallback: string[]): string[] {
+	const oldCopy = new Map([
+		['Crypto Industry Map & Web3', 'Peta Industri Crypto & Web3'],
+		['Financial Planning & Risk Management', 'Financial Planning & Manajemen Risiko'],
+		['Fundamental & Narrative Analysis', 'Analisis Fundamental & Narasi Pasar'],
+		['Global Macro Analysis', 'Analisis Makro Global'],
+		['Technical Analysis (Session 1)', 'Analisis Teknikal Dasar'],
+		['Technical Analysis (Session 2)', 'Analisis Teknikal Lanjutan'],
+		['Sharia Coin Analysis', 'Analisis Coin Syariah'],
+		['Long-Term Portfolio Building', 'Membangun Portfolio Jangka Panjang']
+	]);
+	const values = Array.isArray(sessions)
+		? sessions
+				.map((session) => oldCopy.get(session.trim()) ?? session.trim())
+				.filter((session) => session.length > 0)
+		: [];
+
+	return values.length > 0 ? values : [...fallback];
+}
+
+function normalizeCurriculumTopics(topics: string[] | undefined): string[] {
+	const oldCopy = new Map([
+		['Crypto Industry Map & Web3', 'Peta Industri Crypto & Web3'],
+		['Financial Planning & Risk Management', 'Financial Planning & Manajemen Risiko'],
+		['Fundamental & Narrative Analysis', 'Analisis Fundamental & Narasi Pasar'],
+		['Global Macro Analysis', 'Analisis Makro Global'],
+		['Technical Analysis', 'Analisis Teknikal Dasar dan Lanjutan'],
+		['Sharia Coin Analysis', 'Analisis Coin Syariah'],
+		['Long-Term Portfolio Building', 'Membangun Portfolio Jangka Panjang']
+	]);
+	const values = Array.isArray(topics)
+		? topics
+				.map((topic) => oldCopy.get(topic.trim()) ?? topic.trim())
+				.filter((topic) => topic.length > 0)
+		: [];
+
+	return values.length > 0 ? values : [...defaultLandingContent.curriculum.topics];
+}
+
+function normalizeStringList(values: string[] | undefined, fallback: string[]): string[] {
+	const cleaned = Array.isArray(values)
+		? values.map((value) => value.trim()).filter((value) => value.length > 0)
+		: [];
+
+	return cleaned.length > 0 ? cleaned : [...fallback];
 }
 
 function normalizeInstructors(
@@ -795,7 +939,16 @@ export function sectionCompleteness(
 		}
 		case 'curriculum': {
 			const c = content.curriculum;
-			return countFields([c.title, c.schedule.length ? 'x' : '', c.topics.length ? 'x' : '']);
+			return countFields([
+				c.eyebrow,
+				c.title,
+				c.description,
+				c.schedule.length ? 'x' : '',
+				c.outcomes.length ? 'x' : '',
+				c.disclaimer,
+				c.ctaTitle,
+				c.primaryCta.label
+			]);
 		}
 		case 'instructors': {
 			const c = content.instructors;

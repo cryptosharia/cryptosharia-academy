@@ -1,0 +1,535 @@
+Menurut saya, section “Materi Pembelajaran” ini sudah bersih, mudah dipahami, dan secara visual cukup rapi. Tapi kalau dinilai sebagai section kurikulum untuk menjual bootcamp, masih ada beberapa kelemahan penting: terlalu ringkas, belum menunjukkan alur belajar, belum mengaitkan materi dengan hasil akhir peserta, dan belum terlihat cukup “bernilai tinggi” untuk meyakinkan calon peserta.
+
+Secara desain: 7.8/10
+Secara copywriting/kurikulum: 7/10
+Secara conversion: 6.8/10
+
+Ini bukan jelek. Tapi section ini masih bisa dibuat jauh lebih kuat.
+
+1. Masalah terbesar: judul “Materi Pembelajaran” terlalu umum
+
+Judul ini jelas, tapi masih sangat datar. Hampir semua kelas online bisa pakai judul yang sama.
+
+Untuk bootcamp CryptoSharia, judul kurikulum sebaiknya terasa lebih spesifik dan lebih menjual.
+
+Contoh alternatif:
+
+“Kurikulum 4 Hari: Dari Dasar Crypto hingga Portfolio Syariah”
+
+Atau:
+
+“Alur Belajar Bootcamp Crypto Syariah selama 4 Hari”
+
+Atau:
+
+“Materi Bootcamp: Memahami Crypto dari Industri, Analisis, Risiko, dan Syariah”
+
+Menurut saya, yang paling kuat:
+
+Kurikulum 4 Hari: Dari Dasar Crypto hingga Portfolio Syariah
+
+Kenapa lebih kuat? Karena langsung memberi gambaran perjalanan belajar. Bukan hanya “materi”, tapi ada progres dari awal sampai akhir.
+
+2. Belum ada subjudul penjelas
+
+Saat ini setelah judul langsung masuk ke card Hari 1–4. Secara visual bersih, tapi kurang konteks.
+
+Calon peserta perlu tahu:
+
+bootcamp ini berlangsung berapa hari,
+tiap hari fokusnya apa,
+alurnya dari dasar ke praktik atau tidak,
+materi ini untuk pemula atau yang sudah pernah crypto,
+hasil akhirnya apa.
+
+Tambahkan subjudul di bawah judul.
+
+Contoh:
+
+Selama 4 hari, peserta akan mempelajari crypto dari dasar industri, perencanaan keuangan, analisis fundamental, analisis teknikal, prinsip syariah, hingga penyusunan portfolio jangka panjang.
+
+Ini akan membuat section jauh lebih meyakinkan.
+
+3. Alur kurikulum sebenarnya bagus, tapi belum terlihat sebagai “journey”
+
+Kalau saya baca materinya, alurnya sebenarnya cukup masuk akal:
+
+Hari 1: Peta industri + financial planning/risk
+Hari 2: Fundamental, narrative, macro
+Hari 3: Technical analysis + sharia coin analysis
+Hari 4: Technical analysis lanjutan + portfolio building
+
+Secara substansi, ini bagus. Ada progres dari pemahaman besar → analisis → syariah → portfolio.
+
+Masalahnya, tampilan sekarang hanya menunjukkan daftar. Belum terasa sebagai perjalanan belajar.
+
+Saran: tambahkan label fokus per hari.
+
+Contoh:
+
+Hari 1 — Foundation
+
+Sabtu, 27 Juni 2026
+A. Crypto Industry Map & Web3
+B. Financial Planning & Risk Management
+
+Hari 2 — Market Analysis
+
+Minggu, 28 Juni 2026
+A. Fundamental & Narrative Analysis
+B. Global Macro Analysis
+
+Hari 3 — Asset & Sharia Screening
+
+Sabtu, 4 Juli 2026
+A. Technical Analysis Session 1
+B. Sharia Coin Analysis
+
+Hari 4 — Strategy & Portfolio
+
+Minggu, 5 Juli 2026
+A. Technical Analysis Session 2
+B. Long-Term Portfolio Building
+
+Dengan label seperti ini, user tidak hanya melihat “materi”, tapi memahami alurnya.
+
+4. Card terlalu kosong di bagian bawah
+
+Setiap card memiliki banyak whitespace bawah. Ini membuat section terasa agak “ringan” dan kurang padat nilai.
+
+Bukan berarti harus dipenuhi teks panjang. Tapi card akan lebih kuat kalau ditambahkan satu kalimat outcome per hari.
+
+Contoh:
+
+Hari 1
+
+Outcome: Peserta memahami peta besar industri crypto dan cara mengelola risiko sebelum mulai berinvestasi.
+
+Hari 2
+
+Outcome: Peserta belajar membaca fundamental aset, narasi pasar, dan pengaruh kondisi makro global.
+
+Hari 3
+
+Outcome: Peserta mulai memahami analisis teknikal dasar dan cara menilai aset crypto dari sisi syariah.
+
+Hari 4
+
+Outcome: Peserta belajar menyusun strategi portfolio jangka panjang dengan pendekatan yang lebih terarah.
+
+Ini akan membuat card terasa jauh lebih bernilai.
+
+5. Bahasa materi masih terlalu English-heavy
+
+Materi seperti:
+
+Crypto Industry Map & Web3
+Financial Planning & Risk Management
+Fundamental & Narrative Analysis
+Global Macro Analysis
+Technical Analysis
+Long-Term Portfolio Building
+
+Secara target market mungkin masih oke, terutama kalau audiensnya investor muda atau profesional. Tapi karena website utama berbahasa Indonesia dan ada unsur syariah, terlalu banyak English bisa terasa agak kurang natural.
+
+Saya tidak menyarankan semua diterjemahkan total, karena istilah finance dan crypto memang sering dipakai dalam bahasa Inggris. Tapi bisa dibuat bilingual atau lebih mudah dipahami.
+
+Contoh revisi:
+
+Crypto Industry Map & Web3
+menjadi:
+Peta Industri Crypto & Web3
+
+Financial Planning & Risk Management
+menjadi:
+Financial Planning & Manajemen Risiko
+
+Fundamental & Narrative Analysis
+menjadi:
+Analisis Fundamental & Narasi Pasar
+
+Global Macro Analysis
+menjadi:
+Analisis Makro Global
+
+Technical Analysis
+menjadi:
+Technical Analysis / Analisis Teknikal
+
+Long-Term Portfolio Building
+menjadi:
+Membangun Portfolio Jangka Panjang
+
+Menurut saya, versi yang paling cocok adalah campuran Indonesia + istilah utama English.
+
+6. Istilah “Session 1” dan “Session 2” kurang rapi
+
+Saat ini tertulis:
+
+Technical Analysis (Session 1)
+Technical Analysis (Session 2)
+
+Ini kurang elegan untuk landing page Indonesia. Bisa diganti menjadi:
+
+Technical Analysis Dasar
+dan
+Technical Analysis Lanjutan
+
+Atau:
+
+Analisis Teknikal: Dasar Membaca Chart
+dan
+Analisis Teknikal: Strategi Entry & Exit
+
+Lebih menjual dan lebih jelas manfaatnya.
+
+Kalau hanya “Session 1” dan “Session 2”, calon peserta belum tahu bedanya apa.
+
+7. “Sharia Coin Analysis” perlu diperjelas
+
+Materi ini sangat penting dan bisa menjadi pembeda utama CryptoSharia. Tapi di card sekarang hanya muncul sebagai satu item kecil.
+
+Padahal ini bisa menjadi selling point besar:
+
+“Bagaimana menilai apakah sebuah coin/token layak dikaji dari perspektif syariah?”
+
+Kalau hanya ditulis “Sharia Coin Analysis”, impact-nya kurang kuat.
+
+Saran ubah menjadi:
+
+Sharia Coin Analysis: Menilai Aset Crypto dari Perspektif Syariah
+
+Atau lebih singkat:
+
+Analisis Coin Syariah
+
+Lalu outcome:
+
+Peserta memahami prinsip dasar dalam menilai aset crypto dari sisi bisnis, utilitas, risiko, dan prinsip syariah.
+
+Ini harus diangkat lebih kuat karena ini diferensiasi utama dari bootcamp.
+
+8. “Long-Term Portfolio Building” perlu dibuat lebih konkret
+
+Materi hari ke-4 ini bagus, tapi masih terlalu umum.
+
+Calon peserta akan lebih tertarik kalau dibuat lebih jelas:
+
+Daripada:
+
+Long-Term Portfolio Building
+
+Lebih kuat:
+
+Membangun Portfolio Crypto Jangka Panjang
+
+Atau:
+
+Strategi Portfolio Jangka Panjang yang Lebih Terarah
+
+Atau:
+
+Menyusun Portfolio Crypto dengan Risk Management
+
+Karena “portfolio building” tanpa konteks bisa terdengar generik.
+
+9. Desain card sudah bersih, tapi kurang punya “alur waktu”
+
+Empat card sejajar sudah rapi. Namun karena semuanya sama, belum terasa ada progression dari hari 1 ke hari 4.
+
+Saran visual:
+
+Tambahkan elemen kecil seperti:
+
+garis timeline halus dari Hari 1 ke Hari 4,
+nomor hari lebih dominan,
+atau label tahap: Foundation → Analysis → Sharia Screening → Portfolio.
+
+Contoh:
+
+Hari 1
+Foundation
+
+Hari 2
+Market Analysis
+
+Hari 3
+Sharia Screening
+
+Hari 4
+Portfolio Strategy
+
+Ini sederhana, tapi membuat kurikulum terasa lebih terstruktur.
+
+10. Label A dan B cukup unik, tapi belum jelas maknanya
+
+Label kotak hitam “A” dan “B” terlihat rapi. Namun user mungkin tidak tahu apakah A dan B berarti sesi pagi/sore, materi pertama/kedua, atau modul A/B.
+
+Kalau memang satu hari ada dua sesi, lebih jelas gunakan:
+
+Sesi 1
+Sesi 2
+
+Atau:
+
+Modul A
+Modul B
+
+Atau kalau ingin ringkas:
+
+1
+2
+
+Menurut saya, gunakan:
+
+Sesi 1 dan Sesi 2
+
+Karena lebih manusiawi dan langsung dipahami.
+
+Contoh:
+
+[Sesi 1] Peta Industri Crypto & Web3
+[Sesi 2] Financial Planning & Manajemen Risiko
+
+Kalau desain tidak muat, pakai angka:
+
+1 dan 2
+
+Tapi A/B agak kurang informatif.
+
+11. Tanggal sudah jelas, tapi belum ada jam
+
+Kalau ini halaman promosi bootcamp, calon peserta biasanya ingin tahu:
+
+jam berapa mulai,
+durasi per hari,
+apakah live online/offline,
+apakah ada rekaman,
+apakah ada tugas/praktik.
+
+Di section kurikulum, minimal bisa ditambahkan jam kecil di bawah tanggal.
+
+Contoh:
+
+Sabtu, 27 Juni 2026
+09.00–12.00 WIB · Live Online
+
+Atau:
+
+Sabtu, 27 Juni 2026
+2 sesi pembelajaran live
+
+Kalau jam belum final, tidak perlu dimasukkan. Tapi secara conversion, informasi waktu sangat membantu.
+
+12. Kurikulum belum menunjukkan pembagian pemateri
+
+Karena sebelumnya section pemateri sudah kuat, akan lebih bagus kalau kurikulum menunjukkan siapa yang membawakan apa.
+
+Misalnya kecil saja:
+
+Hari 1:
+
+Peta Industri Crypto & Web3 — Sholahuddin
+Financial Planning & Manajemen Risiko — Ghithrif
+
+Hari 3:
+
+Analisis Coin Syariah — Devin
+
+Ini membantu user menghubungkan pemateri dengan materi.
+
+Tidak perlu terlalu ramai. Bisa berupa teks kecil di bawah materi:
+
+oleh Sholahuddin Al Ayyubi
+oleh Muhammad Ghithrif Gustomo Putra
+oleh Devin Halim
+
+Ini akan memperkuat kredibilitas yang sudah dibangun di section pemateri.
+
+13. Kurikulum belum menunjukkan hasil akhir peserta
+
+Kurikulum yang bagus tidak hanya menjawab “belajar apa”, tapi juga “setelah belajar, bisa apa”.
+
+Saat ini belum ada hasil akhir.
+
+Tambahkan satu blok setelah card:
+
+Setelah mengikuti bootcamp, peserta diharapkan mampu:
+memahami peta besar industri crypto dan Web3,
+membaca risiko sebelum mengambil keputusan investasi,
+memahami analisis fundamental, narasi pasar, dan makro global,
+menggunakan dasar analisis teknikal secara lebih terarah,
+memahami prinsip dasar analisis coin dari sisi syariah,
+menyusun portfolio crypto jangka panjang dengan risk management.
+
+Ini sangat penting untuk conversion.
+
+14. Perlu disclaimer kecil agar aman secara investasi
+
+Karena materi menyentuh investasi, analisis, dan portfolio, sebaiknya ada disclaimer edukatif.
+
+Misalnya:
+
+Materi bootcamp bersifat edukasi dan bukan merupakan ajakan membeli atau menjual aset crypto tertentu. Peserta tetap perlu memahami risiko dan mengambil keputusan secara mandiri.
+
+Ini bisa ditaruh di bawah kurikulum, FAQ, atau footer. Tidak harus di card.
+
+15. Secara visual, section terasa “bersih tapi belum premium”
+
+Card sekarang bersih dan enak dilihat, tapi belum terlalu premium. Masih terasa seperti modul jadwal biasa.
+
+Untuk membuatnya lebih premium, bisa tambahkan:
+
+label kecil di atas judul: KURIKULUM BOOTCAMP
+subjudul yang kuat,
+badge tahap per card,
+outcome per hari,
+CTA setelah section.
+
+Misalnya:
+
+KURIKULUM BOOTCAMP
+
+Kurikulum 4 Hari: Dari Dasar Crypto hingga Portfolio Syariah
+
+Selama 4 hari, peserta akan memahami crypto dari sisi industri, analisis pasar, manajemen risiko, dan prinsip fiqih muamalah.
+
+Ini akan terasa jauh lebih matang.
+
+16. Revisi copy materi yang saya sarankan
+
+Berikut versi yang lebih kuat:
+
+Judul
+
+Kurikulum 4 Hari: Dari Dasar Crypto hingga Portfolio Syariah
+
+Subjudul
+
+Peserta akan belajar memahami crypto dari peta industri, manajemen risiko, analisis pasar, prinsip syariah, hingga penyusunan portfolio jangka panjang yang lebih terarah.
+
+Hari 1 — Foundation
+
+Sabtu, 27 Juni 2026
+
+Sesi 1
+Peta Industri Crypto & Web3
+
+Sesi 2
+Financial Planning & Manajemen Risiko
+
+Outcome:
+Peserta memahami gambaran besar industri crypto serta cara mengelola risiko sebelum mengambil keputusan investasi.
+
+Hari 2 — Market Analysis
+
+Minggu, 28 Juni 2026
+
+Sesi 1
+Analisis Fundamental & Narasi Pasar
+
+Sesi 2
+Analisis Makro Global
+
+Outcome:
+Peserta belajar membaca kualitas aset, narasi pasar, dan pengaruh kondisi makro terhadap pergerakan crypto.
+
+Hari 3 — Technical & Sharia Screening
+
+Sabtu, 4 Juli 2026
+
+Sesi 1
+Analisis Teknikal Dasar
+
+Sesi 2
+Analisis Coin Syariah
+
+Outcome:
+Peserta mulai memahami dasar membaca chart dan prinsip menilai aset crypto dari perspektif syariah.
+
+Hari 4 — Strategy & Portfolio
+
+Minggu, 5 Juli 2026
+
+Sesi 1
+Analisis Teknikal Lanjutan
+
+Sesi 2
+Membangun Portfolio Jangka Panjang
+
+Outcome:
+Peserta belajar menyusun strategi portfolio crypto dengan pendekatan jangka panjang dan manajemen risiko.
+
+17. Saran tampilan card versi baru
+
+Struktur tiap card:
+
+HARI 1
+Foundation
+Sabtu, 27 Juni 2026
+
+[Sesi 1] Peta Industri Crypto & Web3
+[Sesi 2] Financial Planning & Manajemen Risiko
+
+Outcome
+Peserta memahami peta besar industri crypto dan dasar pengelolaan risiko.
+
+Dengan struktur ini, card terasa lebih bercerita.
+
+18. Perlukah tetap 4 card sejajar?
+
+Untuk desktop: boleh, tampilannya rapi.
+
+Tapi ada catatan: 4 card sejajar membuat lebar tiap card agak terbatas. Kalau nanti ditambahkan outcome, card akan lebih tinggi dan isi bisa terasa padat.
+
+Alternatif yang bisa dipertimbangkan:
+
+Opsi A — Tetap 4 card sejajar
+
+Bagus kalau isi dibuat ringkas.
+
+Opsi B — 2x2 grid
+
+Lebih lega, cocok kalau ingin menambahkan outcome dan pemateri.
+
+Opsi C — Timeline vertikal
+
+Paling kuat secara storytelling, terutama kalau ingin menunjukkan progres pembelajaran.
+
+Menurut saya, untuk landing page desktop, 4 card sejajar masih oke karena jadwalnya hanya 4 hari. Tapi pastikan isi tiap card tidak terlalu panjang.
+
+19. CTA setelah kurikulum sangat diperlukan
+
+Setelah user melihat materi, harus ada CTA.
+
+Contoh:
+
+Ingin lihat detail materi dan benefit peserta?
+[Daftar Bootcamp] [Konsultasi via WhatsApp]
+
+Atau:
+
+Siap mengikuti alur belajar 4 hari ini?
+[Daftar Sekarang] [Tanya Program]
+
+Jangan hanya tampilkan kurikulum lalu selesai.
+
+20. Kesimpulan
+
+Section ini sudah punya fondasi yang bagus: bersih, rapi, dan mudah dipahami. Tapi sekarang masih terlalu sederhana untuk ukuran bootcamp yang ingin terlihat kredibel dan serius.
+
+Yang paling perlu diperbaiki:
+
+Ganti judul agar lebih spesifik dan menjual.
+Tambahkan subjudul penjelas.
+Ubah A/B menjadi Sesi 1/Sesi 2.
+Tambahkan label fokus per hari: Foundation, Market Analysis, Sharia Screening, Portfolio Strategy.
+Tambahkan outcome singkat per hari.
+Perjelas istilah seperti Technical Analysis Session 1/2.
+Angkat “Analisis Coin Syariah” sebagai diferensiasi utama.
+Tambahkan CTA setelah section.
+Tambahkan disclaimer edukasi/investasi di bagian bawah halaman.
+Pertimbangkan menghubungkan materi dengan pemateri.
+
+Putusan saya: secara visual sudah rapi, tapi secara selling masih kurang kuat.
+Materinya sebenarnya bagus, hanya perlu dikemas sebagai alur belajar 4 hari yang membawa peserta dari pemahaman dasar menuju strategi portfolio crypto syariah yang lebih matang.
