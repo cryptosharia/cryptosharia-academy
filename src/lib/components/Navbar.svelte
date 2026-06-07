@@ -2,6 +2,7 @@
 	import ThemeToggle from './ThemeToggle.svelte';
 	import { page } from '$app/state';
 	import { userAuth } from '$lib/auth.svelte';
+	import { buildWhatsappUrl, defaultLandingContent } from '$lib/landingContent';
 
 	let scrolled = $state(false);
 	let mobileMenuOpen = $state(false);
@@ -13,6 +14,8 @@
 		userAuth.isLoggedIn && userAuth.user?.email && ADMIN_EMAILS.includes(userAuth.user.email)
 	);
 
+	const whatsappUrl = buildWhatsappUrl(defaultLandingContent.whatsapp);
+
 	const navLinks = $derived(
 		isAdmin
 			? [
@@ -21,10 +24,7 @@
 					{ label: 'Voucher', href: '/admin/vouchers' },
 					{ label: 'Pesanan', href: '/admin/orders' }
 				]
-			: [
-					{ label: 'Subscription', href: '/subscription' },
-					{ label: 'Units', href: '/units' }
-				]
+			: []
 	);
 
 	$effect(() => {
@@ -81,7 +81,7 @@
 						href={link.href}
 						aria-current={active ? 'page' : undefined}
 						class="rounded-lg px-4 py-2 text-sm font-medium transition-colors {active
-							? 'bg-primary-50 text-primary-700 dark:bg-primary-900/40 dark:text-primary-300 ring-1 ring-primary-200 dark:ring-primary-800'
+							? 'bg-primary-50 text-primary-700 dark:bg-primary-900/40 dark:text-primary-300 ring-primary-200 dark:ring-primary-800 ring-1'
 							: 'hover:text-primary-600 dark:hover:text-primary-400 hover:bg-primary-50 dark:hover:bg-primary-900/30 text-gray-600 dark:text-gray-300'}"
 						>{link.label}</a
 					>
@@ -178,12 +178,9 @@
 				{:else}
 					<!-- Guest buttons -->
 					<a
-						href="/auth/login"
-						class="hidden items-center rounded-full border border-gray-200 px-5 py-2 text-sm font-semibold text-gray-700 transition-all hover:bg-gray-50 active:scale-95 sm:inline-flex dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-800"
-						>Masuk</a
-					>
-					<a
-						href="/auth/register"
+						href={whatsappUrl}
+						target="_blank"
+						rel="noopener noreferrer"
 						class="bg-primary-600 orange-glow hover:bg-primary-700 hidden items-center rounded-full px-5 py-2 text-sm font-semibold text-white shadow-sm transition-all active:scale-95 sm:inline-flex"
 						>Daftar</a
 					>
@@ -270,13 +267,9 @@
 					</div>
 				{:else}
 					<a
-						href="/auth/login"
-						onclick={() => (mobileMenuOpen = false)}
-						class="mt-2 block rounded-full border border-gray-200 px-5 py-2.5 text-center text-sm font-semibold text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-800"
-						>Masuk</a
-					>
-					<a
-						href="/auth/register"
+						href={whatsappUrl}
+						target="_blank"
+						rel="noopener noreferrer"
 						onclick={() => (mobileMenuOpen = false)}
 						class="bg-primary-600 hover:bg-primary-700 mt-2 block rounded-full px-5 py-2.5 text-center text-sm font-semibold text-white"
 						>Daftar</a

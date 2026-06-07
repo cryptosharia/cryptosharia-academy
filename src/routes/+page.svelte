@@ -53,7 +53,11 @@
 	{#if sectionId === 'hero'}
 		<section class="relative isolate overflow-hidden bg-slate-950 pt-20 text-white">
 			<div
-				class="absolute inset-0 bg-[linear-gradient(135deg,rgba(15,23,42,0.94),rgba(30,41,59,0.9)),linear-gradient(90deg,rgba(234,88,12,0.18)_0%,rgba(20,184,166,0.1)_48%,rgba(15,23,42,0)_100%)]"
+				class="absolute inset-0 bg-cover bg-center bg-no-repeat md:bg-fixed"
+				style="background-image: url('/background-beranda.png');"
+			></div>
+			<div
+				class="absolute inset-0 bg-[linear-gradient(135deg,rgba(15,23,42,0.9),rgba(15,23,42,0.78)),linear-gradient(90deg,rgba(234,88,12,0.26)_0%,rgba(20,184,166,0.12)_48%,rgba(15,23,42,0)_100%)]"
 			></div>
 			<div
 				class="absolute inset-0 [background-image:linear-gradient(rgba(255,255,255,0.08)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.08)_1px,transparent_1px)] [background-size:56px_56px] opacity-20"
