@@ -2010,7 +2010,7 @@
 					<textarea
 						bind:value={instructor.description}
 						rows="3"
-						placeholder="Fokus Bootcamp"
+						placeholder="Fokus Materi"
 						class="{inputClass} resize-none"
 					></textarea>
 					{@render imageField(

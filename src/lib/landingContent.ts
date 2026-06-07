@@ -201,13 +201,13 @@ export const defaultLandingContent: LandingContent = {
 			'Bootcamp crypto syariah 4 hari bersama founder Crypto Sharia, founder Qualifin, dan pakar fiqih muamalah untuk belajar market, risk, technical, dan portofolio.'
 	},
 	hero: {
-		badge: 'Crypto Sharia Masterclass',
-		title: '',
+		badge: 'Crypto Sharia Masterclass 2026',
+		title: 'Belajar Crypto dengan Ilmu, Risiko yang Terukur, dan Prinsip Syariah',
 		subtitle:
-			'Bootcamp intensif 4 hari untuk memahami industri crypto, manajemen risiko, analisis market, screening syariah, dan portfolio building.',
+			'Masterclass 4 hari untuk memahami peta industri crypto, analisis market, sharia screening, dan strategi portfolio jangka panjang.',
 		description:
 			'Belajar langsung bersama founder Crypto Sharia, founder Qualifin, dan pakar fiqih muamalah dengan pendekatan sistematis, praktis, dan sesuai prinsip syariah.',
-		primaryCtaLabel: 'Join Now / Gabung Sekarang',
+		primaryCtaLabel: 'Daftar Sekarang',
 		secondaryCta: { label: 'Lihat Kurikulum', href: '#curriculum' },
 		videoUrl: '',
 		videoLabel: 'intro-masterclass.mp4',
@@ -225,7 +225,7 @@ export const defaultLandingContent: LandingContent = {
 		eyebrow: '',
 		title: 'Dibangun dari pengalaman edukasi dan komunitas nyata.',
 		description:
-			'Program ini menggabungkan pengalaman praktisi, standar sertifikasi, dan proses belajar komunitas agar peserta memahami crypto secara sistematis, bukan sekadar mengikuti hype.',
+			'CryptoSharia tidak hadir dari teori semata. Materi masterclass ini disusun dari pengalaman edukasi, diskusi komunitas, dan kebutuhan nyata peserta dalam memahami crypto secara lebih terarah dan sesuai prinsip syariah.',
 		activities: [
 			{
 				meta: '',
@@ -375,20 +375,21 @@ export const defaultLandingContent: LandingContent = {
 			'Bootcamp berlangsung 4 hari pada 27-28 Juni 2026 dan 4-5 Juli 2026 dengan dua sesi materi di setiap hari belajar.',
 		benefitCards: [
 			{
-				title: 'Jadwal Bootcamp',
+				title: 'Fasilitas & Benefit',
 				items: [
-					'Sabtu, 27 Juni 2026',
-					'Minggu, 28 Juni 2026',
-					'Sabtu, 4 Juli 2026',
-					'Minggu, 5 Juli 2026'
+					'4 hari live masterclass',
+					'Materi terstruktur & tugas praktik',
+					'FGD & mentoring pendampingan',
+					'Akses komunitas eksklusif',
+					'Sertifikat kelulusan'
 				]
 			},
 			{
-				title: 'Format Belajar',
+				title: 'Jadwal & Format',
 				items: [
-					'2 sesi materi per hari',
-					'Kelas terstruktur bersama praktisi',
-					'FGD kecil untuk pendampingan intensif'
+					'Sabtu & Minggu, 27-28 Juni 2026',
+					'Sabtu & Minggu, 4-5 Juli 2026',
+					'2 sesi materi per hari bersama praktisi'
 				]
 			}
 		],
@@ -524,7 +525,7 @@ export const defaultLandingContent: LandingContent = {
 	},
 	urgency: {
 		eyebrow: '',
-		title: 'Special Price for 10 Pax Only',
+		title: 'Harga Spesial untuk 10 Peserta Pertama',
 		description: 'Kuota terbatas untuk menjaga kualitas mentoring dan diskusi tetap optimal.',
 		ctaLabel: 'Daftar Sekarang'
 	},
@@ -672,14 +673,63 @@ export function mergeContent(stored: Partial<LandingContent> | null | undefined)
 
 function normalizeContent(content: LandingContent): LandingContent {
 	content.layout = normalizeLayout(content.layout);
+	content.hero = normalizeHero(content.hero);
+	content.authority = normalizeAuthority(content.authority);
 	content.valueProps = normalizeValueProps(content.valueProps);
 	content.usp = normalizeUsp(content.usp);
 	content.curriculum = normalizeCurriculum(content.curriculum);
 	content.instructors = normalizeInstructors(content.instructors);
 	content.pricing = normalizePricing(content.pricing);
+	content.urgency = normalizeUrgency(content.urgency);
 	content.faq = normalizeFaq(content.faq);
 	content.finalCta = normalizeFinalCta(content.finalCta);
 	return content;
+}
+
+function normalizeHero(hero: LandingContent['hero']): LandingContent['hero'] {
+	const defaults = defaultLandingContent.hero;
+	const oldBadges = new Set(['Crypto Sharia Masterclass Learning', 'Crypto Sharia Masterclass']);
+	const oldSubtitles = new Set([
+		'Bootcamp intensif 4 hari untuk memahami industri crypto, manajemen risiko, analisis market, screening syariah, dan portfolio building.',
+		'Bootcamp intensif 4 hari untuk memahami industri crypto, manajemen risiko, analisa market, screening syariah, dan portfolio building.'
+	]);
+	const oldCtas = new Set(['Join Now / Gabung Sekarang', 'Join Now / Daftar sekarang']);
+
+	if (!hero.badge?.trim() || oldBadges.has(hero.badge.trim())) hero.badge = defaults.badge;
+	if (!hero.title?.trim()) hero.title = defaults.title;
+	if (!hero.subtitle?.trim() || oldSubtitles.has(hero.subtitle.trim())) {
+		hero.subtitle = defaults.subtitle;
+	}
+	if (!hero.primaryCtaLabel?.trim() || oldCtas.has(hero.primaryCtaLabel.trim())) {
+		hero.primaryCtaLabel = defaults.primaryCtaLabel;
+	}
+
+	return hero;
+}
+
+function normalizeAuthority(authority: LandingContent['authority']): LandingContent['authority'] {
+	const defaults = defaultLandingContent.authority;
+	const oldDescriptions = new Set([
+		'Program ini menggabungkan pengalaman praktisi, standar sertifikasi, dan proses belajar komunitas agar peserta memahami crypto secara sistematis, bukan sekadar mengikuti hype.'
+	]);
+
+	if (!authority.description?.trim() || oldDescriptions.has(authority.description.trim())) {
+		authority.description = defaults.description;
+	}
+
+	return authority;
+}
+
+function normalizeUrgency(urgency: LandingContent['urgency']): LandingContent['urgency'] {
+	const defaults = defaultLandingContent.urgency;
+	const oldTitles = new Set(['Special Price for 10 Pax Only']);
+
+	if (!urgency.title?.trim() || oldTitles.has(urgency.title.trim())) {
+		urgency.title = defaults.title;
+	}
+	if (!urgency.ctaLabel?.trim()) urgency.ctaLabel = defaults.ctaLabel;
+
+	return urgency;
 }
 
 function normalizeValueProps(
