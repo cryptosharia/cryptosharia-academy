@@ -388,8 +388,8 @@ export const defaultLandingContent: LandingContent = {
 		ctaLabel: 'Gabung Sekarang'
 	},
 	curriculum: {
-		eyebrow: 'Kurikulum Bootcamp',
-		title: 'Kurikulum 4 Hari: Dari Dasar Crypto hingga Portfolio Syariah',
+		eyebrow: '',
+		title: 'Detail Kurikulum',
 		description:
 			'Peserta akan belajar memahami crypto dari peta industri, manajemen risiko, analisis pasar, prinsip syariah, hingga penyusunan portfolio jangka panjang yang lebih terarah.',
 		schedule: [
@@ -630,10 +630,15 @@ function normalizeCurriculum(
 	curriculum: LandingContent['curriculum']
 ): LandingContent['curriculum'] {
 	const defaults = defaultLandingContent.curriculum;
-	const oldTitle = 'Jadwal & Materi Bootcamp';
+	const oldTitles = new Set([
+		'Jadwal & Materi Bootcamp',
+		'Materi Pembelajaran',
+		'Kurikulum 4 Hari: Dari Dasar Crypto hingga Portfolio Syariah'
+	]);
+	const oldEyebrows = new Set(['Detail Kurikulum', 'Kurikulum Bootcamp']);
 
-	if (!curriculum.eyebrow?.trim()) curriculum.eyebrow = defaults.eyebrow;
-	if (!curriculum.title?.trim() || curriculum.title.trim() === oldTitle) {
+	if (oldEyebrows.has(curriculum.eyebrow?.trim() ?? '')) curriculum.eyebrow = '';
+	if (!curriculum.title?.trim() || oldTitles.has(curriculum.title.trim())) {
 		curriculum.title = defaults.title;
 	}
 	if (!curriculum.description?.trim()) curriculum.description = defaults.description;
@@ -940,7 +945,6 @@ export function sectionCompleteness(
 		case 'curriculum': {
 			const c = content.curriculum;
 			return countFields([
-				c.eyebrow,
 				c.title,
 				c.description,
 				c.schedule.length ? 'x' : '',

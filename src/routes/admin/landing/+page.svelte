@@ -1735,11 +1735,6 @@
 
 {#snippet curriculumForm()}
 	{@render textField(
-		'Eyebrow',
-		() => content.curriculum.eyebrow,
-		(v) => (content.curriculum.eyebrow = v)
-	)}
-	{@render textField(
 		'Judul',
 		() => content.curriculum.title,
 		(v) => (content.curriculum.title = v)

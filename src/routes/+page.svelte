@@ -412,11 +412,6 @@
 		<section class="bg-slate-50 py-20 dark:bg-slate-900" id="curriculum">
 			<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 				<div class="mx-auto mb-12 max-w-4xl text-center">
-					{#if content.curriculum.eyebrow}
-						<p class="mb-4 text-xs font-black tracking-[0.22em] text-orange-600 uppercase">
-							{content.curriculum.eyebrow}
-						</p>
-					{/if}
 					<h2
 						class="text-3xl leading-tight font-extrabold text-slate-900 sm:text-4xl dark:text-white"
 					>
