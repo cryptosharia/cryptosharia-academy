@@ -24,7 +24,13 @@
 					{ label: 'Voucher', href: '/admin/vouchers' },
 					{ label: 'Pesanan', href: '/admin/orders' }
 				]
-			: []
+			: [
+					{ label: 'Beranda', href: '/#hero' },
+					{ label: 'Pemateri', href: '/#instructors' },
+					{ label: 'Kurikulum', href: '/#curriculum' },
+					{ label: 'Harga', href: '/#pricing' },
+					{ label: 'FAQ', href: '/#faq' }
+				]
 	);
 
 	$effect(() => {
@@ -55,6 +61,13 @@
 		await userAuth.logout();
 		userMenuOpen = false;
 	}
+
+	function isActiveLink(href: string) {
+		if (href.startsWith('/#')) {
+			return page.url.pathname === '/' && page.url.hash === href.slice(1);
+		}
+		return page.url.pathname === href;
+	}
 </script>
 
 <header
@@ -76,7 +89,7 @@
 			</a>
 			<nav class="hidden items-center gap-1 md:flex">
 				{#each navLinks as link}
-					{@const active = page.url.pathname === link.href}
+					{@const active = isActiveLink(link.href)}
 					<a
 						href={link.href}
 						aria-current={active ? 'page' : undefined}
@@ -220,7 +233,7 @@
 		>
 			<div class="space-y-1 px-4 py-3">
 				{#each navLinks as link}
-					{@const active = page.url.pathname === link.href}
+					{@const active = isActiveLink(link.href)}
 					<a
 						href={link.href}
 						onclick={() => (mobileMenuOpen = false)}

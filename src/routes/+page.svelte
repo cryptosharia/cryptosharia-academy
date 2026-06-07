@@ -51,7 +51,10 @@
 
 {#each sections as sectionId (sectionId)}
 	{#if sectionId === 'hero'}
-		<section class="relative isolate overflow-hidden bg-slate-950 pt-20 text-white">
+		<section
+			id="hero"
+			class="relative isolate scroll-mt-20 overflow-hidden bg-slate-950 pt-20 text-white"
+		>
 			<div
 				class="absolute inset-0 bg-cover bg-center bg-no-repeat md:bg-fixed"
 				style="background-image: url('/background-beranda.png');"
@@ -350,7 +353,7 @@
 	{/if}
 
 	{#if sectionId === 'pricing'}
-		<section class="bg-white py-20 dark:bg-gray-950" id="pricing">
+		<section class="scroll-mt-20 bg-white py-20 dark:bg-gray-950" id="pricing">
 			<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 				<div class="grid gap-10 lg:grid-cols-[1fr_0.9fr] lg:items-center">
 					<div>
@@ -424,7 +427,7 @@
 	{/if}
 
 	{#if sectionId === 'curriculum'}
-		<section class="bg-slate-50 py-20 dark:bg-slate-900" id="curriculum">
+		<section class="scroll-mt-20 bg-slate-50 py-20 dark:bg-slate-900" id="curriculum">
 			<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 				<div class="mx-auto mb-12 max-w-4xl text-center">
 					<h2
@@ -634,7 +637,7 @@
 	{/if}
 
 	{#if sectionId === 'instructors'}
-		<section class="bg-white py-20 dark:bg-gray-950" id="instructors">
+		<section class="scroll-mt-20 bg-white py-20 dark:bg-gray-950" id="instructors">
 			<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 				<div class="mb-12 max-w-4xl">
 					{#if content.instructors.eyebrow}
@@ -825,7 +828,7 @@
 	{/if}
 
 	{#if sectionId === 'faq'}
-		<section class="bg-white py-20 dark:bg-gray-950" id="faq">
+		<section class="scroll-mt-20 bg-white py-20 dark:bg-gray-950" id="faq">
 			<div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
 				<div class="mb-10 text-center">
 					<h2 class="text-3xl font-extrabold text-slate-900 sm:text-4xl dark:text-white">
