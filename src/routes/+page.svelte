@@ -468,8 +468,15 @@
 	{#if sectionId === 'instructors'}
 		<section class="bg-white py-20 dark:bg-gray-950" id="instructors">
 			<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-				<div class="mb-12 max-w-3xl">
-					<h2 class="text-3xl font-extrabold text-slate-900 sm:text-4xl dark:text-white">
+				<div class="mb-12 max-w-4xl">
+					{#if content.instructors.eyebrow}
+						<p class="mb-3 text-xs font-bold tracking-[0.2em] text-orange-600 uppercase">
+							{content.instructors.eyebrow}
+						</p>
+					{/if}
+					<h2
+						class="text-3xl leading-tight font-extrabold text-slate-900 sm:text-4xl dark:text-white"
+					>
 						{content.instructors.title}
 					</h2>
 					<p class="mt-4 text-base leading-8 text-slate-600 dark:text-slate-300">
@@ -477,33 +484,124 @@
 					</p>
 				</div>
 
-				<div class="grid gap-5 md:grid-cols-3">
+				<div class="grid items-stretch gap-6 md:grid-cols-2 xl:grid-cols-3">
 					{#each content.instructors.items as instructor}
 						<div
-							class="overflow-hidden rounded-lg border border-slate-200 bg-slate-50 dark:border-slate-800 dark:bg-slate-900"
+							class="group flex h-full flex-col overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm transition hover:border-orange-200 hover:shadow-md dark:border-slate-800 dark:bg-slate-900 dark:hover:border-orange-900/70"
 						>
-							<div class="aspect-[4/3] overflow-hidden bg-slate-200 dark:bg-slate-800">
+							<div
+								class="aspect-[4/3] overflow-hidden border-b border-slate-100 bg-slate-100 dark:border-slate-800 dark:bg-slate-800"
+							>
 								<img
 									src={instructor.photo}
 									alt={instructor.name}
 									class="h-full w-full object-cover object-center"
 								/>
 							</div>
-							<div class="p-6">
+							<div class="flex flex-1 flex-col p-6">
+								<p
+									class="mb-4 inline-flex w-fit rounded-full border border-orange-200 bg-orange-50 px-3 py-1 text-xs leading-5 font-bold text-orange-700 dark:border-orange-900/60 dark:bg-orange-950/40 dark:text-orange-300"
+								>
+									{instructor.badge}
+								</p>
 								<h3
-									class="text-xl leading-snug font-extrabold break-words text-slate-900 dark:text-white"
+									class="text-2xl leading-snug font-extrabold break-words text-slate-900 dark:text-white"
 								>
 									{instructor.name}
 								</h3>
-								<p class="mt-2 text-sm font-bold text-orange-600 dark:text-orange-400">
+								<p class="mt-2 text-sm font-bold text-slate-500 dark:text-slate-400">
+									{instructor.credentials}
+								</p>
+								<p class="mt-2 text-base font-bold text-orange-600 dark:text-orange-400">
 									{instructor.role}
 								</p>
-								<p class="mt-4 text-sm leading-7 text-slate-600 dark:text-slate-400">
-									{instructor.description}
-								</p>
+
+								<div class="mt-5 border-t border-slate-100 pt-5 dark:border-slate-800">
+									<h4 class="text-xs font-black tracking-[0.16em] text-slate-500 uppercase">
+										Highlight Kredensial
+									</h4>
+									<ul class="mt-3 space-y-3">
+										{#each instructor.highlights as highlight}
+											<li class="flex gap-3 text-sm leading-6 text-slate-700 dark:text-slate-300">
+												<svg
+													class="mt-1 h-4 w-4 shrink-0 text-orange-600 dark:text-orange-400"
+													fill="none"
+													stroke="currentColor"
+													viewBox="0 0 24 24"
+													aria-hidden="true"
+												>
+													<path
+														stroke-linecap="round"
+														stroke-linejoin="round"
+														stroke-width="2.5"
+														d="M5 13l4 4L19 7"
+													/>
+												</svg>
+												<span>{highlight}</span>
+											</li>
+										{/each}
+									</ul>
+								</div>
+
+								<div class="mt-5">
+									<h4 class="text-xs font-black tracking-[0.16em] text-slate-500 uppercase">
+										Fokus Bootcamp
+									</h4>
+									<p class="mt-3 text-sm leading-7 text-slate-600 dark:text-slate-400">
+										{instructor.description}
+									</p>
+								</div>
 							</div>
 						</div>
 					{/each}
+				</div>
+
+				<div class="mt-10 border-t border-slate-200 pt-8 dark:border-slate-800">
+					<div class="flex flex-col justify-between gap-6 lg:flex-row lg:items-center">
+						<div>
+							{#if content.instructors.closing}
+								<p class="max-w-3xl text-base leading-8 text-slate-600 dark:text-slate-300">
+									{content.instructors.closing}
+								</p>
+							{/if}
+							<h3 class="mt-4 text-2xl font-extrabold text-slate-900 dark:text-white">
+								{content.instructors.ctaTitle}
+							</h3>
+							<p class="mt-2 text-sm leading-7 text-slate-600 dark:text-slate-400">
+								{content.instructors.ctaDescription}
+							</p>
+						</div>
+						<div class="flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
+							<a
+								href={content.instructors.primaryCta.href}
+								class="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-orange-600 px-6 py-4 text-sm font-bold text-white shadow-lg shadow-orange-950/20 transition hover:bg-orange-500 active:scale-95 sm:w-auto"
+							>
+								{content.instructors.primaryCta.label}
+								<svg
+									class="h-4 w-4"
+									fill="none"
+									stroke="currentColor"
+									viewBox="0 0 24 24"
+									aria-hidden="true"
+								>
+									<path
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										stroke-width="2.5"
+										d="M17 8l4 4m0 0l-4 4m4-4H3"
+									/>
+								</svg>
+							</a>
+							<a
+								href={content.instructors.secondaryCta.href || whatsappUrl}
+								target="_blank"
+								rel="noopener noreferrer"
+								class="inline-flex w-full items-center justify-center rounded-lg border border-slate-300 px-6 py-4 text-sm font-bold text-slate-900 transition hover:border-orange-300 hover:bg-orange-50 sm:w-auto dark:border-slate-700 dark:text-white dark:hover:border-orange-800 dark:hover:bg-orange-950/30"
+							>
+								{content.instructors.secondaryCta.label}
+							</a>
+						</div>
+					</div>
 				</div>
 			</div>
 		</section>

@@ -31,7 +31,15 @@ export type Cta = { label: string; href: string };
 export type BenefitCard = { title: string; items: string[] };
 export type LayoutEntry = { id: SectionId; visible: boolean };
 export type CurriculumDay = { date: string; sessions: string[] };
-export type Instructor = { name: string; role: string; description: string; photo: string };
+export type Instructor = {
+	badge: string;
+	name: string;
+	credentials: string;
+	role: string;
+	highlights: string[];
+	description: string;
+	photo: string;
+};
 
 export type LandingContent = {
 	/** Order + visibility of sections (acts like a simple page builder). */
@@ -99,6 +107,11 @@ export type LandingContent = {
 		eyebrow: string;
 		title: string;
 		description: string;
+		closing: string;
+		ctaTitle: string;
+		ctaDescription: string;
+		primaryCta: Cta;
+		secondaryCta: Cta;
 		items: Instructor[];
 	};
 
@@ -394,29 +407,60 @@ export const defaultLandingContent: LandingContent = {
 	},
 	instructors: {
 		eyebrow: '',
-		title: 'Pemateri Bootcamp',
+		title: 'Tiga Perspektif Kredibel dalam Satu Bootcamp',
 		description:
-			'Belajar bersama tiga pemateri utama dari perspektif investasi crypto, financial planning, dan fiqih muamalah.',
+			'Crypto syariah tidak cukup dipahami hanya dari sisi peluang aset digital. Di bootcamp ini, peserta akan memahami industri crypto, strategi keuangan, dan prinsip fiqih muamalah dari pemateri dengan kredensial yang relevan di bidangnya.',
+		closing:
+			'Dengan kombinasi tiga perspektif ini, peserta tidak hanya belajar melihat peluang crypto, tetapi juga memahami risiko dan batasan syariahnya secara lebih matang.',
+		ctaTitle: 'Siap belajar crypto syariah dari tiga perspektif utama?',
+		ctaDescription:
+			'Lihat kurikulum bootcamp atau konsultasikan kebutuhan belajar Anda melalui WhatsApp.',
+		primaryCta: { label: 'Lihat Kurikulum Bootcamp', href: '#curriculum' },
+		secondaryCta: { label: 'Konsultasi via WhatsApp', href: '' },
 		items: [
 			{
-				name: 'Sholahuddin Al Ayyubi, B.B.A., WMI, AWP.',
+				badge: 'Crypto Syariah & Wealth Planning',
+				name: 'Sholahuddin Al Ayyubi',
+				credentials: 'B.B.A. · WMI · AWP',
 				role: 'Founder of Crypto Sharia',
+				highlights: [
+					'B.B.A. dari LIPIA Jakarta',
+					'Certified WMI, Wakil Manajer Investasi standar nasional BNSP',
+					'Certified AWP, Associate Wealth Planner standar internasional',
+					'Certified International Business Coach dari ICF'
+				],
 				description:
-					'Membawakan perspektif industri crypto, Web3, analisa koin syariah, dan strategi investasi yang sesuai prinsip syariah.',
+					'Membawakan perspektif industri crypto, Web3, analisa koin syariah, dan strategi investasi yang sesuai dengan prinsip syariah.',
 				photo: '/instructors/sholahuddin-al-ayyubi.jpeg'
 			},
 			{
-				name: 'Muhammad Ghithrif Gustomo Putra, S.E., CFA, CFP, CSA, CTA.',
+				badge: 'Investment & Financial Planning',
+				name: 'Muhammad Ghithrif Gustomo Putra',
+				credentials: 'S.E. · CFA · CFP · CSA · CTA',
 				role: 'Founder of Qualifin',
+				highlights: [
+					'CFA, kredensial global bergengsi di bidang investasi dan keuangan',
+					'CFP, sertifikasi profesional di bidang perencanaan keuangan',
+					'CSA dan CTA di bidang analisis pasar dan investasi',
+					'Berpengalaman dalam financial planning, risk management, fundamental analysis, narrative analysis, dan global macro analysis'
+				],
 				description:
-					'Membawakan financial planning, risk management, fundamental analysis, narrative analysis, dan global macro analysis.',
+					'Membantu peserta memahami cara mengelola risiko, membaca fundamental aset, mengenali narasi pasar, dan melihat pengaruh kondisi makro global terhadap keputusan investasi.',
 				photo: '/instructors/muhammad-ghithrif.jpeg'
 			},
 			{
+				badge: 'Fiqih Muamalah & Islamic Finance',
 				name: 'Devin Halim',
+				credentials: 'AAOIFI · DPS MUI',
 				role: 'Pakar Fiqih Muamalah',
+				highlights: [
+					'Latar belakang akademik S1 dan S2',
+					'Sedang menempuh program S3',
+					'Tersertifikasi AAOIFI di bidang Islamic Finance',
+					'Tersertifikasi Dewan Pengawas Syariah MUI'
+				],
 				description:
-					'Membawakan perspektif fiqih muamalah untuk membantu peserta memahami batasan dan prinsip syariah dalam aset crypto.',
+					'Membawakan perspektif fiqih muamalah untuk membantu peserta memahami prinsip syariah, batasan transaksi, dan kehati-hatian dalam memilih serta menggunakan aset crypto.',
 				photo: '/instructors/devin-halim.jpeg'
 			}
 		]
@@ -531,7 +575,81 @@ export function mergeContent(stored: Partial<LandingContent> | null | undefined)
 
 function normalizeContent(content: LandingContent): LandingContent {
 	content.layout = normalizeLayout(content.layout);
+	content.instructors = normalizeInstructors(content.instructors);
 	return content;
+}
+
+function normalizeInstructors(
+	instructors: LandingContent['instructors']
+): LandingContent['instructors'] {
+	const defaults = defaultLandingContent.instructors;
+	const oldTitle = 'Pemateri Bootcamp';
+	const oldDescription =
+		'Belajar bersama tiga pemateri utama dari perspektif investasi crypto, financial planning, dan fiqih muamalah.';
+
+	if (!instructors.title?.trim() || instructors.title.trim() === oldTitle) {
+		instructors.title = defaults.title;
+	}
+	if (!instructors.description?.trim() || instructors.description.trim() === oldDescription) {
+		instructors.description = defaults.description;
+	}
+	if (!instructors.closing?.trim()) instructors.closing = defaults.closing;
+	if (!instructors.ctaTitle?.trim()) instructors.ctaTitle = defaults.ctaTitle;
+	if (!instructors.ctaDescription?.trim()) instructors.ctaDescription = defaults.ctaDescription;
+	instructors.primaryCta = { ...defaults.primaryCta, ...(instructors.primaryCta ?? {}) };
+	instructors.secondaryCta = { ...defaults.secondaryCta, ...(instructors.secondaryCta ?? {}) };
+
+	const sourceItems = Array.isArray(instructors.items) ? instructors.items : [];
+	instructors.items = sourceItems.map((item, index) => normalizeInstructor(item, index));
+
+	return instructors;
+}
+
+function normalizeInstructor(item: Partial<Instructor>, index: number): Instructor {
+	const defaults = defaultLandingContent.instructors.items;
+	const fallback = findInstructorFallback(item, index);
+	const rawName = item.name?.trim() ?? '';
+	const knownDefaultName = defaults.some((instructor) =>
+		rawName.toLowerCase().includes(instructor.name.toLowerCase())
+	);
+	const highlights = Array.isArray(item.highlights)
+		? item.highlights.filter((highlight) => highlight.trim().length > 0)
+		: [];
+
+	return {
+		badge: item.badge?.trim() || fallback.badge,
+		name: knownDefaultName || !rawName ? fallback.name : rawName,
+		credentials: item.credentials?.trim() || fallback.credentials,
+		role: item.role?.trim() || fallback.role,
+		highlights: highlights.length > 0 ? highlights : [...fallback.highlights],
+		description: normalizeInstructorDescription(item.description, fallback),
+		photo: item.photo?.trim() || fallback.photo
+	};
+}
+
+function normalizeInstructorDescription(
+	description: string | undefined,
+	fallback: Instructor
+): string {
+	const value = description?.trim() ?? '';
+	const oldDescriptions = new Set([
+		'Membawakan perspektif industri crypto, Web3, analisa koin syariah, dan strategi investasi yang sesuai prinsip syariah.',
+		'Membawakan financial planning, risk management, fundamental analysis, narrative analysis, dan global macro analysis.',
+		'Membawakan perspektif fiqih muamalah untuk membantu peserta memahami batasan dan prinsip syariah dalam aset crypto.'
+	]);
+
+	return !value || oldDescriptions.has(value) ? fallback.description : value;
+}
+
+function findInstructorFallback(item: Partial<Instructor>, index: number): Instructor {
+	const defaultItems = defaultLandingContent.instructors.items;
+	const rawName = item.name?.toLowerCase() ?? '';
+	const match = defaultItems.find((instructor) => {
+		const firstName = instructor.name.split(' ')[0].toLowerCase();
+		return rawName.includes(firstName);
+	});
+
+	return match ?? defaultItems[index] ?? defaultItems[0];
 }
 
 function normalizeLayout(layout: LayoutEntry[]): LayoutEntry[] {
@@ -657,8 +775,21 @@ export function sectionCompleteness(
 		}
 		case 'instructors': {
 			const c = content.instructors;
-			const arr = c.items.map((i) => (allFilled([i.name, i.role, i.photo]) ? 'x' : ''));
-			return countFields([c.title, c.description, c.items.length ? arr.join('') : '']);
+			const arr = c.items.map((i) =>
+				allFilled([i.badge, i.name, i.credentials, i.role, i.description, i.photo]) &&
+				i.highlights.length > 0
+					? 'x'
+					: ''
+			);
+			return countFields([
+				c.title,
+				c.description,
+				c.closing,
+				c.ctaTitle,
+				c.ctaDescription,
+				c.primaryCta.label,
+				c.items.length ? arr.join('') : ''
+			]);
 		}
 		case 'urgency': {
 			const c = content.urgency;

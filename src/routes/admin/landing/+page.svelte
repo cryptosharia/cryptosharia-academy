@@ -1815,13 +1815,53 @@
 		() => content.instructors.description,
 		(v) => (content.instructors.description = v)
 	)}
+	{@render areaField(
+		'Penutup Section',
+		() => content.instructors.closing,
+		(v) => (content.instructors.closing = v)
+	)}
+	<div class="grid gap-3 md:grid-cols-2">
+		{@render textField(
+			'Judul CTA',
+			() => content.instructors.ctaTitle,
+			(v) => (content.instructors.ctaTitle = v)
+		)}
+		{@render textField(
+			'Deskripsi CTA',
+			() => content.instructors.ctaDescription,
+			(v) => (content.instructors.ctaDescription = v)
+		)}
+		{@render textField(
+			'Label CTA Utama',
+			() => content.instructors.primaryCta.label,
+			(v) => (content.instructors.primaryCta.label = v)
+		)}
+		{@render textField(
+			'Link CTA Utama',
+			() => content.instructors.primaryCta.href,
+			(v) => (content.instructors.primaryCta.href = v)
+		)}
+		{@render textField(
+			'Label CTA Kedua',
+			() => content.instructors.secondaryCta.label,
+			(v) => (content.instructors.secondaryCta.label = v)
+		)}
+		{@render textField(
+			'Link CTA Kedua',
+			() => content.instructors.secondaryCta.href,
+			(v) => (content.instructors.secondaryCta.href = v)
+		)}
+	</div>
 	<div class="border-t border-gray-100 pt-4 dark:border-gray-700">
 		{@render listHeader(
 			'Pemateri',
 			() =>
 				(content.instructors.items = addItem(content.instructors.items, {
+					badge: '',
 					name: '',
+					credentials: '',
 					role: '',
+					highlights: [''],
 					description: '',
 					photo: ''
 				}))
@@ -1835,16 +1875,42 @@
 							() => (content.instructors.items = removeItem(content.instructors.items, i))
 						)}
 					</div>
+					<input bind:value={instructor.badge} placeholder="Badge bidang" class={inputClass} />
+					<input bind:value={instructor.name} placeholder="Nama lengkap" class={inputClass} />
 					<input
-						bind:value={instructor.name}
-						placeholder="Nama lengkap + gelar"
+						bind:value={instructor.credentials}
+						placeholder="Credential ringkas"
 						class={inputClass}
 					/>
 					<input bind:value={instructor.role} placeholder="Jabatan" class={inputClass} />
+					<div class="space-y-2">
+						<div class="flex items-center justify-between">
+							<span class="text-[10px] font-bold text-gray-400">HIGHLIGHT KREDENSIAL</span>
+							<button
+								type="button"
+								onclick={() => (instructor.highlights = addItem(instructor.highlights, ''))}
+								class="text-primary-600 hover:text-primary-700 text-xs font-semibold"
+							>
+								+ Tambah
+							</button>
+						</div>
+						{#each instructor.highlights as highlight, j}
+							<div class="flex items-center gap-2">
+								<input
+									bind:value={instructor.highlights[j]}
+									placeholder="Poin highlight"
+									class={inputClass}
+								/>
+								{@render removeBtn(
+									() => (instructor.highlights = removeItem(instructor.highlights, j))
+								)}
+							</div>
+						{/each}
+					</div>
 					<textarea
 						bind:value={instructor.description}
-						rows="2"
-						placeholder="Deskripsi singkat"
+						rows="3"
+						placeholder="Fokus Bootcamp"
 						class="{inputClass} resize-none"
 					></textarea>
 					{@render imageField(

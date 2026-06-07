@@ -1,0 +1,1419 @@
+# TASK REVISION — Section Pemateri Bootcamp CryptoSharia
+
+## 1. Context
+
+Section yang direvisi adalah bagian **Pemateri Bootcamp** pada website CryptoSharia.
+
+Saat ini section sudah menampilkan 3 pemateri utama:
+
+1. Sholahuddin Al Ayyubi
+2. Muhammad Ghithrif Gustomo Putra
+3. Devin Halim
+
+Namun tampilan saat ini masih terlalu sederhana dan belum cukup kuat membangun kepercayaan. Section masih terasa seperti daftar pemateri biasa, padahal bagian ini seharusnya menjadi salah satu selling point utama bootcamp.
+
+Masukan terbaru dari Founder CryptoSharia menyebutkan bahwa fokus utama section pemateri perlu diperkuat pada kredensial, sertifikasi, dan legitimasi masing-masing pemateri.
+
+Tujuan revisi bukan hanya membuat tampilan lebih rapi, tetapi membuat calon peserta langsung memahami bahwa bootcamp ini dibimbing oleh pemateri dengan kredibilitas dari tiga bidang utama:
+
+1. Crypto syariah dan wealth planning
+2. Investment dan financial planning
+3. Fiqih muamalah dan Islamic finance
+
+---
+
+# 2. Problem Utama Saat Ini
+
+## 2.1 Section masih terlalu deskriptif
+
+Saat ini section hanya menjelaskan bahwa peserta akan belajar bersama tiga pemateri dari perspektif investasi crypto, financial planning, dan fiqih muamalah.
+
+Masalahnya, copy seperti ini masih terlalu informatif dan belum cukup meyakinkan.
+
+Calon peserta perlu diyakinkan bahwa:
+
+* Pemateri memang kompeten.
+* Pemateri punya kredensial yang relevan.
+* Bootcamp ini bukan sekadar kelas crypto biasa.
+* Ada kombinasi antara industri crypto, financial planning, dan fiqih muamalah.
+* Aspek syariah dibawakan oleh orang yang punya legitimasi akademik dan sertifikasi.
+
+---
+
+## 2.2 Kredensial pemateri belum diangkat dengan baik
+
+Masukan dari founder:
+
+### Untuk Sholahuddin Al Ayyubi
+
+Highlight yang perlu diangkat:
+
+* Gelar B.B.A. dari LIPIA Jakarta
+* Certified WMI, Wakil Manajer Investasi, standar nasional BNSP
+* Certified AWP, Associate Wealth Planner, standar internasional
+* Certified International Business Coach dari ICF, International Coaching Federation
+
+### Untuk Muhammad Ghithrif Gustomo Putra
+
+Highlight utama:
+
+* CFA harus ditonjolkan sebagai salah satu kredensial finance paling bergengsi di dunia
+* Sertifikasi lain tetap boleh ditampilkan, tetapi jangan sampai membuat CFA tenggelam
+
+### Untuk Devin Halim
+
+Highlight utama:
+
+* Lulusan S1
+* Lulusan S2
+* Sedang menempuh program S3
+* Sertifikasi AAOIFI, salah satu sertifikasi/standar bergengsi dalam Islamic finance dunia
+* Sertifikasi Dewan Pengawas Syariah MUI
+
+---
+
+## 2.3 Visual card masih terasa seperti template
+
+Card sudah rapi, tetapi belum terasa premium.
+
+Masalah visual saat ini:
+
+* Foto pemateri belum konsisten secara lighting, background, dan crop.
+* Card belum menonjolkan bidang masing-masing pemateri.
+* Belum ada badge bidang seperti Crypto Syariah, Investment, dan Fiqih Muamalah.
+* Belum ada highlight kredensial yang mudah dipindai.
+* Deskripsi masih berupa paragraf biasa.
+* Belum ada CTA setelah section.
+* Section belum memberi rasa bahwa ini adalah tiga pilar utama bootcamp.
+
+---
+
+# 3. Goal Revisi
+
+## 3.1 Goal utama
+
+Membuat section pemateri menjadi lebih kredibel, premium, terstruktur, dan meyakinkan.
+
+Setelah revisi, user harus langsung menangkap pesan berikut:
+
+> Bootcamp CryptoSharia dipandu oleh tiga pemateri dengan kredensial yang saling melengkapi: praktisi crypto syariah, profesional keuangan, dan ahli fiqih muamalah.
+
+---
+
+## 3.2 Output yang diharapkan
+
+Section baru harus:
+
+* Lebih kuat secara trust-building.
+* Lebih mudah dibaca.
+* Lebih premium secara visual.
+* Lebih jelas membedakan peran tiga pemateri.
+* Menonjolkan sertifikasi dan kredensial penting.
+* Tidak terlalu padat.
+* Tetap clean dan profesional.
+* Mobile-friendly.
+* Memiliki CTA yang jelas setelah user membaca profil pemateri.
+
+---
+
+# 4. Copywriting Section Baru
+
+## 4.1 Judul lama
+
+Pemateri Bootcamp
+
+## 4.2 Masalah judul lama
+
+Judul terlalu umum dan datar. Tidak salah, tetapi kurang menjual.
+
+Judul ini hanya menjawab:
+
+> Siapa pematerinya?
+
+Padahal section ini seharusnya menjawab:
+
+> Kenapa pemateri ini layak dipercaya?
+
+---
+
+## 4.3 Rekomendasi judul baru
+
+Gunakan salah satu dari opsi berikut.
+
+### Opsi 1 — Paling direkomendasikan
+
+Tiga Perspektif Kredibel dalam Satu Bootcamp
+
+### Opsi 2
+
+Belajar dari Praktisi, Profesional Keuangan, dan Ahli Fiqih Muamalah
+
+### Opsi 3
+
+Dipandu oleh Pemateri dengan Kredensial Industri, Keuangan, dan Syariah
+
+### Opsi 4
+
+Tiga Pemateri, Tiga Perspektif Utama
+
+---
+
+## 4.4 Judul final yang disarankan
+
+Gunakan:
+
+## Tiga Perspektif Kredibel dalam Satu Bootcamp
+
+Alasan:
+
+* Lebih kuat daripada “Pemateri Bootcamp”.
+* Menjelaskan bahwa ada tiga sudut pandang utama.
+* Kata “kredibel” langsung menekankan trust.
+* Masih pendek dan enak dibaca.
+
+---
+
+## 4.5 Subjudul lama
+
+Belajar bersama tiga pemateri utama dari perspektif investasi crypto, financial planning, dan fiqih muamalah.
+
+---
+
+## 4.6 Masalah subjudul lama
+
+Subjudul lama sudah jelas, tetapi belum cukup menjual. Masih terasa seperti informasi biasa.
+
+---
+
+## 4.7 Subjudul baru yang disarankan
+
+Crypto syariah tidak cukup dipahami hanya dari sisi peluang aset digital. Di bootcamp ini, peserta akan memahami industri crypto, strategi keuangan, dan prinsip fiqih muamalah dari pemateri dengan kredensial yang relevan di bidangnya.
+
+---
+
+## 4.8 Alternatif subjudul yang lebih ringkas
+
+Bootcamp ini menghadirkan pemateri dari tiga bidang penting: industri crypto syariah, perencanaan keuangan profesional, dan fiqih muamalah, agar peserta memahami crypto secara lebih utuh, terarah, dan bertanggung jawab.
+
+---
+
+# 5. Struktur Card Baru
+
+Setiap card pemateri sebaiknya menggunakan struktur berikut:
+
+1. Foto pemateri
+2. Badge bidang
+3. Nama pemateri
+4. Credential ringkas
+5. Role/jabatan
+6. Highlight kredensial
+7. Fokus materi
+8. Deskripsi singkat
+
+---
+
+## 5.1 Format card yang disarankan
+
+Contoh struktur:
+
+[Foto Pemateri]
+
+Badge Bidang
+
+Nama Pemateri
+Credential Ringkas
+Role/Jabatan
+
+Highlight Kredensial:
+
+* Poin 1
+* Poin 2
+* Poin 3
+* Poin 4
+
+Fokus Bootcamp:
+Deskripsi singkat mengenai materi yang dibawakan.
+
+---
+
+# 6. Detail Copy Per Card
+
+---
+
+# 6.1 Card 1 — Sholahuddin Al Ayyubi
+
+## Badge bidang
+
+Crypto Syariah & Wealth Planning
+
+## Nama
+
+Sholahuddin Al Ayyubi
+
+## Credential ringkas
+
+B.B.A. · WMI · AWP
+
+## Role
+
+Founder of Crypto Sharia
+
+## Highlight Kredensial
+
+* B.B.A. dari LIPIA Jakarta
+* Certified WMI, Wakil Manajer Investasi standar nasional BNSP
+* Certified AWP, Associate Wealth Planner standar internasional
+* Certified International Business Coach dari ICF
+
+## Deskripsi/fokus bootcamp
+
+Membawakan perspektif industri crypto, Web3, analisa koin syariah, dan strategi investasi yang sesuai dengan prinsip syariah.
+
+---
+
+## Catatan penting untuk card Sholahuddin
+
+Jangan hanya tulis:
+
+B.B.A., WMI, AWP.
+
+Karena tidak semua orang awam tahu arti WMI dan AWP.
+
+Harus dijelaskan singkat:
+
+* WMI = Wakil Manajer Investasi
+* BNSP = standar nasional
+* AWP = Associate Wealth Planner
+* ICF = International Coaching Federation
+
+Namun jangan terlalu panjang sampai card terlihat berat.
+
+Gunakan format bullet agar mudah dipindai.
+
+---
+
+# 6.2 Card 2 — Muhammad Ghithrif Gustomo Putra
+
+## Badge bidang
+
+Investment & Financial Planning
+
+## Nama
+
+Muhammad Ghithrif Gustomo Putra
+
+## Credential ringkas
+
+S.E. · CFA · CFP · CSA · CTA
+
+## Role
+
+Founder of Qualifin
+
+## Highlight Kredensial
+
+* CFA, kredensial global bergengsi di bidang investasi dan keuangan
+* CFP, sertifikasi profesional di bidang perencanaan keuangan
+* CSA dan CTA di bidang analisis pasar dan investasi
+* Berpengalaman dalam financial planning, risk management, fundamental analysis, narrative analysis, dan global macro analysis
+
+## Deskripsi/fokus bootcamp
+
+Membantu peserta memahami cara mengelola risiko, membaca fundamental aset, mengenali narasi pasar, dan melihat pengaruh kondisi makro global terhadap keputusan investasi.
+
+---
+
+## Catatan penting untuk card Ghithrif
+
+CFA harus menjadi highlight paling kuat.
+
+Jangan tampilkan semua sertifikasi dengan bobot yang sama, karena CFA akan tenggelam.
+
+Urutan yang disarankan:
+
+1. CFA
+2. CFP
+3. CSA dan CTA
+4. Pengalaman bidang analisis dan financial planning
+
+Copy yang perlu dihindari:
+
+* “Sertifikasi finance nomor satu dunia”
+* “Paling hebat di dunia”
+* “Sertifikasi terbaik sedunia”
+
+Gunakan kalimat yang lebih aman dan profesional:
+
+* “kredensial global bergengsi di bidang investasi dan keuangan”
+* “salah satu kredensial profesional paling dikenal dalam industri investasi global”
+
+---
+
+# 6.3 Card 3 — Devin Halim
+
+## Badge bidang
+
+Fiqih Muamalah & Islamic Finance
+
+## Nama
+
+Devin Halim
+
+## Credential ringkas
+
+AAOIFI · DPS MUI
+
+Jika ingin lebih formal:
+
+S1 · S2 · Kandidat S3 · AAOIFI · DPS MUI
+
+Namun gunakan ini hanya jika data akademiknya sudah dipastikan.
+
+## Role
+
+Pakar Fiqih Muamalah
+
+## Highlight Kredensial
+
+* Latar belakang akademik S1 dan S2
+* Sedang menempuh program S3
+* Tersertifikasi AAOIFI di bidang Islamic Finance
+* Tersertifikasi Dewan Pengawas Syariah MUI
+
+## Deskripsi/fokus bootcamp
+
+Membawakan perspektif fiqih muamalah untuk membantu peserta memahami prinsip syariah, batasan transaksi, dan kehati-hatian dalam memilih serta menggunakan aset crypto.
+
+---
+
+## Catatan penting untuk card Devin
+
+Card Devin jangan hanya menampilkan “Pakar Fiqih Muamalah”.
+
+Masukan founder menunjukkan bahwa kekuatan beliau adalah:
+
+* akademik
+* Islamic finance
+* AAOIFI
+* DPS MUI
+
+Bagian ini sangat penting untuk trust, terutama karena topik crypto syariah sensitif. Calon peserta perlu melihat bahwa pembahasan syariah bukan dibawakan secara asal, tetapi oleh orang dengan latar belakang yang relevan.
+
+Jika nanti tersedia nama kampus S1, S2, dan S3, sebaiknya masukkan agar trust lebih kuat.
+
+Contoh jika data lengkap sudah ada:
+
+* S1: [Nama kampus/jurusan]
+* S2: [Nama kampus/jurusan]
+* Kandidat S3: [Nama kampus/program]
+* Sertifikasi AAOIFI
+* Sertifikasi Dewan Pengawas Syariah MUI
+
+Untuk sekarang, kalau belum ada detail kampus, cukup gunakan versi umum:
+
+* Latar belakang akademik S1 dan S2
+* Sedang menempuh program S3
+
+---
+
+# 7. Copy Final Section Siap Pakai
+
+Gunakan copy berikut sebagai versi final sementara.
+
+---
+
+## Judul
+
+Tiga Perspektif Kredibel dalam Satu Bootcamp
+
+## Subjudul
+
+Crypto syariah tidak cukup dipahami hanya dari sisi peluang aset digital. Di bootcamp ini, peserta akan memahami industri crypto, strategi keuangan, dan prinsip fiqih muamalah dari pemateri dengan kredensial yang relevan di bidangnya.
+
+---
+
+## Card 1
+
+Crypto Syariah & Wealth Planning
+
+Sholahuddin Al Ayyubi
+B.B.A. · WMI · AWP
+Founder of Crypto Sharia
+
+Highlight Kredensial:
+
+* B.B.A. dari LIPIA Jakarta
+* Certified WMI, Wakil Manajer Investasi standar nasional BNSP
+* Certified AWP, Associate Wealth Planner standar internasional
+* Certified International Business Coach dari ICF
+
+Fokus Bootcamp:
+Membawakan perspektif industri crypto, Web3, analisa koin syariah, dan strategi investasi yang sesuai dengan prinsip syariah.
+
+---
+
+## Card 2
+
+Investment & Financial Planning
+
+Muhammad Ghithrif Gustomo Putra
+S.E. · CFA · CFP · CSA · CTA
+Founder of Qualifin
+
+Highlight Kredensial:
+
+* CFA, kredensial global bergengsi di bidang investasi dan keuangan
+* CFP, sertifikasi profesional di bidang perencanaan keuangan
+* CSA dan CTA di bidang analisis pasar dan investasi
+* Berpengalaman dalam financial planning, risk management, fundamental analysis, narrative analysis, dan global macro analysis
+
+Fokus Bootcamp:
+Membantu peserta memahami cara mengelola risiko, membaca fundamental aset, mengenali narasi pasar, dan melihat pengaruh kondisi makro global terhadap keputusan investasi.
+
+---
+
+## Card 3
+
+Fiqih Muamalah & Islamic Finance
+
+Devin Halim
+AAOIFI · DPS MUI
+Pakar Fiqih Muamalah
+
+Highlight Kredensial:
+
+* Latar belakang akademik S1 dan S2
+* Sedang menempuh program S3
+* Tersertifikasi AAOIFI di bidang Islamic Finance
+* Tersertifikasi Dewan Pengawas Syariah MUI
+
+Fokus Bootcamp:
+Membawakan perspektif fiqih muamalah untuk membantu peserta memahami prinsip syariah, batasan transaksi, dan kehati-hatian dalam memilih serta menggunakan aset crypto.
+
+---
+
+## Penutup Section
+
+Dengan kombinasi tiga perspektif ini, peserta tidak hanya belajar melihat peluang crypto, tetapi juga memahami risiko dan batasan syariahnya secara lebih matang.
+
+## CTA
+
+Primary button:
+Lihat Kurikulum Bootcamp
+
+Secondary button:
+Konsultasi via WhatsApp
+
+---
+
+# 8. Design Task
+
+## 8.1 Section Layout
+
+Gunakan layout 3 card sejajar di desktop.
+
+Desktop:
+
+* Container max-width mengikuti layout utama website.
+* Judul di kiri atau center boleh, tetapi disarankan kiri jika website keseluruhan menggunakan gaya editorial.
+* Card grid 3 kolom.
+* Gap antar card sekitar 24px–32px.
+* Semua card harus memiliki tinggi yang sama.
+* Card harus terlihat premium, bersih, dan ringan.
+
+Mobile:
+
+* Card menjadi 1 kolom.
+* Foto tidak terlalu tinggi.
+* Pastikan isi card tidak terlalu panjang.
+* CTA tetap muncul setelah semua card.
+* Floating WhatsApp jangan menutupi isi card.
+
+Tablet:
+
+* Bisa 2 kolom + 1 card di bawah, atau tetap 1 kolom jika konten terlalu padat.
+* Jangan memaksakan 3 kolom jika teks menjadi terlalu sempit.
+
+---
+
+## 8.2 Card Design
+
+Setiap card harus memiliki:
+
+* Border halus
+* Border radius konsisten
+* Shadow sangat lembut
+* Padding nyaman
+* Badge bidang di atas nama
+* Highlight kredensial dalam bullet
+* Fokus bootcamp sebagai paragraf pendek
+
+Style card:
+
+* Background: putih
+* Border: abu muda atau orange sangat lembut
+* Hover: border orange sedikit lebih kuat
+* Shadow hover: sangat lembut, jangan berlebihan
+* Radius: 14px–18px
+* Padding body: 24px
+* Jarak antar elemen harus rapi
+
+---
+
+## 8.3 Badge Bidang
+
+Tambahkan badge kecil di setiap card.
+
+Contoh badge:
+
+* Crypto Syariah & Wealth Planning
+* Investment & Financial Planning
+* Fiqih Muamalah & Islamic Finance
+
+Style badge:
+
+* Background orange muda atau amber muda
+* Text orange tua atau navy
+* Font kecil, semi-bold
+* Border radius pill
+* Padding kecil
+* Letakkan di atas nama
+
+Contoh style visual:
+
+* Background: #fff7ed atau #ffedd5
+* Text: #c2410c atau #ea580c
+* Border: #fed7aa
+
+---
+
+## 8.4 Nama dan Credential
+
+Nama pemateri jangan terlalu penuh dengan gelar panjang di satu baris.
+
+Format yang disarankan:
+
+Nama besar:
+Sholahuddin Al Ayyubi
+
+Credential kecil:
+B.B.A. · WMI · AWP
+
+Role:
+Founder of Crypto Sharia
+
+Untuk Ghithrif:
+
+Nama besar:
+Muhammad Ghithrif Gustomo Putra
+
+Credential kecil:
+S.E. · CFA · CFP · CSA · CTA
+
+Role:
+Founder of Qualifin
+
+Untuk Devin:
+
+Nama besar:
+Devin Halim
+
+Credential kecil:
+AAOIFI · DPS MUI
+
+Role:
+Pakar Fiqih Muamalah
+
+---
+
+## 8.5 Highlight Kredensial
+
+Buat bagian khusus dengan heading kecil:
+
+Highlight Kredensial
+
+Gunakan bullet atau checklist.
+
+Contoh:
+
+Highlight Kredensial
+✓ B.B.A. dari LIPIA Jakarta
+✓ Certified WMI, standar nasional BNSP
+✓ Certified AWP, standar internasional
+✓ Certified International Business Coach dari ICF
+
+Catatan:
+
+* Gunakan icon checklist kecil jika cocok.
+* Jangan gunakan icon terlalu besar.
+* Jangan membuat bullet terlalu ramai.
+* Pastikan line-height cukup lega.
+* Jangan gunakan teks abu-abu terlalu muda karena bagian ini penting.
+
+---
+
+## 8.6 Fokus Bootcamp
+
+Setelah highlight kredensial, tambahkan heading kecil:
+
+Fokus Bootcamp
+
+Isi dengan 1 paragraf singkat.
+
+Contoh:
+
+Membawakan perspektif industri crypto, Web3, analisa koin syariah, dan strategi investasi yang sesuai dengan prinsip syariah.
+
+Atau jika ingin lebih scannable, bisa dibuat 3 poin:
+
+Fokus Materi:
+
+* Industri crypto dan Web3
+* Analisa koin syariah
+* Strategi investasi sesuai prinsip syariah
+
+Pilih salah satu.
+
+Rekomendasi:
+Gunakan paragraf pendek agar card tidak terlalu panjang.
+
+---
+
+# 9. Foto Pemateri
+
+## 9.1 Masalah foto saat ini
+
+Foto pemateri terlihat belum konsisten.
+
+Foto 1:
+
+* Formal, tetapi background masih sederhana.
+* Perlu sedikit editing tone agar lebih premium.
+
+Foto 2:
+
+* Terlihat paling kurang corporate.
+* Lighting lebih gelap.
+* Background abu-abu.
+* Outfit lebih kasual.
+* Perlu peningkatan exposure dan crop.
+
+Foto 3:
+
+* Paling corporate.
+* Background putih.
+* Pose profesional.
+* Namun terlalu berbeda dari dua foto lain.
+
+---
+
+## 9.2 Task untuk foto
+
+Samakan gaya ketiga foto agar terasa satu set.
+
+Yang perlu dilakukan:
+
+* Samakan aspect ratio foto.
+* Samakan tinggi area foto di semua card.
+* Samakan posisi kepala/wajah agar sejajar.
+* Samakan tone warna.
+* Samakan brightness dan contrast.
+* Jika memungkinkan, beri background netral yang senada.
+* Jangan biarkan salah satu foto terasa jauh lebih formal atau jauh lebih kasual dibanding yang lain.
+
+---
+
+## 9.3 Rekomendasi crop
+
+Gunakan crop upper-body.
+
+Kepala dan bahu terlihat jelas.
+
+Hindari:
+
+* Foto terlalu zoom-in.
+* Foto terlalu jauh.
+* Kepala terlalu dekat ke tepi atas.
+* Background terlalu kosong.
+* Perbedaan warna background yang terlalu mencolok.
+
+---
+
+## 9.4 Rekomendasi background foto
+
+Jika bisa diedit:
+
+* Gunakan background putih hangat, cream, atau abu sangat muda.
+* Bisa tambahkan gradient halus.
+* Jangan gunakan background terlalu ramai.
+* Jangan gunakan background orange terlalu kuat.
+* Hindari efek berlebihan.
+
+Tujuan:
+
+Foto tetap profesional, bersih, dan menyatu dengan brand CryptoSharia.
+
+---
+
+# 10. CTA Setelah Section
+
+## 10.1 Masalah saat ini
+
+Saat ini hanya ada floating WhatsApp di kanan bawah.
+
+Floating WhatsApp membantu, tetapi tidak cukup sebagai CTA section.
+
+Setelah calon peserta membaca profil pemateri, harus ada CTA yang mengarahkan tindakan berikutnya.
+
+---
+
+## 10.2 CTA yang perlu ditambahkan
+
+Tambahkan di bawah 3 card:
+
+Teks:
+
+Siap belajar crypto syariah dari tiga perspektif utama?
+
+Subteks:
+
+Lihat kurikulum bootcamp atau konsultasikan kebutuhan belajar Anda melalui WhatsApp.
+
+Button:
+
+Primary:
+Lihat Kurikulum Bootcamp
+
+Secondary:
+Konsultasi via WhatsApp
+
+---
+
+## 10.3 Style CTA
+
+Primary button:
+
+* Background orange
+* Text putih
+* Hover orange lebih gelap
+* Radius konsisten dengan style website
+
+Secondary button:
+
+* Background putih
+* Border orange
+* Text orange/navy
+* Hover background orange muda
+
+---
+
+# 11. Floating WhatsApp
+
+## 11.1 Masalah
+
+Floating WhatsApp saat ini cukup dominan secara visual.
+
+Warna hijau sangat kuat dan menarik perhatian dari section pemateri.
+
+---
+
+## 11.2 Task
+
+* Pastikan tombol WhatsApp tidak menutupi card.
+* Di desktop, ukuran masih boleh seperti sekarang tetapi shadow dibuat lebih lembut.
+* Di mobile, ukuran harus lebih compact.
+* Jarak dari bawah dan kanan harus aman.
+* Pastikan tidak menutupi CTA section.
+
+---
+
+# 12. Navbar
+
+## 12.1 Masalah
+
+Navbar saat ini cukup rapi, tetapi bagian kanan terasa agak kurang jelas karena ada ikon kecil dan avatar.
+
+Jika ini halaman publik, avatar tidak diperlukan.
+
+Jika ini halaman admin, avatar boleh ada, tetapi section ini sebaiknya tetap dibedakan antara mode admin dan landing page publik.
+
+---
+
+## 12.2 Task
+
+Jika ini untuk landing page publik:
+
+* Hilangkan avatar.
+* Tambahkan CTA di kanan navbar:
+
+  * Daftar Bootcamp
+  * Masuk
+  * Konsultasi
+
+Jika ini untuk dashboard admin:
+
+* Pastikan ikon kanan punya fungsi jelas.
+* Tooltip jika perlu.
+* Jangan membuat tampilan terlihat seperti landing page publik jika sebenarnya admin panel.
+
+---
+
+# 13. Typography
+
+## 13.1 Judul section
+
+Gunakan font weight bold.
+
+Ukuran desktop:
+
+* 36px–44px
+
+Ukuran mobile:
+
+* 28px–32px
+
+Line-height:
+
+* 1.15 sampai 1.25
+
+---
+
+## 13.2 Subjudul
+
+Ukuran desktop:
+
+* 16px–18px
+
+Ukuran mobile:
+
+* 15px–16px
+
+Lebar maksimum:
+
+* 700px–850px
+
+Warna:
+
+* navy/gray yang cukup kontras
+* Jangan terlalu abu muda
+
+---
+
+## 13.3 Nama pemateri
+
+Ukuran:
+
+* 20px–24px desktop
+* 18px–21px mobile
+
+Weight:
+
+* 700 atau 800
+
+Warna:
+
+* navy gelap
+
+---
+
+## 13.4 Credential ringkas
+
+Ukuran:
+
+* 14px–15px
+
+Warna:
+
+* gray/navy medium
+
+Style:
+
+* Bisa semi-bold
+* Jangan terlalu kecil karena kredensial penting
+
+---
+
+## 13.5 Role/jabatan
+
+Ukuran:
+
+* 14px–15px
+
+Warna:
+
+* orange brand
+
+Weight:
+
+* 600 atau 700
+
+---
+
+## 13.6 Body text
+
+Ukuran:
+
+* 14px–16px
+
+Line-height:
+
+* 1.6–1.8
+
+Warna:
+
+* gray/navy medium
+
+Pastikan nyaman dibaca.
+
+---
+
+# 14. Color Direction
+
+Gunakan palet CryptoSharia yang sudah ada.
+
+## Warna utama
+
+Primary Orange:
+#ea580c
+
+Hover Orange:
+#c2410c
+
+Orange Light:
+#ffedd5
+
+Orange Very Light:
+#fff7ed
+
+Amber:
+#f59e0b
+
+Dark Navy:
+gunakan warna navy/gray gelap sesuai website
+
+---
+
+## Penggunaan warna
+
+Orange digunakan untuk:
+
+* Badge bidang
+* Role/jabatan
+* CTA utama
+* Accent line
+* Hover card
+
+Navy digunakan untuk:
+
+* Judul
+* Nama pemateri
+* Heading kecil
+
+Gray digunakan untuk:
+
+* Subjudul
+* Body text
+* Penjelasan
+
+---
+
+# 15. Interaction / Hover State
+
+## 15.1 Card hover
+
+Saat hover:
+
+* Border berubah sedikit orange
+* Shadow naik sedikit
+* Card bisa naik 2px secara halus
+* Jangan berlebihan
+
+Contoh behavior:
+
+* transform: translateY(-2px)
+* transition: 200ms ease
+* shadow lembut
+
+---
+
+## 15.2 Button hover
+
+Primary button:
+
+* Background dari #ea580c ke #c2410c
+
+Secondary button:
+
+* Background ke #fff7ed
+* Border tetap orange
+
+---
+
+# 16. Mobile Requirements
+
+## 16.1 Layout mobile
+
+Pada layar mobile:
+
+* Section padding kiri-kanan 20px atau 24px
+* Judul tidak terlalu panjang dalam satu baris
+* Card menjadi satu kolom
+* Foto crop tetap rapi
+* Badge jangan terlalu panjang sampai pecah aneh
+* Bullet kredensial tetap terbaca
+* CTA button bisa stack vertikal
+
+---
+
+## 16.2 Card mobile
+
+Pastikan:
+
+* Tidak ada overflow horizontal
+* Nama panjang Ghithrif tetap rapi
+* Credential bisa wrap dengan baik
+* Bullet tidak terlalu kecil
+* Foto tidak terlalu tinggi
+* Spacing antar card cukup
+
+---
+
+## 16.3 Floating WhatsApp mobile
+
+Pastikan:
+
+* Tidak menutupi isi card
+* Tidak menutupi CTA
+* Posisi aman dari bawah
+* Ukuran compact
+* Bisa hanya icon jika layar kecil
+
+---
+
+# 17. Content Accuracy Checklist
+
+Sebelum publish, pastikan data berikut sudah dikonfirmasi:
+
+## Sholahuddin Al Ayyubi
+
+* Penulisan nama benar
+* Gelar B.B.A. benar
+* LIPIA Jakarta benar
+* WMI benar sebagai Wakil Manajer Investasi
+* Standar nasional BNSP benar
+* AWP benar sebagai Associate Wealth Planner
+* Standar internasional benar
+* International Business Coach benar
+* ICF benar sebagai International Coaching Federation
+
+Catatan:
+Jangan tulis “Bussiness”. Yang benar adalah “Business”.
+
+---
+
+## Muhammad Ghithrif Gustomo Putra
+
+* Penulisan nama benar
+* Gelar S.E. benar
+* CFA benar
+* CFP benar
+* CSA benar
+* CTA benar
+* Founder of Qualifin benar
+* Deskripsi bidang analisis benar
+
+Catatan:
+CFA harus ditonjolkan, tetapi jangan menggunakan klaim yang terlalu bombastis.
+
+---
+
+## Devin Halim
+
+* Penulisan nama benar
+* S1 benar
+* S2 benar
+* Sedang S3 benar
+* AAOIFI benar
+* Sertifikasi Dewan Pengawas Syariah MUI benar
+* Role “Pakar Fiqih Muamalah” benar
+
+Catatan:
+Jika ada nama kampus S1, S2, dan program S3, tambahkan agar lebih kuat.
+
+---
+
+# 18. Klaim yang Harus Dihindari
+
+Jangan menggunakan klaim berlebihan seperti:
+
+* Paling terpercaya di dunia
+* Sertifikasi nomor satu dunia
+* Ahli terbaik
+* Satu-satunya bootcamp
+* Dijamin profit
+* Investasi pasti aman
+* Crypto pasti halal
+* Semua aset crypto syariah
+
+Untuk area crypto dan syariah, copy harus hati-hati.
+
+Gunakan bahasa yang profesional:
+
+* membantu memahami
+* memberikan perspektif
+* membahas prinsip
+* mengenali risiko
+* memahami batasan
+* menilai secara lebih terarah
+* sesuai prinsip syariah
+
+---
+
+# 19. Compliance / Disclaimer Note
+
+Karena ini terkait crypto dan investasi, sebaiknya di bagian bawah halaman atau dekat section kurikulum ada disclaimer singkat.
+
+Contoh:
+
+Materi bootcamp bersifat edukasi dan bukan merupakan ajakan membeli atau menjual aset tertentu. Peserta tetap perlu memahami risiko dan mengambil keputusan secara mandiri.
+
+Jika terlalu panjang, bisa ditaruh di footer atau FAQ.
+
+---
+
+# 20. Recommended Final Layout
+
+Urutan section:
+
+1. Badge kecil:
+   PEMATERI BOOTCAMP
+
+2. Judul:
+   Tiga Perspektif Kredibel dalam Satu Bootcamp
+
+3. Subjudul:
+   Crypto syariah tidak cukup dipahami hanya dari sisi peluang aset digital. Di bootcamp ini, peserta akan memahami industri crypto, strategi keuangan, dan prinsip fiqih muamalah dari pemateri dengan kredensial yang relevan di bidangnya.
+
+4. Grid 3 card:
+
+   * Card Sholahuddin
+   * Card Ghithrif
+   * Card Devin
+
+5. Penutup:
+   Dengan kombinasi tiga perspektif ini, peserta tidak hanya belajar melihat peluang crypto, tetapi juga memahami risiko dan batasan syariahnya secara lebih matang.
+
+6. CTA:
+
+   * Lihat Kurikulum Bootcamp
+   * Konsultasi via WhatsApp
+
+---
+
+# 21. Acceptance Criteria
+
+Task dianggap selesai jika:
+
+* Judul section sudah diganti.
+* Subjudul sudah diperkuat.
+* Setiap card punya badge bidang.
+* Nama dan credential tidak lagi ditumpuk terlalu panjang.
+* Highlight kredensial tampil jelas.
+* CFA pada Ghithrif lebih menonjol.
+* AAOIFI dan DPS MUI pada Devin tampil jelas.
+* Sholahuddin menampilkan B.B.A., WMI, AWP, dan International Business Coach.
+* Foto pemateri lebih konsisten secara crop dan tone.
+* Card terlihat lebih premium.
+* CTA ditambahkan di bawah section.
+* Tampilan mobile rapi.
+* Floating WhatsApp tidak menutupi konten.
+* Tidak ada typo seperti “Bussiness”.
+* Tidak ada klaim investasi berlebihan.
+* Copy tetap profesional, aman, dan kredibel.
+
+---
+
+# 22. Priority Task List
+
+## Priority 1 — Copywriting
+
+* Ganti judul section.
+* Ganti subjudul section.
+* Revisi isi card pemateri.
+* Tambahkan highlight kredensial.
+* Tambahkan fokus bootcamp.
+* Tambahkan penutup section.
+* Tambahkan CTA.
+
+## Priority 2 — UI Layout
+
+* Tambahkan badge bidang.
+* Rapikan card body.
+* Pisahkan nama, credential, dan role.
+* Buat highlight kredensial mudah dipindai.
+* Pastikan tinggi card seimbang.
+
+## Priority 3 — Visual Foto
+
+* Samakan crop foto.
+* Samakan tone foto.
+* Naikkan kualitas foto kedua.
+* Pastikan foto terlihat satu set.
+
+## Priority 4 — Responsive
+
+* Cek mobile.
+* Cek tablet.
+* Cek floating WhatsApp.
+* Cek CTA section.
+
+## Priority 5 — Final Review
+
+* Cek typo.
+* Cek akurasi kredensial.
+* Cek klaim berlebihan.
+* Cek spacing.
+* Cek kontras warna.
+* Cek alignment.
+
+---
+
+# 23. Developer Notes
+
+## Component suggestion
+
+Buat komponen data-driven.
+
+Contoh struktur data:
+
+```js
+const speakers = [
+  {
+    name: "Sholahuddin Al Ayyubi",
+    credentials: "B.B.A. · WMI · AWP",
+    role: "Founder of Crypto Sharia",
+    field: "Crypto Syariah & Wealth Planning",
+    highlights: [
+      "B.B.A. dari LIPIA Jakarta",
+      "Certified WMI, Wakil Manajer Investasi standar nasional BNSP",
+      "Certified AWP, Associate Wealth Planner standar internasional",
+      "Certified International Business Coach dari ICF"
+    ],
+    focus:
+      "Membawakan perspektif industri crypto, Web3, analisa koin syariah, dan strategi investasi yang sesuai dengan prinsip syariah."
+  },
+  {
+    name: "Muhammad Ghithrif Gustomo Putra",
+    credentials: "S.E. · CFA · CFP · CSA · CTA",
+    role: "Founder of Qualifin",
+    field: "Investment & Financial Planning",
+    highlights: [
+      "CFA, kredensial global bergengsi di bidang investasi dan keuangan",
+      "CFP, sertifikasi profesional di bidang perencanaan keuangan",
+      "CSA dan CTA di bidang analisis pasar dan investasi",
+      "Berpengalaman dalam financial planning, risk management, fundamental analysis, narrative analysis, dan global macro analysis"
+    ],
+    focus:
+      "Membantu peserta memahami cara mengelola risiko, membaca fundamental aset, mengenali narasi pasar, dan melihat pengaruh kondisi makro global terhadap keputusan investasi."
+  },
+  {
+    name: "Devin Halim",
+    credentials: "AAOIFI · DPS MUI",
+    role: "Pakar Fiqih Muamalah",
+    field: "Fiqih Muamalah & Islamic Finance",
+    highlights: [
+      "Latar belakang akademik S1 dan S2",
+      "Sedang menempuh program S3",
+      "Tersertifikasi AAOIFI di bidang Islamic Finance",
+      "Tersertifikasi Dewan Pengawas Syariah MUI"
+    ],
+    focus:
+      "Membawakan perspektif fiqih muamalah untuk membantu peserta memahami prinsip syariah, batasan transaksi, dan kehati-hatian dalam memilih serta menggunakan aset crypto."
+  }
+];
+```
+
+---
+
+# 24. Suggested UI Text in HTML-Friendly Format
+
+```txt
+PEMATERI BOOTCAMP
+
+Tiga Perspektif Kredibel dalam Satu Bootcamp
+
+Crypto syariah tidak cukup dipahami hanya dari sisi peluang aset digital. Di bootcamp ini, peserta akan memahami industri crypto, strategi keuangan, dan prinsip fiqih muamalah dari pemateri dengan kredensial yang relevan di bidangnya.
+
+[Card 1]
+Crypto Syariah & Wealth Planning
+Sholahuddin Al Ayyubi
+B.B.A. · WMI · AWP
+Founder of Crypto Sharia
+
+Highlight Kredensial:
+- B.B.A. dari LIPIA Jakarta
+- Certified WMI, Wakil Manajer Investasi standar nasional BNSP
+- Certified AWP, Associate Wealth Planner standar internasional
+- Certified International Business Coach dari ICF
+
+Fokus Bootcamp:
+Membawakan perspektif industri crypto, Web3, analisa koin syariah, dan strategi investasi yang sesuai dengan prinsip syariah.
+
+[Card 2]
+Investment & Financial Planning
+Muhammad Ghithrif Gustomo Putra
+S.E. · CFA · CFP · CSA · CTA
+Founder of Qualifin
+
+Highlight Kredensial:
+- CFA, kredensial global bergengsi di bidang investasi dan keuangan
+- CFP, sertifikasi profesional di bidang perencanaan keuangan
+- CSA dan CTA di bidang analisis pasar dan investasi
+- Berpengalaman dalam financial planning, risk management, fundamental analysis, narrative analysis, dan global macro analysis
+
+Fokus Bootcamp:
+Membantu peserta memahami cara mengelola risiko, membaca fundamental aset, mengenali narasi pasar, dan melihat pengaruh kondisi makro global terhadap keputusan investasi.
+
+[Card 3]
+Fiqih Muamalah & Islamic Finance
+Devin Halim
+AAOIFI · DPS MUI
+Pakar Fiqih Muamalah
+
+Highlight Kredensial:
+- Latar belakang akademik S1 dan S2
+- Sedang menempuh program S3
+- Tersertifikasi AAOIFI di bidang Islamic Finance
+- Tersertifikasi Dewan Pengawas Syariah MUI
+
+Fokus Bootcamp:
+Membawakan perspektif fiqih muamalah untuk membantu peserta memahami prinsip syariah, batasan transaksi, dan kehati-hatian dalam memilih serta menggunakan aset crypto.
+
+Dengan kombinasi tiga perspektif ini, peserta tidak hanya belajar melihat peluang crypto, tetapi juga memahami risiko dan batasan syariahnya secara lebih matang.
+
+CTA:
+Lihat Kurikulum Bootcamp
+Konsultasi via WhatsApp
+```
+
+---
+
+# 25. Final Direction
+
+Revisi section ini harus mengubah persepsi dari:
+
+“Ini daftar pemateri.”
+
+Menjadi:
+
+“Ini bootcamp serius yang dipandu oleh tiga pemateri dengan kredensial kuat dari sisi crypto, finance, dan syariah.”
+
+Fokus utama bukan hanya membuat tampilan cantik, tetapi membangun rasa percaya.
+
+Prioritaskan:
+
+1. Kredensial
+2. Kejelasan peran pemateri
+3. Konsistensi visual
+4. Kemudahan membaca
+5. CTA yang jelas
