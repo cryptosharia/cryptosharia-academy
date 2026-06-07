@@ -27,6 +27,12 @@
 		openFaqIndex = openFaqIndex === index ? null : index;
 	}
 
+	function hasRealTestimonials() {
+		return (
+			JSON.stringify(content.testimonials) !== JSON.stringify(defaultLandingContent.testimonials)
+		);
+	}
+
 	onMount(() => {
 		return subscribeLandingContent((c) => {
 			content = c;
@@ -260,7 +266,7 @@
 		</section>
 	{/if}
 
-	{#if sectionId === 'testimonials'}
+	{#if sectionId === 'testimonials' && hasRealTestimonials()}
 		<section class="bg-white py-20 dark:bg-gray-950" id="testimonials">
 			<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 				<div class="mb-12 max-w-3xl">
