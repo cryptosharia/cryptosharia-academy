@@ -334,7 +334,7 @@
 											class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-950/75 to-transparent p-4"
 										>
 											<span
-												class="rounded-full bg-white/90 px-2.5 py-1 text-[10px] font-black tracking-[0.14em] text-slate-900 uppercase"
+												class="rounded-full bg-white/90 px-2.5 py-1 text-[10px] font-black tracking-[0.14em] text-slate-900 uppercase dark:bg-slate-900/90"
 												>Dokumentasi</span
 											>
 										</div>
@@ -348,7 +348,7 @@
 										></div>
 										<div class="relative flex h-full flex-col justify-between p-4">
 											<span
-												class="w-fit rounded-full bg-white/90 px-2.5 py-1 text-[10px] font-black tracking-[0.14em] text-slate-900 uppercase"
+												class="w-fit rounded-full bg-white/90 px-2.5 py-1 text-[10px] font-black tracking-[0.14em] text-slate-900 uppercase dark:bg-slate-900/90"
 												>Dokumentasi</span
 											>
 											<p class="max-w-[12rem] text-xl leading-tight font-black text-white">
@@ -1016,7 +1016,7 @@
 									class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-950/80 to-transparent p-4"
 								>
 									<span
-										class="inline-flex rounded-full bg-white/95 px-3 py-1.5 text-[10px] font-black tracking-[0.14em] text-slate-900 uppercase"
+										class="inline-flex rounded-full bg-white/95 px-3 py-1.5 text-[10px] font-black tracking-[0.14em] text-slate-900 uppercase dark:bg-slate-900/90"
 									>
 										{instructor.badge}
 									</span>
