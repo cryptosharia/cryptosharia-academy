@@ -281,20 +281,21 @@ export const defaultLandingContent: LandingContent = {
 		items: [
 			{
 				label: '',
-				title: 'Memahami Crypto Sesuai Prinsip Syariah',
+				title: 'Crypto Sesuai Prinsip Syariah',
 				description:
-					'Belajar melihat peluang crypto tanpa mengabaikan risiko dan prinsip fiqih muamalah.'
+					'Memahami cara menilai aset crypto dari sisi utilitas, risiko, dan prinsip fiqih muamalah.'
 			},
 			{
 				label: '',
-				title: 'Membangun Wealth Plan yang Lebih Terarah',
+				title: 'Wealth Plan yang Lebih Terarah',
 				description:
-					'Memahami cara mengatur tujuan, alokasi, dan risiko sebelum mengambil keputusan investasi.'
+					'Menyusun tujuan, alokasi, dan batas risiko sebelum mengambil keputusan investasi.'
 			},
 			{
 				label: '',
 				title: 'Strategi Menghadapi Market Volatil',
-				description: 'Belajar membaca kondisi pasar agar tidak mudah terbawa FOMO atau kepanikan.'
+				description:
+					'Membaca kondisi market dan menjaga disiplin agar tidak mudah terbawa FOMO atau kepanikan.'
 			}
 		],
 		docEyebrow: '',
@@ -799,15 +800,31 @@ function normalizeValueProps(
 	const defaults = defaultLandingContent.valueProps;
 	const oldSectionTitles = new Set(['Apa yang Akan Dipelajari?']);
 	const oldTitles = new Map([
-		['Strategi Cuan Halal di Crypto', 'Strategi Investasi Crypto Sesuai Prinsip Syariah'],
-		['Build Your Sharia Wealth', 'Membangun Wealth Plan yang Lebih Terarah'],
-		['Strategi Bertahan di Bear Market', 'Strategi Bertahan di Market Volatil']
+		['Strategi Cuan Halal di Crypto', defaults.items[0].title],
+		['Strategi Investasi Crypto Sesuai Prinsip Syariah', defaults.items[0].title],
+		['Memahami Crypto Sesuai Prinsip Syariah', defaults.items[0].title],
+		['Build Your Sharia Wealth', defaults.items[1].title],
+		['Membangun Wealth Plan yang Lebih Terarah', defaults.items[1].title],
+		['Strategi Bertahan di Bear Market', defaults.items[2].title],
+		['Strategi Bertahan di Market Volatil', defaults.items[2].title]
 	]);
+	const stalePillarCopy = valueProps.items?.some((item) => {
+		const title = item.title?.trim() ?? '';
+		const description = item.description?.trim() ?? '';
+		return (
+			oldTitles.has(title) ||
+			description.includes('aset dan kekayaan') ||
+			description.includes('market sedang turun') ||
+			description.toLowerCase().includes('cuan')
+		);
+	});
 
 	if (!valueProps.title?.trim() || oldSectionTitles.has(valueProps.title.trim())) {
 		valueProps.title = defaults.title;
 	}
-	valueProps.items = normalizeFeatures(valueProps.items, defaults.items, oldTitles);
+	valueProps.items = stalePillarCopy
+		? structuredClone(defaults.items)
+		: normalizeFeatures(valueProps.items, defaults.items, oldTitles);
 	if (!valueProps.docTitle?.trim()) valueProps.docTitle = defaults.docTitle;
 	if (!valueProps.docDescription?.trim()) valueProps.docDescription = defaults.docDescription;
 
@@ -1186,10 +1203,16 @@ function normalizePricing(pricing: LandingContent['pricing']): LandingContent['p
 			[
 				'Materi terstruktur & tugas praktik',
 				'Akses komunitas eksklusif',
-				'Tugas praktik & evaluasi akhir'
+				'Tugas praktik & evaluasi akhir',
+				'Mentoring & networking komunitas'
 			].includes(item.trim())
 		)
 	);
+	const firstValueStack = pricing.benefitCards?.[0]?.items ?? [];
+	const incompleteValueStack =
+		firstValueStack.length < defaultLandingContent.pricing.benefitCards[0].items.length ||
+		!firstValueStack.includes('4 hari live masterclass') ||
+		!firstValueStack.includes('Sertifikat kelulusan');
 
 	if (!pricing.title?.trim() || oldTitles.has(pricing.title.trim())) {
 		pricing.title = defaults.title;
@@ -1203,7 +1226,10 @@ function normalizePricing(pricing: LandingContent['pricing']): LandingContent['p
 	if (!pricing.note?.trim()) pricing.note = defaults.note;
 	if (!pricing.ctaLabel?.trim()) pricing.ctaLabel = defaults.ctaLabel;
 	pricing.benefitCards =
-		Array.isArray(pricing.benefitCards) && pricing.benefitCards.length > 0 && !hasOldValueStack
+		Array.isArray(pricing.benefitCards) &&
+		pricing.benefitCards.length > 0 &&
+		!hasOldValueStack &&
+		!incompleteValueStack
 			? pricing.benefitCards
 			: defaults.benefitCards;
 
