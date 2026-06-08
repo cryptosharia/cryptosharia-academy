@@ -872,7 +872,7 @@
 
 									{#if day.outcome}
 										<div
-											class="mt-6 border-t border-slate-100 pt-5 md:mt-auto md:pt-6 dark:border-slate-800 {openCurriculumIndex ===
+											class="mt-6 border-t border-slate-100 pt-5 md:mt-auto md:min-h-[9.75rem] md:pt-6 dark:border-slate-800 {openCurriculumIndex ===
 											dayIndex
 												? 'block'
 												: 'hidden'} md:!block"
