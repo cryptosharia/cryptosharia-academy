@@ -5,8 +5,7 @@
 		subscribeLandingContent,
 		buildWhatsappUrl,
 		resolveVideoEmbed,
-		type LandingContent,
-		type SectionId
+		type LandingContent
 	} from '$lib/landingContent';
 
 	let content = $state<LandingContent>(structuredClone(defaultLandingContent));
@@ -21,10 +20,6 @@
 	const sections = $derived(
 		content.layout.filter((s) => s.visible && s.id !== 'testimonials').map((s) => s.id)
 	);
-
-	function isVisible(id: SectionId) {
-		return sections.includes(id);
-	}
 
 	let openFaqIndex = $state<number | null>(0);
 	let openCurriculumIndex = $state<number | null>(0);
@@ -105,6 +100,24 @@
 		return 'Pembayaran';
 	}
 
+	function activityBadge(item: LandingContent['authority']['activities'][number]) {
+		const value = item.meta?.trim();
+		if (value) return value;
+		if (/qna|diskusi|gathering|kelas/i.test(item.title)) return 'Kelas / Diskusi';
+		return 'Dokumentasi Event';
+	}
+
+	function benefitIconKey(title: string) {
+		const value = title.toLowerCase();
+		if (value.includes('materi')) return 'layers';
+		if (value.includes('sharia')) return 'shield';
+		if (value.includes('tugas')) return 'task';
+		if (value.includes('fgd') || value.includes('mentoring')) return 'users';
+		if (value.includes('komunitas')) return 'globe';
+		if (value.includes('sertifikat')) return 'certificate';
+		return 'list';
+	}
+
 	onMount(() => {
 		return subscribeLandingContent((c) => {
 			content = c;
@@ -179,7 +192,7 @@
 						<a
 							href={whatsappUrl}
 							target="_blank"
-							rel="noopener noreferrer"
+							rel="external noopener noreferrer"
 							class="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-orange-500 px-6 py-4 text-sm font-black text-white shadow-xl shadow-orange-950/40 transition hover:bg-orange-400 active:scale-95 sm:w-auto"
 						>
 							{content.hero.primaryCtaLabel}
@@ -199,7 +212,7 @@
 							</svg>
 						</a>
 						<a
-							href={content.hero.secondaryCta.href}
+							href="#curriculum"
 							class="inline-flex w-full items-center justify-center rounded-lg border border-white/20 bg-white/[0.04] px-6 py-4 text-sm font-bold text-slate-100 transition hover:border-orange-300 hover:bg-white/10 sm:w-auto"
 						>
 							{content.hero.secondaryCta.label}
@@ -279,7 +292,7 @@
 					</div>
 
 					<div class="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-4">
-						{#each content.hero.highlights as item}
+						{#each content.hero.highlights as item (item.symbol)}
 							<div class="rounded-lg border border-white/10 bg-white/[0.07] p-4 backdrop-blur">
 								<div class="text-[11px] font-black tracking-[0.14em] text-slate-400 uppercase">
 									{item.symbol}
@@ -301,15 +314,6 @@
 			<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 				<div class="grid gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:items-start">
 					<div>
-						<div class="mb-5 flex flex-wrap gap-2">
-							{#each content.authority.cards.slice(0, 4) as proof (proof.label)}
-								<span
-									class="inline-flex rounded-full border border-orange-200 bg-orange-50 px-3 py-2 text-[11px] font-black tracking-[0.12em] text-orange-700 uppercase dark:border-orange-900/60 dark:bg-orange-950/30 dark:text-orange-200"
-								>
-									{proof.label}
-								</span>
-							{/each}
-						</div>
 						<h2
 							class="text-3xl leading-tight font-extrabold text-slate-900 sm:text-4xl dark:text-white"
 						>
@@ -318,10 +322,26 @@
 						<p class="mt-5 text-base leading-8 text-slate-600 dark:text-slate-300">
 							{content.authority.description}
 						</p>
+						<div class="mt-6 grid gap-2 sm:grid-cols-2">
+							{#each content.authority.cards.slice(0, 4) as proof (proof.label)}
+								<div
+									class="rounded-lg border border-orange-200 bg-orange-50 px-3.5 py-3 dark:border-orange-900/60 dark:bg-orange-950/25"
+								>
+									<p
+										class="text-[11px] font-black tracking-[0.12em] text-orange-700 uppercase dark:text-orange-200"
+									>
+										{proof.label}
+									</p>
+									<p class="mt-1 text-xs leading-5 text-slate-600 dark:text-slate-400">
+										{proof.description}
+									</p>
+								</div>
+							{/each}
+						</div>
 					</div>
 
 					<div class="grid gap-4 sm:grid-cols-2">
-						{#each content.authority.activities as item}
+						{#each content.authority.activities as item (item.title)}
 							<div
 								class="group overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm shadow-slate-950/5 transition hover:border-orange-200 hover:shadow-lg hover:shadow-orange-950/5 dark:border-slate-800 dark:bg-slate-900 dark:hover:border-orange-900/70"
 							>
@@ -335,7 +355,7 @@
 										>
 											<span
 												class="rounded-full bg-white/90 px-2.5 py-1 text-[10px] font-black tracking-[0.14em] text-slate-900 uppercase dark:bg-slate-900/90"
-												>Dokumentasi</span
+												>{activityBadge(item)}</span
 											>
 										</div>
 									</div>
@@ -349,7 +369,7 @@
 										<div class="relative flex h-full flex-col justify-between p-4">
 											<span
 												class="w-fit rounded-full bg-white/90 px-2.5 py-1 text-[10px] font-black tracking-[0.14em] text-slate-900 uppercase dark:bg-slate-900/90"
-												>Dokumentasi</span
+												>{activityBadge(item)}</span
 											>
 											<p class="max-w-[12rem] text-xl leading-tight font-black text-white">
 												{item.title}
@@ -390,7 +410,7 @@
 				</div>
 
 				<div class="grid gap-5 md:grid-cols-3">
-					{#each content.valueProps.items as item, index}
+					{#each content.valueProps.items as item, index (item.title)}
 						{@const marker = item.label?.trim() || String(index + 1).padStart(2, '0')}
 						<div
 							class="relative min-h-64 overflow-hidden rounded-lg border border-slate-200 bg-white p-6 shadow-sm shadow-slate-950/5 dark:border-slate-800 dark:bg-slate-950"
@@ -429,7 +449,7 @@
 								</p>
 							</div>
 							<div class="grid grid-cols-2 gap-3 bg-slate-100 p-4 dark:bg-slate-900">
-								{#each content.valueProps.docImages as img}
+								{#each content.valueProps.docImages as img (img)}
 									<div
 										class="aspect-[4/3] overflow-hidden rounded-md border border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-950"
 									>
@@ -461,7 +481,7 @@
 				</div>
 
 				<div class="grid gap-5 md:grid-cols-3">
-					{#each content.testimonials.items as item}
+					{#each content.testimonials.items as item (item.title)}
 						<div
 							class="rounded-lg border border-slate-200 bg-slate-50 p-6 dark:border-slate-800 dark:bg-slate-900"
 						>
@@ -502,11 +522,12 @@
 				</div>
 
 				<div class="relative mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-					{#each content.usp.items as item, index}
+					{#each content.usp.items as item (item.title)}
 						{@const highlighted =
 							item.title.includes('Sharia') ||
 							item.title.includes('FGD') ||
 							item.title.includes('Materi')}
+						{@const iconKey = benefitIconKey(item.title)}
 						<div
 							class="rounded-lg border p-6 {highlighted
 								? 'border-orange-400/35 bg-orange-500/[0.08]'
@@ -515,34 +536,16 @@
 							<div
 								class="mb-5 flex h-12 w-12 items-center justify-center rounded-lg border border-white/10 bg-white/[0.08] text-orange-200"
 							>
-								{#if index === 0}
+								{#if iconKey === 'layers'}
 									<svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 										<path
 											stroke-linecap="round"
 											stroke-linejoin="round"
 											stroke-width="2"
-											d="M9 12l2 2 4-4m5 2a8 8 0 11-16 0 8 8 0 0116 0z"
+											d="M6 7l6-3 6 3-6 3-6-3zm0 5l6 3 6-3M6 17l6 3 6-3"
 										/>
 									</svg>
-								{:else if index === 1}
-									<svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-										<path
-											stroke-linecap="round"
-											stroke-linejoin="round"
-											stroke-width="2"
-											d="M9 12h6m-6 4h6M7 4h10a2 2 0 012 2v14l-4-2-4 2-4-2-4 2V6a2 2 0 012-2z"
-										/>
-									</svg>
-								{:else if index === 2}
-									<svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-										<path
-											stroke-linecap="round"
-											stroke-linejoin="round"
-											stroke-width="2"
-											d="M17 20h5v-2a4 4 0 00-5-3.87M9 20H4v-2a4 4 0 015-3.87m8-4.13a4 4 0 11-8 0 4 4 0 018 0z"
-										/>
-									</svg>
-								{:else if index === 3}
+								{:else if iconKey === 'shield'}
 									<svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 										<path
 											stroke-linecap="round"
@@ -551,7 +554,34 @@
 											d="M12 3l7 4v5c0 4.5-2.8 7.7-7 9-4.2-1.3-7-4.5-7-9V7l7-4z"
 										/>
 									</svg>
-								{:else if index === 4}
+								{:else if iconKey === 'task'}
+									<svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+										<path
+											stroke-linecap="round"
+											stroke-linejoin="round"
+											stroke-width="2"
+											d="M9 12l2 2 4-4m5 2a8 8 0 11-16 0 8 8 0 0116 0z"
+										/>
+									</svg>
+								{:else if iconKey === 'certificate'}
+									<svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+										<path
+											stroke-linecap="round"
+											stroke-linejoin="round"
+											stroke-width="2"
+											d="M9 12h6m-6 4h6M7 4h10a2 2 0 012 2v14l-4-2-4 2-4-2-4 2V6a2 2 0 012-2z"
+										/>
+									</svg>
+								{:else if iconKey === 'users'}
+									<svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+										<path
+											stroke-linecap="round"
+											stroke-linejoin="round"
+											stroke-width="2"
+											d="M17 20h5v-2a4 4 0 00-5-3.87M9 20H4v-2a4 4 0 015-3.87m8-4.13a4 4 0 11-8 0 4 4 0 018 0z"
+										/>
+									</svg>
+								{:else if iconKey === 'globe'}
 									<svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 										<path
 											stroke-linecap="round"
@@ -622,13 +652,13 @@
 							{content.pricing.description}
 						</p>
 						<div class="mt-8 grid gap-4 sm:grid-cols-2">
-							{#each content.pricing.benefitCards as card, cardIndex}
+							{#each content.pricing.benefitCards as card, cardIndex (card.title)}
 								<div
 									class="rounded-lg border border-slate-200 bg-slate-50 p-5 dark:border-slate-800 dark:bg-slate-900"
 								>
 									<p class="text-sm font-black text-slate-900 dark:text-white">{card.title}</p>
 									<ul class="mt-4 space-y-3 text-sm text-slate-700 dark:text-slate-300">
-										{#each card.items as point}
+										{#each card.items as point (point)}
 											<li class="flex gap-3">
 												<span
 													class="mt-1 h-2 w-2 rounded-full {cardIndex % 2 === 0
@@ -654,10 +684,10 @@
 							<span
 								class="inline-flex rounded-full bg-orange-600 px-3 py-1.5 text-[11px] font-black tracking-[0.14em] text-white uppercase"
 							>
-								{content.pricing.priceBadge || 'Kuota Terbatas'}
+								{content.pricing.priceBadge || 'Special Price'}
 							</span>
 						</div>
-						<div class="flex items-end gap-3">
+						<div class="mt-6 flex items-end gap-3">
 							<span class="text-lg font-bold text-slate-500 line-through"
 								>{content.pricing.originalPrice}</span
 							>
@@ -678,7 +708,7 @@
 									Termasuk dalam program
 								</p>
 								<ul class="mt-4 space-y-3 text-sm leading-6 text-slate-700 dark:text-slate-300">
-									{#each pricingProgramItems as point}
+									{#each pricingProgramItems as point (point)}
 										<li class="flex gap-3">
 											<svg
 												class="mt-1 h-4 w-4 shrink-0 text-orange-600 dark:text-orange-400"
@@ -703,7 +733,7 @@
 						<a
 							href={whatsappUrl}
 							target="_blank"
-							rel="noopener noreferrer"
+							rel="external noopener noreferrer"
 							class="mt-8 inline-flex w-full items-center justify-center gap-2 rounded-lg bg-orange-600 px-6 py-4 text-sm font-bold text-white transition hover:bg-orange-500 active:scale-95"
 						>
 							{content.pricing.ctaLabel}
@@ -842,16 +872,17 @@
 
 									{#if day.outcome}
 										<div
-											class="mt-6 border-t border-slate-100 pt-5 md:mt-auto md:pt-6 dark:border-slate-800 {openCurriculumIndex === dayIndex ? 'block' : 'hidden'} md:!block"
+											class="mt-6 border-t border-slate-100 pt-5 md:mt-auto md:pt-6 dark:border-slate-800 {openCurriculumIndex ===
+											dayIndex
+												? 'block'
+												: 'hidden'} md:!block"
 										>
 											<p
 												class="text-[11px] font-black tracking-[0.16em] text-teal-700 uppercase dark:text-teal-300"
 											>
 												Outcome
 											</p>
-											<p
-												class="mt-3 text-base leading-relaxed text-slate-700 dark:text-slate-300"
-											>
+											<p class="mt-3 text-base leading-relaxed text-slate-700 dark:text-slate-300">
 												{day.outcome}
 											</p>
 										</div>
@@ -862,7 +893,7 @@
 					</div>
 				{:else}
 					<div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-						{#each content.curriculum.topics as topic, index}
+						{#each content.curriculum.topics as topic, index (topic)}
 							<div
 								class="flex gap-4 rounded-lg border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-950"
 							>
@@ -894,7 +925,7 @@
 								<ul
 									class="mt-7 grid gap-3 text-base leading-8 text-slate-700 sm:grid-cols-2 dark:text-slate-200"
 								>
-									{#each content.curriculum.outcomes as outcome}
+									{#each content.curriculum.outcomes as outcome (outcome)}
 										<li
 											class="flex gap-3 rounded-lg border border-slate-200 bg-white p-4 shadow-sm shadow-slate-950/5 dark:border-slate-800 dark:bg-slate-950"
 										>
@@ -939,9 +970,7 @@
 									target={isExternalHref(resolveCtaHref(content.curriculum.primaryCta))
 										? '_blank'
 										: undefined}
-									rel={isExternalHref(resolveCtaHref(content.curriculum.primaryCta))
-										? 'noopener noreferrer'
-										: undefined}
+									rel="external noopener noreferrer"
 									class="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-orange-600 px-5 py-3.5 text-sm font-bold whitespace-nowrap text-white transition hover:bg-orange-500 active:scale-95"
 								>
 									{content.curriculum.primaryCta.label}
@@ -965,9 +994,7 @@
 									target={isExternalHref(resolveCtaHref(content.curriculum.secondaryCta))
 										? '_blank'
 										: undefined}
-									rel={isExternalHref(resolveCtaHref(content.curriculum.secondaryCta))
-										? 'noopener noreferrer'
-										: undefined}
+									rel="external noopener noreferrer"
 									class="inline-flex w-full items-center justify-center rounded-lg border border-white/20 px-5 py-3.5 text-sm font-bold whitespace-nowrap text-white transition hover:border-orange-300 hover:bg-white/10"
 								>
 									{content.curriculum.secondaryCta.label}
@@ -1000,7 +1027,7 @@
 				</div>
 
 				<div class="grid items-stretch gap-6 md:grid-cols-2 xl:grid-cols-3">
-					{#each content.instructors.items as instructor, instructorIndex}
+					{#each content.instructors.items as instructor, instructorIndex (instructor.name)}
 						<div
 							class="group flex h-full flex-col overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm transition hover:border-orange-200 hover:shadow-lg hover:shadow-orange-950/5 dark:border-slate-800 dark:bg-slate-900 dark:hover:border-orange-900/70"
 						>
@@ -1023,7 +1050,7 @@
 								</div>
 							</div>
 							<div class="flex flex-1 flex-col p-5 sm:p-6">
-								<div class="flex flex-col mb-5">
+								<div class="mb-5 flex flex-col">
 									<div class="flex flex-col xl:min-h-[12.25rem]">
 										<p
 											class="mb-5 hidden min-h-12 w-fit items-center rounded-full border border-orange-300 bg-orange-50 px-4 py-2 text-sm leading-5 font-bold text-orange-700 sm:inline-flex dark:border-orange-700/70 dark:bg-orange-500/10 dark:text-orange-200"
@@ -1038,7 +1065,9 @@
 										<p class="mt-2 min-h-6 text-sm font-bold text-slate-500 dark:text-slate-400">
 											{instructor.credentials}
 										</p>
-										<p class="mt-2 min-h-7 text-base font-bold text-orange-600 dark:text-orange-400">
+										<p
+											class="mt-2 min-h-7 text-base font-bold text-orange-600 dark:text-orange-400"
+										>
 											{instructor.role}
 										</p>
 									</div>
@@ -1050,7 +1079,7 @@
 											Kredensial Utama
 										</h4>
 										<ul class="mt-3 space-y-2.5">
-											{#each instructor.highlights.slice(0, 3) as highlight}
+											{#each instructor.highlights.slice(0, 3) as highlight (highlight)}
 												<li
 													class="flex gap-3 text-[15px] leading-7 text-slate-700 dark:text-slate-200"
 												>
@@ -1084,11 +1113,13 @@
 										{/if}
 
 										<div
-											class="{openInstructorIndex === instructorIndex ? 'block' : 'hidden'} sm:block"
+											class="{openInstructorIndex === instructorIndex
+												? 'block'
+												: 'hidden'} sm:block"
 										>
 											{#if instructor.highlights.length > 3}
 												<ul class="mt-3 space-y-2.5">
-													{#each instructor.highlights.slice(3) as highlight}
+													{#each instructor.highlights.slice(3) as highlight (highlight)}
 														<li
 															class="flex gap-3 text-[15px] leading-7 text-slate-700 dark:text-slate-200"
 														>
@@ -1154,7 +1185,7 @@
 						</div>
 						<div class="flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
 							<a
-								href={content.instructors.primaryCta.href}
+								href="#curriculum"
 								class="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-orange-600 px-6 py-4 text-sm font-bold whitespace-nowrap text-white shadow-lg shadow-orange-950/20 transition hover:bg-orange-500 active:scale-95 sm:w-auto sm:min-w-44"
 							>
 								{content.instructors.primaryCta.label}
@@ -1176,7 +1207,7 @@
 							<a
 								href={content.instructors.secondaryCta.href || whatsappUrl}
 								target="_blank"
-								rel="noopener noreferrer"
+								rel="external noopener noreferrer"
 								class="inline-flex w-full items-center justify-center rounded-lg border border-slate-300 px-6 py-4 text-sm font-bold whitespace-nowrap text-slate-900 transition hover:border-orange-300 hover:bg-orange-50 sm:w-auto sm:min-w-44 dark:border-slate-700 dark:text-white dark:hover:border-orange-800 dark:hover:bg-orange-950/30"
 							>
 								{content.instructors.secondaryCta.label}
@@ -1217,7 +1248,7 @@
 				<a
 					href={whatsappUrl}
 					target="_blank"
-					rel="noopener noreferrer"
+					rel="external noopener noreferrer"
 					class="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-white px-6 py-4 text-sm font-bold text-orange-700 transition hover:bg-orange-50 active:scale-95 sm:w-auto"
 				>
 					{content.urgency.ctaLabel}
@@ -1307,24 +1338,28 @@
 					{/each}
 				</div>
 				{#if content.faq.items.length > visibleFaqItems.length}
-					<button
-						type="button"
-						onclick={() => (showAllFaqs = true)}
-						class="mt-8 inline-flex w-full items-center justify-center rounded-lg border border-slate-300 px-5 py-3.5 text-sm font-bold text-slate-900 transition hover:border-orange-300 hover:bg-orange-50 sm:w-auto dark:border-slate-700 dark:text-white dark:hover:border-orange-800 dark:hover:bg-orange-950/30"
-					>
-						Lihat FAQ lainnya
-					</button>
+					<div class="mt-8 flex justify-center">
+						<button
+							type="button"
+							onclick={() => (showAllFaqs = true)}
+							class="inline-flex w-full items-center justify-center rounded-lg border border-slate-300 px-5 py-3.5 text-sm font-bold text-slate-900 transition hover:border-orange-300 hover:bg-orange-50 sm:w-auto dark:border-slate-700 dark:text-white dark:hover:border-orange-800 dark:hover:bg-orange-950/30"
+						>
+							Lihat FAQ lainnya
+						</button>
+					</div>
 				{:else if showAllFaqs && content.faq.items.length > 5}
-					<button
-						type="button"
-						onclick={() => {
-							showAllFaqs = false;
-							openFaqIndex = 0;
-						}}
-						class="mt-8 inline-flex w-full items-center justify-center rounded-lg border border-slate-300 px-5 py-3.5 text-sm font-bold text-slate-900 transition hover:border-orange-300 hover:bg-orange-50 sm:w-auto dark:border-slate-700 dark:text-white dark:hover:border-orange-800 dark:hover:bg-orange-950/30"
-					>
-						Sembunyikan FAQ
-					</button>
+					<div class="mt-8 flex justify-center">
+						<button
+							type="button"
+							onclick={() => {
+								showAllFaqs = false;
+								openFaqIndex = 0;
+							}}
+							class="inline-flex w-full items-center justify-center rounded-lg border border-slate-300 px-5 py-3.5 text-sm font-bold text-slate-900 transition hover:border-orange-300 hover:bg-orange-50 sm:w-auto dark:border-slate-700 dark:text-white dark:hover:border-orange-800 dark:hover:bg-orange-950/30"
+						>
+							Sembunyikan FAQ
+						</button>
+					</div>
 				{/if}
 			</div>
 		</section>
@@ -1348,8 +1383,8 @@
 				<a
 					href={whatsappUrl}
 					target="_blank"
-					rel="noopener noreferrer"
-					class="mt-8 inline-flex w-full items-center justify-center gap-2 rounded-lg bg-orange-600 px-8 py-4 text-sm font-black text-white shadow-xl shadow-orange-950/30 transition hover:bg-orange-500 active:scale-95 sm:w-auto"
+					rel="external noopener noreferrer"
+					class="mt-8 inline-flex w-full items-center justify-center gap-2 rounded-lg bg-orange-600 px-8 py-4 text-sm font-black text-white shadow-xl ring-1 shadow-orange-500/20 ring-orange-300/20 transition hover:bg-orange-500 active:scale-95 sm:w-auto"
 				>
 					{content.finalCta.ctaLabel}
 					<svg

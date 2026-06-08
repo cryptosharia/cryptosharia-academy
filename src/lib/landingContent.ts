@@ -202,9 +202,10 @@ export const defaultLandingContent: LandingContent = {
 	},
 	hero: {
 		badge: 'Crypto Sharia Masterclass 2026',
-		title: 'Belajar Crypto dengan Ilmu, Risiko yang Terukur, dan Prinsip Syariah',
+		title:
+			'Masterclass 4 hari untuk memahami crypto dari sisi industri, analisis pasar, manajemen risiko, dan prinsip syariah agar tidak sekadar ikut tren.',
 		subtitle:
-			'Masterclass 4 hari untuk memahami peta industri crypto, analisis market, sharia screening, dan strategi portfolio jangka panjang.',
+			'Belajar crypto secara lebih terarah melalui pendekatan industri, keuangan, dan fiqih muamalah bersama pemateri kredibel.',
 		description:
 			'Belajar langsung bersama founder Crypto Sharia, founder Qualifin, dan pakar fiqih muamalah dengan pendekatan sistematis, praktis, dan sesuai prinsip syariah.',
 		primaryCtaLabel: 'Daftar Sekarang',
@@ -228,27 +229,27 @@ export const defaultLandingContent: LandingContent = {
 			'Materi masterclass ini disusun dari pengalaman edukasi, diskusi komunitas, dan kebutuhan nyata peserta dalam memahami crypto secara lebih terarah dan sesuai prinsip syariah. Berbasis pengalaman edukasi bersama 4.000+ member komunitas CryptoSharia.',
 		activities: [
 			{
-				meta: '',
+				meta: 'Kelas / Diskusi',
 				title: 'QnA Session',
 				description:
 					'Forum tanya jawab rutin untuk membahas market, portofolio, dan fiqih muamalah.',
 				image: ''
 			},
 			{
-				meta: '',
+				meta: 'Dokumentasi Event',
 				title: 'Nushafest',
 				description:
 					'Dokumentasi edukasi publik bersama komunitas yang tertarik pada aset digital halal.',
 				image: ''
 			},
 			{
-				meta: '',
+				meta: 'Dokumentasi Event',
 				title: 'Halal Kulture Market',
 				description: 'Aktivasi edukasi crypto syariah untuk memperluas literasi investor Muslim.',
 				image: ''
 			},
 			{
-				meta: '',
+				meta: 'Diskusi Komunitas',
 				title: 'Gathering Komunitas',
 				description: 'Diskusi kecil dan networking antar member untuk memperkuat proses belajar.',
 				image: ''
@@ -339,15 +340,20 @@ export const defaultLandingContent: LandingContent = {
 		items: [
 			{
 				label: '',
-				title: 'Tugas Praktik Langsung',
+				title: 'Materi Terstruktur',
 				description:
-					'Setiap materi dilengkapi penugasan agar peserta langsung mempraktikkan ilmu yang dipelajari.'
+					'Alur belajar disusun bertahap dari dasar industri crypto, analisis pasar, prinsip syariah, hingga strategi portfolio.'
 			},
 			{
 				label: '',
-				title: 'Sertifikat Kelulusan',
+				title: 'Sharia Compliant',
+				description: 'Belajar fiqih muamalah dan metode analisis crypto sesuai prinsip syariah.'
+			},
+			{
+				label: '',
+				title: 'Tugas Praktik Langsung',
 				description:
-					'Peserta mendapatkan sertifikat setelah menyelesaikan evaluasi akhir sebagai bukti kompetensi.'
+					'Setiap materi dilengkapi penugasan agar peserta langsung mempraktikkan ilmu yang dipelajari.'
 			},
 			{
 				label: '',
@@ -357,19 +363,14 @@ export const defaultLandingContent: LandingContent = {
 			},
 			{
 				label: '',
-				title: 'Sharia Compliant',
-				description: 'Belajar fiqih muamalah dan metode analisis crypto sesuai prinsip syariah.'
-			},
-			{
-				label: '',
 				title: 'Komunitas Global',
 				description: 'Akses networking bersama member dari berbagai industri dan profesi.'
 			},
 			{
 				label: '',
-				title: 'Materi Terstruktur',
+				title: 'Sertifikat Kelulusan',
 				description:
-					'Alur belajar disusun bertahap dari dasar industri crypto, analisis pasar, prinsip syariah, hingga strategi portfolio.'
+					'Peserta mendapatkan sertifikat setelah menyelesaikan evaluasi akhir sebagai bukti kompetensi.'
 			}
 		]
 	},
@@ -384,7 +385,8 @@ export const defaultLandingContent: LandingContent = {
 				items: [
 					'4 hari live masterclass',
 					'Materi & rekaman kelas',
-					'Tugas praktik & evaluasi akhir',
+					'Tugas praktik langsung',
+					'Evaluasi akhir',
 					'FGD & mentoring',
 					'Networking komunitas',
 					'Sertifikat kelulusan'
@@ -399,7 +401,7 @@ export const defaultLandingContent: LandingContent = {
 				]
 			}
 		],
-		priceBadge: '',
+		priceBadge: 'Special Price',
 		originalPrice: 'Rp3.000.000',
 		price: 'Rp2.000.000',
 		note: 'Harga promo untuk peserta awal dengan kuota mentoring terbatas.',
@@ -664,14 +666,18 @@ export function mergeContent(stored: Partial<LandingContent> | null | undefined)
 	const base: LandingContent = structuredClone(defaultLandingContent);
 	if (!stored) return normalizeContent(base);
 
-	const merge = (target: any, source: any) => {
+	const merge = (
+		target: Record<string, unknown>,
+		source: Record<string, unknown>
+	): Record<string, unknown> => {
 		for (const key of Object.keys(source)) {
 			const value = source[key];
 			if (value === undefined || value === null) continue;
 			if (Array.isArray(value)) {
 				target[key] = value;
-			} else if (typeof value === 'object') {
-				target[key] = merge(target[key] ?? {}, value);
+			} else if (isRecord(value)) {
+				const current = isRecord(target[key]) ? target[key] : {};
+				target[key] = merge(current, value);
 			} else {
 				target[key] = value;
 			}
@@ -679,7 +685,16 @@ export function mergeContent(stored: Partial<LandingContent> | null | undefined)
 		return target;
 	};
 
-	return normalizeContent(merge(base, stored));
+	return normalizeContent(
+		merge(
+			base as unknown as Record<string, unknown>,
+			stored as unknown as Record<string, unknown>
+		) as unknown as LandingContent
+	);
+}
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+	return typeof value === 'object' && value !== null && !Array.isArray(value);
 }
 
 function normalizeContent(content: LandingContent): LandingContent {
@@ -700,14 +715,18 @@ function normalizeContent(content: LandingContent): LandingContent {
 function normalizeHero(hero: LandingContent['hero']): LandingContent['hero'] {
 	const defaults = defaultLandingContent.hero;
 	const oldBadges = new Set(['Crypto Sharia Masterclass Learning', 'Crypto Sharia Masterclass']);
+	const oldTitles = new Set([
+		'Belajar Crypto dengan Ilmu, Risiko yang Terukur, dan Prinsip Syariah'
+	]);
 	const oldSubtitles = new Set([
 		'Bootcamp intensif 4 hari untuk memahami industri crypto, manajemen risiko, analisis market, screening syariah, dan portfolio building.',
-		'Bootcamp intensif 4 hari untuk memahami industri crypto, manajemen risiko, analisa market, screening syariah, dan portfolio building.'
+		'Bootcamp intensif 4 hari untuk memahami industri crypto, manajemen risiko, analisa market, screening syariah, dan portfolio building.',
+		'Masterclass 4 hari untuk memahami peta industri crypto, analisis market, sharia screening, dan strategi portfolio jangka panjang.'
 	]);
 	const oldCtas = new Set(['Join Now / Gabung Sekarang', 'Join Now / Daftar sekarang']);
 
 	if (!hero.badge?.trim() || oldBadges.has(hero.badge.trim())) hero.badge = defaults.badge;
-	if (!hero.title?.trim()) hero.title = defaults.title;
+	if (!hero.title?.trim() || oldTitles.has(hero.title.trim())) hero.title = defaults.title;
 	if (!hero.subtitle?.trim() || oldSubtitles.has(hero.subtitle.trim())) {
 		hero.subtitle = defaults.subtitle;
 	}
@@ -740,8 +759,26 @@ function normalizeAuthority(authority: LandingContent['authority']): LandingCont
 	) {
 		authority.cards = defaults.cards;
 	}
+	authority.activities = normalizeAuthorityActivities(authority.activities, defaults.activities);
 
 	return authority;
+}
+
+function normalizeAuthorityActivities(
+	activities: LandingContent['authority']['activities'] | undefined,
+	fallback: LandingContent['authority']['activities']
+): LandingContent['authority']['activities'] {
+	const source = Array.isArray(activities) && activities.length > 0 ? activities : fallback;
+
+	return source.map((activity, index) => {
+		const fallbackActivity = fallback[index] ?? fallback[0];
+		return {
+			meta: activity.meta?.trim() || fallbackActivity.meta,
+			title: activity.title?.trim() || fallbackActivity.title,
+			description: activity.description?.trim() || fallbackActivity.description,
+			image: activity.image?.trim() || fallbackActivity.image
+		};
+	});
 }
 
 function normalizeUrgency(urgency: LandingContent['urgency']): LandingContent['urgency'] {
@@ -867,7 +904,24 @@ function normalizeUspItems(
 		}
 	}
 
-	return normalized;
+	return sortUspItems(normalized);
+}
+
+function sortUspItems(items: Feature[]): Feature[] {
+	const priority = [
+		'Materi Terstruktur',
+		'Sharia Compliant',
+		'Tugas Praktik Langsung',
+		'FGD & Mentoring',
+		'Komunitas Global',
+		'Sertifikat Kelulusan'
+	];
+	const rank = (title: string) => {
+		const index = priority.findIndex((item) => item === title);
+		return index === -1 ? priority.length : index;
+	};
+
+	return [...items].sort((a, b) => rank(a.title) - rank(b.title));
 }
 
 function normalizeCurriculum(
@@ -1129,7 +1183,11 @@ function normalizePricing(pricing: LandingContent['pricing']): LandingContent['p
 	]);
 	const hasOldValueStack = pricing.benefitCards?.some((card) =>
 		card.items?.some((item) =>
-			['Materi terstruktur & tugas praktik', 'Akses komunitas eksklusif'].includes(item.trim())
+			[
+				'Materi terstruktur & tugas praktik',
+				'Akses komunitas eksklusif',
+				'Tugas praktik & evaluasi akhir'
+			].includes(item.trim())
 		)
 	);
 
@@ -1137,6 +1195,9 @@ function normalizePricing(pricing: LandingContent['pricing']): LandingContent['p
 		pricing.title = defaults.title;
 	}
 	if (!pricing.description?.trim()) pricing.description = defaults.description;
+	if (!pricing.priceBadge?.trim() || pricing.priceBadge.trim() === 'Kuota Terbatas') {
+		pricing.priceBadge = defaults.priceBadge;
+	}
 	if (!pricing.originalPrice?.trim()) pricing.originalPrice = defaults.originalPrice;
 	if (!pricing.price?.trim()) pricing.price = defaults.price;
 	if (!pricing.note?.trim()) pricing.note = defaults.note;
