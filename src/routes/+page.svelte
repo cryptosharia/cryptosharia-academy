@@ -10,9 +10,12 @@
 	} from '$lib/landingContent';
 
 	let content = $state<LandingContent>(structuredClone(defaultLandingContent));
+	const INITIAL_FAQ_INDEXES = [0, 1, 3, 4, 5, 7, 10];
 
 	const whatsappUrl = $derived(buildWhatsappUrl(content.whatsapp));
 	const heroVideo = $derived(resolveVideoEmbed(content.hero.videoUrl));
+	const heroHeadlineWords = $derived(splitHeroHeadline(content.hero.badge));
+	const quoteParts = $derived(splitQuoteAttribution(content.usp.quote));
 
 	// Only render sections that are marked visible, in the admin-defined order.
 	const sections = $derived(
@@ -24,11 +27,56 @@
 	}
 
 	let openFaqIndex = $state<number | null>(0);
-	let openInstructorIndex = $state<number | null>(0);
+	let openCurriculumIndex = $state<number | null>(0);
+	let openInstructorIndex = $state<number | null>(null);
 	let showAllFaqs = $state(false);
 
-	const visibleFaqItems = $derived(showAllFaqs ? content.faq.items : content.faq.items.slice(0, 5));
+	const visibleFaqItems = $derived(
+		showAllFaqs ? mapFaqItems(content.faq.items) : buildInitialFaqItems(content.faq.items)
+	);
 	const pricingProgramItems = $derived(content.pricing.benefitCards[0]?.items ?? []);
+
+	function splitHeroHeadline(value: string) {
+		const words = value.trim().split(/\s+/).filter(Boolean);
+		return words.map((text, index) => ({
+			key: `${text}-${index}`,
+			text: `${text}${index < words.length - 1 ? ' ' : ''}`,
+			highlight: text.toLowerCase().includes('sharia')
+		}));
+	}
+
+	function splitQuoteAttribution(value: string) {
+		const trimmed = value.trim();
+		const text = trimmed.replace(/\s*[-\u2013\u2014]\s*Warren Buffett\s*$/, '').trim();
+		return {
+			text: text || trimmed,
+			attribution: text && text !== trimmed ? 'Warren Buffett' : ''
+		};
+	}
+
+	function mapFaqItems(items: LandingContent['faq']['items']) {
+		return items.map((item, index) => ({ item, index }));
+	}
+
+	function buildInitialFaqItems(items: LandingContent['faq']['items']) {
+		const selected = INITIAL_FAQ_INDEXES.filter((index) => index < items.length).map((index) => ({
+			item: items[index],
+			index
+		}));
+		const usedIndexes = selected.map((entry) => entry.index);
+		const minimumCount = Math.min(items.length, 6);
+
+		if (selected.length < minimumCount) {
+			for (const entry of mapFaqItems(items)) {
+				if (usedIndexes.includes(entry.index)) continue;
+				selected.push(entry);
+				usedIndexes.push(entry.index);
+				if (selected.length >= minimumCount) break;
+			}
+		}
+
+		return selected.sort((a, b) => a.index - b.index);
+	}
 
 	function toggleFaq(index: number) {
 		openFaqIndex = openFaqIndex === index ? null : index;
@@ -36,6 +84,10 @@
 
 	function toggleInstructor(index: number) {
 		openInstructorIndex = openInstructorIndex === index ? null : index;
+	}
+
+	function toggleCurriculum(index: number) {
+		openCurriculumIndex = openCurriculumIndex === index ? null : index;
 	}
 
 	function resolveCtaHref(cta: { href: string }) {
@@ -81,9 +133,6 @@
 			<div
 				class="absolute inset-0 [background-image:linear-gradient(30deg,rgba(255,255,255,0.07)_12%,transparent_12.5%,transparent_87%,rgba(255,255,255,0.07)_87.5%,rgba(255,255,255,0.07)),linear-gradient(150deg,rgba(255,255,255,0.07)_12%,transparent_12.5%,transparent_87%,rgba(255,255,255,0.07)_87.5%,rgba(255,255,255,0.07))] [background-size:56px_56px] [background-position:0_0,28px_28px] opacity-[0.14]"
 			></div>
-			<div
-				class="absolute right-[-7rem] bottom-12 h-72 w-72 rounded-full bg-orange-500/20 blur-3xl"
-			></div>
 
 			<div
 				class="relative mx-auto grid max-w-7xl gap-10 px-4 pt-12 pb-14 sm:px-6 sm:py-16 lg:grid-cols-[1fr_0.9fr] lg:px-8 lg:py-24"
@@ -100,7 +149,15 @@
 					<h1
 						class="font-display max-w-full text-4xl leading-[1.04] font-black tracking-normal break-words text-white sm:text-6xl lg:text-7xl"
 					>
-						{content.hero.badge}
+						{#each heroHeadlineWords as word (word.key)}
+							<span
+								class={word.highlight
+									? 'text-orange-300 drop-shadow-[0_0_18px_rgba(251,146,60,0.55)]'
+									: ''}
+							>
+								{word.text}
+							</span>
+						{/each}
 					</h1>
 					<p
 						class="mt-5 max-w-full text-lg leading-8 font-bold break-words text-orange-100 sm:max-w-2xl sm:text-2xl sm:leading-9"
@@ -169,7 +226,7 @@
 						class="absolute -inset-4 rounded-[2rem] bg-[radial-gradient(circle_at_50%_42%,rgba(249,115,22,0.28),transparent_58%)] blur-2xl"
 					></div>
 					<div
-						class="relative overflow-hidden rounded-lg border border-white/15 bg-slate-900 shadow-2xl shadow-black/40"
+						class="relative overflow-hidden rounded-lg border border-orange-300/25 bg-slate-900 shadow-2xl shadow-orange-950/30"
 					>
 						<div class="flex items-center gap-2 border-b border-white/10 bg-slate-950/90 px-4 py-3">
 							<span class="h-3 w-3 rounded-full bg-red-400"></span>
@@ -245,7 +302,7 @@
 				<div class="grid gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:items-start">
 					<div>
 						<div class="mb-5 flex flex-wrap gap-2">
-							{#each content.authority.cards.slice(0, 3) as proof}
+							{#each content.authority.cards.slice(0, 4) as proof (proof.label)}
 								<span
 									class="inline-flex rounded-full border border-orange-200 bg-orange-50 px-3 py-2 text-[11px] font-black tracking-[0.12em] text-orange-700 uppercase dark:border-orange-900/60 dark:bg-orange-950/30 dark:text-orange-200"
 								>
@@ -521,15 +578,20 @@
 				</div>
 
 				<div
-					class="relative mx-auto mt-12 max-w-4xl overflow-hidden rounded-lg border border-orange-500/30 bg-white/[0.05] p-6 text-left shadow-2xl shadow-orange-950/10 sm:p-8"
+					class="relative mx-auto mt-12 max-w-4xl overflow-hidden rounded-lg border border-orange-500/30 bg-[linear-gradient(135deg,rgba(249,115,22,0.12),rgba(255,255,255,0.04)_48%,rgba(20,184,166,0.08))] p-6 text-left shadow-2xl shadow-orange-950/10 sm:p-8"
 				>
 					<div class="absolute top-2 right-6 text-8xl leading-none font-black text-orange-400/10">
 						"
 					</div>
 					<div class="relative border-l-4 border-orange-400 pl-5">
 						<blockquote class="text-xl leading-8 font-extrabold text-white">
-							{content.usp.quote}
+							{quoteParts.text}
 						</blockquote>
+						{#if quoteParts.attribution}
+							<p class="mt-3 text-xs font-black tracking-[0.16em] text-orange-200 uppercase">
+								{quoteParts.attribution}
+							</p>
+						{/if}
 					</div>
 					{#if content.usp.quoteNote}
 						<p class="relative mt-5 max-w-2xl text-sm leading-7 text-slate-300 sm:text-base">
@@ -695,11 +757,16 @@
 						<div
 							class="relative space-y-5 pl-6 md:grid md:grid-cols-2 md:items-stretch md:gap-6 md:space-y-0 md:pl-0 xl:grid-cols-4"
 						>
-							{#each content.curriculum.schedule as day, dayIndex}
+							{#each content.curriculum.schedule as day, dayIndex (day.stage)}
 								<div
 									class="relative flex h-full flex-col rounded-lg border border-slate-200 bg-white p-5 shadow-sm shadow-slate-950/5 before:absolute before:top-6 before:-left-[2.05rem] before:h-4 before:w-4 before:rounded-full before:border-4 before:border-slate-50 before:bg-orange-500 md:p-6 md:before:hidden dark:border-slate-700 dark:bg-slate-950 dark:before:border-slate-900"
 								>
-									<div class="flex items-start justify-between gap-4 md:min-h-[8.75rem]">
+									<button
+										type="button"
+										onclick={() => toggleCurriculum(dayIndex)}
+										class="flex w-full items-start justify-between gap-4 text-left md:pointer-events-none md:min-h-[8.75rem]"
+										aria-expanded={openCurriculumIndex === dayIndex}
+									>
 										<div class="min-w-0">
 											<p class="text-xs font-black tracking-[0.18em] text-orange-600 uppercase">
 												Hari {dayIndex + 1}
@@ -709,58 +776,86 @@
 											>
 												{day.stage}
 											</h3>
-										</div>
-										<span
-											class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-orange-200 bg-orange-50 text-sm font-black text-orange-700 dark:border-orange-900/60 dark:bg-orange-950/40 dark:text-orange-300"
-										>
-											{String(dayIndex + 1).padStart(2, '0')}
-										</span>
-									</div>
-
-									<p
-										class="mt-4 border-b border-slate-100 pb-4 text-[15px] leading-6 font-bold text-slate-600 md:mt-5 md:pb-5 dark:border-slate-800 dark:text-slate-300"
-									>
-										{day.date}
-									</p>
-
-									<ol class="mt-5 space-y-4 md:mt-6 md:space-y-5">
-										{#each day.sessions as session, sessionIndex}
-											<li class="flex gap-3">
-												<span
-													class="mt-0.5 inline-flex h-8 min-w-16 shrink-0 items-center justify-center rounded-md bg-slate-900 px-3 text-xs font-black text-white dark:bg-orange-600"
-												>
-													Sesi {sessionIndex + 1}
-												</span>
-												<div class="min-w-0">
-													<p
-														class="text-base leading-8 font-bold break-words text-slate-800 dark:text-white"
-													>
-														{session}
-													</p>
-													{#if day.sessionSpeakers?.[sessionIndex]}
-														<p class="mt-1 text-sm leading-6 text-slate-500 dark:text-slate-400">
-															oleh {day.sessionSpeakers[sessionIndex]}
-														</p>
-													{/if}
-												</div>
-											</li>
-										{/each}
-									</ol>
-
-									{#if day.outcome}
-										<div
-											class="mt-6 border-t border-slate-100 pt-5 md:mt-auto md:pt-6 dark:border-slate-800"
-										>
 											<p
-												class="text-[11px] font-black tracking-[0.16em] text-teal-700 uppercase dark:text-teal-300"
+												class="mt-3 text-[15px] leading-6 font-bold text-slate-600 dark:text-slate-300"
 											>
-												Outcome
-											</p>
-											<p class="mt-3 text-base leading-relaxed text-slate-700 dark:text-slate-300">
-												{day.outcome}
+												{day.date}
 											</p>
 										</div>
-									{/if}
+										<div class="flex shrink-0 items-center gap-3">
+											<span
+												class="flex h-11 w-11 items-center justify-center rounded-full border border-orange-200 bg-orange-50 text-sm font-black text-orange-700 dark:border-orange-900/60 dark:bg-orange-950/40 dark:text-orange-300"
+											>
+												{String(dayIndex + 1).padStart(2, '0')}
+											</span>
+											<svg
+												class="h-5 w-5 text-orange-600 transition md:hidden dark:text-orange-300 {openCurriculumIndex ===
+												dayIndex
+													? 'rotate-180'
+													: ''}"
+												fill="none"
+												stroke="currentColor"
+												viewBox="0 0 24 24"
+												aria-hidden="true"
+											>
+												<path
+													stroke-linecap="round"
+													stroke-linejoin="round"
+													stroke-width="2.5"
+													d="M19 9l-7 7-7-7"
+												/>
+											</svg>
+										</div>
+									</button>
+
+									<div
+										class="{openCurriculumIndex === dayIndex
+											? 'block'
+											: 'hidden'} md:flex md:flex-1 md:flex-col"
+									>
+										<ol
+											class="mt-5 space-y-4 border-t border-slate-100 pt-5 md:mt-0 md:space-y-5 md:pt-6 dark:border-slate-800"
+										>
+											{#each day.sessions as session, sessionIndex (session)}
+												<li class="flex gap-3">
+													<span
+														class="mt-0.5 inline-flex h-8 min-w-16 shrink-0 items-center justify-center rounded-md bg-slate-900 px-3 text-xs font-black text-white dark:bg-orange-600"
+													>
+														Sesi {sessionIndex + 1}
+													</span>
+													<div class="min-w-0">
+														<p
+															class="text-base leading-8 font-bold break-words text-slate-800 dark:text-white"
+														>
+															{session}
+														</p>
+														{#if day.sessionSpeakers?.[sessionIndex]}
+															<p class="mt-1 text-sm leading-6 text-slate-500 dark:text-slate-400">
+																oleh {day.sessionSpeakers[sessionIndex]}
+															</p>
+														{/if}
+													</div>
+												</li>
+											{/each}
+										</ol>
+
+										{#if day.outcome}
+											<div
+												class="mt-6 border-t border-slate-100 pt-5 md:mt-auto md:pt-6 dark:border-slate-800"
+											>
+												<p
+													class="text-[11px] font-black tracking-[0.16em] text-teal-700 uppercase dark:text-teal-300"
+												>
+													Outcome
+												</p>
+												<p
+													class="mt-3 text-base leading-relaxed text-slate-700 dark:text-slate-300"
+												>
+													{day.outcome}
+												</p>
+											</div>
+										{/if}
+									</div>
 								</div>
 							{/each}
 						</div>
@@ -1150,9 +1245,11 @@
 				</div>
 
 				<div class="space-y-4">
-					{#each visibleFaqItems as faq, index}
+					{#each visibleFaqItems as entry, visibleIndex (entry.index)}
+						{@const faq = entry.item}
+						{@const index = entry.index}
 						{@const category = faqCategory(index)}
-						{#if index === 0 || faqCategory(index - 1) !== category}
+						{#if visibleIndex === 0 || faqCategory(visibleFaqItems[visibleIndex - 1].index) !== category}
 							<div class="pt-3 first:pt-0">
 								<p
 									class="text-xs font-black tracking-[0.16em] text-orange-600 uppercase dark:text-orange-300"

@@ -1,0 +1,513 @@
+1. Kesan keseluruhan mobile sekarang
+
+Secara keseluruhan, mobile sekarang terasa jauh lebih punya karakter. Dark mode lebih hidup. Orange tidak hanya jadi warna tombol, tapi sudah menjadi bagian identitas visual. Pattern di banner dan closing CTA membuat halaman tidak lagi terasa polos.
+
+Yang paling berhasil:
+
+Pricing card jauh lebih kuat.
+Special price banner sudah lebih memorable.
+FAQ lebih rapi karena ada kategori.
+Closing CTA jauh lebih iconic karena ada pattern.
+Dark mode semakin terasa sebagai identitas utama.
+Alur funnel tetap benar: value → pemateri → kurikulum → harga → FAQ → closing.
+
+Namun ada problem baru:
+
+Beberapa section mulai terasa terlalu panjang.
+Ada banyak visual treatment berbeda, tapi belum semuanya terasa satu sistem.
+Card pemateri dan kurikulum masih sangat padat di mobile.
+FAQ sudah lebih rapi, tapi mungkin terlalu sedikit yang tampil sebelum tombol “Lihat FAQ lainnya”.
+Special price banner sangat kuat, tapi hampir terlalu dominan dibanding pricing card.
+2. Hero mobile: sudah lebih hidup, tapi masih belum jadi “signature hero”
+
+Hero sekarang terlihat lebih berkarakter karena ada nuansa background yang lebih hidup dan tidak flat. Ini bagus. Namun menurut saya, hero masih belum sekuat bagian pricing/special price secara visual.
+
+Masalahnya, halaman sekarang justru bagian tengah-bawah terasa lebih iconic daripada hero. Padahal hero harus jadi “wajah utama”.
+
+Kritik hero
+
+Headline Crypto Sharia Masterclass 2026 sudah jelas, tapi masih belum punya visual emphasis yang cukup. Semua teks terasa satu blok. Belum ada satu kata/elemen yang menjadi titik ingat.
+
+Video preview sudah membantu, tapi masih terasa seperti card gelap biasa.
+
+CTA sudah terlihat, tetapi belum menjadi “hero CTA” yang sangat kuat.
+
+Saran
+
+Tambahkan satu elemen kecil yang membuat hero lebih khas:
+
+badge kecil di atas headline: MASTERCLASS 2026
+atau: CRYPTO · FINANCE · FIQIH MUAMALAH
+beri gradient/glow sangat halus pada kata Sharia
+tambahkan pattern geometri sangat tipis di belakang headline/video
+buat video card sedikit lebih premium dengan border orange halus atau glow tipis
+
+Jangan berlebihan. Hero hanya butuh satu elemen signature.
+
+3. Section pengalaman nyata: sudah baik, tapi masih kurang “proof punch”
+
+Bagian “Dibangun dari pengalaman edukasi dan komunitas nyata” sudah tepat berada setelah hero. Secara mobile, section ini cukup jelas.
+
+Namun masih ada kelemahan: proof-nya belum cukup kuat. Foto dokumentasi ada, tapi belum membuat user langsung berpikir:
+
+“Oh, ini memang sudah punya track record.”
+
+Saran
+
+Tambahkan 2–3 proof badge kecil di bawah paragraf, misalnya:
+
+Edukasi komunitas
+Diskusi nyata
+Materi berbasis pengalaman
+Dokumentasi event
+
+Kalau ada data valid, lebih kuat lagi:
+
+Ratusan member
+Event edukasi aktif
+Komunitas lintas profesi
+
+Tapi jangan pakai angka kalau belum pasti.
+
+Untuk card dokumentasi, gambar bisa dibuat sedikit lebih besar dan judulnya dibuat lebih jelas. Saat ini card-nya sudah rapi, tapi masih seperti “thumbnail dokumentasi biasa”.
+
+4. Section “Kenapa Harus Crypto Sharia Masterclass?” sudah jauh lebih bagus
+
+Ini salah satu section yang paling meningkat. Sekarang benefit tidak lagi terasa polos. Ada struktur lebih jelas dan card lebih hidup.
+
+Yang sudah bagus
+Benefit sudah 6 item, jadi layout lebih seimbang.
+Quote Warren Buffett sudah berada setelah benefit, bukan sebelum.
+Section terasa lebih rapi dan lebih masuk akal secara narasi.
+Ada nuansa dark premium yang cocok.
+Kritik
+
+Benefit card masih cukup text-heavy. Di mobile, enam card berurutan tetap terasa panjang. Kalau user scrolling cepat, kemungkinan mereka hanya baca judul-judulnya.
+
+Selain itu, ikon/visual dalam benefit card masih belum cukup kuat. Kalau CEO ingin iconic, bagian benefit perlu punya icon yang konsisten dan mudah dikenali.
+
+Saran
+
+Tambahkan icon kecil di setiap benefit:
+
+Tugas Praktik Langsung → checklist/task
+Sertifikat Kelulusan → certificate/badge
+FGD & Mentoring → chat/users
+Sharia Compliant → shield/book
+Komunitas Global → globe/network
+Materi Terstruktur → layers/roadmap
+
+Icon jangan terlalu ramai. Cukup line icon orange/cream kecil di pojok atas card. Ini akan membuat section terasa lebih memorable tanpa menambah teks.
+
+5. Quote Warren Buffett sekarang benar posisinya, tapi tampilannya masih bisa lebih premium
+
+Posisi quote sudah benar. Tapi sebagai visual element, quote masih belum terlalu “wah”.
+
+Karena ini quote dari tokoh terkenal, harusnya tampil seperti quote panel, bukan hanya teks biasa.
+
+Saran visual
+
+Buat quote box dengan:
+
+tanda kutip besar samar di background
+garis kiri orange
+nama Warren Buffett lebih kecil
+background gradient tipis
+kalimat penghubung ke konteks crypto
+
+Contoh tambahan copy di bawah quote:
+
+Sebelum masuk ke market yang volatile, peserta perlu membangun ilmu, cara berpikir, dan manajemen risiko yang lebih matang.
+
+Ini akan membuat quote tidak terasa tempelan motivasi, tapi menjadi pengunci argumentasi.
+
+6. Section “Apa yang Akan Dipelajari?” masih salah satu yang paling lemah
+
+Ini masih problem dari versi sebelumnya. Dibanding pricing, FAQ, dan closing yang sudah naik visualnya, section “Apa yang Akan Dipelajari?” masih terasa terlalu biasa.
+
+Masalah
+3 card masih terlihat seperti card kecil biasa.
+Belum terasa sebagai “3 pilar utama”.
+Tidak ada angka besar, icon, atau visual marker yang membuatnya memorable.
+Setelah section “Kenapa Harus” yang cukup panjang, bagian ini terasa agak lewat.
+Saran
+
+Ubah framing menjadi:
+
+3 Pilar Pembelajaran Utama
+
+Lalu buat card dengan angka:
+
+01
+Crypto Sesuai Prinsip Syariah
+
+02
+Wealth Plan yang Lebih Terarah
+
+03
+Strategi Menghadapi Market Volatil
+
+Angka 01/02/03 bisa dibuat besar, tipis, dan orange/amber. Ini akan jauh lebih iconic di mobile.
+
+7. Section pemateri: kuat secara trust, tapi terlalu panjang di mobile
+
+Pemateri sekarang masih salah satu section terpenting. Isinya bagus, kredensialnya kuat, dan fotonya membantu. Tapi di mobile, bagian ini terasa panjang dan seperti mini-CV.
+
+Masalah
+Setiap card pemateri panjang.
+Bullet kredensial cukup banyak.
+Teks kecil padat.
+Foto belum konsisten kualitasnya.
+Card Ghithrif masih terasa paling berat.
+Secara mobile, user harus scroll cukup lama hanya untuk melewati pemateri.
+Saran mobile
+
+Saya sarankan buat versi mobile yang lebih ringkas:
+
+Tampilan awal tiap pemateri:
+
+Foto
+Badge bidang
+Nama
+Role
+2–3 kredensial utama
+tombol/accordion: Lihat detail pemateri
+
+Detail lengkap seperti fokus materi dan bullet panjang bisa dibuka jika user mau.
+
+Ini membuat mobile lebih ringan tanpa menghilangkan kredibilitas.
+
+Foto pemateri masih PR
+
+Foto Devin paling corporate. Foto Sholahuddin cukup formal. Foto Ghithrif masih paling kurang premium. Ini masih terasa.
+
+Kalau ingin halaman terlihat benar-benar premium, foto harus diseragamkan. Minimal:
+
+crop sama,
+brightness sama,
+background tone sama,
+foto tengah dinaikkan kualitas visualnya.
+8. Section kurikulum: isinya bagus, tapi mobile masih terasa berat
+
+Kurikulum sekarang sudah lebih kuat secara isi. Judulnya bagus:
+
+Kurikulum 4 Hari: Dari Dasar Crypto hingga Portfolio Syariah
+
+Namun secara mobile, bagian ini masih panjang dan padat. Card hari 1–4 menumpuk dan semuanya punya cukup banyak teks.
+
+Masalah
+Banyak teks kecil.
+Semua detail tampil langsung.
+Section menjadi panjang.
+Card-card terasa berat untuk mobile.
+Belum sepenuhnya terasa seperti journey belajar.
+Saran paling kuat
+
+Ubah kurikulum mobile menjadi vertical timeline.
+
+Contoh struktur:
+
+Hari 1 — Foundation
+Sabtu, 27 Juni 2026
+Sesi 1: Peta Industri Crypto & Web3
+Sesi 2: Financial Planning & Manajemen Risiko
+Outcome: Memahami dasar industri dan risiko.
+
+Lalu garis vertikal orange turun ke Hari 2, Hari 3, Hari 4.
+
+Kenapa timeline lebih baik?
+
+Karena kurikulum adalah perjalanan. Timeline membuat user merasa sedang mengikuti alur, bukan membaca tumpukan kartu.
+
+Kalau belum mau ubah total, minimal jadikan card hari sebagai accordion:
+
+Hari 1 — Foundation
+Hari 2 — Market Analysis
+Hari 3 — Technical & Sharia Screening
+Hari 4 — Strategy & Portfolio
+
+Saat diklik baru muncul sesi dan outcome.
+
+9. Pricing card: improvement besar
+
+Pricing card sekarang jauh lebih baik. Ini salah satu update yang paling berhasil.
+
+Yang bagus
+Ada label SPECIAL PRICE.
+Harga lama dicoret.
+Harga baru sangat jelas.
+Ada penjelasan promo.
+Ada bagian Termasuk dalam Program.
+CTA besar dan jelas.
+Card terasa lebih premium dibanding sebelumnya.
+
+Ini sudah jauh lebih offer-driven.
+
+Kritik
+
+Value stack masih terlalu sedikit. Saat ini terlihat hanya:
+
+Materi & rekaman kelas
+Mentoring & networking komunitas
+
+Kalau memang peserta juga dapat sertifikat, tugas praktik, akses komunitas, evaluasi, atau lainnya, masukkan di sini. Karena pricing adalah tempat user bertanya:
+
+“Dengan Rp2.000.000 saya dapat apa saja?”
+
+Saran value stack
+
+Tambahkan jika memang benar:
+
+4 hari live masterclass
+Materi & rekaman kelas
+Tugas praktik
+FGD & mentoring
+Networking komunitas
+Sertifikat kelulusan
+Evaluasi akhir
+
+Tapi jangan tulis yang tidak pasti.
+
+Saran copy
+
+“Gabung Sekarang” bagus. Bisa tetap.
+
+10. Banner “Harga Spesial untuk 10 Peserta Pertama”: sekarang lebih iconic
+
+Ini update yang bagus sekali. Banner sekarang jauh lebih memorable karena:
+
+orange penuh,
+ada pattern,
+ada badge LIMITED SLOT,
+copy lebih jelas,
+tombol kontras.
+
+Sekarang banner ini benar-benar menjadi visual break yang kuat. Ini menjawab arahan CEO.
+
+Kritik
+
+Banner ini sangat dominan. Bahkan mungkin lebih dominan daripada pricing card. Itu tidak salah, tapi hati-hati jangan sampai banner terasa seperti promo e-commerce, bukan edukasi premium.
+
+Saran
+
+Agar lebih premium:
+
+buat pattern sedikit lebih subtle jika terasa terlalu ramai
+angka 10 bisa dibuat besar samar di background, tapi jangan terlalu jelas
+gunakan wording lebih elegan:
+
+Harga Spesial untuk 10 Peserta Pertama
+Kuota terbatas agar kualitas mentoring dan diskusi tetap optimal.
+
+Ini sudah bagus. Pertahankan.
+
+11. FAQ: jauh lebih baik karena sudah dikategorikan
+
+FAQ sekarang jauh lebih rapi. Ada kategori:
+
+Tentang Program
+Teknis Kelas
+
+Ini improvement besar. Sebelumnya FAQ terasa panjang dan monoton. Sekarang lebih terstruktur.
+
+Yang bagus
+FAQ pertama sangat penting: rekomendasi beli coin.
+Jawabannya aman secara investasi.
+Accordion rapi.
+Kategori membantu scanning.
+Tombol Lihat FAQ lainnya mengurangi panjang mobile.
+
+Ini keputusan bagus.
+
+Kritik
+
+FAQ yang ditampilkan awal mungkin terlalu sedikit untuk menenangkan calon peserta sebelum mereka klik “Lihat FAQ lainnya”. Saat ini user melihat beberapa FAQ penting, tapi kalau tombol “Lihat FAQ lainnya” menyembunyikan terlalu banyak pertanyaan penting, user bisa saja tidak klik.
+
+Pastikan FAQ penting tetap tampil sebelum tombol:
+
+Apakah ini rekomendasi beli coin?
+Cocok untuk pemula?
+Apakah ada rekomendasi coin tertentu?
+Live atau rekaman?
+Kalau tidak bisa hadir?
+Sertifikat?
+
+Ini sudah sebagian tampil. Bagus.
+
+Namun kategori Materi & Syariah dan Pembayaran mungkin perlu tampil juga sebelum tombol, atau minimal ketika FAQ lainnya dibuka.
+
+Saran
+
+Buat kategori:
+
+Tentang Program
+Teknis Kelas
+Materi & Syariah
+Pembayaran
+
+Kalau tidak ingin terlalu panjang, tampilkan masing-masing 1 pertanyaan utama.
+
+12. Closing CTA: jauh lebih iconic
+
+Closing CTA sekarang jauh lebih baik. Pattern background membuatnya terasa seperti final section, bukan cuma teks penutup.
+
+Copy:
+
+Pahami Ilmunya. Kelola Risikonya. Jaga Prinsipnya.
+
+Ini tetap sangat kuat. Pertahankan.
+
+Yang bagus
+Pattern membuat section lebih hidup.
+Heading besar dan kuat.
+CTA full-width terasa mobile-friendly.
+Copy lebih syariah dan aman.
+Tidak menjanjikan profit.
+Kritik
+
+Pattern di closing cukup terlihat. Bagus, tapi pastikan tidak mengganggu keterbacaan. Saat ini masih aman.
+
+CTA button bisa sedikit diberi glow/shadow orange agar lebih menonjol sebagai final action.
+
+13. Disclaimer/footer: sudah jauh lebih baik
+
+Disclaimer sekarang lebih rapi, lebih singkat, dan lebih terbaca. Ini improvement besar dari versi sebelumnya.
+
+Yang bagus
+Ada heading Disclaimer Edukasi & Risiko
+Isinya cukup aman
+Tidak terlalu panjang
+Diletakkan di akhir
+Cocok dengan konteks crypto/investasi
+Kritik kecil
+
+Teks disclaimer masih agak kecil, tapi masih wajar. Kalau ingin lebih readable, naikkan sedikit font atau line-height.
+
+14. Masalah besar yang masih tersisa: mobile terlalu panjang
+
+Ini kritik penting.
+
+Halaman mobile sangat panjang. Itu wajar karena produk edukasi Rp2 juta butuh penjelasan. Tapi beberapa section bisa dibuat lebih compact agar user tidak lelah.
+
+Bagian yang paling membuat panjang:
+
+Pemateri
+Kurikulum
+FAQ jika semua dibuka
+Benefit cards
+Saran
+
+Untuk mobile:
+
+Pemateri: ringkas + accordion detail
+Kurikulum: timeline/accordion
+FAQ: kategori + show more
+Benefit: icon-led dan copy lebih pendek
+
+Dengan begitu halaman tetap kaya informasi tapi lebih ringan.
+
+15. Iconic sudah naik, tapi perlu sistem visual yang konsisten
+
+Sekarang ada pattern di special price dan closing. Bagus. Tapi agar benar-benar terasa sebagai sistem brand, pattern/visual identity perlu muncul secara konsisten namun halus.
+
+Saran sistem visual
+
+Gunakan elemen khas CryptoSharia di beberapa tempat:
+
+Hero: pattern/geometric glow sangat tipis
+Why section: icon orange konsisten
+Learning section: angka 01/02/03
+Kurikulum: vertical timeline orange
+Special price: pattern orange
+Closing: pattern dark
+
+Dengan begitu, halaman terasa punya bahasa visual yang satu keluarga.
+
+Saat ini pattern sudah muncul, tapi belum semua section punya hubungan visual yang kuat.
+
+16. Kontras teks dark mode sudah lebih baik, tapi masih perlu dicek
+
+Beberapa teks kecil masih berpotensi kurang nyaman dibaca, terutama di card yang gelap.
+
+Pastikan:
+
+body text minimal cukup terang
+teks penting jangan terlalu abu-abu
+line-height cukup lega
+jangan pakai font terlalu kecil untuk copy utama
+
+Di mobile, orang membaca dengan cepat. Kalau terlalu kecil, user skip.
+
+17. Copy yang masih perlu dicek
+
+Beberapa istilah perlu dipastikan konsisten:
+
+Gunakan praktik, bukan praktek
+Gunakan analisis, bukan analisa
+Gunakan Daftar Sekarang atau Gabung Sekarang, pilih salah satu yang konsisten
+Kalau pakai Special Price, sekarang sudah ada Harga Spesial, itu lebih baik
+Jangan terlalu sering pakai istilah profit/cuan
+Tetap hindari janji hasil investasi
+18. Prioritas revisi berikutnya
+
+Kalau ingin naik dari 8.6 ke 9+, saya sarankan urutannya:
+
+Prioritas 1 — Ubah kurikulum mobile menjadi timeline
+
+Ini akan membuat halaman jauh lebih mobile-native dan iconic.
+
+Prioritas 2 — Ringkas card pemateri di mobile
+
+Buat detail kredensial/fokus sebagai accordion.
+
+Prioritas 3 — Tambahkan icon konsisten di benefit cards
+
+Ini cepat tapi dampaknya besar.
+
+Prioritas 4 — Perkuat hero dengan pattern/glow/badge
+
+Supaya kesan iconic muncul sejak awal, bukan baru di bawah.
+
+Prioritas 5 — Tambah value stack pricing jika datanya benar
+
+Agar harga Rp2 juta terasa lebih worth it.
+
+Prioritas 6 — Tambahkan kategori FAQ lanjutan
+
+Materi & Syariah, Pembayaran.
+
+Prioritas 7 — Samakan kualitas foto pemateri
+
+Ini tetap PR visual trust.
+
+19. Yang sudah tidak perlu diubah besar-besaran
+
+Pertahankan:
+
+dark mode
+urutan landing page
+special price banner
+closing CTA
+disclaimer
+kategori FAQ
+pricing card baru
+judul kurikulum
+positioning pemateri
+quote setelah benefit
+
+Jangan bongkar ulang struktur. Sekarang tinggal optimasi UX mobile dan visual consistency.
+
+Putusan akhir
+
+Update ini sudah jauh lebih menjawab arahan CEO. Sekarang halaman tidak lagi terlalu polos. Ada elemen yang lebih iconic, terutama:
+
+special price banner,
+closing CTA,
+pricing card,
+FAQ yang lebih terstruktur.
+
+Namun, beberapa section utama masih perlu naik level agar semua halaman terasa konsisten iconic, bukan hanya bagian bawahnya.
+
+Kalau saya rangkum dalam satu kalimat:
+
+Mobile landing page ini sudah kuat dan mulai punya karakter, tetapi masih perlu dibuat lebih mobile-native melalui timeline kurikulum, ringkasan pemateri, icon benefit, dan hero yang lebih signature.

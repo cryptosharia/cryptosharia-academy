@@ -256,28 +256,33 @@ export const defaultLandingContent: LandingContent = {
 		],
 		cards: [
 			{
-				label: 'Analisis Market',
-				description: 'Placeholder screenshot hasil analisis market dan thesis aset pilihan.'
+				label: 'Edukasi Komunitas',
+				description: 'Materi disusun dari kebutuhan belajar komunitas CryptoSharia.'
 			},
 			{
-				label: 'Pencapaian Member',
-				description: 'Placeholder dokumentasi pencapaian dan progres portofolio member.'
+				label: 'Diskusi Nyata',
+				description: 'Forum tanya jawab dan diskusi komunitas menjadi sumber konteks belajar.'
 			},
 			{
-				label: 'Discord Community',
-				description:
-					'Placeholder testimoni profit, ucapan terima kasih, dan sharing pengalaman belajar.'
+				label: 'Materi Berbasis Pengalaman',
+				description: 'Pembelajaran dibangun dari pengalaman edukasi, market, dan mentoring.'
+			},
+			{
+				label: 'Dokumentasi Event',
+				description: 'Aktivitas komunitas dan event menjadi bukti track record edukasi.'
 			}
 		]
 	},
 	valueProps: {
-		eyebrow: 'Tiga fokus utama yang membantu peserta memahami crypto dari sisi peluang, risiko, dan prinsip syariah.',
-		title: 'Apa yang Akan Dipelajari?',
+		eyebrow:
+			'Tiga fokus utama untuk memahami crypto dari sisi peluang, risiko, dan prinsip syariah.',
+		title: '3 Pilar Pembelajaran Utama',
 		items: [
 			{
 				label: '',
 				title: 'Memahami Crypto Sesuai Prinsip Syariah',
-				description: 'Belajar melihat peluang crypto tanpa mengabaikan risiko dan prinsip fiqih muamalah.'
+				description:
+					'Belajar melihat peluang crypto tanpa mengabaikan risiko dan prinsip fiqih muamalah.'
 			},
 			{
 				label: '',
@@ -378,9 +383,10 @@ export const defaultLandingContent: LandingContent = {
 				title: 'Fasilitas & Benefit',
 				items: [
 					'4 hari live masterclass',
-					'Materi terstruktur & tugas praktik',
-					'FGD & mentoring pendampingan',
-					'Akses komunitas eksklusif',
+					'Materi & rekaman kelas',
+					'Tugas praktik & evaluasi akhir',
+					'FGD & mentoring',
+					'Networking komunitas',
 					'Sertifikat kelulusan'
 				]
 			},
@@ -544,9 +550,9 @@ export const defaultLandingContent: LandingContent = {
 					'Sangat cocok. Hari pertama difokuskan untuk membangun fondasi industri crypto dan blockchain agar pemula tidak tertinggal saat masuk ke materi analisis yang lebih teknis.'
 			},
 			{
-				question: 'Apakah bootcamp ini berisi rekomendasi beli coin tertentu?',
+				question: 'Apa yang membedakan program ini dengan masterclass lain?',
 				answer:
-					'Tidak. Program ini bersifat edukasi untuk membantu peserta memahami analisis, risiko, dan prinsip syariah. Keputusan investasi tetap menjadi tanggung jawab masing-masing peserta.'
+					'Program ini menggabungkan edukasi investasi crypto, manajemen risiko, komunitas, mentoring, serta pendekatan syariah secara komprehensif.'
 			},
 			{
 				question: 'Apakah kelas dilakukan live atau rekaman?',
@@ -589,9 +595,9 @@ export const defaultLandingContent: LandingContent = {
 					'Bisa. Detail pembayaran dan konfirmasi pendaftaran dapat dikonsultasikan melalui WhatsApp admin CryptoSharia.'
 			},
 			{
-				question: 'Apa yang membedakan program ini dengan masterclass lain?',
+				question: 'Bagaimana cara konfirmasi pendaftaran?',
 				answer:
-					'Program ini menggabungkan edukasi investasi crypto, manajemen risiko, komunitas, mentoring, serta pendekatan syariah secara komprehensif.'
+					'Setelah menghubungi admin melalui WhatsApp, peserta akan dibantu untuk mendapatkan detail pembayaran dan konfirmasi kuota program.'
 			}
 		]
 	},
@@ -717,9 +723,22 @@ function normalizeAuthority(authority: LandingContent['authority']): LandingCont
 	const oldDescriptions = new Set([
 		'Program ini menggabungkan pengalaman praktisi, standar sertifikasi, dan proses belajar komunitas agar peserta memahami crypto secara sistematis, bukan sekadar mengikuti hype.'
 	]);
+	const oldProofLabels = new Set([
+		'Analisa Market',
+		'Analisis Market',
+		'Pencapaian Member',
+		'Discord Community'
+	]);
 
 	if (!authority.description?.trim() || oldDescriptions.has(authority.description.trim())) {
 		authority.description = defaults.description;
+	}
+	if (
+		!Array.isArray(authority.cards) ||
+		authority.cards.length === 0 ||
+		authority.cards.every((card) => oldProofLabels.has(card.label?.trim() ?? ''))
+	) {
+		authority.cards = defaults.cards;
 	}
 
 	return authority;
@@ -741,13 +760,16 @@ function normalizeValueProps(
 	valueProps: LandingContent['valueProps']
 ): LandingContent['valueProps'] {
 	const defaults = defaultLandingContent.valueProps;
+	const oldSectionTitles = new Set(['Apa yang Akan Dipelajari?']);
 	const oldTitles = new Map([
 		['Strategi Cuan Halal di Crypto', 'Strategi Investasi Crypto Sesuai Prinsip Syariah'],
 		['Build Your Sharia Wealth', 'Membangun Wealth Plan yang Lebih Terarah'],
 		['Strategi Bertahan di Bear Market', 'Strategi Bertahan di Market Volatil']
 	]);
 
-	if (!valueProps.title?.trim()) valueProps.title = defaults.title;
+	if (!valueProps.title?.trim() || oldSectionTitles.has(valueProps.title.trim())) {
+		valueProps.title = defaults.title;
+	}
 	valueProps.items = normalizeFeatures(valueProps.items, defaults.items, oldTitles);
 	if (!valueProps.docTitle?.trim()) valueProps.docTitle = defaults.docTitle;
 	if (!valueProps.docDescription?.trim()) valueProps.docDescription = defaults.docDescription;
@@ -1105,6 +1127,11 @@ function normalizePricing(pricing: LandingContent['pricing']): LandingContent['p
 		'Gabung Programnya Sekarang',
 		'Biaya Program Crypto Sharia Masterclass'
 	]);
+	const hasOldValueStack = pricing.benefitCards?.some((card) =>
+		card.items?.some((item) =>
+			['Materi terstruktur & tugas praktik', 'Akses komunitas eksklusif'].includes(item.trim())
+		)
+	);
 
 	if (!pricing.title?.trim() || oldTitles.has(pricing.title.trim())) {
 		pricing.title = defaults.title;
@@ -1115,7 +1142,7 @@ function normalizePricing(pricing: LandingContent['pricing']): LandingContent['p
 	if (!pricing.note?.trim()) pricing.note = defaults.note;
 	if (!pricing.ctaLabel?.trim()) pricing.ctaLabel = defaults.ctaLabel;
 	pricing.benefitCards =
-		Array.isArray(pricing.benefitCards) && pricing.benefitCards.length > 0
+		Array.isArray(pricing.benefitCards) && pricing.benefitCards.length > 0 && !hasOldValueStack
 			? pricing.benefitCards
 			: defaults.benefitCards;
 
@@ -1129,11 +1156,15 @@ function normalizeFaq(faq: LandingContent['faq']): LandingContent['faq'] {
 		'Bagaimana jika tidak bisa hadir di salah satu sesi?',
 		'Apa yang membedakan program ini dengan masterclass lain?'
 	]);
+	const hasOldDuplicateQuestion = faq.items?.some(
+		(item) => item.question === 'Apakah bootcamp ini berisi rekomendasi beli coin tertentu?'
+	);
 
 	if (!faq.title?.trim()) faq.title = defaults.title;
 	if (
 		!Array.isArray(faq.items) ||
 		faq.items.length === 0 ||
+		hasOldDuplicateQuestion ||
 		(faq.items.length <= 3 && faq.items.every((item) => oldDefaultQuestions.has(item.question)))
 	) {
 		faq.items = defaults.items;
