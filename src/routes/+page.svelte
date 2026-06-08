@@ -1023,107 +1023,112 @@
 								</div>
 							</div>
 							<div class="flex flex-1 flex-col p-5 sm:p-6">
-								<div class="flex flex-col xl:min-h-[12.25rem]">
-									<p
-										class="mb-5 hidden min-h-12 w-fit items-center rounded-full border border-orange-300 bg-orange-50 px-4 py-2 text-sm leading-5 font-bold text-orange-700 sm:inline-flex dark:border-orange-700/70 dark:bg-orange-500/10 dark:text-orange-200"
-									>
-										{instructor.badge}
-									</p>
-									<h3
-										class="text-2xl leading-snug font-black break-words text-slate-900 xl:min-h-[4.25rem] dark:text-white"
-									>
-										{instructor.name}
-									</h3>
-									<p class="mt-2 min-h-6 text-sm font-bold text-slate-500 dark:text-slate-400">
-										{instructor.credentials}
-									</p>
-									<p class="mt-2 min-h-7 text-base font-bold text-orange-600 dark:text-orange-400">
-										{instructor.role}
-									</p>
+								<div class="flex flex-1 flex-col">
+									<div class="flex flex-col xl:min-h-[12.25rem]">
+										<p
+											class="mb-5 hidden min-h-12 w-fit items-center rounded-full border border-orange-300 bg-orange-50 px-4 py-2 text-sm leading-5 font-bold text-orange-700 sm:inline-flex dark:border-orange-700/70 dark:bg-orange-500/10 dark:text-orange-200"
+										>
+											{instructor.badge}
+										</p>
+										<h3
+											class="text-2xl leading-snug font-black break-words text-slate-900 xl:min-h-[4.25rem] dark:text-white"
+										>
+											{instructor.name}
+										</h3>
+										<p class="mt-2 min-h-6 text-sm font-bold text-slate-500 dark:text-slate-400">
+											{instructor.credentials}
+										</p>
+										<p class="mt-2 min-h-7 text-base font-bold text-orange-600 dark:text-orange-400">
+											{instructor.role}
+										</p>
+									</div>
+
+									<div class="mt-5 border-t border-slate-100 pt-5 dark:border-slate-800">
+										<h4
+											class="text-xs font-black tracking-[0.14em] text-slate-600 uppercase dark:text-slate-300"
+										>
+											Kredensial Utama
+										</h4>
+										<ul class="mt-3 space-y-2.5">
+											{#each instructor.highlights.slice(0, 3) as highlight}
+												<li
+													class="flex gap-3 text-[15px] leading-7 text-slate-700 dark:text-slate-200"
+												>
+													<svg
+														class="mt-1 h-3.5 w-3.5 shrink-0 text-orange-600 dark:text-orange-400"
+														fill="none"
+														stroke="currentColor"
+														viewBox="0 0 24 24"
+														aria-hidden="true"
+													>
+														<path
+															stroke-linecap="round"
+															stroke-linejoin="round"
+															stroke-width="2.5"
+															d="M5 13l4 4L19 7"
+														/>
+													</svg>
+													<span>{highlight}</span>
+												</li>
+											{/each}
+										</ul>
+
+										{#if instructor.highlights.length > 3 || instructor.description}
+											<button
+												type="button"
+												onclick={() => toggleInstructor(instructorIndex)}
+												class="mt-5 inline-flex w-full items-center justify-center rounded-lg border border-orange-200 px-4 py-3 text-sm font-bold text-orange-700 sm:hidden dark:border-orange-900/70 dark:text-orange-200"
+											>
+												{openInstructorIndex === instructorIndex ? 'Tutup Detail' : 'Lihat Detail'}
+											</button>
+										{/if}
+
+										<div
+											class="{openInstructorIndex === instructorIndex ? 'block' : 'hidden'} sm:block"
+										>
+											{#if instructor.highlights.length > 3}
+												<ul class="mt-3 space-y-2.5">
+													{#each instructor.highlights.slice(3) as highlight}
+														<li
+															class="flex gap-3 text-[15px] leading-7 text-slate-700 dark:text-slate-200"
+														>
+															<svg
+																class="mt-1 h-3.5 w-3.5 shrink-0 text-orange-600 dark:text-orange-400"
+																fill="none"
+																stroke="currentColor"
+																viewBox="0 0 24 24"
+																aria-hidden="true"
+															>
+																<path
+																	stroke-linecap="round"
+																	stroke-linejoin="round"
+																	stroke-width="2.5"
+																	d="M5 13l4 4L19 7"
+																/>
+															</svg>
+															<span>{highlight}</span>
+														</li>
+													{/each}
+												</ul>
+											{/if}
+										</div>
+									</div>
 								</div>
 
 								<div
-									class="mt-5 border-t border-slate-100 pt-5 xl:min-h-[18rem] dark:border-slate-800"
+									class="mt-5 shrink-0 border-t border-slate-100 pt-5 dark:border-slate-800 {openInstructorIndex ===
+									instructorIndex
+										? 'block'
+										: 'hidden'} sm:block"
 								>
 									<h4
 										class="text-xs font-black tracking-[0.14em] text-slate-600 uppercase dark:text-slate-300"
 									>
-										Kredensial Utama
+										Fokus Materi
 									</h4>
-									<ul class="mt-3 space-y-2.5">
-										{#each instructor.highlights.slice(0, 3) as highlight}
-											<li
-												class="flex gap-3 text-[15px] leading-7 text-slate-700 dark:text-slate-200"
-											>
-												<svg
-													class="mt-1 h-3.5 w-3.5 shrink-0 text-orange-600 dark:text-orange-400"
-													fill="none"
-													stroke="currentColor"
-													viewBox="0 0 24 24"
-													aria-hidden="true"
-												>
-													<path
-														stroke-linecap="round"
-														stroke-linejoin="round"
-														stroke-width="2.5"
-														d="M5 13l4 4L19 7"
-													/>
-												</svg>
-												<span>{highlight}</span>
-											</li>
-										{/each}
-									</ul>
-
-									{#if instructor.highlights.length > 3 || instructor.description}
-										<button
-											type="button"
-											onclick={() => toggleInstructor(instructorIndex)}
-											class="mt-5 inline-flex w-full items-center justify-center rounded-lg border border-orange-200 px-4 py-3 text-sm font-bold text-orange-700 sm:hidden dark:border-orange-900/70 dark:text-orange-200"
-										>
-											{openInstructorIndex === instructorIndex ? 'Tutup Detail' : 'Lihat Detail'}
-										</button>
-									{/if}
-
-									<div
-										class="{openInstructorIndex === instructorIndex ? 'block' : 'hidden'} sm:block"
-									>
-										{#if instructor.highlights.length > 3}
-											<ul class="mt-3 space-y-2.5">
-												{#each instructor.highlights.slice(3) as highlight}
-													<li
-														class="flex gap-3 text-[15px] leading-7 text-slate-700 dark:text-slate-200"
-													>
-														<svg
-															class="mt-1 h-3.5 w-3.5 shrink-0 text-orange-600 dark:text-orange-400"
-															fill="none"
-															stroke="currentColor"
-															viewBox="0 0 24 24"
-															aria-hidden="true"
-														>
-															<path
-																stroke-linecap="round"
-																stroke-linejoin="round"
-																stroke-width="2.5"
-																d="M5 13l4 4L19 7"
-															/>
-														</svg>
-														<span>{highlight}</span>
-													</li>
-												{/each}
-											</ul>
-										{/if}
-
-										<div class="mt-5 border-t border-slate-100 pt-5 dark:border-slate-800">
-											<h4
-												class="text-xs font-black tracking-[0.14em] text-slate-600 uppercase dark:text-slate-300"
-											>
-												Fokus Materi
-											</h4>
-											<p class="mt-3 text-[15px] leading-8 text-slate-600 dark:text-slate-300">
-												{instructor.description}
-											</p>
-										</div>
-									</div>
+									<p class="mt-3 text-[15px] leading-8 text-slate-600 dark:text-slate-300">
+										{instructor.description}
+									</p>
 								</div>
 							</div>
 						</div>
