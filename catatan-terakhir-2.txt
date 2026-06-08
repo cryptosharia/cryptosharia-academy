@@ -1,0 +1,286 @@
+Kritik tajam yang masih perlu diperbaiki
+1. Navbar terlalu kecil dan kurang terbaca
+
+Di screenshot panjang, navbar terlihat sangat kecil. Logo terlihat, tapi menu di tengah dan tombol kanan kurang terasa kuat.
+
+Masalahnya:
+
+menu terlalu kecil,
+spacing antar menu terlalu rapat,
+CTA kanan tidak terlalu menonjol,
+bagian atas jadi terasa seperti “admin navbar”, bukan landing page publik.
+
+Saran:
+
+Perbesar sedikit font menu.
+Buat menu lebih kontras.
+CTA kanan gunakan teks yang jelas seperti Daftar Sekarang.
+Kalau ini landing page publik, menu seperti “Kelola Materi”, “Voucher”, “Pesanan” jangan muncul untuk visitor umum. Itu lebih cocok untuk admin/member dashboard.
+
+Ini penting. Kalau halaman ini untuk calon peserta, navbar harus fokus ke conversion, bukan menu internal.
+
+Navbar publik ideal:
+
+Logo
+Kurikulum | Pemateri | FAQ
+Daftar Sekarang
+
+Menu seperti Kelola Materi, Voucher, Pesanan sebaiknya tidak tampil di landing page publik.
+
+2. Hero masih kurang “menusuk” secara copy
+
+Secara visual hero sudah bagus. Tapi copy hero masih bisa dibuat lebih tajam.
+
+Landing page ini punya positioning kuat, tapi hero perlu menjawab dengan cepat:
+
+kelas ini untuk siapa,
+masalah apa yang diselesaikan,
+kenapa beda dari kelas crypto biasa,
+kenapa harus ikut sekarang.
+
+Saya sarankan subheadline hero dibuat lebih spesifik dan tidak terlalu generik.
+
+Contoh:
+
+Masterclass 4 hari untuk memahami crypto dari peta industri, analisis pasar, manajemen risiko, dan prinsip syariah agar tidak sekadar ikut tren.
+
+Atau:
+
+Belajar memahami crypto secara lebih terarah melalui pendekatan industri, keuangan, dan fiqih muamalah bersama pemateri kredibel.
+
+Kalau di hero masih terlalu umum, user belum langsung menangkap “beda”-nya.
+
+3. Section “Dibangun dari pengalaman…” masih kurang kuat sebagai bukti
+
+Bagian ini sudah bagus secara posisi, tapi secara bukti masih belum terlalu kuat.
+
+Foto dokumentasi membantu, tapi belum cukup “mengangkat” trust.
+
+Kalau ada data, tambahkan salah satu:
+
+jumlah peserta komunitas,
+jumlah event,
+tahun pengalaman,
+jumlah batch,
+nama komunitas,
+lokasi event,
+kutipan testimoni singkat.
+
+Misalnya:
+
+Dibangun dari pengalaman edukasi dan komunitas nyata
+Materi masterclass ini disusun dari pengalaman edukasi, diskusi komunitas, dan kebutuhan nyata peserta dalam memahami crypto secara lebih terarah dan sesuai prinsip syariah.
+
+Kalau ada angka:
+
+Berbasis pengalaman edukasi bersama ratusan member komunitas CryptoSharia.
+
+Tapi jangan pakai angka kalau belum valid.
+
+4. Teks kecil di dark mode masih agak redup
+
+Ini PR terbesar secara visual.
+
+Di beberapa section, terutama:
+
+card benefit,
+card pemateri,
+card kurikulum,
+FAQ,
+disclaimer,
+
+teks kecil terlihat terlalu abu-abu dan kurang kontras.
+
+Dark mode memang premium, tapi kalau kontras terlalu rendah, user akan capek membaca. Apalagi halaman ini panjang.
+
+Saran:
+
+Body text jangan terlalu gelap.
+Gunakan gray yang lebih terang untuk paragraf penting.
+Minimal body text pakai warna seperti #CBD5E1 atau #D1D5DB.
+Teks sekunder boleh lebih redup, tapi jangan untuk informasi inti.
+
+Yang paling perlu dinaikkan kontrasnya:
+
+deskripsi di card benefit,
+bullet kredensial pemateri,
+outcome kurikulum,
+FAQ answer,
+disclaimer.
+5. Section “Apa yang Akan Dipelajari?” masih terasa terlalu ringan
+
+Bagian ini penting sebagai preview, tapi sekarang masih terlihat seperti 3 card kecil yang agak lewat begitu saja.
+
+Saran saya:
+
+Tambahkan subjudul pendek.
+Buat 3 card ini sedikit lebih kuat secara copy.
+Pastikan bahasanya aman dan tidak terlalu “profit-oriented”.
+
+Judul section sudah oke:
+
+Apa yang Akan Dipelajari?
+
+Tapi tambahkan subjudul:
+
+Tiga fokus utama yang membantu peserta memahami crypto dari sisi peluang, risiko, dan prinsip syariah.
+
+Untuk card, saya sarankan:
+
+Memahami Crypto Sesuai Prinsip Syariah
+Belajar melihat peluang crypto tanpa mengabaikan risiko dan prinsip fiqih muamalah.
+Membangun Wealth Plan yang Lebih Terarah
+Memahami cara mengatur tujuan, alokasi, dan risiko sebelum mengambil keputusan investasi.
+Strategi Menghadapi Market Volatil
+Belajar membaca kondisi pasar agar tidak mudah terbawa FOMO atau kepanikan.
+
+Ini lebih dewasa dan lebih aman.
+
+6. Section pemateri masih perlu polishing foto
+
+Ini masih poin yang paling jelas secara visual.
+
+Foto pemateri belum satu rasa:
+
+Sholahuddin: cukup formal, tapi lighting sederhana.
+Ghithrif: paling kasual, paling tidak corporate.
+Devin: paling formal dan paling bersih.
+
+Karena bagian pemateri adalah trust section, foto sangat berpengaruh. Kalau foto tidak konsisten, kualitas keseluruhan section turun sedikit.
+
+Saran:
+
+Samakan crop.
+Samakan brightness.
+Samakan background tone.
+Foto Ghithrif perlu dinaikkan kualitas visualnya.
+Jika memungkinkan, minta foto ulang dengan guideline yang sama.
+
+Guideline foto:
+
+half body,
+background netral,
+lighting depan,
+pakaian formal/semi-formal,
+ekspresi profesional ramah,
+crop kepala sejajar.
+
+Kalau foto pemateri diseragamkan, landing page ini akan naik signifikan.
+
+7. Card pemateri masih sedikit terlalu padat
+
+Card pemateri sudah kuat, tapi masih ada kepadatan teks, terutama card Ghithrif.
+
+Masalah:
+
+nama panjang,
+gelar banyak,
+bullet panjang,
+body text kecil,
+card dark mode membuatnya terasa makin padat.
+
+Saran:
+
+Gunakan heading Kredensial Utama daripada Highlight Kredensial.
+Gunakan Fokus Materi daripada Fokus Bootcamp.
+Ringkas bullet Ghithrif.
+
+Contoh ringkas:
+
+Kredensial Utama
+
+CFA, kredensial global bergengsi di bidang investasi dan keuangan
+CFP, sertifikasi profesional perencanaan keuangan
+CSA & CTA di bidang analisis pasar
+Berpengalaman dalam risk management, fundamental analysis, dan macro analysis
+
+Ini cukup. Tidak perlu semua dijelaskan panjang.
+
+8. Kurikulum sudah bagus, tapi card-nya cukup padat
+
+Kurikulum sekarang sudah jauh lebih kuat. Judulnya bagus:
+
+Kurikulum 4 Hari: Dari Dasar Crypto hingga Portfolio Syariah
+
+Ini sudah tepat.
+
+Masalahnya hanya: empat card sejajar membuat teks di dalamnya agak kecil dan padat.
+
+Saran:
+
+Perbesar sedikit font isi card.
+Tambah line-height.
+Outcome dibuat lebih ringkas.
+Di mobile pastikan card menjadi satu kolom dan tidak terlalu panjang.
+Di desktop, pertimbangkan max-width card sedikit lebih lega.
+
+Secara isi, struktur kurikulum sudah bagus. Jangan bongkar lagi.
+
+9. Pricing sudah benar posisinya, tapi value stack harus lebih jelas
+
+Sekarang pricing muncul di timing yang benar. Tapi harga Rp2.000.000 perlu didukung dengan “apa saja yang didapat”.
+
+Kalau belum ada, tambahkan di pricing section:
+
+Yang Anda dapatkan:
+
+4 hari live masterclass
+materi terstruktur
+tugas praktik
+FGD & mentoring
+akses komunitas
+sertifikat kelulusan
+rekaman kelas, jika tersedia
+worksheet/template, jika tersedia
+
+Jangan tulis yang belum pasti. Tapi kalau ada benefit yang valid, tampilkan. Ini membantu harga terasa lebih masuk akal.
+
+Sekarang pricing sudah bagus, tapi bisa lebih menjual kalau value stack lebih eksplisit.
+
+10. FAQ sudah banyak, tapi pastikan pertanyaan paling sensitif ada
+
+FAQ sudah lebih lengkap. Bagus.
+
+Tapi untuk crypto syariah, FAQ wajib menjawab keberatan yang sensitif:
+
+Apakah ini rekomendasi beli coin?
+Apakah bootcamp ini menjamin profit?
+Apakah crypto yang dibahas pasti halal?
+Apakah cocok untuk pemula?
+Apakah ada rekaman?
+Apakah dapat sertifikat?
+Apakah ada praktik?
+Apakah ada komunitas?
+Apakah ada refund?
+Apakah pembayaran bisa transfer?
+
+Yang paling penting:
+
+Apakah bootcamp ini memberikan rekomendasi beli coin tertentu?
+Jawaban aman:
+
+Tidak. Materi bersifat edukasi dan membantu peserta memahami cara menganalisis aset, risiko, dan prinsip syariah. Keputusan investasi tetap menjadi tanggung jawab masing-masing peserta.
+
+Ini penting untuk keamanan brand.
+
+11. Disclaimer footer terlalu kecil dan panjang
+
+Disclaimer sudah bagus karena dibutuhkan. Tapi dari screenshot, disclaimer terlihat seperti blok teks kecil yang sangat panjang.
+
+Masalah:
+
+kemungkinan besar tidak dibaca,
+terlalu padat,
+kontras rendah,
+terlihat seperti formalitas.
+
+Saran:
+Buat heading kecil:
+
+Disclaimer Edukasi & Risiko
+
+Lalu buat paragraf pendek:
+
+Materi dalam program ini bersifat edukasi dan bukan merupakan ajakan membeli atau menjual aset crypto tertentu. Crypto memiliki risiko tinggi. Peserta bertanggung jawab atas setiap keputusan investasi yang diambil. Pembahasan prinsip syariah bertujuan sebagai edukasi dan kerangka analisis, bukan jaminan atas aset tertentu.
+
+Lebih baik pendek, jelas, dan terbaca daripada panjang tapi diabaikan.

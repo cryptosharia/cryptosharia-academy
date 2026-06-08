@@ -226,6 +226,13 @@
 		<section class="bg-slate-50 py-20 dark:bg-slate-900" id="program">
 			<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 				<div class="mx-auto mb-12 max-w-3xl text-center">
+					{#if content.valueProps.eyebrow}
+						<p
+							class="mb-3 text-sm font-black tracking-widest text-primary-600 uppercase dark:text-primary-400"
+						>
+							{content.valueProps.eyebrow}
+						</p>
+					{/if}
 					<h2 class="text-3xl font-extrabold text-slate-900 sm:text-4xl dark:text-white">
 						{content.valueProps.title}
 					</h2>
@@ -428,7 +435,7 @@
 
 	{#if sectionId === 'curriculum'}
 		<section class="scroll-mt-20 bg-slate-50 py-20 dark:bg-slate-900" id="curriculum">
-			<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+			<div class="mx-auto max-w-[90rem] px-4 sm:px-6 lg:px-8">
 				<div class="mx-auto mb-12 max-w-4xl text-center">
 					<h2
 						class="text-3xl leading-tight font-extrabold text-slate-900 sm:text-5xl dark:text-white"
@@ -488,7 +495,7 @@
 												</span>
 												<div class="min-w-0">
 													<p
-														class="text-[15px] leading-7 font-bold break-words text-slate-800 dark:text-white"
+														class="text-base leading-8 font-bold break-words text-slate-800 dark:text-white"
 													>
 														{session}
 													</p>
@@ -509,7 +516,7 @@
 											>
 												Outcome
 											</p>
-											<p class="mt-3 text-[15px] leading-8 text-slate-700 dark:text-slate-300">
+											<p class="mt-3 text-base leading-relaxed text-slate-700 dark:text-slate-300">
 												{day.outcome}
 											</p>
 										</div>

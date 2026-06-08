@@ -4,16 +4,10 @@
 
 <footer class="bg-slate-900 text-slate-300">
 	<div class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-		<div class="rounded-xl border border-slate-700/50 bg-slate-800/50 p-4">
-			<p class="text-justify text-[10px] leading-relaxed text-slate-500 sm:text-xs">
-				<strong class="text-slate-400">Disclaimer Risiko Kripto:</strong> Perdagangan dan investasi aset
-				kripto merupakan aktivitas berisiko tinggi (high-risk). Nilai aset kripto sangat fluktuatif dan
-				dapat berubah secara signifikan dalam waktu singkat. CryptoSharia Academy adalah platform edukasi
-				murni dan tidak menyediakan saran keuangan profesional, layanan penasihat investasi, manajemen
-				portofolio, pialang, atau pertukaran aset (exchange). Semua materi, analisis, dan studi kasus
-				yang disampaikan bertujuan semata-mata untuk pembelajaran. Keputusan investasi sepenuhnya merupakan
-				tanggung jawab pribadi masing-masing individu. Selalu lakukan riset mandiri (DYOR) dan pastikan
-				untuk hanya mengalokasikan dana yang Anda siap untuk kehilangan.
+		<div class="rounded-xl border border-slate-700/50 bg-slate-800/50 p-4 text-center">
+			<h4 class="mb-2 text-xs font-bold text-slate-400">Disclaimer Edukasi & Risiko</h4>
+			<p class="text-[11px] leading-relaxed text-slate-500 sm:text-xs">
+				Pasar cryptocurrency sangat fluktuatif dan berisiko tinggi. Peserta bertanggung jawab atas setiap keputusan investasi yang diambil. Pembahasan prinsip syariah bertujuan sebagai edukasi dan kerangka analisis, bukan jaminan atas aset tertentu.
 			</p>
 		</div>
 

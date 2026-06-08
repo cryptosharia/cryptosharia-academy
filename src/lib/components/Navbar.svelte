@@ -15,8 +15,10 @@
 
 	const whatsappUrl = buildWhatsappUrl(defaultLandingContent.whatsapp);
 
+	const isAdminRoute = $derived(page.url.pathname.startsWith('/admin'));
+
 	const navLinks = $derived(
-		isAdmin
+		isAdminRoute
 			? [
 					{ label: 'Landing Page', href: '/admin/landing' },
 					{ label: 'Kelola Materi', href: '/admin/courses' },
@@ -24,10 +26,8 @@
 					{ label: 'Pesanan', href: '/admin/orders' }
 				]
 			: [
-					{ label: 'Beranda', href: '/#hero' },
-					{ label: 'Pemateri', href: '/#instructors' },
 					{ label: 'Kurikulum', href: '/#curriculum' },
-					{ label: 'Harga', href: '/#pricing' },
+					{ label: 'Pemateri', href: '/#instructors' },
 					{ label: 'FAQ', href: '/#faq' }
 				]
 	);
@@ -86,15 +86,15 @@
 					>Crypto<span class="text-primary-600 dark:text-primary-400">Sharia</span></span
 				>
 			</a>
-			<nav class="hidden items-center gap-1 md:flex">
+			<nav class="hidden items-center gap-6 md:flex">
 				{#each navLinks as link}
 					{@const active = isActiveLink(link.href)}
 					<a
 						href={link.href}
 						aria-current={active ? 'page' : undefined}
-						class="rounded-lg px-4 py-2 text-sm font-medium transition-colors {active
-							? 'bg-primary-50 text-primary-700 dark:bg-primary-900/40 dark:text-primary-300 ring-primary-200 dark:ring-primary-800 ring-1'
-							: 'hover:text-primary-600 dark:hover:text-primary-400 hover:bg-primary-50 dark:hover:bg-primary-900/30 text-gray-600 dark:text-gray-300'}"
+						class="rounded-lg px-2 py-2 text-base font-bold transition-colors {active
+							? 'text-primary-600 dark:text-primary-400'
+							: 'hover:text-primary-600 dark:hover:text-primary-400 text-gray-600 dark:text-gray-300'}"
 						>{link.label}</a
 					>
 				{/each}
@@ -191,8 +191,8 @@
 						href={whatsappUrl}
 						target="_blank"
 						rel="noopener noreferrer"
-						class="bg-primary-600 orange-glow hover:bg-primary-700 hidden items-center rounded-full px-5 py-2 text-sm font-semibold text-white shadow-sm transition-all active:scale-95 sm:inline-flex"
-						>Daftar</a
+						class="bg-primary-600 orange-glow hover:bg-primary-700 hidden items-center rounded-full px-6 py-2.5 text-sm font-bold text-white shadow-sm transition-all active:scale-95 sm:inline-flex"
+						>Daftar Sekarang</a
 					>
 				{/if}
 
@@ -281,8 +281,8 @@
 						target="_blank"
 						rel="noopener noreferrer"
 						onclick={() => (mobileMenuOpen = false)}
-						class="bg-primary-600 hover:bg-primary-700 mt-2 block rounded-full px-5 py-2.5 text-center text-sm font-semibold text-white"
-						>Daftar</a
+						class="bg-primary-600 hover:bg-primary-700 mt-2 block rounded-full px-5 py-3 text-center text-sm font-bold text-white"
+						>Daftar Sekarang</a
 					>
 				{/if}
 			</div>

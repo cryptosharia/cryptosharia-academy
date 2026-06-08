@@ -225,7 +225,7 @@ export const defaultLandingContent: LandingContent = {
 		eyebrow: '',
 		title: 'Dibangun dari pengalaman edukasi dan komunitas nyata.',
 		description:
-			'CryptoSharia tidak hadir dari teori semata. Materi masterclass ini disusun dari pengalaman edukasi, diskusi komunitas, dan kebutuhan nyata peserta dalam memahami crypto secara lebih terarah dan sesuai prinsip syariah.',
+			'Materi masterclass ini disusun dari pengalaman edukasi, diskusi komunitas, dan kebutuhan nyata peserta dalam memahami crypto secara lebih terarah dan sesuai prinsip syariah. Berbasis pengalaman edukasi bersama 4.000+ member komunitas CryptoSharia.',
 		activities: [
 			{
 				meta: '',
@@ -271,24 +271,24 @@ export const defaultLandingContent: LandingContent = {
 		]
 	},
 	valueProps: {
-		eyebrow: '',
+		eyebrow: 'Tiga fokus utama yang membantu peserta memahami crypto dari sisi peluang, risiko, dan prinsip syariah.',
 		title: 'Apa yang Akan Dipelajari?',
 		items: [
 			{
 				label: '',
-				title: 'Strategi Investasi Crypto Sesuai Prinsip Syariah',
-				description: 'Memahami strategi investasi crypto yang terukur dan sesuai prinsip syariah.'
+				title: 'Memahami Crypto Sesuai Prinsip Syariah',
+				description: 'Belajar melihat peluang crypto tanpa mengabaikan risiko dan prinsip fiqih muamalah.'
 			},
 			{
 				label: '',
 				title: 'Membangun Wealth Plan yang Lebih Terarah',
 				description:
-					'Membangun aset dan kekayaan jangka panjang dengan pendekatan yang sehat dan berkelanjutan.'
+					'Memahami cara mengatur tujuan, alokasi, dan risiko sebelum mengambil keputusan investasi.'
 			},
 			{
 				label: '',
-				title: 'Strategi Bertahan di Market Volatil',
-				description: 'Belajar menjaga portofolio dan mengambil peluang saat market sedang turun.'
+				title: 'Strategi Menghadapi Market Volatil',
+				description: 'Belajar membaca kondisi pasar agar tidak mudah terbawa FOMO atau kepanikan.'
 			}
 		],
 		docEyebrow: '',
@@ -301,25 +301,25 @@ export const defaultLandingContent: LandingContent = {
 		eyebrow: '',
 		title: 'Member Premium Crypto Sharia yang Sudah Bertumbuh Bersama',
 		description:
-			'Placeholder untuk screenshot testimoni Discord, ucapan terima kasih, dokumentasi profit member, dan sharing pengalaman belajar.',
+			'Mereka telah membuktikan bahwa berinvestasi di dunia crypto bisa dilakukan dengan ilmu, risiko terukur, dan tetap sesuai prinsip syariah.',
 		items: [
 			{
-				meta: '',
-				title: 'Thanks to you my mentor!',
+				meta: 'Arief Adjie, Web Developer',
+				title: 'Alhamdulillah portofilio BTC sudah +12,5%.',
 				description:
-					'Member membagikan hasil belajar, eksekusi strategi spot, dan progres portofolio di Discord Premium.'
+					'Sedang mencari instrumen investasi yg high return... semakin yakin untuk invest di kripto. Grup yg sangat bermanfaat selain dibahas dari sisi syariahnya kita juga bisa dapat update penting... membantu ana untuk menentukan kapan entry maupun exit.'
 			},
 			{
-				meta: '',
-				title: 'Akhirnya lebih paham cara analisis market tanpa gambling.',
+				meta: 'Ibrahim, Karyawan Swasta',
+				title: 'Jadi pede investasi ke Crypto karena sesuai Syariat.',
 				description:
-					'Pendekatan riset, manajemen risiko, dan screening syariah membantu member lebih disiplin.'
+					'Di Komunitas ini saya belajar bahwa Investasi di Cryptocurrency harus disertai dengan ilmunya. Halal kah koin tsb, seperti apa fundamental nya, lalu update ekonomi makro nya seperti apa.'
 			},
 			{
-				meta: '',
-				title: 'Profit tanpa leverage, tetap pakai rencana.',
+				meta: 'Faris, Karyawan',
+				title: 'Komunitas yang bergerak berdasarkan landasan ilmu.',
 				description:
-					'Dokumentasi hasil member ditampilkan sebagai studi kasus edukasi, bukan janji keuntungan.'
+					'Alhamdulillah bersyukur nemu komunitas crypto sharia... dapat berdiskusi tanpa rasa canggung membahas crypto disupport modul-modul crypto secara sudut pandang syariah serta update informasi market.'
 			}
 		]
 	},
@@ -495,12 +495,12 @@ export const defaultLandingContent: LandingContent = {
 				badge: 'Investment & Financial Planning',
 				name: 'Muhammad Ghithrif Gustomo Putra',
 				credentials: 'S.E. · CFA · CFP · CSA · CTA',
-				role: 'Founder of Qualifin',
+				role: 'VP Marketing (Ex. Ajaib Kripto)',
 				highlights: [
-					'CFA, kredensial global bergengsi di bidang investasi dan keuangan',
+					'CFA, kredensial global bergengsi di bidang investasi',
 					'CFP, sertifikasi profesional perencanaan keuangan',
 					'CSA & CTA di bidang analisis pasar',
-					'Berpengalaman dalam risk management, fundamental analysis, dan macro analysis'
+					'Berpengalaman di risk management, fundamental, & macro analysis'
 				],
 				description:
 					'Membantu peserta memahami cara membaca risiko, fundamental aset, narasi pasar, dan pengaruh kondisi makro terhadap keputusan investasi.',
@@ -531,12 +531,17 @@ export const defaultLandingContent: LandingContent = {
 	},
 	faq: {
 		eyebrow: '',
-		title: 'Pertanyaan yang Sering Diajukan',
+		title: 'Frequently Asked Questions',
 		items: [
 			{
-				question: 'Apakah program ini cocok untuk pemula?',
+				question: 'Apakah bootcamp ini memberikan rekomendasi beli coin tertentu?',
 				answer:
-					'Ya. Materi disusun dari dasar hingga advanced sehingga dapat diikuti oleh pemula maupun yang sudah berpengalaman.'
+					'Tidak. Materi bersifat edukasi dan membantu peserta memahami cara menganalisis aset, risiko, dan prinsip syariah. Keputusan investasi tetap menjadi tanggung jawab masing-masing peserta.'
+			},
+			{
+				question: 'Apakah kelas ini cocok untuk pemula yang belum pernah beli crypto?',
+				answer:
+					'Sangat cocok. Hari pertama difokuskan untuk membangun fondasi industri crypto dan blockchain agar pemula tidak tertinggal saat masuk ke materi analisis yang lebih teknis.'
 			},
 			{
 				question: 'Apakah bootcamp ini berisi rekomendasi beli coin tertentu?',
