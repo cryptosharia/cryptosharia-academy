@@ -1023,7 +1023,7 @@
 								</div>
 							</div>
 							<div class="flex flex-1 flex-col p-5 sm:p-6">
-								<div class="flex flex-1 flex-col">
+								<div class="flex flex-col mb-5">
 									<div class="flex flex-col xl:min-h-[12.25rem]">
 										<p
 											class="mb-5 hidden min-h-12 w-fit items-center rounded-full border border-orange-300 bg-orange-50 px-4 py-2 text-sm leading-5 font-bold text-orange-700 sm:inline-flex dark:border-orange-700/70 dark:bg-orange-500/10 dark:text-orange-200"
@@ -1116,7 +1116,7 @@
 								</div>
 
 								<div
-									class="mt-5 shrink-0 border-t border-slate-100 pt-5 dark:border-slate-800 {openInstructorIndex ===
+									class="mt-auto shrink-0 border-t border-slate-100 pt-5 dark:border-slate-800 {openInstructorIndex ===
 									instructorIndex
 										? 'block'
 										: 'hidden'} sm:block"
