@@ -74,15 +74,19 @@
 		? 'bg-white/90 shadow-sm backdrop-blur-md dark:bg-gray-900/90'
 		: 'bg-white dark:bg-gray-900'}"
 >
-	<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-		<div class="flex h-16 items-center justify-between">
-			<a href="/" class="group flex items-center gap-2.5">
+	<div class="mx-auto max-w-7xl px-3 sm:px-6 lg:px-8">
+		<div class="relative flex h-16 min-w-0 items-center justify-between gap-3">
+			<a
+				href="/"
+				class="group flex max-w-[10.75rem] min-w-0 items-center gap-2 sm:max-w-none sm:gap-2.5"
+			>
 				<img
 					src="/logo.png"
 					alt="CryptoSharia"
-					class="h-9 w-9 rounded-full transition-transform group-hover:scale-105"
+					class="h-9 w-9 shrink-0 rounded-full transition-transform group-hover:scale-105 sm:h-10 sm:w-10"
 				/>
-				<span class="font-sans text-lg font-extrabold text-gray-900 dark:text-white"
+				<span
+					class="truncate font-sans text-base font-extrabold text-gray-900 sm:text-xl dark:text-white"
 					>Crypto<span class="text-primary-600 dark:text-primary-400">Sharia</span></span
 				>
 			</a>
@@ -99,7 +103,9 @@
 					>
 				{/each}
 			</nav>
-			<div class="flex items-center gap-2">
+			<div
+				class="absolute top-1/2 right-0 flex shrink-0 -translate-y-1/2 items-center gap-2 md:static md:translate-y-0"
+			>
 				{#if userAuth.isLoggedIn}
 					<!-- User avatar + dropdown -->
 					<div class="relative">
@@ -191,14 +197,18 @@
 						href={whatsappUrl}
 						target="_blank"
 						rel="noopener noreferrer"
-						class="bg-primary-600 orange-glow hover:bg-primary-700 hidden items-center rounded-full px-6 py-2.5 text-sm font-bold text-white shadow-sm transition-all active:scale-95 sm:inline-flex"
-						>Daftar Sekarang</a
+						class="bg-primary-600 orange-glow hover:bg-primary-700 inline-flex items-center rounded-lg px-3 py-2.5 text-xs font-black text-white shadow-sm transition-all active:scale-95 sm:px-6 sm:text-sm"
+						><span class="sm:hidden">Daftar</span><span class="hidden sm:inline"
+							>Daftar Sekarang</span
+						></a
 					>
 				{/if}
 
 				<button
 					onclick={() => (mobileMenuOpen = !mobileMenuOpen)}
-					class="flex h-10 w-10 items-center justify-center rounded-lg text-gray-600 hover:bg-gray-100 md:hidden dark:text-gray-300 dark:hover:bg-gray-800"
+					class="{!isAdminRoute && !userAuth.isLoggedIn
+						? 'hidden'
+						: 'flex'} h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-gray-200 text-gray-600 hover:bg-gray-100 md:hidden dark:border-gray-700 dark:text-gray-300 dark:hover:bg-gray-800"
 					aria-label="Toggle menu"
 				>
 					{#if mobileMenuOpen}

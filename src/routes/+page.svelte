@@ -24,9 +24,18 @@
 	}
 
 	let openFaqIndex = $state<number | null>(0);
+	let openInstructorIndex = $state<number | null>(0);
+	let showAllFaqs = $state(false);
+
+	const visibleFaqItems = $derived(showAllFaqs ? content.faq.items : content.faq.items.slice(0, 5));
+	const pricingProgramItems = $derived(content.pricing.benefitCards[0]?.items ?? []);
 
 	function toggleFaq(index: number) {
 		openFaqIndex = openFaqIndex === index ? null : index;
+	}
+
+	function toggleInstructor(index: number) {
+		openInstructorIndex = openInstructorIndex === index ? null : index;
 	}
 
 	function resolveCtaHref(cta: { href: string }) {
@@ -35,6 +44,13 @@
 
 	function isExternalHref(href: string) {
 		return /^https?:\/\//.test(href);
+	}
+
+	function faqCategory(index: number) {
+		if (index <= 2) return 'Tentang Program';
+		if (index <= 6) return 'Teknis Kelas';
+		if (index <= 9) return 'Materi & Syariah';
+		return 'Pembayaran';
 	}
 
 	onMount(() => {
@@ -53,32 +69,52 @@
 	{#if sectionId === 'hero'}
 		<section
 			id="hero"
-			class="relative isolate scroll-mt-20 overflow-hidden bg-slate-950 pt-20 text-white"
+			class="relative isolate scroll-mt-20 overflow-hidden bg-slate-950 pt-16 text-white sm:pt-20"
 		>
 			<div
 				class="absolute inset-0 bg-cover bg-center bg-no-repeat md:bg-fixed"
 				style="background-image: url('/background-beranda.png');"
 			></div>
 			<div
-				class="absolute inset-0 bg-[linear-gradient(135deg,rgba(15,23,42,0.9),rgba(15,23,42,0.78)),linear-gradient(90deg,rgba(234,88,12,0.26)_0%,rgba(20,184,166,0.12)_48%,rgba(15,23,42,0)_100%)]"
+				class="absolute inset-0 bg-[radial-gradient(circle_at_22%_18%,rgba(249,115,22,0.35),transparent_30%),radial-gradient(circle_at_78%_42%,rgba(20,184,166,0.18),transparent_34%),linear-gradient(135deg,rgba(15,23,42,0.96),rgba(15,23,42,0.82))]"
 			></div>
 			<div
-				class="absolute inset-0 [background-image:linear-gradient(rgba(255,255,255,0.08)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.08)_1px,transparent_1px)] [background-size:56px_56px] opacity-20"
+				class="absolute inset-0 [background-image:linear-gradient(30deg,rgba(255,255,255,0.07)_12%,transparent_12.5%,transparent_87%,rgba(255,255,255,0.07)_87.5%,rgba(255,255,255,0.07)),linear-gradient(150deg,rgba(255,255,255,0.07)_12%,transparent_12.5%,transparent_87%,rgba(255,255,255,0.07)_87.5%,rgba(255,255,255,0.07))] [background-size:56px_56px] [background-position:0_0,28px_28px] opacity-[0.14]"
+			></div>
+			<div
+				class="absolute right-[-7rem] bottom-12 h-72 w-72 rounded-full bg-orange-500/20 blur-3xl"
 			></div>
 
 			<div
-				class="relative mx-auto grid max-w-7xl gap-12 px-4 py-16 sm:px-6 lg:grid-cols-[1fr_0.9fr] lg:px-8 lg:py-24"
+				class="relative mx-auto grid max-w-7xl gap-10 px-4 pt-12 pb-14 sm:px-6 sm:py-16 lg:grid-cols-[1fr_0.9fr] lg:px-8 lg:py-24"
 			>
-				<div class="flex max-w-3xl min-w-0 flex-col justify-center">
+				<div
+					class="flex w-full max-w-[calc(100vw-2rem)] min-w-0 flex-col justify-center sm:max-w-3xl"
+				>
+					<div
+						class="mb-5 inline-flex w-fit items-center gap-2 rounded-full border border-orange-300/30 bg-orange-400/10 px-3.5 py-2 text-[11px] font-black tracking-[0.18em] text-orange-100 uppercase shadow-lg shadow-orange-950/20"
+					>
+						<span class="h-1.5 w-1.5 rounded-full bg-orange-300"></span>
+						Masterclass 2026
+					</div>
 					<h1
-						class="font-display text-4xl leading-tight font-extrabold tracking-normal break-words sm:text-6xl lg:text-7xl"
+						class="font-display max-w-full text-4xl leading-[1.04] font-black tracking-normal break-words text-white sm:text-6xl lg:text-7xl"
 					>
 						{content.hero.badge}
 					</h1>
-					<p class="mt-6 max-w-2xl text-base leading-8 text-slate-300 sm:text-lg">
+					<p
+						class="mt-5 max-w-full text-lg leading-8 font-bold break-words text-orange-100 sm:max-w-2xl sm:text-2xl sm:leading-9"
+					>
+						{content.hero.title}
+					</p>
+					<p
+						class="mt-5 max-w-full text-base leading-8 break-words text-slate-300 sm:max-w-2xl sm:text-lg"
+					>
 						{content.hero.subtitle}
 					</p>
-					<p class="mt-4 max-w-2xl text-sm leading-7 text-slate-400 sm:text-base">
+					<p
+						class="mt-4 max-w-full text-sm leading-7 break-words text-slate-400 sm:max-w-2xl sm:text-base sm:leading-8"
+					>
 						{content.hero.description}
 					</p>
 
@@ -87,7 +123,7 @@
 							href={whatsappUrl}
 							target="_blank"
 							rel="noopener noreferrer"
-							class="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-orange-600 px-6 py-4 text-sm font-bold text-white shadow-lg shadow-orange-950/30 transition hover:bg-orange-500 active:scale-95 sm:w-auto"
+							class="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-orange-500 px-6 py-4 text-sm font-black text-white shadow-xl shadow-orange-950/40 transition hover:bg-orange-400 active:scale-95 sm:w-auto"
 						>
 							{content.hero.primaryCtaLabel}
 							<svg
@@ -107,18 +143,35 @@
 						</a>
 						<a
 							href={content.hero.secondaryCta.href}
-							class="inline-flex w-full items-center justify-center rounded-lg border border-white/20 px-6 py-4 text-sm font-bold text-slate-100 transition hover:border-orange-300 hover:bg-white/10 sm:w-auto"
+							class="inline-flex w-full items-center justify-center rounded-lg border border-white/20 bg-white/[0.04] px-6 py-4 text-sm font-bold text-slate-100 transition hover:border-orange-300 hover:bg-white/10 sm:w-auto"
 						>
 							{content.hero.secondaryCta.label}
 						</a>
+					</div>
+					<div class="mt-7 flex flex-wrap gap-2 text-[11px] font-black tracking-[0.14em] uppercase">
+						<span
+							class="rounded-full border border-white/10 bg-white/[0.05] px-3 py-2 text-slate-300"
+							>Crypto</span
+						>
+						<span
+							class="rounded-full border border-white/10 bg-white/[0.05] px-3 py-2 text-slate-300"
+							>Finance</span
+						>
+						<span
+							class="rounded-full border border-white/10 bg-white/[0.05] px-3 py-2 text-slate-300"
+							>Fiqih Muamalah</span
+						>
 					</div>
 				</div>
 
 				<div class="relative min-w-0">
 					<div
-						class="overflow-hidden rounded-lg border border-white/15 bg-slate-900 shadow-2xl shadow-black/30"
+						class="absolute -inset-4 rounded-[2rem] bg-[radial-gradient(circle_at_50%_42%,rgba(249,115,22,0.28),transparent_58%)] blur-2xl"
+					></div>
+					<div
+						class="relative overflow-hidden rounded-lg border border-white/15 bg-slate-900 shadow-2xl shadow-black/40"
 					>
-						<div class="flex items-center gap-2 border-b border-white/10 bg-slate-950 px-4 py-3">
+						<div class="flex items-center gap-2 border-b border-white/10 bg-slate-950/90 px-4 py-3">
 							<span class="h-3 w-3 rounded-full bg-red-400"></span>
 							<span class="h-3 w-3 rounded-full bg-yellow-400"></span>
 							<span class="h-3 w-3 rounded-full bg-green-400"></span>
@@ -144,11 +197,11 @@
 								</video>
 							{:else}
 								<div
-									class="absolute inset-0 [background-image:linear-gradient(120deg,rgba(249,115,22,0.26),transparent_42%),linear-gradient(45deg,rgba(20,184,166,0.2),transparent_56%)] opacity-40"
+									class="absolute inset-0 [background-image:radial-gradient(circle_at_30%_20%,rgba(249,115,22,0.34),transparent_34%),linear-gradient(120deg,rgba(249,115,22,0.24),transparent_42%),linear-gradient(45deg,rgba(20,184,166,0.2),transparent_56%)] opacity-70"
 								></div>
 								<div class="relative flex h-full flex-col items-center justify-center text-center">
 									<div
-										class="mb-5 flex h-16 w-16 items-center justify-center rounded-full border border-white/20 bg-white/10"
+										class="mb-5 flex h-16 w-16 items-center justify-center rounded-full border border-white/25 bg-white/10 shadow-lg shadow-orange-950/30"
 									>
 										<svg
 											class="ml-1 h-8 w-8 text-white"
@@ -170,8 +223,10 @@
 
 					<div class="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-4">
 						{#each content.hero.highlights as item}
-							<div class="rounded-lg border border-white/10 bg-white/[0.06] p-4">
-								<div class="text-xs font-semibold text-slate-400">{item.symbol}</div>
+							<div class="rounded-lg border border-white/10 bg-white/[0.07] p-4 backdrop-blur">
+								<div class="text-[11px] font-black tracking-[0.14em] text-slate-400 uppercase">
+									{item.symbol}
+								</div>
 								<div class="mt-1 text-2xl font-black text-emerald-300">{item.performance}</div>
 							</div>
 						{/each}
@@ -182,11 +237,25 @@
 	{/if}
 
 	{#if sectionId === 'authority'}
-		<section class="bg-white py-20 dark:bg-gray-950">
+		<section class="relative overflow-hidden bg-white py-16 sm:py-20 dark:bg-gray-950">
+			<div
+				class="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-orange-300/60 to-transparent dark:via-orange-700/50"
+			></div>
 			<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 				<div class="grid gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:items-start">
 					<div>
-						<h2 class="text-3xl font-extrabold text-slate-900 sm:text-4xl dark:text-white">
+						<div class="mb-5 flex flex-wrap gap-2">
+							{#each content.authority.cards.slice(0, 3) as proof}
+								<span
+									class="inline-flex rounded-full border border-orange-200 bg-orange-50 px-3 py-2 text-[11px] font-black tracking-[0.12em] text-orange-700 uppercase dark:border-orange-900/60 dark:bg-orange-950/30 dark:text-orange-200"
+								>
+									{proof.label}
+								</span>
+							{/each}
+						</div>
+						<h2
+							class="text-3xl leading-tight font-extrabold text-slate-900 sm:text-4xl dark:text-white"
+						>
 							{content.authority.title}
 						</h2>
 						<p class="mt-5 text-base leading-8 text-slate-600 dark:text-slate-300">
@@ -197,23 +266,46 @@
 					<div class="grid gap-4 sm:grid-cols-2">
 						{#each content.authority.activities as item}
 							<div
-								class="rounded-lg border border-slate-200 bg-slate-50 p-5 dark:border-slate-800 dark:bg-slate-900"
+								class="group overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm shadow-slate-950/5 transition hover:border-orange-200 hover:shadow-lg hover:shadow-orange-950/5 dark:border-slate-800 dark:bg-slate-900 dark:hover:border-orange-900/70"
 							>
 								{#if item.image}
 									<div
-										class="mb-4 aspect-video overflow-hidden rounded-md border border-slate-200 dark:border-slate-700"
+										class="relative aspect-video overflow-hidden border-b border-slate-200 dark:border-slate-800"
 									>
 										<img src={item.image} alt={item.title} class="h-full w-full object-cover" />
+										<div
+											class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-950/75 to-transparent p-4"
+										>
+											<span
+												class="rounded-full bg-white/90 px-2.5 py-1 text-[10px] font-black tracking-[0.14em] text-slate-900 uppercase"
+												>Dokumentasi</span
+											>
+										</div>
 									</div>
 								{:else}
 									<div
-										class="mb-4 aspect-video rounded-md border border-dashed border-slate-300 bg-white dark:border-slate-700 dark:bg-slate-950"
-									></div>
+										class="relative aspect-video overflow-hidden border-b border-slate-200 bg-[radial-gradient(circle_at_28%_22%,rgba(249,115,22,0.28),transparent_36%),linear-gradient(135deg,#0f172a,#111827_48%,#134e4a)] dark:border-slate-800"
+									>
+										<div
+											class="absolute inset-0 [background-image:linear-gradient(30deg,rgba(255,255,255,0.08)_12%,transparent_12.5%,transparent_87%,rgba(255,255,255,0.08)_87.5%,rgba(255,255,255,0.08)),linear-gradient(150deg,rgba(255,255,255,0.08)_12%,transparent_12.5%,transparent_87%,rgba(255,255,255,0.08)_87.5%,rgba(255,255,255,0.08))] [background-size:48px_48px] [background-position:0_0,24px_24px] opacity-30"
+										></div>
+										<div class="relative flex h-full flex-col justify-between p-4">
+											<span
+												class="w-fit rounded-full bg-white/90 px-2.5 py-1 text-[10px] font-black tracking-[0.14em] text-slate-900 uppercase"
+												>Dokumentasi</span
+											>
+											<p class="max-w-[12rem] text-xl leading-tight font-black text-white">
+												{item.title}
+											</p>
+										</div>
+									</div>
 								{/if}
-								<h3 class="text-lg font-bold text-slate-900 dark:text-white">{item.title}</h3>
-								<p class="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-400">
-									{item.description}
-								</p>
+								<div class="p-5">
+									<h3 class="text-lg font-bold text-slate-900 dark:text-white">{item.title}</h3>
+									<p class="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-400">
+										{item.description}
+									</p>
+								</div>
 							</div>
 						{/each}
 					</div>
@@ -223,28 +315,43 @@
 	{/if}
 
 	{#if sectionId === 'valueProps'}
-		<section class="bg-slate-50 py-20 dark:bg-slate-900" id="program">
+		<section class="bg-slate-50 py-16 sm:py-20 dark:bg-slate-900" id="program">
 			<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 				<div class="mx-auto mb-12 max-w-3xl text-center">
 					{#if content.valueProps.eyebrow}
 						<p
-							class="mb-3 text-sm font-black tracking-widest text-primary-600 uppercase dark:text-primary-400"
+							class="text-primary-600 dark:text-primary-400 mb-3 text-xs leading-6 font-black tracking-[0.16em] uppercase"
 						>
 							{content.valueProps.eyebrow}
 						</p>
 					{/if}
-					<h2 class="text-3xl font-extrabold text-slate-900 sm:text-4xl dark:text-white">
+					<h2
+						class="text-3xl leading-tight font-extrabold text-slate-900 sm:text-4xl dark:text-white"
+					>
 						{content.valueProps.title}
 					</h2>
 				</div>
 
 				<div class="grid gap-5 md:grid-cols-3">
-					{#each content.valueProps.items as item}
+					{#each content.valueProps.items as item, index}
+						{@const marker = item.label?.trim() || String(index + 1).padStart(2, '0')}
 						<div
-							class="rounded-lg border border-slate-200 bg-white p-6 dark:border-slate-800 dark:bg-slate-950"
+							class="relative min-h-64 overflow-hidden rounded-lg border border-slate-200 bg-white p-6 shadow-sm shadow-slate-950/5 dark:border-slate-800 dark:bg-slate-950"
 						>
-							<h3 class="text-xl font-bold text-slate-900 dark:text-white">{item.title}</h3>
-							<p class="mt-4 text-sm leading-7 text-slate-600 dark:text-slate-400">
+							<div
+								class="absolute -right-2 -bottom-4 text-8xl leading-none font-black text-orange-100 dark:text-orange-950/50"
+							>
+								{marker}
+							</div>
+							<div
+								class="relative mb-8 flex h-12 w-12 items-center justify-center rounded-lg border border-orange-200 bg-orange-50 text-sm font-black text-orange-700 dark:border-orange-900/70 dark:bg-orange-950/30 dark:text-orange-200"
+							>
+								{marker}
+							</div>
+							<h3 class="relative text-xl leading-snug font-black text-slate-900 dark:text-white">
+								{item.title}
+							</h3>
+							<p class="relative mt-4 text-sm leading-7 text-slate-600 dark:text-slate-400">
 								{item.description}
 							</p>
 						</div>
@@ -321,10 +428,13 @@
 	{/if}
 
 	{#if sectionId === 'usp'}
-		<section class="bg-slate-950 py-20 text-white">
+		<section class="relative overflow-hidden bg-slate-950 py-16 text-white sm:py-20">
+			<div
+				class="absolute inset-0 [background-image:radial-gradient(circle_at_18%_12%,rgba(249,115,22,0.18),transparent_30%),linear-gradient(30deg,rgba(255,255,255,0.05)_12%,transparent_12.5%,transparent_87%,rgba(255,255,255,0.05)_87.5%,rgba(255,255,255,0.05)),linear-gradient(150deg,rgba(255,255,255,0.05)_12%,transparent_12.5%,transparent_87%,rgba(255,255,255,0.05)_87.5%,rgba(255,255,255,0.05))] [background-size:auto,56px_56px,56px_56px] [background-position:0_0,0_0,28px_28px] opacity-60"
+			></div>
 			<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-				<div class="mx-auto max-w-4xl text-center">
-					<h2 class="text-3xl leading-tight font-extrabold sm:text-4xl">
+				<div class="relative mx-auto max-w-4xl text-center">
+					<h2 class="text-3xl leading-tight font-black sm:text-4xl">
 						{content.usp.title}
 					</h2>
 					{#if content.usp.description}
@@ -334,9 +444,76 @@
 					{/if}
 				</div>
 
-				<div class="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-					{#each content.usp.items as item}
-						<div class="rounded-lg border border-white/10 bg-white/[0.04] p-6">
+				<div class="relative mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+					{#each content.usp.items as item, index}
+						{@const highlighted =
+							item.title.includes('Sharia') ||
+							item.title.includes('FGD') ||
+							item.title.includes('Materi')}
+						<div
+							class="rounded-lg border p-6 {highlighted
+								? 'border-orange-400/35 bg-orange-500/[0.08]'
+								: 'border-white/10 bg-white/[0.04]'}"
+						>
+							<div
+								class="mb-5 flex h-12 w-12 items-center justify-center rounded-lg border border-white/10 bg-white/[0.08] text-orange-200"
+							>
+								{#if index === 0}
+									<svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+										<path
+											stroke-linecap="round"
+											stroke-linejoin="round"
+											stroke-width="2"
+											d="M9 12l2 2 4-4m5 2a8 8 0 11-16 0 8 8 0 0116 0z"
+										/>
+									</svg>
+								{:else if index === 1}
+									<svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+										<path
+											stroke-linecap="round"
+											stroke-linejoin="round"
+											stroke-width="2"
+											d="M9 12h6m-6 4h6M7 4h10a2 2 0 012 2v14l-4-2-4 2-4-2-4 2V6a2 2 0 012-2z"
+										/>
+									</svg>
+								{:else if index === 2}
+									<svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+										<path
+											stroke-linecap="round"
+											stroke-linejoin="round"
+											stroke-width="2"
+											d="M17 20h5v-2a4 4 0 00-5-3.87M9 20H4v-2a4 4 0 015-3.87m8-4.13a4 4 0 11-8 0 4 4 0 018 0z"
+										/>
+									</svg>
+								{:else if index === 3}
+									<svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+										<path
+											stroke-linecap="round"
+											stroke-linejoin="round"
+											stroke-width="2"
+											d="M12 3l7 4v5c0 4.5-2.8 7.7-7 9-4.2-1.3-7-4.5-7-9V7l7-4z"
+										/>
+									</svg>
+								{:else if index === 4}
+									<svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+										<path
+											stroke-linecap="round"
+											stroke-linejoin="round"
+											stroke-width="2"
+											d="M12 21a9 9 0 100-18 9 9 0 000 18zm0 0c2-2.4 3-5.4 3-9s-1-6.6-3-9m0 18c-2-2.4-3-5.4-3-9s1-6.6 3-9m-7 9h14"
+										/>
+									</svg>
+								{:else}
+									<svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+										<path
+											stroke-linecap="round"
+											stroke-linejoin="round"
+											stroke-width="2"
+											d="M4 6h16M4 12h16M4 18h10"
+										/>
+									</svg>
+								{/if}
+							</div>
 							<h3 class="text-xl leading-snug font-extrabold text-white">{item.title}</h3>
 							<p class="mt-3 text-[15px] leading-7 text-slate-300">{item.description}</p>
 						</div>
@@ -344,13 +521,18 @@
 				</div>
 
 				<div
-					class="mx-auto mt-12 max-w-4xl rounded-lg border border-orange-500/25 bg-white/[0.04] p-6 text-center sm:p-8"
+					class="relative mx-auto mt-12 max-w-4xl overflow-hidden rounded-lg border border-orange-500/30 bg-white/[0.05] p-6 text-left shadow-2xl shadow-orange-950/10 sm:p-8"
 				>
-					<blockquote class="text-xl leading-8 font-extrabold text-white">
-						{content.usp.quote}
-					</blockquote>
+					<div class="absolute top-2 right-6 text-8xl leading-none font-black text-orange-400/10">
+						"
+					</div>
+					<div class="relative border-l-4 border-orange-400 pl-5">
+						<blockquote class="text-xl leading-8 font-extrabold text-white">
+							{content.usp.quote}
+						</blockquote>
+					</div>
 					{#if content.usp.quoteNote}
-						<p class="mx-auto mt-4 max-w-2xl text-sm leading-7 text-slate-300 sm:text-base">
+						<p class="relative mt-5 max-w-2xl text-sm leading-7 text-slate-300 sm:text-base">
 							{content.usp.quoteNote}
 						</p>
 					{/if}
@@ -360,11 +542,18 @@
 	{/if}
 
 	{#if sectionId === 'pricing'}
-		<section class="scroll-mt-20 bg-white py-20 dark:bg-gray-950" id="pricing">
+		<section class="scroll-mt-20 bg-white py-16 sm:py-20 dark:bg-gray-950" id="pricing">
 			<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 				<div class="grid gap-10 lg:grid-cols-[1fr_0.9fr] lg:items-center">
 					<div>
-						<h2 class="text-3xl font-extrabold text-slate-900 sm:text-4xl dark:text-white">
+						<div
+							class="mb-4 inline-flex rounded-full border border-orange-200 bg-orange-50 px-3 py-2 text-[11px] font-black tracking-[0.14em] text-orange-700 uppercase dark:border-orange-900/60 dark:bg-orange-950/30 dark:text-orange-200"
+						>
+							Kuota Mentoring Terbatas
+						</div>
+						<h2
+							class="text-3xl leading-tight font-extrabold text-slate-900 sm:text-4xl dark:text-white"
+						>
 							{content.pricing.title}
 						</h2>
 						<p class="mt-5 text-base leading-8 text-slate-600 dark:text-slate-300">
@@ -372,8 +561,10 @@
 						</p>
 						<div class="mt-8 grid gap-4 sm:grid-cols-2">
 							{#each content.pricing.benefitCards as card, cardIndex}
-								<div class="rounded-lg border border-slate-200 p-5 dark:border-slate-800">
-									<p class="text-sm font-bold text-slate-500">{card.title}</p>
+								<div
+									class="rounded-lg border border-slate-200 bg-slate-50 p-5 dark:border-slate-800 dark:bg-slate-900"
+								>
+									<p class="text-sm font-black text-slate-900 dark:text-white">{card.title}</p>
 									<ul class="mt-4 space-y-3 text-sm text-slate-700 dark:text-slate-300">
 										{#each card.items as point}
 											<li class="flex gap-3">
@@ -392,8 +583,18 @@
 					</div>
 
 					<div
-						class="rounded-lg border border-orange-200 bg-orange-50 p-6 shadow-xl shadow-orange-950/10 dark:border-orange-900/60 dark:bg-orange-950/20"
+						class="relative overflow-hidden rounded-lg border border-orange-200 bg-orange-50 p-6 shadow-xl shadow-orange-950/10 dark:border-orange-900/60 dark:bg-orange-950/20"
 					>
+						<div
+							class="absolute -top-12 -right-10 h-36 w-36 rounded-full bg-orange-300/30 blur-2xl dark:bg-orange-500/20"
+						></div>
+						<div class="relative">
+							<span
+								class="inline-flex rounded-full bg-orange-600 px-3 py-1.5 text-[11px] font-black tracking-[0.14em] text-white uppercase"
+							>
+								{content.pricing.priceBadge || 'Kuota Terbatas'}
+							</span>
+						</div>
 						<div class="flex items-end gap-3">
 							<span class="text-lg font-bold text-slate-500 line-through"
 								>{content.pricing.originalPrice}</span
@@ -405,6 +606,38 @@
 						<p class="mt-4 text-sm leading-7 text-slate-700 dark:text-slate-300">
 							{content.pricing.note}
 						</p>
+						{#if pricingProgramItems.length > 0}
+							<div
+								class="mt-6 rounded-lg border border-orange-200 bg-white/75 p-4 dark:border-orange-900/50 dark:bg-slate-950/70"
+							>
+								<p
+									class="text-xs font-black tracking-[0.14em] text-orange-700 uppercase dark:text-orange-300"
+								>
+									Termasuk dalam program
+								</p>
+								<ul class="mt-4 space-y-3 text-sm leading-6 text-slate-700 dark:text-slate-300">
+									{#each pricingProgramItems as point}
+										<li class="flex gap-3">
+											<svg
+												class="mt-1 h-4 w-4 shrink-0 text-orange-600 dark:text-orange-400"
+												fill="none"
+												stroke="currentColor"
+												viewBox="0 0 24 24"
+												aria-hidden="true"
+											>
+												<path
+													stroke-linecap="round"
+													stroke-linejoin="round"
+													stroke-width="2.5"
+													d="M5 13l4 4L19 7"
+												/>
+											</svg>
+											<span>{point}</span>
+										</li>
+									{/each}
+								</ul>
+							</div>
+						{/if}
 						<a
 							href={whatsappUrl}
 							target="_blank"
@@ -434,7 +667,7 @@
 	{/if}
 
 	{#if sectionId === 'curriculum'}
-		<section class="scroll-mt-20 bg-slate-50 py-20 dark:bg-slate-900" id="curriculum">
+		<section class="scroll-mt-20 bg-slate-50 py-16 sm:py-20 dark:bg-slate-900" id="curriculum">
 			<div class="mx-auto max-w-[90rem] px-4 sm:px-6 lg:px-8">
 				<div class="mx-auto mb-12 max-w-4xl text-center">
 					<h2
@@ -454,14 +687,19 @@
 				{#if content.curriculum.schedule.length > 0}
 					<div class="relative">
 						<div
+							class="pointer-events-none absolute top-4 bottom-4 left-[0.45rem] w-px bg-gradient-to-b from-orange-300 via-slate-300 to-teal-300 md:hidden dark:from-orange-700 dark:via-slate-700 dark:to-teal-700"
+						></div>
+						<div
 							class="pointer-events-none absolute top-16 right-10 left-10 hidden h-px bg-gradient-to-r from-orange-200 via-slate-300 to-teal-200 xl:block dark:from-orange-900/70 dark:via-slate-700 dark:to-teal-900/60"
 						></div>
-						<div class="relative grid items-stretch gap-6 md:grid-cols-2 xl:grid-cols-4">
+						<div
+							class="relative space-y-5 pl-6 md:grid md:grid-cols-2 md:items-stretch md:gap-6 md:space-y-0 md:pl-0 xl:grid-cols-4"
+						>
 							{#each content.curriculum.schedule as day, dayIndex}
 								<div
-									class="flex h-full flex-col rounded-lg border border-slate-200 bg-white p-6 shadow-sm shadow-slate-950/5 dark:border-slate-700 dark:bg-slate-950"
+									class="relative flex h-full flex-col rounded-lg border border-slate-200 bg-white p-5 shadow-sm shadow-slate-950/5 before:absolute before:top-6 before:-left-[2.05rem] before:h-4 before:w-4 before:rounded-full before:border-4 before:border-slate-50 before:bg-orange-500 md:p-6 md:before:hidden dark:border-slate-700 dark:bg-slate-950 dark:before:border-slate-900"
 								>
-									<div class="flex min-h-[8.75rem] items-start justify-between gap-4">
+									<div class="flex items-start justify-between gap-4 md:min-h-[8.75rem]">
 										<div class="min-w-0">
 											<p class="text-xs font-black tracking-[0.18em] text-orange-600 uppercase">
 												Hari {dayIndex + 1}
@@ -480,12 +718,12 @@
 									</div>
 
 									<p
-										class="mt-5 border-b border-slate-100 pb-5 text-[15px] leading-6 font-bold text-slate-600 dark:border-slate-800 dark:text-slate-300"
+										class="mt-4 border-b border-slate-100 pb-4 text-[15px] leading-6 font-bold text-slate-600 md:mt-5 md:pb-5 dark:border-slate-800 dark:text-slate-300"
 									>
 										{day.date}
 									</p>
 
-									<ol class="mt-6 space-y-5">
+									<ol class="mt-5 space-y-4 md:mt-6 md:space-y-5">
 										{#each day.sessions as session, sessionIndex}
 											<li class="flex gap-3">
 												<span
@@ -510,7 +748,9 @@
 									</ol>
 
 									{#if day.outcome}
-										<div class="mt-auto border-t border-slate-100 pt-6 dark:border-slate-800">
+										<div
+											class="mt-6 border-t border-slate-100 pt-5 md:mt-auto md:pt-6 dark:border-slate-800"
+										>
 											<p
 												class="text-[11px] font-black tracking-[0.16em] text-teal-700 uppercase dark:text-teal-300"
 											>
@@ -554,15 +794,17 @@
 								<h3
 									class="text-2xl leading-tight font-extrabold text-slate-900 sm:text-3xl dark:text-white"
 								>
-									Setelah mengikuti bootcamp, peserta diharapkan mampu:
+									Setelah 4 hari, peserta akan lebih siap untuk:
 								</h3>
 								<ul
-									class="mt-7 grid gap-4 text-base leading-8 text-slate-700 sm:grid-cols-2 dark:text-slate-200"
+									class="mt-7 grid gap-3 text-base leading-8 text-slate-700 sm:grid-cols-2 dark:text-slate-200"
 								>
 									{#each content.curriculum.outcomes as outcome}
-										<li class="flex gap-3">
+										<li
+											class="flex gap-3 rounded-lg border border-slate-200 bg-white p-4 shadow-sm shadow-slate-950/5 dark:border-slate-800 dark:bg-slate-950"
+										>
 											<svg
-												class="mt-1.5 h-5 w-5 shrink-0 text-orange-600 dark:text-orange-400"
+												class="mt-1 h-5 w-5 shrink-0 text-orange-600 dark:text-orange-400"
 												fill="none"
 												stroke="currentColor"
 												viewBox="0 0 24 24"
@@ -644,7 +886,7 @@
 	{/if}
 
 	{#if sectionId === 'instructors'}
-		<section class="scroll-mt-20 bg-white py-20 dark:bg-gray-950" id="instructors">
+		<section class="scroll-mt-20 bg-white py-16 sm:py-20 dark:bg-gray-950" id="instructors">
 			<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 				<div class="mb-12 max-w-4xl">
 					{#if content.instructors.eyebrow}
@@ -663,28 +905,37 @@
 				</div>
 
 				<div class="grid items-stretch gap-6 md:grid-cols-2 xl:grid-cols-3">
-					{#each content.instructors.items as instructor}
+					{#each content.instructors.items as instructor, instructorIndex}
 						<div
 							class="group flex h-full flex-col overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm transition hover:border-orange-200 hover:shadow-lg hover:shadow-orange-950/5 dark:border-slate-800 dark:bg-slate-900 dark:hover:border-orange-900/70"
 						>
 							<div
-								class="aspect-[4/3] overflow-hidden border-b border-slate-100 bg-gradient-to-br from-slate-50 via-orange-50/40 to-slate-100 dark:border-slate-800 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900"
+								class="relative aspect-[5/4] overflow-hidden border-b border-slate-100 bg-gradient-to-br from-slate-50 via-orange-50/40 to-slate-100 sm:aspect-[4/3] dark:border-slate-800 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900"
 							>
 								<img
 									src={instructor.photo}
 									alt={instructor.name}
 									class="h-full w-full object-cover object-[center_22%] brightness-[1.03] contrast-[1.04] saturate-[0.96]"
 								/>
+								<div
+									class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-950/80 to-transparent p-4"
+								>
+									<span
+										class="inline-flex rounded-full bg-white/95 px-3 py-1.5 text-[10px] font-black tracking-[0.14em] text-slate-900 uppercase"
+									>
+										{instructor.badge}
+									</span>
+								</div>
 							</div>
-							<div class="flex flex-1 flex-col p-6">
+							<div class="flex flex-1 flex-col p-5 sm:p-6">
 								<div class="flex flex-col xl:min-h-[12.25rem]">
 									<p
-										class="mb-5 inline-flex min-h-12 w-fit items-center rounded-full border border-orange-300 bg-orange-50 px-4 py-2 text-sm leading-5 font-bold text-orange-700 dark:border-orange-700/70 dark:bg-orange-500/10 dark:text-orange-200"
+										class="mb-5 hidden min-h-12 w-fit items-center rounded-full border border-orange-300 bg-orange-50 px-4 py-2 text-sm leading-5 font-bold text-orange-700 sm:inline-flex dark:border-orange-700/70 dark:bg-orange-500/10 dark:text-orange-200"
 									>
 										{instructor.badge}
 									</p>
 									<h3
-										class="text-2xl leading-snug font-extrabold break-words text-slate-900 xl:min-h-[4.25rem] dark:text-white"
+										class="text-2xl leading-snug font-black break-words text-slate-900 xl:min-h-[4.25rem] dark:text-white"
 									>
 										{instructor.name}
 									</h3>
@@ -705,7 +956,7 @@
 										Kredensial Utama
 									</h4>
 									<ul class="mt-3 space-y-2.5">
-										{#each instructor.highlights as highlight}
+										{#each instructor.highlights.slice(0, 3) as highlight}
 											<li
 												class="flex gap-3 text-[15px] leading-7 text-slate-700 dark:text-slate-200"
 											>
@@ -727,17 +978,57 @@
 											</li>
 										{/each}
 									</ul>
-								</div>
 
-								<div class="mt-5">
-									<h4
-										class="text-xs font-black tracking-[0.14em] text-slate-600 uppercase dark:text-slate-300"
+									{#if instructor.highlights.length > 3 || instructor.description}
+										<button
+											type="button"
+											onclick={() => toggleInstructor(instructorIndex)}
+											class="mt-5 inline-flex w-full items-center justify-center rounded-lg border border-orange-200 px-4 py-3 text-sm font-bold text-orange-700 sm:hidden dark:border-orange-900/70 dark:text-orange-200"
+										>
+											{openInstructorIndex === instructorIndex ? 'Tutup Detail' : 'Lihat Detail'}
+										</button>
+									{/if}
+
+									<div
+										class="{openInstructorIndex === instructorIndex ? 'block' : 'hidden'} sm:block"
 									>
-										Fokus Materi
-									</h4>
-									<p class="mt-3 text-[15px] leading-8 text-slate-600 dark:text-slate-300">
-										{instructor.description}
-									</p>
+										{#if instructor.highlights.length > 3}
+											<ul class="mt-3 space-y-2.5">
+												{#each instructor.highlights.slice(3) as highlight}
+													<li
+														class="flex gap-3 text-[15px] leading-7 text-slate-700 dark:text-slate-200"
+													>
+														<svg
+															class="mt-1 h-3.5 w-3.5 shrink-0 text-orange-600 dark:text-orange-400"
+															fill="none"
+															stroke="currentColor"
+															viewBox="0 0 24 24"
+															aria-hidden="true"
+														>
+															<path
+																stroke-linecap="round"
+																stroke-linejoin="round"
+																stroke-width="2.5"
+																d="M5 13l4 4L19 7"
+															/>
+														</svg>
+														<span>{highlight}</span>
+													</li>
+												{/each}
+											</ul>
+										{/if}
+
+										<div class="mt-5 border-t border-slate-100 pt-5 dark:border-slate-800">
+											<h4
+												class="text-xs font-black tracking-[0.14em] text-slate-600 uppercase dark:text-slate-300"
+											>
+												Fokus Materi
+											</h4>
+											<p class="mt-3 text-[15px] leading-8 text-slate-600 dark:text-slate-300">
+												{instructor.description}
+											</p>
+										</div>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -798,12 +1089,27 @@
 	{/if}
 
 	{#if sectionId === 'urgency'}
-		<section class="bg-orange-600 py-16 text-white">
+		<section class="relative overflow-hidden bg-orange-600 py-14 text-white sm:py-16">
 			<div
-				class="mx-auto flex max-w-7xl flex-col items-start justify-between gap-6 px-4 sm:px-6 lg:flex-row lg:items-center lg:px-8"
+				class="absolute inset-0 bg-[radial-gradient(circle_at_20%_25%,rgba(255,255,255,0.24),transparent_28%),linear-gradient(30deg,rgba(255,255,255,0.12)_12%,transparent_12.5%,transparent_87%,rgba(255,255,255,0.12)_87.5%,rgba(255,255,255,0.12)),linear-gradient(150deg,rgba(255,255,255,0.12)_12%,transparent_12.5%,transparent_87%,rgba(255,255,255,0.12)_87.5%,rgba(255,255,255,0.12))] [background-size:auto,56px_56px,56px_56px] [background-position:0_0,0_0,28px_28px] opacity-45"
+			></div>
+			<div
+				class="pointer-events-none absolute -right-4 -bottom-8 text-[10rem] leading-none font-black text-white/10 sm:right-10 sm:text-[13rem]"
+			>
+				10
+			</div>
+			<div
+				class="relative mx-auto flex max-w-7xl flex-col items-start justify-between gap-6 px-4 sm:px-6 lg:flex-row lg:items-center lg:px-8"
 			>
 				<div>
-					<h2 class="text-3xl font-extrabold sm:text-4xl">{content.urgency.title}</h2>
+					<div
+						class="mb-4 inline-flex rounded-full bg-white/15 px-3 py-2 text-[11px] font-black tracking-[0.14em] uppercase"
+					>
+						Limited Slot
+					</div>
+					<h2 class="max-w-2xl text-3xl leading-tight font-black sm:text-4xl">
+						{content.urgency.title}
+					</h2>
 					<p class="mt-3 max-w-2xl text-sm leading-7 text-orange-50">
 						{content.urgency.description}
 					</p>
@@ -835,26 +1141,44 @@
 	{/if}
 
 	{#if sectionId === 'faq'}
-		<section class="scroll-mt-20 bg-white py-20 dark:bg-gray-950" id="faq">
-			<div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+		<section class="scroll-mt-20 bg-white py-16 sm:py-20 dark:bg-gray-950" id="faq">
+			<div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
 				<div class="mb-10 text-center">
 					<h2 class="text-3xl font-extrabold text-slate-900 sm:text-4xl dark:text-white">
 						{content.faq.title}
 					</h2>
 				</div>
 
-				<div class="space-y-3">
-					{#each content.faq.items as faq, index}
-						<div class="overflow-hidden rounded-lg border border-slate-200 dark:border-slate-800">
+				<div class="space-y-4">
+					{#each visibleFaqItems as faq, index}
+						{@const category = faqCategory(index)}
+						{#if index === 0 || faqCategory(index - 1) !== category}
+							<div class="pt-3 first:pt-0">
+								<p
+									class="text-xs font-black tracking-[0.16em] text-orange-600 uppercase dark:text-orange-300"
+								>
+									{category}
+								</p>
+							</div>
+						{/if}
+						<div
+							class="overflow-hidden rounded-lg border transition {openFaqIndex === index
+								? 'border-orange-300 shadow-sm shadow-orange-950/5 dark:border-orange-800'
+								: 'border-slate-200 dark:border-slate-800'}"
+						>
 							<button
 								type="button"
 								onclick={() => toggleFaq(index)}
-								class="flex w-full items-center justify-between gap-4 bg-slate-50 px-5 py-5 text-left transition hover:bg-slate-100 dark:bg-slate-900 dark:hover:bg-slate-800"
+								class="flex w-full items-center justify-between gap-4 px-5 py-5 text-left transition {openFaqIndex ===
+								index
+									? 'bg-orange-50 dark:bg-orange-950/20'
+									: 'bg-slate-50 hover:bg-slate-100 dark:bg-slate-900 dark:hover:bg-slate-800'}"
 								aria-expanded={openFaqIndex === index}
 							>
 								<span class="font-bold text-slate-900 dark:text-white">{faq.question}</span>
 								<svg
-									class="h-5 w-5 shrink-0 text-slate-500 transition {openFaqIndex === index
+									class="h-5 w-5 shrink-0 text-orange-600 transition dark:text-orange-300 {openFaqIndex ===
+									index
 										? 'rotate-180'
 										: ''}"
 									fill="none"
@@ -872,19 +1196,47 @@
 							</button>
 							{#if openFaqIndex === index}
 								<div class="bg-white px-5 py-5 dark:bg-slate-950">
-									<p class="text-sm leading-7 text-slate-600 dark:text-slate-300">{faq.answer}</p>
+									<p class="text-sm leading-7 text-slate-600 dark:text-slate-300">
+										{faq.answer}
+									</p>
 								</div>
 							{/if}
 						</div>
 					{/each}
 				</div>
+				{#if content.faq.items.length > visibleFaqItems.length}
+					<button
+						type="button"
+						onclick={() => (showAllFaqs = true)}
+						class="mt-8 inline-flex w-full items-center justify-center rounded-lg border border-slate-300 px-5 py-3.5 text-sm font-bold text-slate-900 transition hover:border-orange-300 hover:bg-orange-50 sm:w-auto dark:border-slate-700 dark:text-white dark:hover:border-orange-800 dark:hover:bg-orange-950/30"
+					>
+						Lihat FAQ lainnya
+					</button>
+				{:else if showAllFaqs && content.faq.items.length > 5}
+					<button
+						type="button"
+						onclick={() => {
+							showAllFaqs = false;
+							openFaqIndex = 0;
+						}}
+						class="mt-8 inline-flex w-full items-center justify-center rounded-lg border border-slate-300 px-5 py-3.5 text-sm font-bold text-slate-900 transition hover:border-orange-300 hover:bg-orange-50 sm:w-auto dark:border-slate-700 dark:text-white dark:hover:border-orange-800 dark:hover:bg-orange-950/30"
+					>
+						Sembunyikan FAQ
+					</button>
+				{/if}
 			</div>
 		</section>
 	{/if}
 
 	{#if sectionId === 'finalCta'}
-		<section class="bg-slate-950 py-20 text-white">
-			<div class="mx-auto max-w-5xl px-4 text-center sm:px-6 lg:px-8">
+		<section class="relative overflow-hidden bg-slate-950 py-16 text-white sm:py-20">
+			<div
+				class="absolute inset-0 bg-[radial-gradient(circle_at_50%_35%,rgba(249,115,22,0.2),transparent_34%),linear-gradient(30deg,rgba(255,255,255,0.05)_12%,transparent_12.5%,transparent_87%,rgba(255,255,255,0.05)_87.5%,rgba(255,255,255,0.05)),linear-gradient(150deg,rgba(255,255,255,0.05)_12%,transparent_12.5%,transparent_87%,rgba(255,255,255,0.05)_87.5%,rgba(255,255,255,0.05))] [background-size:auto,56px_56px,56px_56px] [background-position:0_0,0_0,28px_28px]"
+			></div>
+			<div class="relative mx-auto max-w-5xl px-4 text-center sm:px-6 lg:px-8">
+				<div
+					class="mx-auto mb-8 h-px max-w-xs bg-gradient-to-r from-transparent via-orange-400 to-transparent"
+				></div>
 				<h2 class="text-4xl leading-tight font-black sm:text-5xl">
 					{content.finalCta.title}
 				</h2>
@@ -895,7 +1247,7 @@
 					href={whatsappUrl}
 					target="_blank"
 					rel="noopener noreferrer"
-					class="mt-8 inline-flex items-center justify-center gap-2 rounded-lg bg-orange-600 px-8 py-4 text-sm font-bold text-white transition hover:bg-orange-500 active:scale-95"
+					class="mt-8 inline-flex w-full items-center justify-center gap-2 rounded-lg bg-orange-600 px-8 py-4 text-sm font-black text-white shadow-xl shadow-orange-950/30 transition hover:bg-orange-500 active:scale-95 sm:w-auto"
 				>
 					{content.finalCta.ctaLabel}
 					<svg
