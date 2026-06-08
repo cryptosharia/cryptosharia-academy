@@ -838,24 +838,24 @@
 												</li>
 											{/each}
 										</ol>
-
-										{#if day.outcome}
-											<div
-												class="mt-6 border-t border-slate-100 pt-5 md:mt-auto md:pt-6 dark:border-slate-800"
-											>
-												<p
-													class="text-[11px] font-black tracking-[0.16em] text-teal-700 uppercase dark:text-teal-300"
-												>
-													Outcome
-												</p>
-												<p
-													class="mt-3 text-base leading-relaxed text-slate-700 dark:text-slate-300"
-												>
-													{day.outcome}
-												</p>
-											</div>
-										{/if}
 									</div>
+
+									{#if day.outcome}
+										<div
+											class="mt-6 border-t border-slate-100 pt-5 md:mt-auto md:pt-6 dark:border-slate-800 {openCurriculumIndex === dayIndex ? 'block' : 'hidden'} md:!block"
+										>
+											<p
+												class="text-[11px] font-black tracking-[0.16em] text-teal-700 uppercase dark:text-teal-300"
+											>
+												Outcome
+											</p>
+											<p
+												class="mt-3 text-base leading-relaxed text-slate-700 dark:text-slate-300"
+											>
+												{day.outcome}
+											</p>
+										</div>
+									{/if}
 								</div>
 							{/each}
 						</div>
