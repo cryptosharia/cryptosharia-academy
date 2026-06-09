@@ -1287,7 +1287,8 @@ function normalizeLayout(layout: LayoutEntry[]): LayoutEntry[] {
 		if (!entry || typeof entry.id !== 'string') continue;
 		const id = entry.id as SectionId;
 		if (!defaultIds.has(id) || seen.has(id)) continue;
-		normalized.push({ id, visible: entry.visible !== false });
+		const forceHidden: Set<SectionId> = new Set(['valueProps']);
+		normalized.push({ id, visible: forceHidden.has(id) ? false : entry.visible !== false });
 		seen.add(id);
 	}
 
