@@ -1313,10 +1313,12 @@ function normalizeFinalCta(finalCta: LandingContent['finalCta']): LandingContent
 }
 
 function normalizeTestimonials(
-	testimonials: LandingContent['testimonials']
+	testimonials: LandingContent['testimonials'] | undefined
 ): LandingContent['testimonials'] {
 	const defaults = defaultLandingContent.testimonials;
-	if (!testimonials?.title?.trim()) testimonials.title = defaults.title;
+	if (!testimonials) return structuredClone(defaults);
+
+	if (!testimonials.title?.trim()) testimonials.title = defaults.title;
 
 	const oldDescriptions = new Set([
 		'Placeholder untuk screenshot testimoni Discord, ucapan terima kasih, dokumentasi profit member, dan sharing pengalaman belajar.'
