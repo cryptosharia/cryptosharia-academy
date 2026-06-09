@@ -1616,6 +1616,12 @@
 						placeholder="Deskripsi"
 						class="{inputClass} resize-none"
 					></textarea>
+					{@render imageField(
+						'Gambar Screenshot',
+						`testimonial-${i}`,
+						() => item.image ?? '',
+						(v) => (item.image = v)
+					)}
 				</div>
 			{/each}
 		</div>

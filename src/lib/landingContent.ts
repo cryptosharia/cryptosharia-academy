@@ -24,7 +24,7 @@ export type SectionId =
 
 export type Highlight = { symbol: string; performance: string };
 export type Feature = { label: string; title: string; description: string };
-export type ProofItem = { meta: string; title: string; description: string };
+export type ProofItem = { meta: string; title: string; description: string; image?: string };
 export type Activity = { meta: string; title: string; description: string; image: string };
 export type Faq = { question: string; answer: string };
 export type Cta = { label: string; href: string };
