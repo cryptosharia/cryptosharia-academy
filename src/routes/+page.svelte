@@ -322,22 +322,6 @@
 						<p class="mt-5 text-base leading-8 text-slate-600 dark:text-slate-300">
 							{content.authority.description}
 						</p>
-						<div class="mt-6 grid gap-2 sm:grid-cols-2">
-							{#each content.authority.cards.slice(0, 4) as proof (proof.label)}
-								<div
-									class="rounded-lg border border-orange-200 bg-orange-50 px-3.5 py-3 dark:border-orange-900/60 dark:bg-orange-950/25"
-								>
-									<p
-										class="text-[11px] font-black tracking-[0.12em] text-orange-700 uppercase dark:text-orange-200"
-									>
-										{proof.label}
-									</p>
-									<p class="mt-1 text-xs leading-5 text-slate-600 dark:text-slate-400">
-										{proof.description}
-									</p>
-								</div>
-							{/each}
-						</div>
 					</div>
 
 					<div class="grid gap-4 sm:grid-cols-2">
