@@ -1124,21 +1124,6 @@
 									</div>
 								</div>
 
-								<div
-									class="mt-auto shrink-0 border-t border-slate-100 pt-5 dark:border-slate-800 {openInstructorIndex ===
-									instructorIndex
-										? 'block'
-										: 'hidden'} sm:block"
-								>
-									<h4
-										class="text-xs font-black tracking-[0.14em] text-slate-600 uppercase dark:text-slate-300"
-									>
-										Fokus Materi
-									</h4>
-									<p class="mt-3 text-[15px] leading-8 text-slate-600 dark:text-slate-300">
-										{instructor.description}
-									</p>
-								</div>
 							</div>
 						</div>
 					{/each}
