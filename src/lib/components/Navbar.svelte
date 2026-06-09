@@ -203,7 +203,6 @@
 				{:else}
 					<!-- Guest buttons -->
 					<div class="flex items-center gap-2 sm:gap-3">
-						<a href="/auth/login" class="hidden sm:inline-flex items-center rounded-lg px-3 py-2 text-sm font-bold text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white">Masuk</a>
 						<a
 							href={whatsappUrl}
 							target="_blank"
