@@ -837,11 +837,7 @@
 														>
 															{session}
 														</p>
-														{#if day.sessionSpeakers?.[sessionIndex]}
-															<p class="mt-1 text-sm leading-6 text-slate-500 dark:text-slate-400">
-																oleh {day.sessionSpeakers[sessionIndex]}
-															</p>
-														{/if}
+
 													</div>
 												</li>
 											{/each}
