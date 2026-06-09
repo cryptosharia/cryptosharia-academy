@@ -1189,7 +1189,13 @@ function normalizePricing(pricing: LandingContent['pricing']): LandingContent['p
 	const defaults = defaultLandingContent.pricing;
 	const oldTitles = new Set([
 		'Gabung Programnya Sekarang',
-		'Biaya Program Crypto Sharia Masterclass'
+		'Biaya Program Crypto Sharia Masterclass',
+		'Gabung Crypto Sharia Masterclass 2026'
+	]);
+	
+	const oldDescriptions = new Set([
+		'Bootcamp berlangsung 4 hari pada 27-28 Juni 2026 dan 4-5 Juli 2026 dengan dua sesi materi di setiap hari belajar.',
+		'Program ini akan dilaksanakan pada tanggal 27 Juni - 5 Juli 2026'
 	]);
 	
 	const firstValueStack = pricing.programIncludes?.length 
@@ -1212,7 +1218,9 @@ function normalizePricing(pricing: LandingContent['pricing']): LandingContent['p
 	if (!pricing.title?.trim() || oldTitles.has(pricing.title.trim())) {
 		pricing.title = defaults.title;
 	}
-	if (!pricing.description?.trim()) pricing.description = defaults.description;
+	if (!pricing.description?.trim() || oldDescriptions.has(pricing.description.trim())) {
+		pricing.description = defaults.description;
+	}
 	if (!pricing.dateCard) pricing.dateCard = defaults.dateCard;
 	if (!pricing.priceBadge?.trim()) pricing.priceBadge = defaults.priceBadge;
 	if (!pricing.originalPrice?.trim()) pricing.originalPrice = defaults.originalPrice;
