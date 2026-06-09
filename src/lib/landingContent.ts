@@ -518,7 +518,7 @@ export const defaultLandingContent: LandingContent = {
 			{
 				badge: 'Fiqih Muamalah & Islamic Finance',
 				name: 'Devin Halim',
-				credentials: 'AAOIFI · DPS MUI',
+				credentials: 'B.B.A, M.Sc · AAOIFI · DPS MUI',
 				role: 'Pakar Fiqih Muamalah',
 				highlights: [
 					'Latar belakang akademik S1 dan S2',

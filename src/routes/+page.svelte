@@ -1017,15 +1017,7 @@
 									alt={instructor.name}
 									class="h-full w-full object-cover object-[center_22%] brightness-[1.03] contrast-[1.04] saturate-[0.96]"
 								/>
-								<div
-									class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-950/80 to-transparent p-4"
-								>
-									<span
-										class="inline-flex rounded-full bg-white/95 px-3 py-1.5 text-[10px] font-black tracking-[0.14em] text-slate-900 uppercase dark:bg-slate-900/90"
-									>
-										{instructor.badge}
-									</span>
-								</div>
+
 							</div>
 							<div class="flex flex-1 flex-col p-5 sm:p-6">
 								<div class="mb-5 flex flex-col">
