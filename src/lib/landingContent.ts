@@ -486,7 +486,7 @@ export const defaultLandingContent: LandingContent = {
 		secondaryCta: { label: 'Diskusi via WhatsApp', href: '' },
 		items: [
 			{
-				badge: 'Crypto Syariah & Wealth Planning',
+				badge: 'Founder of Crypto Sharia',
 				name: 'Sholahuddin Al Ayyubi',
 				credentials: 'B.B.A. · WMI · AWP',
 				role: 'Founder of Crypto Sharia',
@@ -501,7 +501,7 @@ export const defaultLandingContent: LandingContent = {
 				photo: '/instructors/sholahuddin-al-ayyubi.jpeg'
 			},
 			{
-				badge: 'Investment & Financial Planning',
+				badge: 'Founder of Qualifin',
 				name: 'Muhammad Ghithrif Gustomo Putra',
 				credentials: 'S.E. · CFA · CFP · CSA · CTA',
 				role: 'VP Marketing (Ex. Ajaib Kripto)',
@@ -516,7 +516,7 @@ export const defaultLandingContent: LandingContent = {
 				photo: '/instructors/muhammad-ghithrif.jpeg'
 			},
 			{
-				badge: 'Fiqih Muamalah & Islamic Finance',
+				badge: 'Pakar Fiqih Muamalah',
 				name: 'Devin Halim',
 				credentials: 'B.B.A, M.Sc · AAOIFI · DPS MUI',
 				role: 'Pakar Fiqih Muamalah',

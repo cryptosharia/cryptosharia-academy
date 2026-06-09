@@ -1035,11 +1035,7 @@
 										<p class="mt-2 min-h-6 text-sm font-bold text-slate-500 dark:text-slate-400">
 											{instructor.credentials}
 										</p>
-										<p
-											class="mt-2 min-h-7 text-base font-bold text-orange-600 dark:text-orange-400"
-										>
-											{instructor.role}
-										</p>
+
 									</div>
 
 									<div class="mt-5 border-t border-slate-100 pt-5 dark:border-slate-800">
