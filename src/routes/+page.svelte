@@ -7,6 +7,7 @@
 		resolveVideoEmbed,
 		type LandingContent
 	} from '$lib/landingContent';
+	import CoinTicker from '$lib/components/CoinTicker.svelte';
 
 	let content = $state<LandingContent>(structuredClone(defaultLandingContent));
 	const INITIAL_FAQ_INDEXES = [0, 1, 3, 4, 5, 7, 10];
@@ -291,82 +292,124 @@
 						</div>
 					</div>
 
-					<div class="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-4">
-						{#each content.hero.highlights as item (item.symbol)}
-							<div class="rounded-lg border border-white/10 bg-white/[0.07] p-4 backdrop-blur">
-								<div class="text-[11px] font-black tracking-[0.14em] text-slate-400 uppercase">
-									{item.symbol}
-								</div>
-								<div class="mt-1 text-2xl font-black text-emerald-300">{item.performance}</div>
-							</div>
-						{/each}
-					</div>
+					<CoinTicker highlights={content.hero.highlights} />
 				</div>
 			</div>
 		</section>
 	{/if}
 
 	{#if sectionId === 'authority'}
-		<section class="relative overflow-hidden bg-white py-16 sm:py-20 dark:bg-gray-950">
-			<div
-				class="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-orange-300/60 to-transparent dark:via-orange-700/50"
-			></div>
-			<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-				<div class="grid gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:items-start">
-					<div>
-						<h2
-							class="text-3xl leading-tight font-extrabold sm:text-4xl heading-gradient"
-						>
-							{content.authority.title}
-						</h2>
-						<p class="mt-5 text-base leading-8 text-slate-600 dark:text-slate-300">
-							{content.authority.description}
-						</p>
-					</div>
+		<section class="relative overflow-hidden bg-gray-950 py-20 sm:py-28">
+			<!-- Subtle geometric pattern overlay -->
+			<div class="pointer-events-none absolute inset-0 opacity-[0.04] [background-image:linear-gradient(30deg,rgba(255,255,255,0.5)_12%,transparent_12.5%,transparent_87%,rgba(255,255,255,0.5)_87.5%)] [background-size:60px_60px]"></div>
+			<!-- Top border glow -->
+			<div class="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-orange-300/60 to-transparent dark:via-orange-700/50"></div>
 
-					<div class="grid gap-4 sm:grid-cols-2">
-						{#each content.authority.activities as item (item.title)}
-							<div
-								class="group overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm shadow-slate-950/5 transition hover:border-orange-200 hover:shadow-lg hover:shadow-orange-950/5 dark:border-slate-800 dark:bg-slate-900 dark:hover:border-orange-900/70"
-							>
-								{#if item.image}
-									<div
-										class="relative aspect-video overflow-hidden border-b border-slate-200 dark:border-slate-800"
-									>
-										<img src={item.image} alt={item.title} class="h-full w-full object-cover" />
-										<div
-											class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-950/75 to-transparent p-4"
-										>
-											<span
-												class="rounded-full bg-white/90 px-2.5 py-1 text-[10px] font-black tracking-[0.14em] text-slate-900 uppercase dark:bg-slate-900/90"
-												>{activityBadge(item)}</span
-											>
-										</div>
+			<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+				<!-- Section header -->
+				<div class="mx-auto mb-16 max-w-3xl text-center">
+					<h2 class="text-3xl leading-tight font-extrabold sm:text-4xl lg:text-5xl heading-gradient">
+						{content.authority.title}
+					</h2>
+					<p class="mt-5 text-base leading-8 text-slate-300">
+						{content.authority.description}
+					</p>
+				</div>
+
+				<!-- Desktop: Alternating storytelling layout -->
+				<div class="relative hidden lg:block">
+					<!-- Vertical timeline line -->
+					<div class="absolute left-1/2 top-0 h-full w-px -translate-x-1/2 bg-gradient-to-b from-orange-500/30 via-orange-300/20 to-transparent"></div>
+
+					<div class="space-y-20">
+						{#each content.authority.activities as item, index (item.title)}
+							{@const isEven = index % 2 === 0}
+							{@const isFirst = index === 0}
+							<div class="relative grid grid-cols-2 items-center gap-12" class:grid-cols-[1.2fr_0.8fr]={isFirst && isEven} class:grid-cols-[0.8fr_1.2fr]={!isFirst && !isEven} class:grid-cols-[1.1fr_0.9fr]={!isFirst && isEven}>
+								<!-- Large numbered badge -->
+								<div class="pointer-events-none absolute -top-6 text-7xl font-black text-orange-500/15" class:left-4={isEven} class:right-4={!isEven}>
+									{String(index + 1).padStart(2, '0')}
+								</div>
+
+								{#if isEven}
+									<!-- Image LEFT, text RIGHT -->
+									<div class="relative">
+										<!-- Subtle radial glow behind image -->
+										<div class="absolute -inset-4 rounded-2xl bg-[radial-gradient(circle_at_center,rgba(249,115,22,0.10),transparent_70%)]"></div>
+										{#if item.image}
+											<div class="relative overflow-hidden rounded-xl {isFirst ? 'aspect-[16/10]' : 'aspect-[16/9]'}">
+												<img src={item.image} alt={item.title} class="h-full w-full object-cover" />
+												<div class="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-gray-950/80 to-transparent"></div>
+											</div>
+										{:else}
+											<div class="relative flex {isFirst ? 'aspect-[16/10]' : 'aspect-[16/9]'} items-center justify-center rounded-xl bg-[radial-gradient(circle_at_28%_22%,rgba(249,115,22,0.20),transparent_40%),linear-gradient(135deg,#0f172a,#111827)]">
+												<div class="absolute inset-0 [background-image:linear-gradient(30deg,rgba(255,255,255,0.06)_12%,transparent_12.5%,transparent_87%,rgba(255,255,255,0.06)_87.5%)] [background-size:48px_48px] opacity-30"></div>
+												<p class="relative text-lg font-bold text-white/70">{item.title}</p>
+											</div>
+										{/if}
+									</div>
+									<div class="flex flex-col justify-center">
+										<span class="mb-3 w-fit rounded-full border border-orange-500/30 bg-orange-500/10 px-3 py-1 text-[10px] font-black tracking-[0.14em] text-orange-300 uppercase">{activityBadge(item)}</span>
+										<h3 class="text-2xl font-bold text-white">{item.title}</h3>
+										<p class="mt-3 text-base leading-7 text-slate-300">{item.description}</p>
 									</div>
 								{:else}
-									<div
-										class="relative aspect-video overflow-hidden border-b border-slate-200 bg-[radial-gradient(circle_at_28%_22%,rgba(249,115,22,0.28),transparent_36%),linear-gradient(135deg,#0f172a,#111827_48%,#134e4a)] dark:border-slate-800"
-									>
-										<div
-											class="absolute inset-0 [background-image:linear-gradient(30deg,rgba(255,255,255,0.08)_12%,transparent_12.5%,transparent_87%,rgba(255,255,255,0.08)_87.5%,rgba(255,255,255,0.08)),linear-gradient(150deg,rgba(255,255,255,0.08)_12%,transparent_12.5%,transparent_87%,rgba(255,255,255,0.08)_87.5%,rgba(255,255,255,0.08))] [background-size:48px_48px] [background-position:0_0,24px_24px] opacity-30"
-										></div>
-										<div class="relative flex h-full flex-col justify-between p-4">
-											<span
-												class="w-fit rounded-full bg-white/90 px-2.5 py-1 text-[10px] font-black tracking-[0.14em] text-slate-900 uppercase dark:bg-slate-900/90"
-												>{activityBadge(item)}</span
-											>
-											<p class="max-w-[12rem] text-xl leading-tight font-black text-white">
-												{item.title}
-											</p>
-										</div>
+									<!-- Text LEFT, image RIGHT -->
+									<div class="flex flex-col justify-center">
+										<span class="mb-3 w-fit rounded-full border border-orange-500/30 bg-orange-500/10 px-3 py-1 text-[10px] font-black tracking-[0.14em] text-orange-300 uppercase">{activityBadge(item)}</span>
+										<h3 class="text-2xl font-bold text-white">{item.title}</h3>
+										<p class="mt-3 text-base leading-7 text-slate-300">{item.description}</p>
+									</div>
+									<div class="relative">
+										<div class="absolute -inset-4 rounded-2xl bg-[radial-gradient(circle_at_center,rgba(249,115,22,0.10),transparent_70%)]"></div>
+										{#if item.image}
+											<div class="relative overflow-hidden rounded-xl aspect-[16/9]">
+												<img src={item.image} alt={item.title} class="h-full w-full object-cover" />
+												<div class="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-gray-950/80 to-transparent"></div>
+											</div>
+										{:else}
+											<div class="relative flex aspect-[16/9] items-center justify-center rounded-xl bg-[radial-gradient(circle_at_28%_22%,rgba(249,115,22,0.20),transparent_40%),linear-gradient(135deg,#0f172a,#111827)]">
+												<div class="absolute inset-0 [background-image:linear-gradient(30deg,rgba(255,255,255,0.06)_12%,transparent_12.5%,transparent_87%,rgba(255,255,255,0.06)_87.5%)] [background-size:48px_48px] opacity-30"></div>
+												<p class="relative text-lg font-bold text-white/70">{item.title}</p>
+											</div>
+										{/if}
 									</div>
 								{/if}
-								<div class="p-5">
-									<h3 class="text-lg font-bold text-slate-900 dark:text-white">{item.title}</h3>
-									<p class="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-400">
-										{item.description}
-									</p>
+							</div>
+						{/each}
+					</div>
+				</div>
+
+				<!-- Mobile: Vertical timeline layout -->
+				<div class="lg:hidden">
+					<div class="relative space-y-10 pl-10">
+						<!-- Timeline line -->
+						<div class="absolute left-[15px] top-2 h-[calc(100%-1rem)] w-px bg-gradient-to-b from-orange-500/30 via-orange-300/20 to-transparent"></div>
+
+						{#each content.authority.activities as item, index (item.title)}
+							<div class="relative">
+								<!-- Timeline dot -->
+								<div class="absolute -left-10 top-1 flex h-[30px] w-[30px] items-center justify-center rounded-full border border-orange-500/40 bg-gray-950 text-xs font-black text-orange-400">
+									{index + 1}
 								</div>
+
+								<!-- Image -->
+								{#if item.image}
+									<div class="relative mb-4 overflow-hidden rounded-xl aspect-[16/9]">
+										<img src={item.image} alt={item.title} class="h-full w-full object-cover" />
+										<div class="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-gray-950/80 to-transparent"></div>
+									</div>
+								{:else}
+									<div class="relative mb-4 flex aspect-[16/9] items-center justify-center rounded-xl bg-[radial-gradient(circle_at_28%_22%,rgba(249,115,22,0.20),transparent_40%),linear-gradient(135deg,#0f172a,#111827)]">
+										<div class="absolute inset-0 [background-image:linear-gradient(30deg,rgba(255,255,255,0.06)_12%,transparent_12.5%,transparent_87%,rgba(255,255,255,0.06)_87.5%)] [background-size:48px_48px] opacity-30"></div>
+										<p class="relative text-lg font-bold text-white/70">{item.title}</p>
+									</div>
+								{/if}
+
+								<!-- Text -->
+								<span class="mb-2 inline-block rounded-full border border-orange-500/30 bg-orange-500/10 px-3 py-1 text-[10px] font-black tracking-[0.14em] text-orange-300 uppercase">{activityBadge(item)}</span>
+								<h3 class="text-xl font-bold text-white">{item.title}</h3>
+								<p class="mt-2 text-sm leading-7 text-slate-300">{item.description}</p>
 							</div>
 						{/each}
 					</div>

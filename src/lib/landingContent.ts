@@ -232,30 +232,30 @@ export const defaultLandingContent: LandingContent = {
 			'Materi masterclass ini disusun dari pengalaman edukasi, diskusi komunitas, dan kebutuhan nyata peserta dalam memahami crypto secara lebih terarah dan sesuai prinsip syariah. Berbasis pengalaman edukasi bersama 4.000+ member komunitas CryptoSharia.',
 		activities: [
 			{
-				meta: 'Kelas / Diskusi',
-				title: 'QnA Session',
-				description:
-					'Forum tanya jawab rutin untuk membahas market, portofolio, dan fiqih muamalah.',
-				image: ''
-			},
-			{
-				meta: 'Dokumentasi Event',
-				title: 'Nushafest',
+				meta: 'Event 2025',
+				title: 'Nushafest 2025',
 				description:
 					'Dokumentasi edukasi publik bersama komunitas yang tertarik pada aset digital halal.',
-				image: ''
+				image: '/events/nushafest.png'
 			},
 			{
-				meta: 'Dokumentasi Event',
-				title: 'Halal Kulture Market',
+				meta: 'Event 2025',
+				title: 'Halal Kulture Market 2025',
 				description: 'Aktivasi edukasi crypto syariah untuk memperluas literasi investor Muslim.',
-				image: ''
+				image: '/events/halalkulture.png'
 			},
 			{
-				meta: 'Diskusi Komunitas',
-				title: 'Gathering Komunitas',
+				meta: 'Event 2025',
+				title: 'Bootcamp Crypto Sharia 2025',
+				description:
+					'Workshop intensif dan praktik langsung untuk peserta yang ingin memahami crypto secara mendalam.',
+				image: '/events/bootcamp.png'
+			},
+			{
+				meta: 'Event 2025',
+				title: 'Kopdar Crypto Sharia 2025',
 				description: 'Diskusi kecil dan networking antar member untuk memperkuat proses belajar.',
-				image: ''
+				image: '/events/kopdar.png'
 			}
 		],
 		cards: [
