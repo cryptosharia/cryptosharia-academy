@@ -1317,7 +1317,16 @@ function normalizeTestimonials(
 ): LandingContent['testimonials'] {
 	const defaults = defaultLandingContent.testimonials;
 	if (!testimonials?.title?.trim()) testimonials.title = defaults.title;
-	if (!testimonials?.description?.trim()) testimonials.description = defaults.description;
+
+	const oldDescriptions = new Set([
+		'Placeholder untuk screenshot testimoni Discord, ucapan terima kasih, dokumentasi profit member, dan sharing pengalaman belajar.'
+	]);
+	if (
+		!testimonials?.description?.trim() ||
+		oldDescriptions.has(testimonials.description.trim())
+	) {
+		testimonials.description = defaults.description;
+	}
 
 	// Detect old/stale testimonial data from Firestore and replace with new defaults
 	const oldMetas = new Set([
