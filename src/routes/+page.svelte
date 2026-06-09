@@ -467,20 +467,52 @@
 				<div class="grid gap-5 md:grid-cols-3">
 					{#each content.testimonials.items as item (item.title)}
 						<div
-							class="rounded-lg border border-slate-200 bg-slate-50 p-6 dark:border-slate-800 dark:bg-slate-900"
+							class="flex flex-col rounded-xl border border-slate-200 bg-white p-6 shadow-sm transition hover:border-orange-200 hover:shadow-md dark:border-slate-800 dark:bg-slate-900 dark:hover:border-orange-900/60"
 						>
-							<div
-								class="mb-5 h-32 rounded-md border border-dashed border-slate-300 bg-white p-4 dark:border-slate-700 dark:bg-slate-950"
-							>
-								<div class="h-3 w-24 rounded bg-slate-200 dark:bg-slate-800"></div>
-								<div class="mt-4 h-3 w-full rounded bg-slate-200 dark:bg-slate-800"></div>
-								<div class="mt-3 h-3 w-3/4 rounded bg-slate-200 dark:bg-slate-800"></div>
-								<div class="mt-5 h-8 w-24 rounded bg-emerald-100 dark:bg-emerald-950"></div>
+							<!-- Stars -->
+							<div class="mb-4 flex gap-0.5">
+								{#each Array(5) as _}
+									<svg
+										class="h-4 w-4 text-orange-400"
+										fill="currentColor"
+										viewBox="0 0 20 20"
+										aria-hidden="true"
+									>
+										<path
+											d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+										/>
+									</svg>
+								{/each}
 							</div>
-							<h3 class="text-lg font-bold text-slate-900 dark:text-white">"{item.title}"</h3>
-							<p class="mt-3 text-sm leading-7 text-slate-600 dark:text-slate-400">
+
+							<!-- Quote -->
+							<blockquote class="flex-1 text-sm leading-7 text-slate-700 dark:text-slate-300">
+								<span class="text-2xl font-black leading-none text-orange-300">"</span>
 								{item.description}
-							</p>
+								<span class="text-2xl font-black leading-none text-orange-300">"</span>
+							</blockquote>
+
+							<!-- Divider -->
+							<div class="mt-5 border-t border-slate-100 pt-5 dark:border-slate-800">
+								<div class="flex items-center gap-3">
+									<!-- Avatar initials -->
+									<div
+										class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-orange-100 text-sm font-black text-orange-700 dark:bg-orange-950/50 dark:text-orange-300"
+									>
+										{item.meta?.split(',')[0]?.trim().charAt(0) ?? '?'}
+									</div>
+									<div class="min-w-0">
+										<p class="truncate text-sm font-bold text-slate-900 dark:text-white">
+											{item.meta?.split(',')[0]?.trim() ?? ''}
+										</p>
+										{#if item.meta?.includes(',')}
+											<p class="truncate text-xs text-slate-500 dark:text-slate-400">
+												{item.meta.split(',').slice(1).join(',').trim()}
+											</p>
+										{/if}
+									</div>
+								</div>
+							</div>
 						</div>
 					{/each}
 				</div>
