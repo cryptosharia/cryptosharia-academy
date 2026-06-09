@@ -476,8 +476,7 @@ export const defaultLandingContent: LandingContent = {
 		title: 'Tiga Perspektif Kredibel dalam Satu Bootcamp',
 		description:
 			'Crypto syariah tidak cukup dipahami hanya dari sisi peluang aset digital. Di bootcamp ini, peserta akan belajar dari tiga perspektif penting: industri crypto, strategi keuangan, dan prinsip fiqih muamalah.',
-		closing:
-			'Dengan kombinasi tiga perspektif ini, peserta tidak hanya belajar melihat peluang crypto, tetapi juga memahami risiko dan batasan syariahnya secara lebih matang.',
+		closing: '',
 		ctaTitle: 'Siap memahami crypto syariah secara lebih utuh?',
 		ctaDescription:
 			'Belajar dari tiga perspektif: industri crypto, strategi keuangan, dan prinsip fiqih muamalah.',
@@ -1091,6 +1090,7 @@ function normalizeInstructors(
 	const oldCtaDescriptions = new Set([
 		'Lihat kurikulum bootcamp atau konsultasikan kebutuhan belajar Anda melalui WhatsApp.'
 	]);
+	const oldClosing = 'Dengan kombinasi tiga perspektif ini, peserta tidak hanya belajar melihat peluang crypto, tetapi juga memahami risiko dan batasan syariahnya secara lebih matang.';
 
 	if (!instructors.eyebrow?.trim()) instructors.eyebrow = defaults.eyebrow;
 	if (!instructors.title?.trim() || instructors.title.trim() === oldTitle) {
@@ -1099,7 +1099,7 @@ function normalizeInstructors(
 	if (!instructors.description?.trim() || oldDescriptions.has(instructors.description.trim())) {
 		instructors.description = defaults.description;
 	}
-	if (!instructors.closing?.trim()) instructors.closing = defaults.closing;
+	if (!instructors.closing?.trim() || instructors.closing.trim() === oldClosing) instructors.closing = defaults.closing;
 	if (!instructors.ctaTitle?.trim() || instructors.ctaTitle.trim() === oldCtaTitle) {
 		instructors.ctaTitle = defaults.ctaTitle;
 	}
