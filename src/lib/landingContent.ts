@@ -182,7 +182,7 @@ export const defaultLandingContent: LandingContent = {
 		{ id: 'hero', visible: true },
 		{ id: 'authority', visible: true },
 		{ id: 'usp', visible: true },
-		{ id: 'valueProps', visible: true },
+		{ id: 'valueProps', visible: false },
 		{ id: 'instructors', visible: true },
 		{ id: 'curriculum', visible: true },
 		{ id: 'pricing', visible: true },
