@@ -1044,13 +1044,13 @@
 										>
 											Kredensial Utama
 										</h4>
-										<ul class="mt-3 space-y-2.5">
-											{#each instructor.highlights.slice(0, 3) as highlight (highlight)}
+										<ul class="mt-4 space-y-3">
+											{#each instructor.highlights as highlight (highlight)}
 												<li
 													class="flex gap-3 text-[15px] leading-7 text-slate-700 dark:text-slate-200"
 												>
 													<svg
-														class="mt-1 h-3.5 w-3.5 shrink-0 text-orange-600 dark:text-orange-400"
+														class="mt-1 h-4 w-4 shrink-0 text-orange-600 dark:text-orange-400"
 														fill="none"
 														stroke="currentColor"
 														viewBox="0 0 24 24"
@@ -1067,51 +1067,8 @@
 												</li>
 											{/each}
 										</ul>
-
-										{#if instructor.highlights.length > 3 || instructor.description}
-											<button
-												type="button"
-												onclick={() => toggleInstructor(instructorIndex)}
-												class="mt-5 inline-flex w-full items-center justify-center rounded-lg border border-orange-200 px-4 py-3 text-sm font-bold text-orange-700 sm:hidden dark:border-orange-900/70 dark:text-orange-200"
-											>
-												{openInstructorIndex === instructorIndex ? 'Tutup Detail' : 'Lihat Detail'}
-											</button>
-										{/if}
-
-										<div
-											class="{openInstructorIndex === instructorIndex
-												? 'block'
-												: 'hidden'} sm:block"
-										>
-											{#if instructor.highlights.length > 3}
-												<ul class="mt-3 space-y-2.5">
-													{#each instructor.highlights.slice(3) as highlight (highlight)}
-														<li
-															class="flex gap-3 text-[15px] leading-7 text-slate-700 dark:text-slate-200"
-														>
-															<svg
-																class="mt-1 h-3.5 w-3.5 shrink-0 text-orange-600 dark:text-orange-400"
-																fill="none"
-																stroke="currentColor"
-																viewBox="0 0 24 24"
-																aria-hidden="true"
-															>
-																<path
-																	stroke-linecap="round"
-																	stroke-linejoin="round"
-																	stroke-width="2.5"
-																	d="M5 13l4 4L19 7"
-																/>
-															</svg>
-															<span>{highlight}</span>
-														</li>
-													{/each}
-												</ul>
-											{/if}
-										</div>
 									</div>
 								</div>
-
 							</div>
 						</div>
 					{/each}
