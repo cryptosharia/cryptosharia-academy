@@ -523,15 +523,9 @@
 
 				<div class="relative mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
 					{#each content.usp.items as item (item.title)}
-						{@const highlighted =
-							item.title.includes('Sharia') ||
-							item.title.includes('FGD') ||
-							item.title.includes('Materi')}
 						{@const iconKey = benefitIconKey(item.title)}
 						<div
-							class="rounded-lg border p-6 {highlighted
-								? 'border-orange-400/35 bg-orange-500/[0.08]'
-								: 'border-white/10 bg-white/[0.04]'}"
+							class="rounded-lg border border-orange-400/35 bg-orange-500/[0.08] p-6"
 						>
 							<div
 								class="mb-5 flex h-12 w-12 items-center justify-center rounded-lg border border-white/10 bg-white/[0.08] text-orange-200"
