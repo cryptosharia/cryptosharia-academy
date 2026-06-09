@@ -901,7 +901,7 @@
 								>
 									{#each content.curriculum.outcomes as outcome (outcome)}
 										<li
-											class="flex gap-3 rounded-lg border border-slate-200 bg-white p-4 shadow-sm shadow-slate-950/5 dark:border-slate-800 dark:bg-slate-950"
+											class="flex gap-3 rounded-lg border border-orange-100 bg-orange-50/50 p-4 shadow-sm shadow-orange-950/5 dark:border-orange-500/20 dark:bg-orange-500/10"
 										>
 											<svg
 												class="mt-1 h-5 w-5 shrink-0 text-orange-600 dark:text-orange-400"
