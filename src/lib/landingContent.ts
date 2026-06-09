@@ -33,6 +33,7 @@ export type LayoutEntry = { id: SectionId; visible: boolean };
 export type CurriculumDay = {
 	stage: string;
 	date: string;
+	time?: string;
 	sessions: string[];
 	sessionSpeakers: string[];
 	outcome: string;
@@ -411,6 +412,7 @@ export const defaultLandingContent: LandingContent = {
 			{
 				stage: 'Foundation',
 				date: 'Sabtu, 27 Juni 2026',
+				time: '08.30 - 12.00 WIB',
 				sessions: ['Peta Industri Crypto & Web3', 'Financial Planning & Manajemen Risiko'],
 				sessionSpeakers: ['Sholahuddin Al Ayyubi', 'Muhammad Ghithrif Gustomo Putra'],
 				outcome:
@@ -419,6 +421,7 @@ export const defaultLandingContent: LandingContent = {
 			{
 				stage: 'Market Analysis',
 				date: 'Minggu, 28 Juni 2026',
+				time: '08.30 - 12.00 WIB',
 				sessions: ['Analisis Fundamental & Narasi Pasar', 'Analisis Makro Global'],
 				sessionSpeakers: ['Muhammad Ghithrif Gustomo Putra', 'Muhammad Ghithrif Gustomo Putra'],
 				outcome:
@@ -427,6 +430,7 @@ export const defaultLandingContent: LandingContent = {
 			{
 				stage: 'Technical & Sharia Screening',
 				date: 'Sabtu, 4 Juli 2026',
+				time: '08.30 - 12.00 WIB',
 				sessions: ['Analisis Teknikal Dasar', 'Analisis Coin Syariah'],
 				sessionSpeakers: ['Muhammad Ghithrif Gustomo Putra', 'Devin Halim'],
 				outcome:
@@ -435,6 +439,7 @@ export const defaultLandingContent: LandingContent = {
 			{
 				stage: 'Strategy & Portfolio',
 				date: 'Minggu, 5 Juli 2026',
+				time: '08.30 - 12.00 WIB',
 				sessions: ['Analisis Teknikal Lanjutan', 'Strategi Portfolio Jangka Panjang'],
 				sessionSpeakers: ['Muhammad Ghithrif Gustomo Putra', 'Sholahuddin Al Ayyubi'],
 				outcome:
@@ -1002,6 +1007,7 @@ function normalizeCurriculumDay(day: Partial<CurriculumDay>, index: number): Cur
 	return {
 		stage: day.stage?.trim() || fallback.stage,
 		date: day.date?.trim() || fallback.date,
+		time: day.time?.trim() || fallback.time,
 		sessions,
 		sessionSpeakers: sessions.map((_, sessionIndex) => {
 			return speakers[sessionIndex] || fallback.sessionSpeakers[sessionIndex] || '';

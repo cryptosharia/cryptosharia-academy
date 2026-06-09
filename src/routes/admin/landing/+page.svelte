@@ -1762,6 +1762,7 @@
 				(content.curriculum.schedule = addItem(content.curriculum.schedule, {
 					stage: '',
 					date: '',
+					time: '',
 					sessions: ['', ''],
 					sessionSpeakers: ['', ''],
 					outcome: ''
@@ -1784,6 +1785,11 @@
 					<input
 						bind:value={day.date}
 						placeholder="Tanggal, contoh: Sabtu, 27 Juni 2026"
+						class={inputClass}
+					/>
+					<input
+						bind:value={day.time}
+						placeholder="Waktu (opsional), contoh: 08.30 - 12.00 WIB"
 						class={inputClass}
 					/>
 					<div class="space-y-2">
