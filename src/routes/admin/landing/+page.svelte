@@ -1682,6 +1682,18 @@
 	)}
 	<div class="grid grid-cols-2 gap-4">
 		{@render textField(
+			'Label Card Tanggal',
+			() => content.pricing.dateCard?.label || '',
+			(v) => { if (content.pricing.dateCard) content.pricing.dateCard.label = v; }
+		)}
+		{@render textField(
+			'Info Tanggal',
+			() => content.pricing.dateCard?.date || '',
+			(v) => { if (content.pricing.dateCard) content.pricing.dateCard.date = v; }
+		)}
+	</div>
+	<div class="grid grid-cols-2 gap-4">
+		{@render textField(
 			'Label Tombol',
 			() => content.pricing.ctaLabel,
 			(v) => (content.pricing.ctaLabel = v)

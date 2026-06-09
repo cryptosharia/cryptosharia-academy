@@ -629,7 +629,16 @@
 						<p class="mt-5 text-base leading-8 text-slate-600 dark:text-slate-300">
 							{content.pricing.description}
 						</p>
-
+						{#if content.pricing.dateCard?.date}
+							<div class="mt-8 inline-block rounded-xl border border-orange-200 bg-orange-50/50 p-5 dark:border-orange-900/50 dark:bg-orange-950/20">
+								<p class="text-xs font-black tracking-[0.14em] text-orange-700 uppercase dark:text-orange-400">
+									{content.pricing.dateCard.label}
+								</p>
+								<p class="mt-2 text-xl font-extrabold text-slate-900 dark:text-white">
+									{content.pricing.dateCard.date}
+								</p>
+							</div>
+						{/if}
 					</div>
 
 					<div
@@ -692,7 +701,7 @@
 							href={whatsappUrl}
 							target="_blank"
 							rel="external noopener noreferrer"
-							class="mt-8 inline-flex w-full items-center justify-center gap-2 rounded-lg bg-orange-600 px-6 py-4 text-sm font-bold text-white transition hover:bg-orange-500 active:scale-95"
+							class="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-lg bg-orange-600 px-6 py-4 text-sm font-bold text-white transition hover:bg-orange-500 active:scale-95"
 						>
 							{content.pricing.ctaLabel}
 							<svg

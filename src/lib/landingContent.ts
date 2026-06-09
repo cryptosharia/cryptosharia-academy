@@ -134,6 +134,7 @@ export type LandingContent = {
 		eyebrow: string;
 		title: string;
 		description: string;
+		dateCard: { label: string; date: string };
 		programIncludes: string[];
 		benefitCards?: BenefitCard[];
 		priceBadge: string;
@@ -378,23 +379,27 @@ export const defaultLandingContent: LandingContent = {
 	},
 	pricing: {
 		eyebrow: '',
-		title: 'Gabung Crypto Sharia Masterclass 2026',
+		title: 'Amankan Kursi Crypto Sharia Masterclass 2026',
 		description:
-			'Bootcamp berlangsung 4 hari pada 27-28 Juni 2026 dan 4-5 Juli 2026 dengan dua sesi materi di setiap hari belajar.',
+			'Program intensif untuk memahami crypto dari sudut pandang syariah, praktik, dan risiko secara lebih terarah.',
+		dateCard: {
+			label: 'Tanggal Program',
+			date: '27 Juni – 5 Juli 2026'
+		},
 		programIncludes: [
-			'4 hari live masterclass',
-			'Materi & rekaman kelas',
-			'Tugas praktik langsung',
-			'Evaluasi akhir',
-			'FGD & mentoring',
-			'Networking komunitas',
-			'Sertifikat kelulusan'
+			'4 sesi live masterclass terstruktur',
+			'Akses materi dan rekaman kelas',
+			'Tugas praktik untuk memahami konsep',
+			'Evaluasi akhir sebagai ukuran progres',
+			'FGD dan mentoring bersama mentor',
+			'Networking komunitas CryptoSharia',
+			'Sertifikat kelulusan program'
 		],
-		priceBadge: 'Special Price',
-		originalPrice: 'Rp3.000.000',
-		price: 'Rp2.000.000',
-		note: 'Harga promo untuk peserta awal dengan kuota mentoring terbatas.',
-		ctaLabel: 'Gabung Sekarang'
+		priceBadge: 'PROMO 10 PESERTA AWAL',
+		originalPrice: 'Rp5.000.000',
+		price: 'Rp3.000.000',
+		note: 'Harga promo hanya untuk 10 peserta awal. Kuota mentoring dibatasi agar pendampingan tetap fokus.',
+		ctaLabel: 'Amankan Kursi Sekarang'
 	},
 	curriculum: {
 		eyebrow: '',
@@ -1208,6 +1213,7 @@ function normalizePricing(pricing: LandingContent['pricing']): LandingContent['p
 		pricing.title = defaults.title;
 	}
 	if (!pricing.description?.trim()) pricing.description = defaults.description;
+	if (!pricing.dateCard) pricing.dateCard = defaults.dateCard;
 	if (!pricing.priceBadge?.trim()) pricing.priceBadge = defaults.priceBadge;
 	if (!pricing.originalPrice?.trim()) pricing.originalPrice = defaults.originalPrice;
 	if (!pricing.price?.trim()) pricing.price = defaults.price;
@@ -1414,7 +1420,7 @@ export function sectionCompleteness(
 		}
 		case 'pricing': {
 			const c = content.pricing;
-			return countFields([c.title, c.price, c.ctaLabel, c.programIncludes.length ? 'x' : '']);
+			return countFields([c.title, c.price, c.ctaLabel, c.programIncludes.length ? 'x' : '', c.dateCard?.date]);
 		}
 		case 'curriculum': {
 			const c = content.curriculum;

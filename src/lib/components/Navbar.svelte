@@ -107,10 +107,18 @@
 				class="absolute top-1/2 right-0 flex shrink-0 -translate-y-1/2 items-center gap-2 md:static md:translate-y-0"
 			>
 				{#if userAuth.isLoggedIn}
-					<!-- User avatar + dropdown -->
-					<div class="relative">
-						<button
-							onclick={(e) => {
+					{#if !isAdminRoute && page.url.pathname === '/'}
+						<a
+							href="/profile"
+							class="inline-flex items-center justify-center rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm font-bold text-gray-700 shadow-sm hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-700"
+						>
+							Member Area
+						</a>
+					{:else}
+						<!-- User avatar + dropdown -->
+						<div class="relative">
+							<button
+								onclick={(e) => {
 								e.stopPropagation();
 								userMenuOpen = !userMenuOpen;
 							}}
@@ -191,17 +199,21 @@
 							</div>
 						{/if}
 					</div>
+					{/if}
 				{:else}
 					<!-- Guest buttons -->
-					<a
-						href={whatsappUrl}
-						target="_blank"
-						rel="noopener noreferrer"
-						class="bg-primary-600 orange-glow hover:bg-primary-700 inline-flex items-center rounded-lg px-3 py-2.5 text-xs font-black text-white shadow-sm transition-all active:scale-95 sm:px-6 sm:text-sm"
-						><span class="sm:hidden">Daftar</span><span class="hidden sm:inline"
-							>Daftar Sekarang</span
-						></a
-					>
+					<div class="flex items-center gap-2 sm:gap-3">
+						<a href="/auth/login" class="hidden sm:inline-flex items-center rounded-lg px-3 py-2 text-sm font-bold text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white">Masuk</a>
+						<a
+							href={whatsappUrl}
+							target="_blank"
+							rel="noopener noreferrer"
+							class="bg-primary-600 orange-glow hover:bg-primary-700 inline-flex items-center rounded-lg px-3 py-2.5 text-xs font-black text-white shadow-sm transition-all active:scale-95 sm:px-6 sm:text-sm"
+							><span class="sm:hidden">Daftar</span><span class="hidden sm:inline"
+								>Daftar Sekarang</span
+							></a
+						>
+					</div>
 				{/if}
 
 				<button

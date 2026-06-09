@@ -1,0 +1,226 @@
+Bagian ini sudah jauh lebih rapi, tapi masih terasa seperti “pricing section biasa”, belum cukup kuat sebagai section penutup yang harus mendorong orang klik Gabung Sekarang. Secara visual premium, tapi dari sisi persuasi masih kurang tajam.
+
+1. Masalah utama: sisi kiri terlalu kosong
+
+Area kiri punya banyak ruang gelap kosong. Secara estetika memang minimalis, tapi di bagian CTA, ruang kosong sebesar ini membuat section terasa “kurang hidup” dan kurang mendesak.
+
+Saat ini kiri hanya berisi:
+
+Kuota mentoring terbatas
+Gabung Crypto Sharia Masterclass 2026
+Program ini akan dilaksanakan pada tanggal 27 Juni - 5 Juli 2026
+
+Ini informasinya benar, tapi belum cukup kuat untuk mengimbangi pricing card di kanan.
+
+Saran: tambahkan value summary di kiri, misalnya 3 poin pendek:
+
+Belajar langsung dari mentor CryptoSharia
+Cocok untuk pemula yang ingin memahami crypto secara syariah
+Dibimbing sampai paham dasar analisis, risiko, dan praktik
+
+Jadi sisi kiri bukan hanya judul, tapi juga alasan kenapa program ini layak diikuti.
+
+2. Headline masih terlalu generik
+
+“Gabung Crypto Sharia Masterclass 2026” jelas, tapi kurang menggigit. Untuk section harga, headline sebaiknya lebih dekat ke keputusan beli.
+
+Alternatif yang lebih kuat:
+
+Pilihan 1:
+
+Amankan Kursi Mentoring Crypto Syariah 2026
+
+Pilihan 2:
+
+Mulai Belajar Crypto Syariah dengan Bimbingan Langsung
+
+Pilihan 3:
+
+Gabung Masterclass Crypto Syariah Sebelum Kuota Penuh
+
+Menurutku yang paling cocok:
+
+Amankan Kursi Crypto Sharia Masterclass 2026
+
+Lebih terasa eksklusif dan urgency-nya masuk.
+
+3. Tanggal program kurang menonjol
+
+Tanggal “27 Juni - 5 Juli 2026” sekarang hanya berupa teks biasa. Padahal ini informasi penting untuk mendorong keputusan.
+
+Sebaiknya tanggal dibuat seperti info pill/card kecil, misalnya:
+
+📅 27 Juni – 5 Juli 2026
+Live Masterclass + Mentoring Terbatas
+
+Atau tanpa emoji agar lebih premium:
+
+Tanggal Program
+27 Juni – 5 Juli 2026
+
+Letakkan dalam mini-card dengan border tipis orange gelap. Ini akan membuat sisi kiri lebih berisi.
+
+4. Pricing card sudah bagus, tapi hierarchy bisa diperkuat
+
+Bagian kanan sudah cukup premium. Yang bagus:
+
+Harga lama dicoret jelas
+Harga promo sangat dominan
+Label “Special Price” terlihat
+CTA button jelas
+List benefit rapi
+
+Tapi ada beberapa hal yang bisa diperbaiki.
+
+Label “SPECIAL PRICE”
+
+Label ini bagus, tapi masih terasa agak umum. Bisa diganti menjadi lebih kontekstual:
+
+PROMO 10 PESERTA AWAL
+
+Ini jauh lebih kuat karena langsung menjawab: “Kenapa harganya diskon?”
+
+Daripada hanya “Special Price”, lebih baik:
+
+PROMO 10 PESERTA AWAL
+
+atau
+
+KUOTA PROMO TERBATAS
+
+5. Harga Rp3.000.000 sudah kuat, tapi perlu framing nilai
+
+Saat ini setelah harga ada kalimat:
+
+Harga promo untuk 10 peserta awal dengan kuota mentoring terbatas.
+
+Ini informatif, tapi belum cukup menjual. Bisa diperkuat menjadi:
+
+Harga promo khusus untuk 10 peserta awal. Setelah kuota terpenuhi, harga kembali ke Rp5.000.000.
+
+Kalimat ini lebih menekan urgency dan membuat harga lama terasa relevan.
+
+Versi yang lebih halus:
+
+Harga promo hanya untuk 10 peserta awal. Kuota mentoring dibatasi agar pendampingan tetap fokus.
+
+Ini lebih elegan dan tidak terlalu hard selling.
+
+6. List “Termasuk dalam Program” terlalu datar
+
+Isi benefit-nya sudah bagus, tapi masih terasa seperti daftar fitur. Untuk program 3 juta, orang perlu merasa bahwa ini bukan cuma “kelas”, tapi ada hasil dan pendampingan.
+
+Saat ini:
+
+4 hari live masterclass
+Materi & rekaman kelas
+Tugas praktik langsung
+Evaluasi akhir
+FGD & mentoring
+Networking komunitas
+Sertifikat kelulusan
+
+Saran copy yang lebih kuat:
+
+4 sesi live masterclass terstruktur
+Akses materi dan rekaman kelas
+Tugas praktik untuk memahami konsep
+Evaluasi akhir sebagai ukuran progres
+FGD dan mentoring bersama mentor
+Akses networking komunitas CryptoSharia
+Sertifikat kelulusan program
+
+Perubahan kecil, tapi terasa lebih profesional.
+
+7. CTA “Gabung Sekarang” sudah benar, tapi bisa lebih spesifik
+
+“Gabung Sekarang” aman, tapi agak umum. Karena ini masterclass dengan kuota terbatas, CTA bisa dibuat lebih kuat:
+
+Amankan Kursi Sekarang →
+
+atau
+
+Daftar Masterclass Sekarang →
+
+atau
+
+Gabung Kuota Promo →
+
+Menurutku yang paling bagus:
+
+Amankan Kursi Sekarang →
+
+Karena sesuai dengan narasi kuota terbatas.
+
+8. Jarak antar elemen kanan masih agak longgar
+
+Pricing card kanan terlihat premium, tapi ada sedikit rasa “terlalu lega” di beberapa area, terutama antara list benefit dan tombol CTA. Kalau section ini ada di desktop besar, masih oke. Tapi secara conversion, tombol CTA sebaiknya tidak terasa terlalu jauh dari benefit.
+
+Saran:
+
+Kurangi sedikit padding vertikal card kanan
+Dekatkan tombol CTA ke list benefit
+Atau tambahkan microcopy kecil di atas tombol:
+
+Kuota mentoring terbatas untuk menjaga kualitas diskusi.
+
+Lalu tombol:
+
+Amankan Kursi Sekarang →
+
+Ini membuat CTA terasa lebih natural.
+
+9. Avatar kanan atas navbar mengganggu sedikit
+
+Avatar kecil di kanan atas terlihat seperti foto random dan agak memecah nuansa premium. Kalau ini halaman publik sales page, avatar user sebaiknya tidak muncul, kecuali ini memang halaman dashboard/login.
+
+Untuk landing page publik, lebih baik kanan atas diganti:
+
+tombol “Masuk”
+tombol “Daftar”
+atau hilangkan saja
+
+Karena avatar membuat orang bertanya: “Ini sudah login? Ini halaman member? Ini untuk siapa?”
+
+10. Komposisi desktop bisa dibuat lebih iconic
+
+Masukan CEO “jangan polosan banget” masih relevan di section ini. Bagian ini bersih, tapi belum iconic. Untuk membuatnya lebih khas CryptoSharia, bisa tambahkan elemen visual halus:
+
+background pattern Islamic geometric sangat tipis di belakang pricing card
+glow orange radial yang lebih lembut di kanan
+garis orbit/blockchain pattern tipis di area kiri
+icon kecil shield/check/halal/learning di benefit list
+mini badge “Mentoring Terbatas” dengan aksen premium
+
+Jangan terlalu ramai. Cukup 1–2 elemen saja agar tetap mahal.
+
+Rekomendasi susunan copy baru
+
+Sisi kiri:
+
+KUOTA MENTORING TERBATAS
+Amankan Kursi Crypto Sharia Masterclass 2026
+Program intensif untuk memahami crypto dari sudut pandang syariah, praktik, dan risiko secara lebih terarah.
+
+Tanggal Program
+27 Juni – 5 Juli 2026
+
+Card kanan:
+
+PROMO 10 PESERTA AWAL
+Rp5.000.000
+Rp3.000.000
+Harga promo hanya untuk 10 peserta awal. Kuota mentoring dibatasi agar pendampingan tetap fokus.
+
+TERMASUK DALAM PROGRAM
+✓ 4 sesi live masterclass terstruktur
+✓ Akses materi dan rekaman kelas
+✓ Tugas praktik untuk memahami konsep
+✓ Evaluasi akhir sebagai ukuran progres
+✓ FGD dan mentoring bersama mentor
+✓ Networking komunitas CryptoSharia
+✓ Sertifikat kelulusan program
+
+Amankan Kursi Sekarang →
+
+Kesimpulannya: visualnya sudah premium, tapi section ini masih kurang menjual. Perbaikan terbesar ada di sisi kiri yang terlalu kosong, label promo yang perlu lebih spesifik, dan CTA yang perlu dibuat lebih urgent.
