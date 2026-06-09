@@ -629,27 +629,7 @@
 						<p class="mt-5 text-base leading-8 text-slate-600 dark:text-slate-300">
 							{content.pricing.description}
 						</p>
-						<div class="mt-8 grid gap-4 sm:grid-cols-2">
-							{#each content.pricing.benefitCards as card, cardIndex (card.title)}
-								<div
-									class="rounded-lg border border-slate-200 bg-slate-50 p-5 dark:border-slate-800 dark:bg-slate-900"
-								>
-									<p class="text-sm font-black text-slate-900 dark:text-white">{card.title}</p>
-									<ul class="mt-4 space-y-3 text-sm text-slate-700 dark:text-slate-300">
-										{#each card.items as point (point)}
-											<li class="flex gap-3">
-												<span
-													class="mt-1 h-2 w-2 rounded-full {cardIndex % 2 === 0
-														? 'bg-orange-500'
-														: 'bg-teal-500'}"
-												></span>
-												{point}
-											</li>
-										{/each}
-									</ul>
-								</div>
-							{/each}
-						</div>
+
 					</div>
 
 					<div
