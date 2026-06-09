@@ -317,37 +317,31 @@ export const defaultLandingContent: LandingContent = {
 				meta: 'Antii, Finance',
 				title: 'Diskusi soal halal-haram crypto dibahas dengan bijak.',
 				description:
-					'Happy rasanya bisa bergabung di komunitas ini. Diskusi soal halal-haram crypto dibahas dengan bijak oleh asatidz. Diskusi terarah tidak langsung menghakimi dan banyak insight trading dari teman-teman.'
+					'Happy rasanya bisa bergabung dikomunitas ini. Diskusi soal halal-haram crypto dibahas dengan bijak oleh ustadz² ,di-lead baik sama ketumnya dan saling mengingatkan antar admin dan member, diskusi terarah tidak langsung menghakimi. Banyak insight juga dr temen² yg udah duluan trading baik itu outlook atau bagi² sygnal lainnya. Smg cryptosharia makin besar dan Istiqomah mengedukasi trading sesuai syariat. Barakallahu fiikum'
 			},
 			{
 				meta: 'Muhamad Cholid, Staff Marketing',
 				title: 'Sangat membantu untuk kita yang belajar crypto.',
 				description:
-					'Alhamdulillah bermanfaat sekali semenjak bergabung dengan CryptoSharia ini, banyak ilmu yang didapat. Adanya kumpulan fatwa & rekaman webinar sangat membantu untuk kita yang belajar crypto.'
+					'Manfaat yang di dapatkan dari Crypto Sharia : Alhamdulillah bermanfaat sekali semenjak bergabung dengan CryptoSharia ini, banyak ilmu yang di dapat. Dari ilmu di wa sampai discord, apalagi adanya Chat Kumpulan Fatwa & Rekaman Webinar sangat membantu untuk kita yang belajar crypto. Harapannya semoga CrytoSharia semakin besar dan jadi manfaat untuk banyak orang. Doa terbaiknya saemoga CrytoSharia jadi komunitas utama bagi Muslim Indonesia. Jazaakumullahu khairan wa baarakallahu fiikum 🙏'
 			},
 			{
 				meta: 'Rainsha Sinna, Freelancer',
 				title: 'Alhamdulillah ortu ana udah profit lebih dari 10%.',
 				description:
-					'Ana banyak belajar dari webinar & grup komunitas ini. Alhamdulillah biidznillah ortu ana yang juga ikut invest udah mulai "memetik buahnya", lebih dari 10% profitnya dan sempat TP sebagian.'
+					'Kalo kebermanfaatan komunitas ini buat ana pribadi masih di level ilmu ya, kalau level investasi itu ortu ana. Jadi ana ngebantuin ortu yg lagi invest di crypto, setelah kami sama2 mulai terbuka bahwa crypto itu gak mutlak haram. Terus komunitas CryptoSharia nongol di feed IG. Dari sana ana banyak belajar dari webinar, grup WA & Discord komunitas ini, dan diskusi ana dgn ortu seputar crypto juga ya ttg apa yg ana dapetin dari komunitas. Alhamdulillah biidznillah ortu ana udah mulai "memetik buahnya", lebih dari 10% profitnya dan sempat TP sebagian. Semoga komunitas CryptoSharia bisa terus berkembang dan jadi jalan bagi kaum muslimin...'
 			},
 			{
 				meta: 'Aizul, Programmer',
-				title: 'Banyak manfaat apalagi sebagai pemula.',
+				title: 'Memberikan saya banyak manfaat, apalagi sebagai pemula.',
 				description:
-					'Bergabung dengan komunitas Crypto Sharia memberikan saya banyak manfaat, apalagi sebagai pemula. Di sini saya belajar mulai dari pengertian dasar, strategi investasi, hingga aspek hukum kripto menurut syariat Islam.'
+					'Bergabung dengan komunitas Crypto Sharia memberikan saya banyak manfaat, apalagi sebagai pemula. Di sini saya belajar mulai dari pengertian dasar, istilah penting, strategi investasi, hingga aspek hukum kripto menurut syariat Islam. Saya berharap Crypto Sharia bisa menjadi pelopor utama di Indonesia dalam menyebarkan edukasi dan informasi bermanfaat bagi umat Muslim tentang dunia investasi kripto yang halal dan sesuai syariah.'
 			},
 			{
 				meta: 'Ibrahim, Karyawan Swasta',
 				title: 'Jadi pede investasi ke Crypto karena sesuai Syariat.',
 				description:
-					'Seneng sekali ternyata ada komunitas Crypto Sharia, dan jadi pede untuk investasi ke Crypto. Di komunitas ini saya jadi belajar bahwa investasi harus disertai dengan ilmunya, fundamentalnya, dan update ekonomi makronya.'
-			},
-			{
-				meta: 'Firman, Karyawan Swasta',
-				title: 'Punya wadah diskusi yang memperhatikan syariat.',
-				description:
-					'Bismillah, punya sebuah wadah untuk berdiskusi yang semua punya kesamaan (memperhatikan syariat) adalah hal yang paling nikmat. Alhamdulillah banyak informasi yang didapat, khususnya webinar yang sangat bermanfaat.'
+					'Alhamdulillah seneng sekali pas lihat Instagram ternyata ada komunitas Crypto Sharia, dan jadi pede untuk Investasi ke Crypto karena ada fatwa2 dari Ulama bahwa hukumnya Halal / Mubah (Tergantung koinnya juga) . Lalu juga di Komunitas ini saya jadi belajar bahwa Investasi di Cryptocurrency harus disertai dengan ilmunya. Halal kah koin tsb, seperti apa fundamental nya, lalu update ekonomi makro nya seperti apa dll. Harapan nya agar Crypto Sharia bisa benar2 menjadi wadah untuk kaum muslimin yg mau Investasi di Crypto dengan Halal & sesuai syariat Agama Islam. Barakallahufiikum..'
 			}
 		]
 	},
