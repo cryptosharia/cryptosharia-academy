@@ -719,6 +719,7 @@ function normalizeContent(content: LandingContent): LandingContent {
 	content.hero = normalizeHero(content.hero);
 	content.authority = normalizeAuthority(content.authority);
 	content.valueProps = normalizeValueProps(content.valueProps);
+	content.testimonials = normalizeTestimonials(content.testimonials);
 	content.usp = normalizeUsp(content.usp);
 	content.curriculum = normalizeCurriculum(content.curriculum);
 	content.instructors = normalizeInstructors(content.instructors);
@@ -1311,6 +1312,29 @@ function normalizeFinalCta(finalCta: LandingContent['finalCta']): LandingContent
 	return finalCta;
 }
 
+function normalizeTestimonials(
+	testimonials: LandingContent['testimonials']
+): LandingContent['testimonials'] {
+	const defaults = defaultLandingContent.testimonials;
+	if (!testimonials?.title?.trim()) testimonials.title = defaults.title;
+	if (!testimonials?.description?.trim()) testimonials.description = defaults.description;
+
+	const oldTitles = new Set([
+		'Alhamdulillah portofilio BTC sudah +12,5%.',
+		'Komunitas yang bergerak berdasarkan landasan ilmu.'
+	]);
+	const hasOldItems =
+		!Array.isArray(testimonials.items) ||
+		testimonials.items.length === 0 ||
+		(testimonials.items.length <= 3 && testimonials.items.some((i) => oldTitles.has(i.title)));
+
+	if (hasOldItems) {
+		testimonials.items = defaults.items;
+	}
+
+	return testimonials;
+}
+
 function normalizeLayout(layout: LayoutEntry[]): LayoutEntry[] {
 	const defaultEntries = defaultLandingContent.layout;
 	const defaultIds = new Set(defaultEntries.map((entry) => entry.id));
@@ -1322,7 +1346,11 @@ function normalizeLayout(layout: LayoutEntry[]): LayoutEntry[] {
 		const id = entry.id as SectionId;
 		if (!defaultIds.has(id) || seen.has(id)) continue;
 		const forceHidden: Set<SectionId> = new Set(['valueProps']);
-		normalized.push({ id, visible: forceHidden.has(id) ? false : entry.visible !== false });
+		const forceVisible: Set<SectionId> = new Set(['testimonials']);
+		let vis = entry.visible !== false;
+		if (forceHidden.has(id)) vis = false;
+		if (forceVisible.has(id)) vis = true;
+		normalized.push({ id, visible: vis });
 		seen.add(id);
 	}
 
