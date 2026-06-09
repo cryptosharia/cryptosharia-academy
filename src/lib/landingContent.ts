@@ -134,7 +134,8 @@ export type LandingContent = {
 		eyebrow: string;
 		title: string;
 		description: string;
-		benefitCards: BenefitCard[];
+		programIncludes: string[];
+		benefitCards?: BenefitCard[];
 		priceBadge: string;
 		originalPrice: string;
 		price: string;
@@ -380,27 +381,14 @@ export const defaultLandingContent: LandingContent = {
 		title: 'Gabung Crypto Sharia Masterclass 2026',
 		description:
 			'Bootcamp berlangsung 4 hari pada 27-28 Juni 2026 dan 4-5 Juli 2026 dengan dua sesi materi di setiap hari belajar.',
-		benefitCards: [
-			{
-				title: 'Fasilitas & Benefit',
-				items: [
-					'4 hari live masterclass',
-					'Materi & rekaman kelas',
-					'Tugas praktik langsung',
-					'Evaluasi akhir',
-					'FGD & mentoring',
-					'Networking komunitas',
-					'Sertifikat kelulusan'
-				]
-			},
-			{
-				title: 'Jadwal & Format',
-				items: [
-					'Sabtu & Minggu, 27-28 Juni 2026',
-					'Sabtu & Minggu, 4-5 Juli 2026',
-					'2 sesi materi per hari bersama praktisi'
-				]
-			}
+		programIncludes: [
+			'4 hari live masterclass',
+			'Materi & rekaman kelas',
+			'Tugas praktik langsung',
+			'Evaluasi akhir',
+			'FGD & mentoring',
+			'Networking komunitas',
+			'Sertifikat kelulusan'
 		],
 		priceBadge: 'Special Price',
 		originalPrice: 'Rp3.000.000',
@@ -1198,19 +1186,21 @@ function normalizePricing(pricing: LandingContent['pricing']): LandingContent['p
 		'Gabung Programnya Sekarang',
 		'Biaya Program Crypto Sharia Masterclass'
 	]);
-	const hasOldValueStack = pricing.benefitCards?.some((card) =>
-		card.items?.some((item) =>
-			[
-				'Materi terstruktur & tugas praktik',
-				'Akses komunitas eksklusif',
-				'Tugas praktik & evaluasi akhir',
-				'Mentoring & networking komunitas'
-			].includes(item.trim())
-		)
+	
+	const firstValueStack = pricing.programIncludes?.length 
+		? pricing.programIncludes 
+		: pricing.benefitCards?.[0]?.items ?? [];
+		
+	const hasOldValueStack = firstValueStack.some((item) =>
+		[
+			'Materi terstruktur & tugas praktik',
+			'Akses komunitas eksklusif',
+			'Tugas praktik & evaluasi akhir',
+			'Mentoring & networking komunitas'
+		].includes(item.trim())
 	);
-	const firstValueStack = pricing.benefitCards?.[0]?.items ?? [];
 	const incompleteValueStack =
-		firstValueStack.length < defaultLandingContent.pricing.benefitCards[0].items.length ||
+		firstValueStack.length < defaultLandingContent.pricing.programIncludes.length ||
 		!firstValueStack.includes('4 hari live masterclass') ||
 		!firstValueStack.includes('Sertifikat kelulusan');
 
@@ -1218,20 +1208,20 @@ function normalizePricing(pricing: LandingContent['pricing']): LandingContent['p
 		pricing.title = defaults.title;
 	}
 	if (!pricing.description?.trim()) pricing.description = defaults.description;
-	if (!pricing.priceBadge?.trim() || pricing.priceBadge.trim() === 'Kuota Terbatas') {
-		pricing.priceBadge = defaults.priceBadge;
-	}
+	if (!pricing.priceBadge?.trim()) pricing.priceBadge = defaults.priceBadge;
 	if (!pricing.originalPrice?.trim()) pricing.originalPrice = defaults.originalPrice;
 	if (!pricing.price?.trim()) pricing.price = defaults.price;
 	if (!pricing.note?.trim()) pricing.note = defaults.note;
 	if (!pricing.ctaLabel?.trim()) pricing.ctaLabel = defaults.ctaLabel;
-	pricing.benefitCards =
-		Array.isArray(pricing.benefitCards) &&
-		pricing.benefitCards.length > 0 &&
+	
+	pricing.programIncludes =
+		firstValueStack.length > 0 &&
 		!hasOldValueStack &&
 		!incompleteValueStack
-			? pricing.benefitCards
-			: defaults.benefitCards;
+			? firstValueStack
+			: defaults.programIncludes;
+			
+	delete pricing.benefitCards;
 
 	return pricing;
 }
@@ -1424,7 +1414,7 @@ export function sectionCompleteness(
 		}
 		case 'pricing': {
 			const c = content.pricing;
-			return countFields([c.title, c.price, c.ctaLabel, c.benefitCards.length ? 'x' : '']);
+			return countFields([c.title, c.price, c.ctaLabel, c.programIncludes.length ? 'x' : '']);
 		}
 		case 'curriculum': {
 			const c = content.curriculum;

@@ -29,7 +29,7 @@
 	const visibleFaqItems = $derived(
 		showAllFaqs ? mapFaqItems(content.faq.items) : buildInitialFaqItems(content.faq.items)
 	);
-	const pricingProgramItems = $derived(content.pricing.benefitCards[0]?.items ?? []);
+	const pricingProgramItems = $derived(content.pricing.programIncludes ?? []);
 
 	function splitHeroHeadline(value: string) {
 		const words = value.trim().split(/\s+/).filter(Boolean);

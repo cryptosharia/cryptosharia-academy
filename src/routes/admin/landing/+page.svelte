@@ -1706,37 +1706,21 @@
 	)}
 	<div class="border-t border-gray-100 pt-4 dark:border-gray-700">
 		{@render listHeader(
-			'Kartu Benefit',
-			() =>
-				(content.pricing.benefitCards = addItem(content.pricing.benefitCards, {
-					title: '',
-					items: ['']
-				}))
+			'Termasuk Dalam Program',
+			() => (content.pricing.programIncludes = [...content.pricing.programIncludes, ''])
 		)}
-		<div class="mt-3 space-y-3">
-			{#each content.pricing.benefitCards as card, i}
-				<div class="space-y-2 {cardClass}">
-					<div class="flex items-center justify-between">
-						<span class="text-[10px] font-bold text-gray-400">KARTU {i + 1}</span>
-						{@render removeBtn(
-							() => (content.pricing.benefitCards = removeItem(content.pricing.benefitCards, i))
-						)}
-					</div>
-					<input bind:value={card.title} placeholder="Judul kartu" class={inputClass} />
-					<div class="space-y-2">
-						{#each card.items as _, j}
-							<div class="flex items-center gap-2">
-								<input bind:value={card.items[j]} placeholder="Poin benefit" class={inputClass} />
-								{@render removeBtn(() => (card.items = removeItem(card.items, j)))}
-							</div>
-						{/each}
-						<button
-							type="button"
-							onclick={() => (card.items = [...card.items, ''])}
-							class="text-primary-600 hover:text-primary-700 text-xs font-semibold"
-							>+ Tambah poin</button
-						>
-					</div>
+		<div class="mt-3 space-y-2">
+			{#each content.pricing.programIncludes as _, i}
+				<div class="flex items-center gap-2">
+					<span class="text-xs font-bold text-gray-400">{i + 1}.</span>
+					<input
+						bind:value={content.pricing.programIncludes[i]}
+						placeholder="Poin benefit"
+						class={inputClass}
+					/>
+					{@render removeBtn(
+						() => (content.pricing.programIncludes = removeItem(content.pricing.programIncludes, i))
+					)}
 				</div>
 			{/each}
 		</div>
