@@ -1319,16 +1319,26 @@ function normalizeTestimonials(
 	if (!testimonials?.title?.trim()) testimonials.title = defaults.title;
 	if (!testimonials?.description?.trim()) testimonials.description = defaults.description;
 
+	// Detect old/stale testimonial data from Firestore and replace with new defaults
+	const oldMetas = new Set([
+		'Discord Community',
+		'Member feedback',
+		'Portfolio story',
+		'Arief Adjie, Web Developer'
+	]);
 	const oldTitles = new Set([
 		'Alhamdulillah portofilio BTC sudah +12,5%.',
-		'Komunitas yang bergerak berdasarkan landasan ilmu.'
+		'Komunitas yang bergerak berdasarkan landasan ilmu.',
+		'Jadi pede investasi ke Crypto karena sesuai Syariat.'
 	]);
-	const hasOldItems =
+	const hasStaleItems =
 		!Array.isArray(testimonials.items) ||
 		testimonials.items.length === 0 ||
-		(testimonials.items.length <= 3 && testimonials.items.some((i) => oldTitles.has(i.title)));
+		testimonials.items.some(
+			(i) => oldMetas.has(i.meta) || oldTitles.has(i.title)
+		);
 
-	if (hasOldItems) {
+	if (hasStaleItems) {
 		testimonials.items = defaults.items;
 	}
 
@@ -1346,7 +1356,7 @@ function normalizeLayout(layout: LayoutEntry[]): LayoutEntry[] {
 		const id = entry.id as SectionId;
 		if (!defaultIds.has(id) || seen.has(id)) continue;
 		const forceHidden: Set<SectionId> = new Set(['valueProps']);
-		const forceVisible: Set<SectionId> = new Set(['testimonials']);
+		const forceVisible: Set<SectionId> = new Set(['testimonials', 'authority', 'usp']);
 		let vis = entry.visible !== false;
 		if (forceHidden.has(id)) vis = false;
 		if (forceVisible.has(id)) vis = true;
@@ -1361,7 +1371,26 @@ function normalizeLayout(layout: LayoutEntry[]): LayoutEntry[] {
 		seen.add(entry.id);
 	});
 
-	return reorderLayoutForConversion(normalized, defaultEntries);
+	// Force testimonials to be positioned right before 'usp'
+	const testimonialsIdx = normalized.findIndex((e) => e.id === 'testimonials');
+	const uspIdx = normalized.findIndex((e) => e.id === 'usp');
+	if (testimonialsIdx !== -1 && uspIdx !== -1 && testimonialsIdx > uspIdx) {
+		const [entry] = normalized.splice(testimonialsIdx, 1);
+		const newUspIdx = normalized.findIndex((e) => e.id === 'usp');
+		normalized.splice(newUspIdx, 0, entry);
+	}
+
+	const result = reorderLayoutForConversion(normalized, defaultEntries);
+
+	// Final pass: force visibility regardless of stored or reordered state
+	const forceHiddenFinal: Set<SectionId> = new Set(['valueProps']);
+	const forceVisibleFinal: Set<SectionId> = new Set(['testimonials', 'authority', 'usp']);
+	for (const entry of result) {
+		if (forceHiddenFinal.has(entry.id)) entry.visible = false;
+		if (forceVisibleFinal.has(entry.id)) entry.visible = true;
+	}
+
+	return result;
 }
 
 function reorderLayoutForConversion(
@@ -1371,10 +1400,14 @@ function reorderLayoutForConversion(
 	if (!shouldUseConversionOrder(layout)) return layout;
 
 	const visibility = new Map(layout.map((entry) => [entry.id, entry.visible]));
-	return defaultEntries.map((entry) => ({
-		id: entry.id,
-		visible: visibility.get(entry.id) ?? entry.visible
-	}));
+	const forceHidden: Set<SectionId> = new Set(['valueProps']);
+	const forceVisible: Set<SectionId> = new Set(['testimonials', 'authority', 'usp']);
+	return defaultEntries.map((entry) => {
+		let vis = visibility.get(entry.id) ?? entry.visible;
+		if (forceHidden.has(entry.id)) vis = false;
+		if (forceVisible.has(entry.id)) vis = true;
+		return { id: entry.id, visible: vis };
+	});
 }
 
 function shouldUseConversionOrder(layout: LayoutEntry[]): boolean {
