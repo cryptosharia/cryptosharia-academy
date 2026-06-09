@@ -18,7 +18,7 @@
 
 	// Only render sections that are marked visible, in the admin-defined order.
 	const sections = $derived(
-		content.layout.filter((s) => s.visible && s.id !== 'testimonials').map((s) => s.id)
+		content.layout.filter((s) => s.visible).map((s) => s.id)
 	);
 
 	let openFaqIndex = $state<number | null>(0);

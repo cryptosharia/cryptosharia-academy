@@ -184,6 +184,7 @@ export const defaultLandingContent: LandingContent = {
 	layout: [
 		{ id: 'hero', visible: true },
 		{ id: 'authority', visible: true },
+		{ id: 'testimonials', visible: true },
 		{ id: 'usp', visible: true },
 		{ id: 'valueProps', visible: false },
 		{ id: 'instructors', visible: true },
