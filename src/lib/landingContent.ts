@@ -192,8 +192,7 @@ export const defaultLandingContent: LandingContent = {
 		{ id: 'pricing', visible: true },
 		{ id: 'urgency', visible: true },
 		{ id: 'faq', visible: true },
-		{ id: 'finalCta', visible: true },
-		{ id: 'testimonials', visible: true }
+		{ id: 'finalCta', visible: true }
 	],
 	whatsapp: {
 		phone: '6281234567890',
