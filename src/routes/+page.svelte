@@ -315,7 +315,7 @@
 				<div class="grid gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:items-start">
 					<div>
 						<h2
-							class="text-3xl leading-tight font-extrabold text-slate-900 sm:text-4xl dark:text-white"
+							class="text-3xl leading-tight font-extrabold sm:text-4xl heading-gradient"
 						>
 							{content.authority.title}
 						</h2>
@@ -456,7 +456,7 @@
 		<section class="bg-white py-20 dark:bg-gray-950" id="testimonials">
 			<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 				<div class="mb-12 max-w-3xl">
-					<h2 class="text-3xl font-extrabold text-slate-900 sm:text-4xl dark:text-white">
+					<h2 class="text-3xl font-extrabold sm:text-4xl heading-gradient">
 						{content.testimonials.title}
 					</h2>
 					<p class="mt-4 text-base leading-8 text-slate-600 dark:text-slate-300">
@@ -535,7 +535,7 @@
 			></div>
 			<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 				<div class="relative mx-auto max-w-4xl text-center">
-					<h2 class="text-3xl leading-tight font-black sm:text-4xl">
+					<h2 class="text-3xl leading-tight font-black sm:text-4xl heading-gradient">
 						{content.usp.title}
 					</h2>
 					{#if content.usp.description}
@@ -549,8 +549,9 @@
 					{#each content.usp.items as item (item.title)}
 						{@const iconKey = benefitIconKey(item.title)}
 						<div
-							class="rounded-lg border border-orange-400/35 bg-orange-500/[0.08] p-6"
+							class="relative overflow-hidden rounded-lg border border-orange-400/35 bg-orange-500/[0.08] p-6"
 						>
+							<div class="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_85%_15%,rgba(249,115,22,0.10),transparent_60%)]"></div>
 							<div
 								class="mb-5 flex h-12 w-12 items-center justify-center rounded-lg border border-white/10 bg-white/[0.08] text-orange-200"
 							>
@@ -662,7 +663,7 @@
 							Kuota Mentoring Terbatas
 						</div>
 						<h2
-							class="text-3xl leading-tight font-extrabold text-slate-900 sm:text-4xl dark:text-white"
+							class="text-3xl leading-tight font-extrabold sm:text-4xl heading-gradient"
 						>
 							{content.pricing.title}
 						</h2>
@@ -778,7 +779,7 @@
 			<div class="mx-auto max-w-[90rem] px-4 sm:px-6 lg:px-8">
 				<div class="mx-auto mb-12 max-w-4xl text-center">
 					<h2
-						class="text-3xl leading-tight font-extrabold text-slate-900 sm:text-5xl dark:text-white"
+						class="text-3xl leading-tight font-extrabold sm:text-5xl heading-gradient"
 					>
 						{content.curriculum.title}
 					</h2>
@@ -804,7 +805,7 @@
 						>
 							{#each content.curriculum.schedule as day, dayIndex (day.stage)}
 								<div
-									class="relative flex h-full flex-col rounded-lg border border-slate-200 bg-white p-5 shadow-sm shadow-slate-950/5 before:absolute before:top-6 before:-left-[2.05rem] before:h-4 before:w-4 before:rounded-full before:border-4 before:border-slate-50 before:bg-orange-500 md:p-6 md:before:hidden dark:border-slate-700 dark:bg-slate-950 dark:before:border-slate-900"
+									class="relative flex h-full flex-col rounded-lg border border-slate-200 bg-white p-5 shadow-sm shadow-slate-950/5 shadow-[inset_0_1px_0_rgba(249,115,22,0.12)] before:absolute before:top-6 before:-left-[2.05rem] before:h-4 before:w-4 before:rounded-full before:border-4 before:border-slate-50 before:bg-orange-500 md:p-6 md:before:hidden dark:border-slate-700 dark:bg-slate-950 dark:before:border-slate-900"
 								>
 									<button
 										type="button"
@@ -932,24 +933,29 @@
 					</div>
 				{/if}
 
-				<div class="mt-14 border-t border-slate-200 pt-12 dark:border-slate-800">
-					<div class="grid gap-8 lg:grid-cols-[1fr_0.9fr] lg:items-start">
+				<div class="relative mt-14 overflow-hidden rounded-2xl bg-slate-900 p-8 sm:p-10 dark:bg-slate-950">
+					<!-- Top gradient border accent -->
+					<div class="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-orange-500 via-amber-400 to-teal-400"></div>
+					<!-- Subtle geometric pattern -->
+					<div class="pointer-events-none absolute inset-0 [background-image:linear-gradient(30deg,rgba(255,255,255,0.04)_12%,transparent_12.5%,transparent_87%,rgba(255,255,255,0.04)_87.5%),linear-gradient(150deg,rgba(255,255,255,0.04)_12%,transparent_12.5%,transparent_87%,rgba(255,255,255,0.04)_87.5%)] [background-size:48px_48px] [background-position:0_0,24px_24px]"></div>
+					<div class="relative grid gap-8 lg:grid-cols-[1fr_0.9fr] lg:items-start">
 						{#if content.curriculum.outcomes.length > 0}
 							<div>
 								<h3
-									class="text-2xl leading-tight font-extrabold text-slate-900 sm:text-3xl dark:text-white"
+									class="text-2xl leading-tight font-extrabold sm:text-3xl heading-gradient"
 								>
 									Setelah 4 hari, peserta akan lebih siap untuk:
 								</h3>
 								<ul
-									class="mt-7 grid gap-3 text-base leading-8 text-slate-700 sm:grid-cols-2 dark:text-slate-200"
+									class="mt-7 grid gap-3 text-base leading-8 text-slate-100 sm:grid-cols-2"
 								>
-									{#each content.curriculum.outcomes as outcome (outcome)}
+									{#each content.curriculum.outcomes as outcome, index (outcome)}
 										<li
-											class="flex gap-3 rounded-lg border border-orange-100 bg-orange-50/50 p-4 shadow-sm shadow-orange-950/5 dark:border-orange-500/20 dark:bg-orange-500/10"
+											class="flex gap-3 rounded-lg border-l-4 {index % 2 === 0 ? 'border-l-orange-500' : 'border-l-emerald-500'} bg-slate-800/60 p-4 font-semibold shadow-sm shadow-orange-500/5"
 										>
+											<span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-orange-500/20 text-xs font-black text-orange-300">{index + 1}</span>
 											<svg
-												class="mt-1 h-5 w-5 shrink-0 text-orange-600 dark:text-orange-400"
+												class="mt-1 h-5 w-5 shrink-0 text-orange-400"
 												fill="none"
 												stroke="currentColor"
 												viewBox="0 0 24 24"
@@ -967,7 +973,7 @@
 									{/each}
 								</ul>
 								{#if content.curriculum.disclaimer}
-									<p class="mt-6 text-xs leading-6 text-slate-500 dark:text-slate-500">
+									<p class="mt-6 text-xs leading-6 text-slate-400">
 										{content.curriculum.disclaimer}
 									</p>
 								{/if}
@@ -1036,7 +1042,7 @@
 						</p>
 					{/if}
 					<h2
-						class="text-3xl leading-tight font-extrabold text-slate-900 sm:text-4xl dark:text-white"
+						class="text-3xl leading-tight font-extrabold sm:text-4xl heading-gradient"
 					>
 						{content.instructors.title}
 					</h2>
@@ -1224,7 +1230,7 @@
 		<section class="scroll-mt-20 bg-white py-16 sm:py-20 dark:bg-gray-950" id="faq">
 			<div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
 				<div class="mb-10 text-center">
-					<h2 class="text-3xl font-extrabold text-slate-900 sm:text-4xl dark:text-white">
+					<h2 class="text-3xl font-extrabold sm:text-4xl heading-gradient">
 						{content.faq.title}
 					</h2>
 				</div>
@@ -1253,7 +1259,7 @@
 								onclick={() => toggleFaq(index)}
 								class="flex w-full items-center justify-between gap-4 px-5 py-5 text-left transition {openFaqIndex ===
 								index
-									? 'bg-orange-50 dark:bg-orange-950/20'
+									? 'bg-gradient-to-b from-orange-950/15 to-transparent dark:from-orange-950/20 dark:to-transparent'
 									: 'bg-slate-50 hover:bg-slate-100 dark:bg-slate-900 dark:hover:bg-slate-800'}"
 								aria-expanded={openFaqIndex === index}
 							>
