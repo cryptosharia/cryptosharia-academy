@@ -413,7 +413,7 @@
 					{#each content.valueProps.items as item, index (item.title)}
 						{@const marker = item.label?.trim() || String(index + 1).padStart(2, '0')}
 						<div
-							class="relative min-h-64 overflow-hidden rounded-lg border border-slate-200 bg-white p-6 shadow-sm shadow-slate-950/5 dark:border-slate-800 dark:bg-slate-950"
+							class="relative min-h-64 overflow-hidden rounded-lg border border-orange-200 bg-white p-6 shadow-sm shadow-slate-950/5 dark:border-orange-400/35 dark:bg-orange-500/[0.08]"
 						>
 							<div
 								class="absolute -right-2 -bottom-4 text-8xl leading-none font-black text-orange-100 dark:text-orange-950/50"
