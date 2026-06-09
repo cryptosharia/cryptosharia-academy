@@ -134,7 +134,7 @@ export type LandingContent = {
 		eyebrow: string;
 		title: string;
 		description: string;
-		dateCard: { label: string; date: string };
+		dateCard: { label: string; date: string; time?: string };
 		programIncludes: string[];
 		benefitCards?: BenefitCard[];
 		priceBadge: string;
@@ -383,8 +383,9 @@ export const defaultLandingContent: LandingContent = {
 		description:
 			'Program intensif untuk memahami crypto dari sudut pandang syariah, praktik, dan risiko secara lebih terarah.',
 		dateCard: {
-			label: 'Tanggal Program',
-			date: '27 Juni – 5 Juli 2026'
+			label: 'Jadwal Pelaksanaan',
+			date: '27 Juni – 5 Juli 2026',
+			time: '08.30 - 12.00 WIB (2 Sesi/Hari)'
 		},
 		programIncludes: [
 			'4 sesi live masterclass terstruktur',
@@ -1221,7 +1222,12 @@ function normalizePricing(pricing: LandingContent['pricing']): LandingContent['p
 	if (!pricing.description?.trim() || oldDescriptions.has(pricing.description.trim())) {
 		pricing.description = defaults.description;
 	}
-	if (!pricing.dateCard) pricing.dateCard = defaults.dateCard;
+	if (!pricing.dateCard) {
+		pricing.dateCard = defaults.dateCard;
+	} else if (pricing.dateCard.label === 'Tanggal Program' && !pricing.dateCard.time) {
+		pricing.dateCard.label = defaults.dateCard.label;
+		pricing.dateCard.time = defaults.dateCard.time;
+	}
 	if (!pricing.priceBadge?.trim()) pricing.priceBadge = defaults.priceBadge;
 	if (!pricing.originalPrice?.trim()) pricing.originalPrice = defaults.originalPrice;
 	if (!pricing.price?.trim()) pricing.price = defaults.price;

@@ -637,6 +637,14 @@
 								<p class="mt-2 text-xl font-extrabold text-slate-900 dark:text-white">
 									{content.pricing.dateCard.date}
 								</p>
+								{#if content.pricing.dateCard.time}
+									<div class="mt-3 flex items-center gap-2 text-sm font-semibold text-slate-700 dark:text-slate-300">
+										<svg class="h-4 w-4 text-orange-600 dark:text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+											<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+										</svg>
+										{content.pricing.dateCard.time}
+									</div>
+								{/if}
 							</div>
 						{/if}
 					</div>

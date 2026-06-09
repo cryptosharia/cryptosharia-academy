@@ -1692,6 +1692,11 @@
 			(v) => { if (content.pricing.dateCard) content.pricing.dateCard.date = v; }
 		)}
 	</div>
+	{@render textField(
+		'Info Waktu (opsional)',
+		() => content.pricing.dateCard?.time || '',
+		(v) => { if (content.pricing.dateCard) content.pricing.dateCard.time = v; }
+	)}
 	<div class="grid grid-cols-2 gap-4">
 		{@render textField(
 			'Label Tombol',
