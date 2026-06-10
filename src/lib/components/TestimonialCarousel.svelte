@@ -101,53 +101,44 @@
 </script>
 
 <div 
-	class="relative mx-auto max-w-[1120px]"
+	class="relative mx-auto max-w-[960px]"
 	onmouseenter={() => isPaused = true}
 	onmouseleave={() => isPaused = false}
 	ontouchstart={() => isPaused = true}
 	ontouchend={() => {
-		// Resume after a slight delay to allow scroll to settle
 		setTimeout(() => isPaused = false, 1000);
 	}}
 >
 	<div
 		bind:this={containerRef}
 		onscroll={updateActiveIndex}
-		class="flex gap-5 overflow-x-auto snap-x snap-mandatory scroll-smooth px-1 pb-4 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+		class="flex gap-5 overflow-x-auto snap-x snap-mandatory scroll-smooth pb-4 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
 	>
 		{#each imageTestimonials as item, index (item.name)}
-			<div class="w-[85vw] min-w-[85vw] shrink-0 snap-start sm:w-[340px] sm:min-w-[340px]">
-				<div
-					class="flex h-full flex-col overflow-hidden rounded-xl border border-slate-700/60 bg-slate-900 shadow-lg shadow-orange-950/10 transition hover:border-orange-500/40 hover:shadow-xl hover:shadow-orange-950/15 dark:border-slate-700/60 dark:bg-slate-900"
-				>
-					<!-- Screenshot area with constrained height -->
-					<div class="flex max-h-[480px] items-center justify-center overflow-hidden bg-slate-950/60 p-3">
-						<img
-							src={item.image}
-							alt="Testimonial dari {item.name}"
-							class="h-auto max-h-[456px] w-full rounded-lg object-contain drop-shadow-[0_2px_8px_rgba(0,0,0,0.3)]"
-						/>
-					</div>
-					<!-- Name label -->
-					<div class="border-t border-slate-800 bg-slate-900 px-4 py-3">
-						<div class="flex items-center gap-3">
-							<div class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-orange-500/15 text-xs font-black text-orange-400">
-								{item.name.charAt(0)}
-							</div>
-							<p class="truncate text-sm font-bold text-slate-200">
-								{item.name}
-							</p>
-							<span class="ml-auto text-[10px] font-semibold tracking-wider text-slate-500 uppercase">Member</span>
+			<div class="w-[85vw] min-w-[85vw] shrink-0 snap-start md:w-[calc(50%-10px)] md:min-w-[calc(50%-10px)]">
+				<div class="relative overflow-hidden rounded-xl border border-slate-700/50 bg-slate-950 shadow-lg shadow-black/20 transition hover:border-orange-500/40 hover:shadow-orange-950/20">
+					<!-- Screenshot -->
+					<img
+						src={item.image}
+						alt="Testimonial dari {item.name}"
+						class="block w-full h-auto object-contain"
+					/>
+					<!-- Compact overlay name badge -->
+					<div class="absolute bottom-0 inset-x-0 flex items-center gap-2 bg-gradient-to-t from-slate-950/90 via-slate-950/60 to-transparent px-4 pt-8 pb-3">
+						<div class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-orange-500/20 text-[10px] font-black text-orange-400 backdrop-blur-sm">
+							{item.name.charAt(0)}
 						</div>
+						<span class="text-xs font-bold text-slate-300">{item.name}</span>
+						<span class="text-[9px] font-semibold tracking-wider text-slate-500 uppercase">· Member</span>
 					</div>
 				</div>
 			</div>
 		{/each}
 	</div>
 
-	<!-- Dots Indicator -->
+	<!-- Dots -->
 	{#if imageTestimonials.length > 1}
-		<div class="mt-5 flex justify-center gap-2">
+		<div class="mt-4 flex justify-center gap-2">
 			{#each imageTestimonials as _, index}
 				<button
 					type="button"
@@ -159,3 +150,4 @@
 		</div>
 	{/if}
 </div>
+
