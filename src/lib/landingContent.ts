@@ -196,7 +196,7 @@ export const defaultLandingContent: LandingContent = {
 	],
 	whatsapp: {
 		phone: '6282186584279',
-		message: 'Assalamualaikum CryptoSharia, saya mau daftar Crypto Sharia Masterclass.'
+		message: 'Halo admin, saya tertarik mau join Crypto Sharia Masterclass….'
 	},
 	seo: {
 		title: 'Crypto Sharia Masterclass | Bootcamp Crypto Syariah 4 Hari',
