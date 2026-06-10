@@ -10,7 +10,11 @@
 		{ name: 'Thoriq', image: '/images/testimonials/Thoriq.png' },
 		{ name: 'Kang Ayip', image: '/images/testimonials/Kang Ayip.png' },
 		{ name: 'Syaukah (NAORIS)', image: '/images/testimonials/Syaukah NAORIS.png' },
-		{ name: 'Affan Zaky', image: '/images/testimonials/image.png' }
+		{ name: 'Affan Zaky', image: '/images/testimonials/image.png' },
+		{ name: 'Excel', image: '/images/testimonials/excellentmous.png' },
+		{ name: 'Sir', image: '/images/testimonials/sir.png' },
+		{ name: 'Arief Adjie Wicaksono', image: '/images/testimonials/Arief Adjie Wicaksono.png' },
+		{ name: 'Faqih', image: '/images/testimonials/Faqih.png' }
 	];
 
 	let containerRef: HTMLDivElement;
