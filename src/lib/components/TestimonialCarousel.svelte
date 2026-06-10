@@ -4,7 +4,6 @@
 
 	let { items = [] }: { items: ProofItem[] } = $props();
 
-	// Safe image-based mapping replacing text items
 	const imageTestimonials = [
 		{ name: 'Suarabangjan', image: '/images/testimonials/Suarabangjan.png' },
 		{ name: 'Syaukah (TNSR)', image: '/images/testimonials/Syaukah TNSR.png' },
@@ -17,6 +16,7 @@
 	let activeIndex = $state(0);
 	let intervalId: ReturnType<typeof setInterval>;
 	let isPaused = $state(false);
+	let lightboxIndex = $state<number | null>(null);
 
 	function updateActiveIndex() {
 		if (!containerRef) return;
@@ -36,39 +36,60 @@
 
 	function scrollToSlide(index: number) {
 		if (!containerRef) return;
-		// Determine item width. We can approximate it based on viewport, but scrolling to child offset is safer
 		const child = containerRef.children[index] as HTMLElement;
 		if (child) {
-			containerRef.scrollTo({
-				left: child.offsetLeft,
-				behavior: 'smooth'
-			});
+			containerRef.scrollTo({ left: child.offsetLeft, behavior: 'smooth' });
+		}
+	}
+
+	function navigate(direction: -1 | 1) {
+		const len = imageTestimonials.length;
+		if (!containerRef || len === 0) return;
+
+		// If lightbox is open, navigate within lightbox
+		if (lightboxIndex !== null) {
+			lightboxIndex = (lightboxIndex + direction + len) % len;
+			return;
+		}
+
+		// Otherwise scroll the carousel
+		const next = (activeIndex + direction + len) % len;
+		scrollToSlide(next);
+	}
+
+	function openLightbox(index: number) {
+		lightboxIndex = index;
+		isPaused = true;
+	}
+
+	function closeLightbox() {
+		lightboxIndex = null;
+		isPaused = false;
+	}
+
+	function handleKeydown(e: KeyboardEvent) {
+		if (lightboxIndex !== null) {
+			if (e.key === 'Escape') closeLightbox();
+			if (e.key === 'ArrowLeft') navigate(-1);
+			if (e.key === 'ArrowRight') navigate(1);
 		}
 	}
 
 	function startAutoSlide() {
-		// Respect prefers-reduced-motion
 		if (typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
 			return;
 		}
-
 		stopAutoSlide();
 		intervalId = setInterval(() => {
 			if (isPaused || imageTestimonials.length === 0 || !containerRef) return;
-			
-			// Figure out how many items are currently visible to avoid scrolling past the end
 			const width = containerRef.offsetWidth;
 			const scrollWidth = containerRef.scrollWidth;
 			const maxScrollLeft = scrollWidth - width;
-			
-			// If we reached the end, go back to start
 			if (containerRef.scrollLeft >= maxScrollLeft - 10) {
 				containerRef.scrollTo({ left: 0, behavior: 'smooth' });
 			} else {
-				// Find the next child to scroll to
 				const currentLeft = containerRef.scrollLeft;
 				let targetChild: HTMLElement | null = null;
-				
 				for (let i = 0; i < containerRef.children.length; i++) {
 					const child = containerRef.children[i] as HTMLElement;
 					if (child.offsetLeft > currentLeft + 10) {
@@ -76,7 +97,6 @@
 						break;
 					}
 				}
-				
 				if (targetChild) {
 					containerRef.scrollTo({ left: targetChild.offsetLeft, behavior: 'smooth' });
 				}
@@ -85,29 +105,57 @@
 	}
 
 	function stopAutoSlide() {
-		if (intervalId) {
-			clearInterval(intervalId);
-		}
+		if (intervalId) clearInterval(intervalId);
 	}
 
 	onMount(() => {
 		startAutoSlide();
+		if (typeof window !== 'undefined') {
+			window.addEventListener('keydown', handleKeydown);
+		}
 	});
 
 	onDestroy(() => {
 		stopAutoSlide();
+		if (typeof window !== 'undefined') {
+			window.removeEventListener('keydown', handleKeydown);
+		}
 	});
 </script>
 
-<div 
-	class="relative mx-auto max-w-[960px]"
+<!-- Carousel wrapper -->
+<div
+	class="group relative mx-auto max-w-[960px]"
 	onmouseenter={() => isPaused = true}
-	onmouseleave={() => isPaused = false}
+	onmouseleave={() => { if (lightboxIndex === null) isPaused = false; }}
 	ontouchstart={() => isPaused = true}
-	ontouchend={() => {
-		setTimeout(() => isPaused = false, 1000);
-	}}
+	ontouchend={() => { if (lightboxIndex === null) setTimeout(() => isPaused = false, 1000); }}
 >
+	<!-- Left arrow -->
+	<button
+		type="button"
+		aria-label="Previous testimonial"
+		onclick={() => navigate(-1)}
+		class="absolute left-0 top-1/2 z-10 -translate-x-3 -translate-y-1/2 flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-slate-900/70 text-slate-400 shadow-lg shadow-black/30 backdrop-blur-md transition hover:border-orange-500/50 hover:text-orange-400 hover:shadow-orange-950/30 md:-translate-x-5 md:h-11 md:w-11"
+	>
+		<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+			<path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd"/>
+		</svg>
+	</button>
+
+	<!-- Right arrow -->
+	<button
+		type="button"
+		aria-label="Next testimonial"
+		onclick={() => navigate(1)}
+		class="absolute right-0 top-1/2 z-10 -translate-y-1/2 translate-x-3 flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-slate-900/70 text-slate-400 shadow-lg shadow-black/30 backdrop-blur-md transition hover:border-orange-500/50 hover:text-orange-400 hover:shadow-orange-950/30 md:translate-x-5 md:h-11 md:w-11"
+	>
+		<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+			<path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/>
+		</svg>
+	</button>
+
+	<!-- Scrollable track -->
 	<div
 		bind:this={containerRef}
 		onscroll={updateActiveIndex}
@@ -115,38 +163,89 @@
 	>
 		{#each imageTestimonials as item, index (item.name)}
 			<div class="w-[85vw] min-w-[85vw] shrink-0 snap-start md:w-[calc(50%-10px)] md:min-w-[calc(50%-10px)]">
-				<div class="relative overflow-hidden rounded-xl border border-slate-700/50 bg-slate-950 shadow-lg shadow-black/20 transition hover:border-orange-500/40 hover:shadow-orange-950/20">
-					<!-- Screenshot -->
-					<img
-						src={item.image}
-						alt="Testimonial dari {item.name}"
-						class="block w-full h-auto object-contain"
-					/>
-					<!-- Compact overlay name badge -->
-					<div class="absolute bottom-0 inset-x-0 flex items-center gap-2 bg-gradient-to-t from-slate-950/90 via-slate-950/60 to-transparent px-4 pt-8 pb-3">
-						<div class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-orange-500/20 text-[10px] font-black text-orange-400 backdrop-blur-sm">
-							{item.name.charAt(0)}
+				<button
+					type="button"
+					class="w-full cursor-zoom-in text-left"
+					onclick={() => openLightbox(index)}
+				>
+					<div class="relative overflow-hidden rounded-xl border border-slate-700/50 bg-slate-950 shadow-lg shadow-black/20 transition hover:border-orange-500/40 hover:shadow-orange-950/20">
+						<img
+							src={item.image}
+							alt="Testimonial dari {item.name}"
+							class="block w-full h-auto object-contain"
+						/>
+						<div class="absolute bottom-0 inset-x-0 flex items-center gap-2 bg-gradient-to-t from-slate-950/90 via-slate-950/60 to-transparent px-4 pt-8 pb-3">
+							<div class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-orange-500/20 text-[10px] font-black text-orange-400 backdrop-blur-sm">
+								{item.name.charAt(0)}
+							</div>
+							<span class="text-xs font-bold text-slate-300">{item.name}</span>
+							<span class="text-[9px] font-semibold tracking-wider text-slate-500 uppercase">· Member</span>
 						</div>
-						<span class="text-xs font-bold text-slate-300">{item.name}</span>
-						<span class="text-[9px] font-semibold tracking-wider text-slate-500 uppercase">· Member</span>
 					</div>
-				</div>
+				</button>
 			</div>
 		{/each}
 	</div>
-
-	<!-- Dots -->
-	{#if imageTestimonials.length > 1}
-		<div class="mt-4 flex justify-center gap-2">
-			{#each imageTestimonials as _, index}
-				<button
-					type="button"
-					aria-label="Go to slide {index + 1}"
-					class="h-2 rounded-full transition-all duration-300 {activeIndex === index ? 'w-6 bg-orange-500' : 'w-2 bg-slate-600 hover:bg-orange-400'}"
-					onclick={() => scrollToSlide(index)}
-				></button>
-			{/each}
-		</div>
-	{/if}
 </div>
 
+<!-- Lightbox modal -->
+{#if lightboxIndex !== null}
+	<!-- svelte-ignore a11y_no_static_element_interactions -->
+	<div
+		class="fixed inset-0 z-50 flex items-center justify-center bg-black/85 backdrop-blur-sm"
+		onclick={(e) => { if (e.target === e.currentTarget) closeLightbox(); }}
+		onkeydown={(e) => { if (e.key === 'Escape') closeLightbox(); }}
+	>
+		<!-- Close button -->
+		<button
+			type="button"
+			aria-label="Close lightbox"
+			onclick={closeLightbox}
+			class="absolute right-4 top-4 z-50 flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-slate-900/80 text-slate-400 backdrop-blur-md transition hover:border-orange-500/50 hover:text-orange-400"
+		>
+			<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+				<path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>
+			</svg>
+		</button>
+
+		<!-- Nav left -->
+		<button
+			type="button"
+			aria-label="Previous testimonial"
+			onclick={() => navigate(-1)}
+			class="absolute left-3 top-1/2 z-50 -translate-y-1/2 flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-slate-900/70 text-slate-400 backdrop-blur-md transition hover:border-orange-500/50 hover:text-orange-400 md:left-6"
+		>
+			<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+				<path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd"/>
+			</svg>
+		</button>
+
+		<!-- Image -->
+		<div class="mx-14 max-h-[90vh] max-w-[90vw] md:mx-20">
+			<img
+				src={imageTestimonials[lightboxIndex].image}
+				alt="Testimonial dari {imageTestimonials[lightboxIndex].name}"
+				class="max-h-[85vh] w-auto rounded-xl border border-white/10 object-contain shadow-2xl shadow-black/50"
+			/>
+			<div class="mt-3 flex items-center gap-2">
+				<div class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-orange-500/20 text-xs font-black text-orange-400">
+					{imageTestimonials[lightboxIndex].name.charAt(0)}
+				</div>
+				<span class="text-sm font-bold text-slate-200">{imageTestimonials[lightboxIndex].name}</span>
+				<span class="text-[10px] font-semibold tracking-wider text-slate-500 uppercase">· Member</span>
+			</div>
+		</div>
+
+		<!-- Nav right -->
+		<button
+			type="button"
+			aria-label="Next testimonial"
+			onclick={() => navigate(1)}
+			class="absolute right-3 top-1/2 z-50 -translate-y-1/2 flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-slate-900/70 text-slate-400 backdrop-blur-md transition hover:border-orange-500/50 hover:text-orange-400 md:right-6"
+		>
+			<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+				<path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/>
+			</svg>
+		</button>
+	</div>
+{/if}
