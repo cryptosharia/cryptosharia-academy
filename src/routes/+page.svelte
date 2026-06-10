@@ -1055,7 +1055,7 @@
 								<div class="mb-5 flex flex-col">
 									<div class="flex flex-col xl:min-h-[12.25rem]">
 										<p
-											class="mb-5 hidden min-h-12 w-fit items-center rounded-full border border-orange-300 bg-orange-50 px-4 py-2 text-sm leading-5 font-bold text-orange-700 sm:inline-flex dark:border-orange-700/70 dark:bg-orange-500/10 dark:text-orange-200"
+											class="mb-5 inline-flex min-h-12 w-fit items-center rounded-full border border-orange-300 bg-orange-50 px-4 py-2 text-sm leading-5 font-bold text-orange-700 dark:border-orange-700/70 dark:bg-orange-500/10 dark:text-orange-200"
 										>
 											{instructor.badge}
 										</p>
