@@ -1250,7 +1250,7 @@
 <!-- ============ Section forms ============ -->
 {#snippet globalForm()}
 	{@render textField(
-		'Nomor WhatsApp (cth. 6281234567890)',
+		'Nomor WhatsApp (cth. +6282186584279)',
 		() => content.whatsapp.phone,
 		(v) => (content.whatsapp.phone = v)
 	)}
