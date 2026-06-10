@@ -195,7 +195,7 @@ export const defaultLandingContent: LandingContent = {
 		{ id: 'finalCta', visible: true }
 	],
 	whatsapp: {
-		phone: '6281234567890',
+		phone: '6282186584279',
 		message: 'Assalamualaikum CryptoSharia, saya mau daftar Crypto Sharia Masterclass.'
 	},
 	seo: {
