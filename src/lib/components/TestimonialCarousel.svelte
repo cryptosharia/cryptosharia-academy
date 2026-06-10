@@ -9,7 +9,8 @@
 		{ name: 'Syaukah (TNSR)', image: '/images/testimonials/Syaukah TNSR.png' },
 		{ name: 'Thoriq', image: '/images/testimonials/Thoriq.png' },
 		{ name: 'Kang Ayip', image: '/images/testimonials/Kang Ayip.png' },
-		{ name: 'Syaukah (NAORIS)', image: '/images/testimonials/Syaukah NAORIS.png' }
+		{ name: 'Syaukah (NAORIS)', image: '/images/testimonials/Syaukah NAORIS.png' },
+		{ name: 'Affan Zaky', image: '/images/testimonials/image.png' }
 	];
 
 	let containerRef: HTMLDivElement;
