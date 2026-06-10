@@ -22,8 +22,17 @@
 	function updateActiveIndex() {
 		if (!containerRef) return;
 		const scrollLeft = containerRef.scrollLeft;
-		const width = containerRef.offsetWidth;
-		activeIndex = Math.round(scrollLeft / width);
+		let closest = 0;
+		let closestDist = Infinity;
+		for (let i = 0; i < containerRef.children.length; i++) {
+			const child = containerRef.children[i] as HTMLElement;
+			const dist = Math.abs(child.offsetLeft - scrollLeft);
+			if (dist < closestDist) {
+				closestDist = dist;
+				closest = i;
+			}
+		}
+		activeIndex = closest;
 	}
 
 	function scrollToSlide(index: number) {
@@ -92,7 +101,7 @@
 </script>
 
 <div 
-	class="relative"
+	class="relative mx-auto max-w-[1120px]"
 	onmouseenter={() => isPaused = true}
 	onmouseleave={() => isPaused = false}
 	ontouchstart={() => isPaused = true}
@@ -104,24 +113,31 @@
 	<div
 		bind:this={containerRef}
 		onscroll={updateActiveIndex}
-		class="flex gap-5 overflow-x-auto snap-x snap-mandatory scroll-smooth pb-4 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+		class="flex gap-5 overflow-x-auto snap-x snap-mandatory scroll-smooth px-1 pb-4 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
 	>
 		{#each imageTestimonials as item, index (item.name)}
-			<div class="w-full min-w-full shrink-0 snap-start sm:min-w-[calc(50%-0.625rem)] lg:min-w-[calc(33.333333%-1.25rem*2/3)]">
+			<div class="w-[85vw] min-w-[85vw] shrink-0 snap-start sm:w-[340px] sm:min-w-[340px]">
 				<div
-					class="flex h-full flex-col overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm transition hover:border-orange-200 hover:shadow-md dark:border-slate-800 dark:bg-slate-900 dark:hover:border-orange-900/60"
+					class="flex h-full flex-col overflow-hidden rounded-xl border border-slate-700/60 bg-slate-900 shadow-lg shadow-orange-950/10 transition hover:border-orange-500/40 hover:shadow-xl hover:shadow-orange-950/15 dark:border-slate-700/60 dark:bg-slate-900"
 				>
-					<div class="flex-1 bg-slate-50 dark:bg-slate-950/50 p-2 sm:p-4 flex items-center justify-center">
-						<img src={item.image} alt="Testimonial dari {item.name}" class="w-full h-auto object-contain drop-shadow-sm rounded-md" />
+					<!-- Screenshot area with constrained height -->
+					<div class="flex max-h-[480px] items-center justify-center overflow-hidden bg-slate-950/60 p-3">
+						<img
+							src={item.image}
+							alt="Testimonial dari {item.name}"
+							class="h-auto max-h-[456px] w-full rounded-lg object-contain drop-shadow-[0_2px_8px_rgba(0,0,0,0.3)]"
+						/>
 					</div>
-					<div class="border-t border-slate-100 bg-white p-4 dark:border-slate-800 dark:bg-slate-900">
+					<!-- Name label -->
+					<div class="border-t border-slate-800 bg-slate-900 px-4 py-3">
 						<div class="flex items-center gap-3">
-							<div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-orange-100 text-xs font-black text-orange-700 dark:bg-orange-950/50 dark:text-orange-300">
+							<div class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-orange-500/15 text-xs font-black text-orange-400">
 								{item.name.charAt(0)}
 							</div>
-							<p class="truncate text-sm font-bold text-slate-900 dark:text-white">
+							<p class="truncate text-sm font-bold text-slate-200">
 								{item.name}
 							</p>
+							<span class="ml-auto text-[10px] font-semibold tracking-wider text-slate-500 uppercase">Member</span>
 						</div>
 					</div>
 				</div>
@@ -131,12 +147,12 @@
 
 	<!-- Dots Indicator -->
 	{#if imageTestimonials.length > 1}
-		<div class="mt-4 flex justify-center gap-2">
+		<div class="mt-5 flex justify-center gap-2">
 			{#each imageTestimonials as _, index}
 				<button
 					type="button"
 					aria-label="Go to slide {index + 1}"
-					class="h-2 rounded-full transition-all duration-300 {activeIndex === index ? 'w-6 bg-orange-500' : 'w-2 bg-slate-300 dark:bg-slate-700 hover:bg-orange-300 dark:hover:bg-orange-900/60'}"
+					class="h-2 rounded-full transition-all duration-300 {activeIndex === index ? 'w-6 bg-orange-500' : 'w-2 bg-slate-600 hover:bg-orange-400'}"
 					onclick={() => scrollToSlide(index)}
 				></button>
 			{/each}
