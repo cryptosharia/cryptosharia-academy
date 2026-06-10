@@ -6,12 +6,11 @@
 
 	// Safe image-based mapping replacing text items
 	const imageTestimonials = [
-		{ name: 'Aizul', image: '/images/testimonials/Aizul.png' },
-		{ name: 'Antii', image: '/images/testimonials/Antii.png' },
-		{ name: 'Firman', image: '/images/testimonials/Firman.png' },
-		{ name: 'Ibrahim', image: '/images/testimonials/Ibrahim.png' },
-		{ name: 'Muhamad Cholid', image: '/images/testimonials/Muhamad Cholid.png' },
-		{ name: 'Rainsha Sinna', image: '/images/testimonials/Rainsha Sinna.png' }
+		{ name: 'Suarabangjan', image: '/images/testimonials/Suarabangjan.png' },
+		{ name: 'Syaukah', image: '/images/testimonials/Syaukah TNSR.png' },
+		{ name: 'Thoriq', image: '/images/testimonials/Thoriq.png' },
+		{ name: 'Kang Ayip', image: '/images/testimonials/Kang Ayip.png' },
+		{ name: 'Syaukah', image: '/images/testimonials/Syaukah NAORIS.png' }
 	];
 
 	let containerRef: HTMLDivElement;
