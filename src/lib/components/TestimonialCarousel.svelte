@@ -4,6 +4,16 @@
 
 	let { items = [] }: { items: ProofItem[] } = $props();
 
+	// Safe image-based mapping replacing text items
+	const imageTestimonials = [
+		{ name: 'Aizul', image: '/images/testimonials/Aizul.png' },
+		{ name: 'Antii', image: '/images/testimonials/Antii.png' },
+		{ name: 'Firman', image: '/images/testimonials/Firman.png' },
+		{ name: 'Ibrahim', image: '/images/testimonials/Ibrahim.png' },
+		{ name: 'Muhamad Cholid', image: '/images/testimonials/Muhamad Cholid.png' },
+		{ name: 'Rainsha Sinna', image: '/images/testimonials/Rainsha Sinna.png' }
+	];
+
 	let containerRef: HTMLDivElement;
 	let activeIndex = $state(0);
 	let intervalId: ReturnType<typeof setInterval>;
@@ -36,7 +46,7 @@
 
 		stopAutoSlide();
 		intervalId = setInterval(() => {
-			if (isPaused || items.length === 0 || !containerRef) return;
+			if (isPaused || imageTestimonials.length === 0 || !containerRef) return;
 			
 			// Figure out how many items are currently visible to avoid scrolling past the end
 			const width = containerRef.offsetWidth;
@@ -96,72 +106,33 @@
 		onscroll={updateActiveIndex}
 		class="flex gap-5 overflow-x-auto snap-x snap-mandatory scroll-smooth pb-4 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
 	>
-		{#each items as item, index (item.title)}
+		{#each imageTestimonials as item, index (item.name)}
 			<div class="w-full min-w-full shrink-0 snap-start sm:min-w-[calc(50%-0.625rem)] lg:min-w-[calc(33.333333%-1.25rem*2/3)]">
-				{#if item.image}
-					<div
-						class="h-full overflow-hidden rounded-xl border border-slate-200 shadow-sm transition hover:border-orange-200 hover:shadow-md dark:border-slate-800 dark:hover:border-orange-900/60"
-					>
-						<img src={item.image} alt={item.title || item.meta} class="w-full h-full object-cover" />
+				<div
+					class="flex h-full flex-col overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm transition hover:border-orange-200 hover:shadow-md dark:border-slate-800 dark:bg-slate-900 dark:hover:border-orange-900/60"
+				>
+					<div class="flex-1 bg-slate-50 dark:bg-slate-950/50 p-2 sm:p-4 flex items-center justify-center">
+						<img src={item.image} alt="Testimonial dari {item.name}" class="w-full h-auto object-contain drop-shadow-sm rounded-md" />
 					</div>
-				{:else}
-					<div
-						class="flex h-full flex-col rounded-xl border border-slate-200 bg-white p-6 shadow-sm transition hover:border-orange-200 hover:shadow-md dark:border-slate-800 dark:bg-slate-900 dark:hover:border-orange-900/60"
-					>
-						<!-- Stars -->
-						<div class="mb-4 flex gap-0.5">
-							{#each Array(5) as _}
-								<svg
-									class="h-4 w-4 text-orange-400"
-									fill="currentColor"
-									viewBox="0 0 20 20"
-									aria-hidden="true"
-								>
-									<path
-										d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-									/>
-								</svg>
-							{/each}
-						</div>
-
-						<!-- Quote -->
-						<blockquote class="flex-1 text-sm leading-7 text-slate-700 dark:text-slate-300">
-							<span class="text-2xl font-black leading-none text-orange-300">"</span>
-							{item.description}
-							<span class="text-2xl font-black leading-none text-orange-300">"</span>
-						</blockquote>
-
-						<!-- Divider -->
-						<div class="mt-5 border-t border-slate-100 pt-5 dark:border-slate-800">
-							<div class="flex items-center gap-3">
-								<!-- Avatar initials -->
-								<div
-									class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-orange-100 text-sm font-black text-orange-700 dark:bg-orange-950/50 dark:text-orange-300"
-								>
-									{item.meta?.split(',')[0]?.trim().charAt(0) ?? '?'}
-								</div>
-								<div class="min-w-0">
-									<p class="truncate text-sm font-bold text-slate-900 dark:text-white">
-										{item.meta?.split(',')[0]?.trim() ?? ''}
-									</p>
-									{#if item.meta?.includes(',')}
-										<p class="truncate text-xs text-slate-500 dark:text-slate-400">
-											{item.meta.split(',').slice(1).join(',').trim()}
-										</p>
-									{/if}
-								</div>
+					<div class="border-t border-slate-100 bg-white p-4 dark:border-slate-800 dark:bg-slate-900">
+						<div class="flex items-center gap-3">
+							<div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-orange-100 text-xs font-black text-orange-700 dark:bg-orange-950/50 dark:text-orange-300">
+								{item.name.charAt(0)}
 							</div>
+							<p class="truncate text-sm font-bold text-slate-900 dark:text-white">
+								{item.name}
+							</p>
 						</div>
 					</div>
-				{/if}
+				</div>
 			</div>
 		{/each}
 	</div>
 
 	<!-- Dots Indicator -->
-	{#if items.length > 1}
+	{#if imageTestimonials.length > 1}
 		<div class="mt-4 flex justify-center gap-2">
-			{#each items as _, index}
+			{#each imageTestimonials as _, index}
 				<button
 					type="button"
 					aria-label="Go to slide {index + 1}"
