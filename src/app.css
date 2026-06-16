@@ -240,3 +240,19 @@
 .animate-marquee:hover {
 	animation-play-state: paused;
 }
+
+.heading-gradient {
+	background-image: linear-gradient(to right, var(--tw-gradient-from), var(--tw-gradient-via), var(--tw-gradient-to));
+	-webkit-background-clip: text;
+	background-clip: text;
+	color: transparent;
+	--tw-gradient-from: #ffffff;
+	--tw-gradient-via: #ffedd5;
+	--tw-gradient-to: #fdba74;
+}
+
+:root:not(.dark) .heading-gradient {
+	--tw-gradient-from: #0f172a;
+	--tw-gradient-via: #7c2d12;
+	--tw-gradient-to: #c2410c;
+}

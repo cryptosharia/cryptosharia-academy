@@ -7,6 +7,8 @@
 		resolveVideoEmbed,
 		type LandingContent
 	} from '$lib/landingContent';
+	import CoinTicker from '$lib/components/CoinTicker.svelte';
+	import TestimonialCarousel from '$lib/components/TestimonialCarousel.svelte';
 
 	let content = $state<LandingContent>(structuredClone(defaultLandingContent));
 	const INITIAL_FAQ_INDEXES = [0, 1, 3, 4, 5, 7, 10];
@@ -291,82 +293,124 @@
 						</div>
 					</div>
 
-					<div class="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-4">
-						{#each content.hero.highlights as item (item.symbol)}
-							<div class="rounded-lg border border-white/10 bg-white/[0.07] p-4 backdrop-blur">
-								<div class="text-[11px] font-black tracking-[0.14em] text-slate-400 uppercase">
-									{item.symbol}
-								</div>
-								<div class="mt-1 text-2xl font-black text-emerald-300">{item.performance}</div>
-							</div>
-						{/each}
-					</div>
+					<CoinTicker highlights={content.hero.highlights} />
 				</div>
 			</div>
 		</section>
 	{/if}
 
 	{#if sectionId === 'authority'}
-		<section class="relative overflow-hidden bg-white py-16 sm:py-20 dark:bg-gray-950">
-			<div
-				class="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-orange-300/60 to-transparent dark:via-orange-700/50"
-			></div>
-			<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-				<div class="grid gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:items-start">
-					<div>
-						<h2
-							class="text-3xl leading-tight font-extrabold text-slate-900 sm:text-4xl dark:text-white"
-						>
-							{content.authority.title}
-						</h2>
-						<p class="mt-5 text-base leading-8 text-slate-600 dark:text-slate-300">
-							{content.authority.description}
-						</p>
-					</div>
+		<section class="relative overflow-hidden bg-gray-950 py-20 sm:py-28">
+			<!-- Subtle geometric pattern overlay -->
+			<div class="pointer-events-none absolute inset-0 opacity-[0.04] [background-image:linear-gradient(30deg,rgba(255,255,255,0.5)_12%,transparent_12.5%,transparent_87%,rgba(255,255,255,0.5)_87.5%)] [background-size:60px_60px]"></div>
+			<!-- Top border glow -->
+			<div class="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-orange-300/60 to-transparent dark:via-orange-700/50"></div>
 
-					<div class="grid gap-4 sm:grid-cols-2">
-						{#each content.authority.activities as item (item.title)}
-							<div
-								class="group overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm shadow-slate-950/5 transition hover:border-orange-200 hover:shadow-lg hover:shadow-orange-950/5 dark:border-slate-800 dark:bg-slate-900 dark:hover:border-orange-900/70"
-							>
-								{#if item.image}
-									<div
-										class="relative aspect-video overflow-hidden border-b border-slate-200 dark:border-slate-800"
-									>
-										<img src={item.image} alt={item.title} class="h-full w-full object-cover" />
-										<div
-											class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-950/75 to-transparent p-4"
-										>
-											<span
-												class="rounded-full bg-white/90 px-2.5 py-1 text-[10px] font-black tracking-[0.14em] text-slate-900 uppercase dark:bg-slate-900/90"
-												>{activityBadge(item)}</span
-											>
-										</div>
+			<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+				<!-- Section header -->
+				<div class="mx-auto mb-16 max-w-3xl text-center">
+					<h2 class="text-3xl leading-tight font-extrabold sm:text-4xl lg:text-5xl heading-gradient">
+						{content.authority.title}
+					</h2>
+					<p class="mt-5 text-base leading-8 text-slate-300">
+						{content.authority.description}
+					</p>
+				</div>
+
+				<!-- Desktop: Alternating storytelling layout -->
+				<div class="relative hidden lg:block">
+					<!-- Vertical timeline line -->
+					<div class="absolute left-1/2 top-0 h-full w-px -translate-x-1/2 bg-gradient-to-b from-orange-500/30 via-orange-300/20 to-transparent"></div>
+
+					<div class="space-y-20">
+						{#each content.authority.activities as item, index (item.title)}
+							{@const isEven = index % 2 === 0}
+							{@const isFirst = index === 0}
+							<div class="relative grid grid-cols-2 items-center gap-12" class:grid-cols-[1.2fr_0.8fr]={isFirst && isEven} class:grid-cols-[0.8fr_1.2fr]={!isFirst && !isEven} class:grid-cols-[1.1fr_0.9fr]={!isFirst && isEven}>
+								<!-- Large numbered badge -->
+								<div class="pointer-events-none absolute -top-6 text-7xl font-black text-orange-500/15" class:left-4={isEven} class:right-4={!isEven}>
+									{String(index + 1).padStart(2, '0')}
+								</div>
+
+								{#if isEven}
+									<!-- Image LEFT, text RIGHT -->
+									<div class="relative">
+										<!-- Subtle radial glow behind image -->
+										<div class="absolute -inset-4 rounded-2xl bg-[radial-gradient(circle_at_center,rgba(249,115,22,0.10),transparent_70%)]"></div>
+										{#if item.image}
+											<div class="relative overflow-hidden rounded-xl {isFirst ? 'aspect-[16/10]' : 'aspect-[16/9]'}">
+												<img src={item.image} alt={item.title} class="h-full w-full object-cover" />
+												<div class="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-gray-950/80 to-transparent"></div>
+											</div>
+										{:else}
+											<div class="relative flex {isFirst ? 'aspect-[16/10]' : 'aspect-[16/9]'} items-center justify-center rounded-xl bg-[radial-gradient(circle_at_28%_22%,rgba(249,115,22,0.20),transparent_40%),linear-gradient(135deg,#0f172a,#111827)]">
+												<div class="absolute inset-0 [background-image:linear-gradient(30deg,rgba(255,255,255,0.06)_12%,transparent_12.5%,transparent_87%,rgba(255,255,255,0.06)_87.5%)] [background-size:48px_48px] opacity-30"></div>
+												<p class="relative text-lg font-bold text-white/70">{item.title}</p>
+											</div>
+										{/if}
+									</div>
+									<div class="flex flex-col justify-center">
+										<span class="mb-3 w-fit rounded-full border border-orange-500/30 bg-orange-500/10 px-3 py-1 text-[10px] font-black tracking-[0.14em] text-orange-300 uppercase">{activityBadge(item)}</span>
+										<h3 class="text-2xl font-bold text-white">{item.title}</h3>
+										<p class="mt-3 text-base leading-7 text-slate-300">{item.description}</p>
 									</div>
 								{:else}
-									<div
-										class="relative aspect-video overflow-hidden border-b border-slate-200 bg-[radial-gradient(circle_at_28%_22%,rgba(249,115,22,0.28),transparent_36%),linear-gradient(135deg,#0f172a,#111827_48%,#134e4a)] dark:border-slate-800"
-									>
-										<div
-											class="absolute inset-0 [background-image:linear-gradient(30deg,rgba(255,255,255,0.08)_12%,transparent_12.5%,transparent_87%,rgba(255,255,255,0.08)_87.5%,rgba(255,255,255,0.08)),linear-gradient(150deg,rgba(255,255,255,0.08)_12%,transparent_12.5%,transparent_87%,rgba(255,255,255,0.08)_87.5%,rgba(255,255,255,0.08))] [background-size:48px_48px] [background-position:0_0,24px_24px] opacity-30"
-										></div>
-										<div class="relative flex h-full flex-col justify-between p-4">
-											<span
-												class="w-fit rounded-full bg-white/90 px-2.5 py-1 text-[10px] font-black tracking-[0.14em] text-slate-900 uppercase dark:bg-slate-900/90"
-												>{activityBadge(item)}</span
-											>
-											<p class="max-w-[12rem] text-xl leading-tight font-black text-white">
-												{item.title}
-											</p>
-										</div>
+									<!-- Text LEFT, image RIGHT -->
+									<div class="flex flex-col justify-center">
+										<span class="mb-3 w-fit rounded-full border border-orange-500/30 bg-orange-500/10 px-3 py-1 text-[10px] font-black tracking-[0.14em] text-orange-300 uppercase">{activityBadge(item)}</span>
+										<h3 class="text-2xl font-bold text-white">{item.title}</h3>
+										<p class="mt-3 text-base leading-7 text-slate-300">{item.description}</p>
+									</div>
+									<div class="relative">
+										<div class="absolute -inset-4 rounded-2xl bg-[radial-gradient(circle_at_center,rgba(249,115,22,0.10),transparent_70%)]"></div>
+										{#if item.image}
+											<div class="relative overflow-hidden rounded-xl aspect-[16/9]">
+												<img src={item.image} alt={item.title} class="h-full w-full object-cover" />
+												<div class="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-gray-950/80 to-transparent"></div>
+											</div>
+										{:else}
+											<div class="relative flex aspect-[16/9] items-center justify-center rounded-xl bg-[radial-gradient(circle_at_28%_22%,rgba(249,115,22,0.20),transparent_40%),linear-gradient(135deg,#0f172a,#111827)]">
+												<div class="absolute inset-0 [background-image:linear-gradient(30deg,rgba(255,255,255,0.06)_12%,transparent_12.5%,transparent_87%,rgba(255,255,255,0.06)_87.5%)] [background-size:48px_48px] opacity-30"></div>
+												<p class="relative text-lg font-bold text-white/70">{item.title}</p>
+											</div>
+										{/if}
 									</div>
 								{/if}
-								<div class="p-5">
-									<h3 class="text-lg font-bold text-slate-900 dark:text-white">{item.title}</h3>
-									<p class="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-400">
-										{item.description}
-									</p>
+							</div>
+						{/each}
+					</div>
+				</div>
+
+				<!-- Mobile: Vertical timeline layout -->
+				<div class="lg:hidden">
+					<div class="relative space-y-10 pl-10">
+						<!-- Timeline line -->
+						<div class="absolute left-[15px] top-2 h-[calc(100%-1rem)] w-px bg-gradient-to-b from-orange-500/30 via-orange-300/20 to-transparent"></div>
+
+						{#each content.authority.activities as item, index (item.title)}
+							<div class="relative">
+								<!-- Timeline dot -->
+								<div class="absolute -left-10 top-1 flex h-[30px] w-[30px] items-center justify-center rounded-full border border-orange-500/40 bg-gray-950 text-xs font-black text-orange-400">
+									{index + 1}
 								</div>
+
+								<!-- Image -->
+								{#if item.image}
+									<div class="relative mb-4 overflow-hidden rounded-xl aspect-[16/9]">
+										<img src={item.image} alt={item.title} class="h-full w-full object-cover" />
+										<div class="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-gray-950/80 to-transparent"></div>
+									</div>
+								{:else}
+									<div class="relative mb-4 flex aspect-[16/9] items-center justify-center rounded-xl bg-[radial-gradient(circle_at_28%_22%,rgba(249,115,22,0.20),transparent_40%),linear-gradient(135deg,#0f172a,#111827)]">
+										<div class="absolute inset-0 [background-image:linear-gradient(30deg,rgba(255,255,255,0.06)_12%,transparent_12.5%,transparent_87%,rgba(255,255,255,0.06)_87.5%)] [background-size:48px_48px] opacity-30"></div>
+										<p class="relative text-lg font-bold text-white/70">{item.title}</p>
+									</div>
+								{/if}
+
+								<!-- Text -->
+								<span class="mb-2 inline-block rounded-full border border-orange-500/30 bg-orange-500/10 px-3 py-1 text-[10px] font-black tracking-[0.14em] text-orange-300 uppercase">{activityBadge(item)}</span>
+								<h3 class="text-xl font-bold text-white">{item.title}</h3>
+								<p class="mt-2 text-sm leading-7 text-slate-300">{item.description}</p>
 							</div>
 						{/each}
 					</div>
@@ -456,7 +500,7 @@
 		<section class="bg-white py-20 dark:bg-gray-950" id="testimonials">
 			<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 				<div class="mb-12 max-w-3xl">
-					<h2 class="text-3xl font-extrabold text-slate-900 sm:text-4xl dark:text-white">
+					<h2 class="text-3xl font-extrabold sm:text-4xl heading-gradient">
 						{content.testimonials.title}
 					</h2>
 					<p class="mt-4 text-base leading-8 text-slate-600 dark:text-slate-300">
@@ -464,58 +508,7 @@
 					</p>
 				</div>
 
-				<div class="grid gap-5 md:grid-cols-3">
-					{#each content.testimonials.items as item (item.title)}
-						<div
-							class="flex flex-col rounded-xl border border-slate-200 bg-white p-6 shadow-sm transition hover:border-orange-200 hover:shadow-md dark:border-slate-800 dark:bg-slate-900 dark:hover:border-orange-900/60"
-						>
-							<!-- Stars -->
-							<div class="mb-4 flex gap-0.5">
-								{#each Array(5) as _}
-									<svg
-										class="h-4 w-4 text-orange-400"
-										fill="currentColor"
-										viewBox="0 0 20 20"
-										aria-hidden="true"
-									>
-										<path
-											d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-										/>
-									</svg>
-								{/each}
-							</div>
-
-							<!-- Quote -->
-							<blockquote class="flex-1 text-sm leading-7 text-slate-700 dark:text-slate-300">
-								<span class="text-2xl font-black leading-none text-orange-300">"</span>
-								{item.description}
-								<span class="text-2xl font-black leading-none text-orange-300">"</span>
-							</blockquote>
-
-							<!-- Divider -->
-							<div class="mt-5 border-t border-slate-100 pt-5 dark:border-slate-800">
-								<div class="flex items-center gap-3">
-									<!-- Avatar initials -->
-									<div
-										class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-orange-100 text-sm font-black text-orange-700 dark:bg-orange-950/50 dark:text-orange-300"
-									>
-										{item.meta?.split(',')[0]?.trim().charAt(0) ?? '?'}
-									</div>
-									<div class="min-w-0">
-										<p class="truncate text-sm font-bold text-slate-900 dark:text-white">
-											{item.meta?.split(',')[0]?.trim() ?? ''}
-										</p>
-										{#if item.meta?.includes(',')}
-											<p class="truncate text-xs text-slate-500 dark:text-slate-400">
-												{item.meta.split(',').slice(1).join(',').trim()}
-											</p>
-										{/if}
-									</div>
-								</div>
-							</div>
-						</div>
-					{/each}
-				</div>
+				<TestimonialCarousel items={content.testimonials.items} />
 			</div>
 		</section>
 	{/if}
@@ -527,7 +520,7 @@
 			></div>
 			<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 				<div class="relative mx-auto max-w-4xl text-center">
-					<h2 class="text-3xl leading-tight font-black sm:text-4xl">
+					<h2 class="text-3xl leading-tight font-black sm:text-4xl heading-gradient">
 						{content.usp.title}
 					</h2>
 					{#if content.usp.description}
@@ -541,8 +534,9 @@
 					{#each content.usp.items as item (item.title)}
 						{@const iconKey = benefitIconKey(item.title)}
 						<div
-							class="rounded-lg border border-orange-400/35 bg-orange-500/[0.08] p-6"
+							class="relative overflow-hidden rounded-lg border border-orange-400/35 bg-orange-500/[0.08] p-6"
 						>
+							<div class="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_85%_15%,rgba(249,115,22,0.10),transparent_60%)]"></div>
 							<div
 								class="mb-5 flex h-12 w-12 items-center justify-center rounded-lg border border-white/10 bg-white/[0.08] text-orange-200"
 							>
@@ -654,7 +648,7 @@
 							Kuota Mentoring Terbatas
 						</div>
 						<h2
-							class="text-3xl leading-tight font-extrabold text-slate-900 sm:text-4xl dark:text-white"
+							class="text-3xl leading-tight font-extrabold sm:text-4xl heading-gradient"
 						>
 							{content.pricing.title}
 						</h2>
@@ -770,7 +764,7 @@
 			<div class="mx-auto max-w-[90rem] px-4 sm:px-6 lg:px-8">
 				<div class="mx-auto mb-12 max-w-4xl text-center">
 					<h2
-						class="text-3xl leading-tight font-extrabold text-slate-900 sm:text-5xl dark:text-white"
+						class="text-3xl leading-tight font-extrabold sm:text-5xl heading-gradient"
 					>
 						{content.curriculum.title}
 					</h2>
@@ -796,7 +790,7 @@
 						>
 							{#each content.curriculum.schedule as day, dayIndex (day.stage)}
 								<div
-									class="relative flex h-full flex-col rounded-lg border border-slate-200 bg-white p-5 shadow-sm shadow-slate-950/5 before:absolute before:top-6 before:-left-[2.05rem] before:h-4 before:w-4 before:rounded-full before:border-4 before:border-slate-50 before:bg-orange-500 md:p-6 md:before:hidden dark:border-slate-700 dark:bg-slate-950 dark:before:border-slate-900"
+									class="relative flex h-full flex-col rounded-lg border border-slate-200 bg-white p-5 shadow-sm shadow-slate-950/5 shadow-[inset_0_1px_0_rgba(249,115,22,0.12)] before:absolute before:top-6 before:-left-[2.05rem] before:h-4 before:w-4 before:rounded-full before:border-4 before:border-slate-50 before:bg-orange-500 md:p-6 md:before:hidden dark:border-slate-700 dark:bg-slate-950 dark:before:border-slate-900"
 								>
 									<button
 										type="button"
@@ -924,24 +918,29 @@
 					</div>
 				{/if}
 
-				<div class="mt-14 border-t border-slate-200 pt-12 dark:border-slate-800">
-					<div class="grid gap-8 lg:grid-cols-[1fr_0.9fr] lg:items-start">
+				<div class="relative mt-14 overflow-hidden rounded-2xl bg-slate-900 p-8 sm:p-10 dark:bg-slate-950">
+					<!-- Top gradient border accent -->
+					<div class="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-orange-500 via-amber-400 to-teal-400"></div>
+					<!-- Subtle geometric pattern -->
+					<div class="pointer-events-none absolute inset-0 [background-image:linear-gradient(30deg,rgba(255,255,255,0.04)_12%,transparent_12.5%,transparent_87%,rgba(255,255,255,0.04)_87.5%),linear-gradient(150deg,rgba(255,255,255,0.04)_12%,transparent_12.5%,transparent_87%,rgba(255,255,255,0.04)_87.5%)] [background-size:48px_48px] [background-position:0_0,24px_24px]"></div>
+					<div class="relative grid gap-8 lg:grid-cols-[1fr_0.9fr] lg:items-start">
 						{#if content.curriculum.outcomes.length > 0}
 							<div>
 								<h3
-									class="text-2xl leading-tight font-extrabold text-slate-900 sm:text-3xl dark:text-white"
+									class="text-2xl leading-tight font-extrabold sm:text-3xl heading-gradient"
 								>
 									Setelah 4 hari, peserta akan lebih siap untuk:
 								</h3>
 								<ul
-									class="mt-7 grid gap-3 text-base leading-8 text-slate-700 sm:grid-cols-2 dark:text-slate-200"
+									class="mt-7 grid gap-3 text-base leading-8 text-slate-100 sm:grid-cols-2"
 								>
-									{#each content.curriculum.outcomes as outcome (outcome)}
+									{#each content.curriculum.outcomes as outcome, index (outcome)}
 										<li
-											class="flex gap-3 rounded-lg border border-orange-100 bg-orange-50/50 p-4 shadow-sm shadow-orange-950/5 dark:border-orange-500/20 dark:bg-orange-500/10"
+											class="flex gap-3 rounded-lg border-l-4 {index % 2 === 0 ? 'border-l-orange-500' : 'border-l-emerald-500'} bg-slate-800/60 p-4 font-semibold shadow-sm shadow-orange-500/5"
 										>
+											<span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-orange-500/20 text-xs font-black text-orange-300">{index + 1}</span>
 											<svg
-												class="mt-1 h-5 w-5 shrink-0 text-orange-600 dark:text-orange-400"
+												class="mt-1 h-5 w-5 shrink-0 text-orange-400"
 												fill="none"
 												stroke="currentColor"
 												viewBox="0 0 24 24"
@@ -959,7 +958,7 @@
 									{/each}
 								</ul>
 								{#if content.curriculum.disclaimer}
-									<p class="mt-6 text-xs leading-6 text-slate-500 dark:text-slate-500">
+									<p class="mt-6 text-xs leading-6 text-slate-400">
 										{content.curriculum.disclaimer}
 									</p>
 								{/if}
@@ -1028,7 +1027,7 @@
 						</p>
 					{/if}
 					<h2
-						class="text-3xl leading-tight font-extrabold text-slate-900 sm:text-4xl dark:text-white"
+						class="text-3xl leading-tight font-extrabold sm:text-4xl heading-gradient"
 					>
 						{content.instructors.title}
 					</h2>
@@ -1056,7 +1055,7 @@
 								<div class="mb-5 flex flex-col">
 									<div class="flex flex-col xl:min-h-[12.25rem]">
 										<p
-											class="mb-5 hidden min-h-12 w-fit items-center rounded-full border border-orange-300 bg-orange-50 px-4 py-2 text-sm leading-5 font-bold text-orange-700 sm:inline-flex dark:border-orange-700/70 dark:bg-orange-500/10 dark:text-orange-200"
+											class="mb-5 inline-flex min-h-12 w-fit items-center rounded-full border border-orange-300 bg-orange-50 px-4 py-2 text-sm leading-5 font-bold text-orange-700 dark:border-orange-700/70 dark:bg-orange-500/10 dark:text-orange-200"
 										>
 											{instructor.badge}
 										</p>
@@ -1216,7 +1215,7 @@
 		<section class="scroll-mt-20 bg-white py-16 sm:py-20 dark:bg-gray-950" id="faq">
 			<div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
 				<div class="mb-10 text-center">
-					<h2 class="text-3xl font-extrabold text-slate-900 sm:text-4xl dark:text-white">
+					<h2 class="text-3xl font-extrabold sm:text-4xl heading-gradient">
 						{content.faq.title}
 					</h2>
 				</div>
@@ -1245,7 +1244,7 @@
 								onclick={() => toggleFaq(index)}
 								class="flex w-full items-center justify-between gap-4 px-5 py-5 text-left transition {openFaqIndex ===
 								index
-									? 'bg-orange-50 dark:bg-orange-950/20'
+									? 'bg-gradient-to-b from-orange-950/15 to-transparent dark:from-orange-950/20 dark:to-transparent'
 									: 'bg-slate-50 hover:bg-slate-100 dark:bg-slate-900 dark:hover:bg-slate-800'}"
 								aria-expanded={openFaqIndex === index}
 							>

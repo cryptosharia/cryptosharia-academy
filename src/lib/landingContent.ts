@@ -24,7 +24,7 @@ export type SectionId =
 
 export type Highlight = { symbol: string; performance: string };
 export type Feature = { label: string; title: string; description: string };
-export type ProofItem = { meta: string; title: string; description: string };
+export type ProofItem = { meta: string; title: string; description: string; image?: string };
 export type Activity = { meta: string; title: string; description: string; image: string };
 export type Faq = { question: string; answer: string };
 export type Cta = { label: string; href: string };
@@ -195,8 +195,8 @@ export const defaultLandingContent: LandingContent = {
 		{ id: 'finalCta', visible: true }
 	],
 	whatsapp: {
-		phone: '6281234567890',
-		message: 'Assalamualaikum CryptoSharia, saya mau daftar Crypto Sharia Masterclass.'
+		phone: '6282186584279',
+		message: 'Halo admin, saya tertarik mau join Crypto Sharia Masterclass….'
 	},
 	seo: {
 		title: 'Crypto Sharia Masterclass | Bootcamp Crypto Syariah 4 Hari',
@@ -232,30 +232,30 @@ export const defaultLandingContent: LandingContent = {
 			'Materi masterclass ini disusun dari pengalaman edukasi, diskusi komunitas, dan kebutuhan nyata peserta dalam memahami crypto secara lebih terarah dan sesuai prinsip syariah. Berbasis pengalaman edukasi bersama 4.000+ member komunitas CryptoSharia.',
 		activities: [
 			{
-				meta: 'Kelas / Diskusi',
-				title: 'QnA Session',
-				description:
-					'Forum tanya jawab rutin untuk membahas market, portofolio, dan fiqih muamalah.',
-				image: ''
-			},
-			{
-				meta: 'Dokumentasi Event',
-				title: 'Nushafest',
+				meta: 'Event 2025',
+				title: 'Nushafest 2025',
 				description:
 					'Dokumentasi edukasi publik bersama komunitas yang tertarik pada aset digital halal.',
-				image: ''
+				image: '/events/nushafest.png'
 			},
 			{
-				meta: 'Dokumentasi Event',
-				title: 'Halal Kulture Market',
+				meta: 'Event 2025',
+				title: 'Halal Kulture Market 2025',
 				description: 'Aktivasi edukasi crypto syariah untuk memperluas literasi investor Muslim.',
-				image: ''
+				image: '/events/halalkulture.png'
 			},
 			{
-				meta: 'Diskusi Komunitas',
-				title: 'Gathering Komunitas',
+				meta: 'Event 2025',
+				title: 'Bootcamp Crypto Sharia 2025',
+				description:
+					'Workshop intensif dan praktik langsung untuk peserta yang ingin memahami crypto secara mendalam.',
+				image: '/events/bootcamp.png'
+			},
+			{
+				meta: 'Event 2025',
+				title: 'Kopdar Crypto Sharia 2025',
 				description: 'Diskusi kecil dan networking antar member untuk memperkuat proses belajar.',
-				image: ''
+				image: '/events/kopdar.png'
 			}
 		],
 		cards: [
@@ -317,37 +317,31 @@ export const defaultLandingContent: LandingContent = {
 				meta: 'Antii, Finance',
 				title: 'Diskusi soal halal-haram crypto dibahas dengan bijak.',
 				description:
-					'Happy rasanya bisa bergabung di komunitas ini. Diskusi soal halal-haram crypto dibahas dengan bijak oleh asatidz. Diskusi terarah tidak langsung menghakimi dan banyak insight trading dari teman-teman.'
+					'Happy rasanya bisa bergabung dikomunitas ini. Diskusi soal halal-haram crypto dibahas dengan bijak oleh ustadz² ,di-lead baik sama ketumnya dan saling mengingatkan antar admin dan member, diskusi terarah tidak langsung menghakimi. Banyak insight juga dr temen² yg udah duluan trading baik itu outlook atau bagi² sygnal lainnya. Smg cryptosharia makin besar dan Istiqomah mengedukasi trading sesuai syariat. Barakallahu fiikum'
 			},
 			{
 				meta: 'Muhamad Cholid, Staff Marketing',
 				title: 'Sangat membantu untuk kita yang belajar crypto.',
 				description:
-					'Alhamdulillah bermanfaat sekali semenjak bergabung dengan CryptoSharia ini, banyak ilmu yang didapat. Adanya kumpulan fatwa & rekaman webinar sangat membantu untuk kita yang belajar crypto.'
+					'Manfaat yang di dapatkan dari Crypto Sharia : Alhamdulillah bermanfaat sekali semenjak bergabung dengan CryptoSharia ini, banyak ilmu yang di dapat. Dari ilmu di wa sampai discord, apalagi adanya Chat Kumpulan Fatwa & Rekaman Webinar sangat membantu untuk kita yang belajar crypto. Harapannya semoga CrytoSharia semakin besar dan jadi manfaat untuk banyak orang. Doa terbaiknya saemoga CrytoSharia jadi komunitas utama bagi Muslim Indonesia. Jazaakumullahu khairan wa baarakallahu fiikum 🙏'
 			},
 			{
 				meta: 'Rainsha Sinna, Freelancer',
 				title: 'Alhamdulillah ortu ana udah profit lebih dari 10%.',
 				description:
-					'Ana banyak belajar dari webinar & grup komunitas ini. Alhamdulillah biidznillah ortu ana yang juga ikut invest udah mulai "memetik buahnya", lebih dari 10% profitnya dan sempat TP sebagian.'
+					'Kalo kebermanfaatan komunitas ini buat ana pribadi masih di level ilmu ya, kalau level investasi itu ortu ana. Jadi ana ngebantuin ortu yg lagi invest di crypto, setelah kami sama2 mulai terbuka bahwa crypto itu gak mutlak haram. Terus komunitas CryptoSharia nongol di feed IG. Dari sana ana banyak belajar dari webinar, grup WA & Discord komunitas ini, dan diskusi ana dgn ortu seputar crypto juga ya ttg apa yg ana dapetin dari komunitas. Alhamdulillah biidznillah ortu ana udah mulai "memetik buahnya", lebih dari 10% profitnya dan sempat TP sebagian. Semoga komunitas CryptoSharia bisa terus berkembang dan jadi jalan bagi kaum muslimin...'
 			},
 			{
 				meta: 'Aizul, Programmer',
-				title: 'Banyak manfaat apalagi sebagai pemula.',
+				title: 'Memberikan saya banyak manfaat, apalagi sebagai pemula.',
 				description:
-					'Bergabung dengan komunitas Crypto Sharia memberikan saya banyak manfaat, apalagi sebagai pemula. Di sini saya belajar mulai dari pengertian dasar, strategi investasi, hingga aspek hukum kripto menurut syariat Islam.'
+					'Bergabung dengan komunitas Crypto Sharia memberikan saya banyak manfaat, apalagi sebagai pemula. Di sini saya belajar mulai dari pengertian dasar, istilah penting, strategi investasi, hingga aspek hukum kripto menurut syariat Islam. Saya berharap Crypto Sharia bisa menjadi pelopor utama di Indonesia dalam menyebarkan edukasi dan informasi bermanfaat bagi umat Muslim tentang dunia investasi kripto yang halal dan sesuai syariah.'
 			},
 			{
 				meta: 'Ibrahim, Karyawan Swasta',
 				title: 'Jadi pede investasi ke Crypto karena sesuai Syariat.',
 				description:
-					'Seneng sekali ternyata ada komunitas Crypto Sharia, dan jadi pede untuk investasi ke Crypto. Di komunitas ini saya jadi belajar bahwa investasi harus disertai dengan ilmunya, fundamentalnya, dan update ekonomi makronya.'
-			},
-			{
-				meta: 'Firman, Karyawan Swasta',
-				title: 'Punya wadah diskusi yang memperhatikan syariat.',
-				description:
-					'Bismillah, punya sebuah wadah untuk berdiskusi yang semua punya kesamaan (memperhatikan syariat) adalah hal yang paling nikmat. Alhamdulillah banyak informasi yang didapat, khususnya webinar yang sangat bermanfaat.'
+					'Alhamdulillah seneng sekali pas lihat Instagram ternyata ada komunitas Crypto Sharia, dan jadi pede untuk Investasi ke Crypto karena ada fatwa2 dari Ulama bahwa hukumnya Halal / Mubah (Tergantung koinnya juga) . Lalu juga di Komunitas ini saya jadi belajar bahwa Investasi di Cryptocurrency harus disertai dengan ilmunya. Halal kah koin tsb, seperti apa fundamental nya, lalu update ekonomi makro nya seperti apa dll. Harapan nya agar Crypto Sharia bisa benar2 menjadi wadah untuk kaum muslimin yg mau Investasi di Crypto dengan Halal & sesuai syariat Agama Islam. Barakallahufiikum..'
 			}
 		]
 	},
@@ -1313,22 +1307,38 @@ function normalizeFinalCta(finalCta: LandingContent['finalCta']): LandingContent
 }
 
 function normalizeTestimonials(
-	testimonials: LandingContent['testimonials']
+	testimonials: LandingContent['testimonials'] | undefined
 ): LandingContent['testimonials'] {
 	const defaults = defaultLandingContent.testimonials;
-	if (!testimonials?.title?.trim()) testimonials.title = defaults.title;
-	if (!testimonials?.description?.trim()) testimonials.description = defaults.description;
+	if (!testimonials) return structuredClone(defaults);
 
+	if (!testimonials.title?.trim()) testimonials.title = defaults.title;
+
+	const oldDescriptions = new Set([
+		'Placeholder untuk screenshot testimoni Discord, ucapan terima kasih, dokumentasi profit member, dan sharing pengalaman belajar.'
+	]);
+	if (!testimonials?.description?.trim() || oldDescriptions.has(testimonials.description.trim())) {
+		testimonials.description = defaults.description;
+	}
+
+	// Detect old/stale testimonial data from Firestore and replace with new defaults
+	const oldMetas = new Set([
+		'Discord Community',
+		'Member feedback',
+		'Portfolio story',
+		'Arief Adjie, Web Developer'
+	]);
 	const oldTitles = new Set([
 		'Alhamdulillah portofilio BTC sudah +12,5%.',
-		'Komunitas yang bergerak berdasarkan landasan ilmu.'
+		'Komunitas yang bergerak berdasarkan landasan ilmu.',
+		'Jadi pede investasi ke Crypto karena sesuai Syariat.'
 	]);
-	const hasOldItems =
+	const hasStaleItems =
 		!Array.isArray(testimonials.items) ||
 		testimonials.items.length === 0 ||
-		(testimonials.items.length <= 3 && testimonials.items.some((i) => oldTitles.has(i.title)));
+		testimonials.items.some((i) => oldMetas.has(i.meta) || oldTitles.has(i.title));
 
-	if (hasOldItems) {
+	if (hasStaleItems) {
 		testimonials.items = defaults.items;
 	}
 
@@ -1345,7 +1355,7 @@ function normalizeLayout(layout: LayoutEntry[]): LayoutEntry[] {
 		if (!entry || typeof entry.id !== 'string') continue;
 		const id = entry.id as SectionId;
 		if (!defaultIds.has(id) || seen.has(id)) continue;
-		const forceVisible: Set<SectionId> = new Set(['testimonials']);
+		const forceVisible: Set<SectionId> = new Set(['testimonials', 'authority', 'usp']);
 		let vis = entry.visible !== false;
 		if (forceVisible.has(id)) vis = true;
 		normalized.push({ id, visible: vis });
@@ -1359,7 +1369,24 @@ function normalizeLayout(layout: LayoutEntry[]): LayoutEntry[] {
 		seen.add(entry.id);
 	});
 
-	return reorderLayoutForConversion(normalized, defaultEntries);
+	// Force testimonials to be positioned right before 'usp'
+	const testimonialsIdx = normalized.findIndex((e) => e.id === 'testimonials');
+	const uspIdx = normalized.findIndex((e) => e.id === 'usp');
+	if (testimonialsIdx !== -1 && uspIdx !== -1 && testimonialsIdx > uspIdx) {
+		const [entry] = normalized.splice(testimonialsIdx, 1);
+		const newUspIdx = normalized.findIndex((e) => e.id === 'usp');
+		normalized.splice(newUspIdx, 0, entry);
+	}
+
+	const result = reorderLayoutForConversion(normalized, defaultEntries);
+
+	// Final pass: force visibility regardless of stored or reordered state
+	const forceVisibleFinal: Set<SectionId> = new Set(['testimonials', 'authority', 'usp']);
+	for (const entry of result) {
+		if (forceVisibleFinal.has(entry.id)) entry.visible = true;
+	}
+
+	return result;
 }
 
 function reorderLayoutForConversion(
@@ -1370,12 +1397,14 @@ function reorderLayoutForConversion(
 
 	const visibility = new Map(layout.map((entry) => [entry.id, entry.visible]));
 	const useDefaultVisibility = new Set<SectionId>(['valueProps']);
-	return defaultEntries.map((entry) => ({
-		id: entry.id,
-		visible: useDefaultVisibility.has(entry.id)
+	const forceVisible: Set<SectionId> = new Set(['testimonials', 'authority', 'usp']);
+	return defaultEntries.map((entry) => {
+		let vis = useDefaultVisibility.has(entry.id)
 			? entry.visible
-			: (visibility.get(entry.id) ?? entry.visible)
-	}));
+			: (visibility.get(entry.id) ?? entry.visible);
+		if (forceVisible.has(entry.id)) vis = true;
+		return { id: entry.id, visible: vis };
+	});
 }
 
 function shouldUseConversionOrder(layout: LayoutEntry[]): boolean {
