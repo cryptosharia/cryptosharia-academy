@@ -24,19 +24,7 @@
 		userAuth.isLoggedIn && userAuth.user?.email && ADMIN_EMAILS.includes(userAuth.user.email)
 	);
 
-	const SECTION_ORDER: SectionId[] = [
-		'hero',
-		'authority',
-		'usp',
-		'valueProps',
-		'instructors',
-		'curriculum',
-		'pricing',
-		'urgency',
-		'faq',
-		'finalCta',
-		'testimonials'
-	];
+	const SECTION_ORDER: SectionId[] = defaultLandingContent.layout.map((entry) => entry.id);
 
 	// A "view" is either a settings panel, a content section id, or advanced.
 	type View = 'overview' | 'layout' | 'global' | SectionId | 'reset';
@@ -1684,18 +1672,24 @@
 		{@render textField(
 			'Label Card Tanggal',
 			() => content.pricing.dateCard?.label || '',
-			(v) => { if (content.pricing.dateCard) content.pricing.dateCard.label = v; }
+			(v) => {
+				if (content.pricing.dateCard) content.pricing.dateCard.label = v;
+			}
 		)}
 		{@render textField(
 			'Info Tanggal',
 			() => content.pricing.dateCard?.date || '',
-			(v) => { if (content.pricing.dateCard) content.pricing.dateCard.date = v; }
+			(v) => {
+				if (content.pricing.dateCard) content.pricing.dateCard.date = v;
+			}
 		)}
 	</div>
 	{@render textField(
 		'Info Waktu (opsional)',
 		() => content.pricing.dateCard?.time || '',
-		(v) => { if (content.pricing.dateCard) content.pricing.dateCard.time = v; }
+		(v) => {
+			if (content.pricing.dateCard) content.pricing.dateCard.time = v;
+		}
 	)}
 	<div class="grid grid-cols-2 gap-4">
 		{@render textField(

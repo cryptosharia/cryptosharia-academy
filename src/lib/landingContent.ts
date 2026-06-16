@@ -183,13 +183,13 @@ export const SECTION_LABELS: Record<SectionId, string> = {
 export const defaultLandingContent: LandingContent = {
 	layout: [
 		{ id: 'hero', visible: true },
-		{ id: 'authority', visible: true },
 		{ id: 'testimonials', visible: true },
 		{ id: 'usp', visible: true },
-		{ id: 'valueProps', visible: false },
-		{ id: 'instructors', visible: true },
 		{ id: 'curriculum', visible: true },
+		{ id: 'valueProps', visible: true },
+		{ id: 'instructors', visible: true },
 		{ id: 'pricing', visible: true },
+		{ id: 'authority', visible: true },
 		{ id: 'urgency', visible: true },
 		{ id: 'faq', visible: true },
 		{ id: 'finalCta', visible: true }
@@ -1109,7 +1109,8 @@ function normalizeInstructors(
 	const oldCtaDescriptions = new Set([
 		'Lihat kurikulum bootcamp atau konsultasikan kebutuhan belajar Anda melalui WhatsApp.'
 	]);
-	const oldClosing = 'Dengan kombinasi tiga perspektif ini, peserta tidak hanya belajar melihat peluang crypto, tetapi juga memahami risiko dan batasan syariahnya secara lebih matang.';
+	const oldClosing =
+		'Dengan kombinasi tiga perspektif ini, peserta tidak hanya belajar melihat peluang crypto, tetapi juga memahami risiko dan batasan syariahnya secara lebih matang.';
 
 	if (!instructors.eyebrow?.trim()) instructors.eyebrow = defaults.eyebrow;
 	if (!instructors.title?.trim() || instructors.title.trim() === oldTitle) {
@@ -1118,7 +1119,8 @@ function normalizeInstructors(
 	if (!instructors.description?.trim() || oldDescriptions.has(instructors.description.trim())) {
 		instructors.description = defaults.description;
 	}
-	if (!instructors.closing?.trim() || instructors.closing.trim() === oldClosing) instructors.closing = defaults.closing;
+	if (!instructors.closing?.trim() || instructors.closing.trim() === oldClosing)
+		instructors.closing = defaults.closing;
 	if (!instructors.ctaTitle?.trim() || instructors.ctaTitle.trim() === oldCtaTitle) {
 		instructors.ctaTitle = defaults.ctaTitle;
 	}
@@ -1218,16 +1220,16 @@ function normalizePricing(pricing: LandingContent['pricing']): LandingContent['p
 		'Biaya Program Crypto Sharia Masterclass',
 		'Gabung Crypto Sharia Masterclass 2026'
 	]);
-	
+
 	const oldDescriptions = new Set([
 		'Bootcamp berlangsung 4 hari pada 27-28 Juni 2026 dan 4-5 Juli 2026 dengan dua sesi materi di setiap hari belajar.',
 		'Program ini akan dilaksanakan pada tanggal 27 Juni - 5 Juli 2026'
 	]);
-	
-	const firstValueStack = pricing.programIncludes?.length 
-		? pricing.programIncludes 
-		: pricing.benefitCards?.[0]?.items ?? [];
-		
+
+	const firstValueStack = pricing.programIncludes?.length
+		? pricing.programIncludes
+		: (pricing.benefitCards?.[0]?.items ?? []);
+
 	const hasOldValueStack = firstValueStack.some((item) =>
 		[
 			'Materi terstruktur & tugas praktik',
@@ -1258,14 +1260,12 @@ function normalizePricing(pricing: LandingContent['pricing']): LandingContent['p
 	if (!pricing.price?.trim()) pricing.price = defaults.price;
 	if (!pricing.note?.trim()) pricing.note = defaults.note;
 	if (!pricing.ctaLabel?.trim()) pricing.ctaLabel = defaults.ctaLabel;
-	
+
 	pricing.programIncludes =
-		firstValueStack.length > 0 &&
-		!hasOldValueStack &&
-		!incompleteValueStack
+		firstValueStack.length > 0 && !hasOldValueStack && !incompleteValueStack
 			? firstValueStack
 			: defaults.programIncludes;
-			
+
 	delete pricing.benefitCards;
 
 	return pricing;
@@ -1345,10 +1345,8 @@ function normalizeLayout(layout: LayoutEntry[]): LayoutEntry[] {
 		if (!entry || typeof entry.id !== 'string') continue;
 		const id = entry.id as SectionId;
 		if (!defaultIds.has(id) || seen.has(id)) continue;
-		const forceHidden: Set<SectionId> = new Set(['valueProps']);
 		const forceVisible: Set<SectionId> = new Set(['testimonials']);
 		let vis = entry.visible !== false;
-		if (forceHidden.has(id)) vis = false;
 		if (forceVisible.has(id)) vis = true;
 		normalized.push({ id, visible: vis });
 		seen.add(id);
@@ -1371,28 +1369,51 @@ function reorderLayoutForConversion(
 	if (!shouldUseConversionOrder(layout)) return layout;
 
 	const visibility = new Map(layout.map((entry) => [entry.id, entry.visible]));
+	const useDefaultVisibility = new Set<SectionId>(['valueProps']);
 	return defaultEntries.map((entry) => ({
 		id: entry.id,
-		visible: visibility.get(entry.id) ?? entry.visible
+		visible: useDefaultVisibility.has(entry.id)
+			? entry.visible
+			: (visibility.get(entry.id) ?? entry.visible)
 	}));
 }
 
 function shouldUseConversionOrder(layout: LayoutEntry[]): boolean {
-	const indexOf = (id: SectionId) => layout.findIndex((entry) => entry.id === id);
-	const valuePropsIndex = indexOf('valueProps');
-	const uspIndex = indexOf('usp');
-	const curriculumIndex = indexOf('curriculum');
-	const instructorsIndex = indexOf('instructors');
-	const pricingIndex = indexOf('pricing');
-	const urgencyIndex = indexOf('urgency');
+	const order = layout.map((entry) => entry.id);
+	const legacyOrders: SectionId[][] = [
+		[
+			'hero',
+			'authority',
+			'testimonials',
+			'usp',
+			'valueProps',
+			'instructors',
+			'curriculum',
+			'pricing',
+			'urgency',
+			'faq',
+			'finalCta'
+		],
+		[
+			'hero',
+			'authority',
+			'usp',
+			'valueProps',
+			'instructors',
+			'curriculum',
+			'pricing',
+			'urgency',
+			'faq',
+			'finalCta',
+			'testimonials'
+		]
+	];
 
-	return (
-		(valuePropsIndex !== -1 && uspIndex !== -1 && valuePropsIndex < uspIndex) ||
-		(curriculumIndex !== -1 && instructorsIndex !== -1 && curriculumIndex < instructorsIndex) ||
-		(pricingIndex !== -1 && curriculumIndex !== -1 && pricingIndex < curriculumIndex) ||
-		(pricingIndex !== -1 && instructorsIndex !== -1 && pricingIndex < instructorsIndex) ||
-		(pricingIndex !== -1 && urgencyIndex !== -1 && urgencyIndex !== pricingIndex + 1)
-	);
+	return legacyOrders.some((legacyOrder) => isSameSectionOrder(order, legacyOrder));
+}
+
+function isSameSectionOrder(order: SectionId[], expected: SectionId[]): boolean {
+	return order.length === expected.length && order.every((id, index) => id === expected[index]);
 }
 
 function findDefaultInsertIndex(
@@ -1486,7 +1507,13 @@ export function sectionCompleteness(
 		}
 		case 'pricing': {
 			const c = content.pricing;
-			return countFields([c.title, c.price, c.ctaLabel, c.programIncludes.length ? 'x' : '', c.dateCard?.date]);
+			return countFields([
+				c.title,
+				c.price,
+				c.ctaLabel,
+				c.programIncludes.length ? 'x' : '',
+				c.dateCard?.date
+			]);
 		}
 		case 'curriculum': {
 			const c = content.curriculum;
