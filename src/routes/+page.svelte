@@ -499,7 +499,7 @@
 	{#if sectionId === 'testimonials'}
 		<section class="bg-white py-20 dark:bg-gray-950" id="testimonials">
 			<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-				<div class="mb-12 max-w-3xl">
+				<div class="mx-auto mb-12 max-w-3xl text-center">
 					<h2 class="text-3xl font-extrabold sm:text-4xl heading-gradient">
 						{content.testimonials.title}
 					</h2>
