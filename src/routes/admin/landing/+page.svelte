@@ -1723,15 +1723,123 @@
 	)}
 	<div class="border-t border-gray-100 pt-4 dark:border-gray-700">
 		{@render listHeader(
+			'Pilihan Paket',
+			() =>
+				(content.pricing.packages = addItem(content.pricing.packages, {
+					code: '',
+					title: '',
+					description: '',
+					image: '',
+					lessons: [''],
+					price: '',
+					sessionPrice: '',
+					ctaMessage: ''
+				}))
+		)}
+		<div class="mt-3 space-y-3">
+			{#each content.pricing.packages as pkg, i (pkg)}
+				<div class="space-y-3 {cardClass}">
+					<div class="flex items-center justify-between">
+						<span class="text-[10px] font-bold text-gray-400">PAKET {i + 1}</span>
+						{@render removeBtn(
+							() => (content.pricing.packages = removeItem(content.pricing.packages, i))
+						)}
+					</div>
+					<div class="grid gap-3 md:grid-cols-2">
+						<input bind:value={pkg.code} placeholder="Kode, contoh: Paket A" class={inputClass} />
+						<input bind:value={pkg.title} placeholder="Judul paket" class={inputClass} />
+					</div>
+					<textarea
+						bind:value={pkg.description}
+						rows="2"
+						placeholder="Deskripsi singkat paket"
+						class="{inputClass} resize-none"
+					></textarea>
+					{@render imageField(
+						'Gambar Paket',
+						`pricing-package-${i}`,
+						() => pkg.image,
+						(v) => (pkg.image = v)
+					)}
+					<div class="grid gap-3 md:grid-cols-2">
+						<input bind:value={pkg.price} placeholder="Harga" class={inputClass} />
+						<input
+							bind:value={pkg.sessionPrice}
+							placeholder="Info harga per sesi"
+							class={inputClass}
+						/>
+					</div>
+					<textarea
+						bind:value={pkg.ctaMessage}
+						rows="2"
+						placeholder="Pesan WhatsApp khusus paket"
+						class="{inputClass} resize-none"
+					></textarea>
+					<div class="space-y-2">
+						<div class="flex items-center justify-between">
+							<span
+								class="text-xs font-bold tracking-wide text-gray-500 uppercase dark:text-gray-400"
+								>Materi Paket</span
+							>
+							<button
+								type="button"
+								onclick={() => (pkg.lessons = [...pkg.lessons, ''])}
+								class="text-primary-600 hover:text-primary-700 flex cursor-pointer items-center gap-1 text-xs font-semibold"
+							>
+								+ Tambah materi
+							</button>
+						</div>
+						{#each pkg.lessons as lesson, j (j)}
+							<div class="flex items-center gap-2">
+								<span class="text-xs font-bold text-gray-400">{j + 1}.</span>
+								<input
+									value={lesson}
+									oninput={(e) => (pkg.lessons[j] = e.currentTarget.value)}
+									placeholder="Materi"
+									class={inputClass}
+								/>
+								{@render removeBtn(() => (pkg.lessons = removeItem(pkg.lessons, j)))}
+							</div>
+						{/each}
+					</div>
+				</div>
+			{/each}
+		</div>
+	</div>
+	<div class="border-t border-gray-100 pt-4 dark:border-gray-700">
+		{@render listHeader(
+			'Benefit Semua Paket',
+			() => (content.pricing.packageBenefits = [...content.pricing.packageBenefits, ''])
+		)}
+		<div class="mt-3 space-y-2">
+			{#each content.pricing.packageBenefits as benefit, i (i)}
+				<div class="flex items-center gap-2">
+					<span class="text-xs font-bold text-gray-400">{i + 1}.</span>
+					<input
+						value={benefit}
+						oninput={(e) => (content.pricing.packageBenefits[i] = e.currentTarget.value)}
+						placeholder="Benefit bersama"
+						class={inputClass}
+					/>
+					{@render removeBtn(
+						() => (content.pricing.packageBenefits = removeItem(content.pricing.packageBenefits, i))
+					)}
+				</div>
+			{/each}
+		</div>
+	</div>
+	<div class="border-t border-gray-100 pt-4 dark:border-gray-700">
+		{@render listHeader(
 			'Termasuk Dalam Program',
 			() => (content.pricing.programIncludes = [...content.pricing.programIncludes, ''])
 		)}
 		<div class="mt-3 space-y-2">
-			{#each content.pricing.programIncludes as _, i}
+			{#each content.pricing.programIncludes as point, i (i)}
 				<div class="flex items-center gap-2">
 					<span class="text-xs font-bold text-gray-400">{i + 1}.</span>
 					<input
-						bind:value={content.pricing.programIncludes[i]}
+						value={point}
+						oninput={(e) => (content.pricing.programIncludes[i] = e.currentTarget.value)}
 						placeholder="Poin benefit"
 						class={inputClass}
 					/>

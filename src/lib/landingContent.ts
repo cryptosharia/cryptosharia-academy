@@ -30,6 +30,16 @@ export type Faq = { question: string; answer: string };
 export type Cta = { label: string; href: string };
 export type BenefitCard = { title: string; items: string[] };
 export type LayoutEntry = { id: SectionId; visible: boolean };
+export type PricingPackage = {
+	code: string;
+	title: string;
+	description: string;
+	image: string;
+	lessons: string[];
+	price: string;
+	sessionPrice: string;
+	ctaMessage: string;
+};
 export type CurriculumDay = {
 	stage: string;
 	date: string;
@@ -136,6 +146,8 @@ export type LandingContent = {
 		title: string;
 		description: string;
 		dateCard: { label: string; date: string; time?: string };
+		packages: PricingPackage[];
+		packageBenefits: string[];
 		programIncludes: string[];
 		benefitCards?: BenefitCard[];
 		priceBadge: string;
@@ -400,6 +412,86 @@ export const defaultLandingContent: LandingContent = {
 			date: '27 Juni – 5 Juli 2026',
 			time: '08.30 - 12.00 WIB (2 Sesi/Hari)'
 		},
+		packages: [
+			{
+				code: 'Paket A',
+				title: 'Fundamental',
+				description:
+					'Cocok untuk pemula yang ingin membangun pondasi crypto, keamanan aset, dan perencanaan risiko sebelum mulai berinvestasi.',
+				image: '/images/packages/paket-a-fundamental.jpeg',
+				lessons: [
+					'Pengenalan Ekosistem Crypto & Web3',
+					'Keamanan Aset & Praktik Dompet Digital',
+					'Penyusunan Financial Planning',
+					'Manajemen Risiko Fundamental',
+					'Psikologi Investor'
+				],
+				price: 'Rp750.000',
+				sessionPrice: 'Harga per sesi: Sesi 1 400k, Sesi 2 400k',
+				ctaMessage:
+					"Assalamu'alaikum admin, saya tertarik ikut Paket A Fundamental Crypto Sharia Masterclass."
+			},
+			{
+				code: 'Paket B',
+				title: 'Market Analysis',
+				description:
+					'Cocok untuk peserta yang ingin membaca kondisi pasar, tokenomics, narasi, dan data on-chain secara lebih terarah.',
+				image: '/images/packages/paket-b-market-analysis.jpeg',
+				lessons: [
+					'Analisis Fundamental Kripto',
+					'Bedah Tokenomics',
+					'Analisis Makro Global',
+					'Siklus Pasar & Analisis Narasi',
+					'Pengenalan Data On-Chain Dasar'
+				],
+				price: 'Rp750.000',
+				sessionPrice: 'Harga per sesi: Sesi 1 400k, Sesi 2 400k',
+				ctaMessage:
+					"Assalamu'alaikum admin, saya tertarik ikut Paket B Market Analysis Crypto Sharia Masterclass."
+			},
+			{
+				code: 'Paket C',
+				title: 'Technical Analysis',
+				description:
+					'Cocok untuk peserta yang ingin memahami price action, area kunci, indikator, dan menyusun trading plan dengan risiko terukur.',
+				image: '/images/packages/paket-c-technical-analysis.jpeg',
+				lessons: [
+					'Anatomi Candlestick & Price Action',
+					'Pemetaan Area Kunci',
+					'Penggunaan Indikator Esensial',
+					'Setup Trading Plan',
+					'Risk/Reward Ratio (RR) & Position Sizing'
+				],
+				price: 'Rp750.000',
+				sessionPrice: 'Harga per sesi: Sesi 1 400k, Sesi 2 400k',
+				ctaMessage:
+					"Assalamu'alaikum admin, saya tertarik ikut Paket C Technical Analysis Crypto Sharia Masterclass."
+			},
+			{
+				code: 'Paket D',
+				title: 'Sharia Coin Screening',
+				description:
+					'Cocok untuk peserta yang ingin menilai aset crypto dari sisi fikih muamalah, kriteria syariah, dan praktik screening.',
+				image: '/images/packages/paket-d-sharia-screening.jpeg',
+				lessons: [
+					'Fikih Muamalah Kripto',
+					'Kriteria Penyaringan Syariah',
+					'Praktik Screening Platform',
+					'Bedah Kasus Ekosistem',
+					'Zakat Aset Kripto'
+				],
+				price: 'Rp750.000',
+				sessionPrice: 'Harga per sesi: Sesi 1 400k, Sesi 2 400k',
+				ctaMessage:
+					"Assalamu'alaikum admin, saya tertarik ikut Paket D Sharia Coin Screening Crypto Sharia Masterclass."
+			}
+		],
+		packageBenefits: [
+			'Materi terstruktur dari dasar hingga praktik',
+			'FGD & mentoring bersama mentor berpengalaman',
+			'Penugasan untuk memperkuat pemahaman',
+			'Sertifikat penyelesaian program'
+		],
 		programIncludes: [
 			'4 sesi live masterclass terstruktur',
 			'Akses materi dan rekaman kelas',
@@ -1090,6 +1182,30 @@ function normalizeStringList(values: string[] | undefined, fallback: string[]): 
 	return cleaned.length > 0 ? cleaned : [...fallback];
 }
 
+function normalizePricingPackages(
+	packages: PricingPackage[] | undefined,
+	fallback: PricingPackage[]
+): PricingPackage[] {
+	const values = Array.isArray(packages) ? packages : [];
+	const normalized = values
+		.map((pkg, index) => {
+			const defaultPackage = fallback[index] ?? fallback[0];
+			return {
+				code: pkg.code?.trim() || defaultPackage.code,
+				title: pkg.title?.trim() || defaultPackage.title,
+				description: pkg.description?.trim() || defaultPackage.description,
+				image: pkg.image?.trim() || defaultPackage.image,
+				lessons: normalizeStringList(pkg.lessons, defaultPackage.lessons),
+				price: pkg.price?.trim() || defaultPackage.price,
+				sessionPrice: pkg.sessionPrice?.trim() || defaultPackage.sessionPrice,
+				ctaMessage: pkg.ctaMessage?.trim() || defaultPackage.ctaMessage
+			};
+		})
+		.filter((pkg) => pkg.code && pkg.title);
+
+	return normalized.length > 0 ? normalized : structuredClone(fallback);
+}
+
 function normalizeInstructors(
 	instructors: LandingContent['instructors']
 ): LandingContent['instructors'] {
@@ -1254,6 +1370,8 @@ function normalizePricing(pricing: LandingContent['pricing']): LandingContent['p
 	if (!pricing.price?.trim()) pricing.price = defaults.price;
 	if (!pricing.note?.trim()) pricing.note = defaults.note;
 	if (!pricing.ctaLabel?.trim()) pricing.ctaLabel = defaults.ctaLabel;
+	pricing.packages = normalizePricingPackages(pricing.packages, defaults.packages);
+	pricing.packageBenefits = normalizeStringList(pricing.packageBenefits, defaults.packageBenefits);
 
 	pricing.programIncludes =
 		firstValueStack.length > 0 && !hasOldValueStack && !incompleteValueStack
@@ -1540,6 +1658,8 @@ export function sectionCompleteness(
 				c.title,
 				c.price,
 				c.ctaLabel,
+				c.packages.length ? 'x' : '',
+				c.packageBenefits.length ? 'x' : '',
 				c.programIncludes.length ? 'x' : '',
 				c.dateCard?.date
 			]);

@@ -10,6 +10,8 @@
 	import CoinTicker from '$lib/components/CoinTicker.svelte';
 	import TestimonialCarousel from '$lib/components/TestimonialCarousel.svelte';
 
+	type PricingPackage = LandingContent['pricing']['packages'][number];
+
 	let content = $state<LandingContent>(structuredClone(defaultLandingContent));
 	const INITIAL_FAQ_INDEXES = [0, 1, 3, 4, 5, 7, 10];
 
@@ -19,9 +21,7 @@
 	const quoteParts = $derived(splitQuoteAttribution(content.usp.quote));
 
 	// Only render sections that are marked visible, in the admin-defined order.
-	const sections = $derived(
-		content.layout.filter((s) => s.visible).map((s) => s.id)
-	);
+	const sections = $derived(content.layout.filter((s) => s.visible).map((s) => s.id));
 
 	let openFaqIndex = $state<number | null>(0);
 	let openCurriculumIndex = $state<number | null>(0);
@@ -31,7 +31,13 @@
 	const visibleFaqItems = $derived(
 		showAllFaqs ? mapFaqItems(content.faq.items) : buildInitialFaqItems(content.faq.items)
 	);
+	const pricingPackages = $derived(content.pricing.packages ?? []);
+	const pricingPackageBenefits = $derived(content.pricing.packageBenefits ?? []);
 	const pricingProgramItems = $derived(content.pricing.programIncludes ?? []);
+	let selectedPricingPackageIndex = $state(0);
+	const selectedPricingPackage = $derived(
+		pricingPackages[selectedPricingPackageIndex] ?? pricingPackages[0]
+	);
 
 	function splitHeroHeadline(value: string) {
 		const words = value.trim().split(/\s+/).filter(Boolean);
@@ -95,6 +101,19 @@
 		return /^https?:\/\//.test(href);
 	}
 
+	function selectPricingPackage(index: number) {
+		selectedPricingPackageIndex = index;
+	}
+
+	function packageWhatsappUrl(pkg: PricingPackage) {
+		return buildWhatsappUrl({
+			phone: content.whatsapp.phone,
+			message:
+				pkg.ctaMessage?.trim() ||
+				`Assalamu'alaikum admin, saya tertarik ikut ${pkg.code} ${pkg.title} Crypto Sharia Masterclass.`
+		});
+	}
+
 	function faqCategory(index: number) {
 		if (index <= 2) return 'Tentang Program';
 		if (index <= 6) return 'Teknis Kelas';
@@ -126,6 +145,111 @@
 		});
 	});
 </script>
+
+{#snippet pricingPackageCard(pkg: PricingPackage)}
+	<article
+		class="group flex h-full min-h-[680px] flex-col overflow-hidden rounded-lg border border-orange-200 bg-white shadow-lg shadow-orange-950/5 transition hover:-translate-y-1 hover:border-orange-300 hover:shadow-xl hover:shadow-orange-950/10 dark:border-orange-900/50 dark:bg-slate-950 dark:shadow-black/20 dark:hover:border-orange-500/70"
+	>
+		<div class="relative aspect-[4/3] overflow-hidden bg-slate-950">
+			{#if pkg.image}
+				<img
+					src={pkg.image}
+					alt="Poster {pkg.code} {pkg.title}"
+					class="h-full w-full object-cover object-top transition duration-500 group-hover:scale-105"
+					loading="lazy"
+				/>
+				<div
+					class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/10 to-transparent"
+				></div>
+			{:else}
+				<div
+					class="flex h-full items-center justify-center bg-slate-900 text-sm font-bold text-slate-500"
+				>
+					CryptoSharia
+				</div>
+			{/if}
+			<div
+				class="absolute top-4 left-4 rounded-full bg-orange-400 px-3 py-1.5 text-[11px] font-black tracking-[0.14em] text-slate-950 uppercase shadow-lg shadow-black/20"
+			>
+				{pkg.code}
+			</div>
+		</div>
+
+		<div class="flex flex-1 flex-col p-5">
+			<h3 class="text-2xl leading-tight font-black text-slate-950 dark:text-white">
+				{pkg.title}
+			</h3>
+			<p class="mt-3 text-sm leading-6 text-slate-600 dark:text-slate-300">
+				{pkg.description}
+			</p>
+
+			<div class="mt-5">
+				<p
+					class="text-[11px] font-black tracking-[0.14em] text-orange-700 uppercase dark:text-orange-300"
+				>
+					Materi yang dipelajari
+				</p>
+				<ul class="mt-3 space-y-3 text-sm leading-6 text-slate-700 dark:text-slate-300">
+					{#each pkg.lessons as lesson (lesson)}
+						<li class="flex gap-3">
+							<span
+								class="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-orange-100 text-orange-700 dark:bg-orange-500/15 dark:text-orange-300"
+							>
+								<svg
+									class="h-3.5 w-3.5"
+									fill="none"
+									stroke="currentColor"
+									viewBox="0 0 24 24"
+									aria-hidden="true"
+								>
+									<path
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										stroke-width="3"
+										d="M5 13l4 4L19 7"
+									/>
+								</svg>
+							</span>
+							<span>{lesson}</span>
+						</li>
+					{/each}
+				</ul>
+			</div>
+
+			<div class="mt-auto pt-6">
+				<div class="border-t border-slate-200 pt-5 dark:border-slate-800">
+					<p class="text-xs font-bold text-slate-500 dark:text-slate-400">Investasi ilmu</p>
+					<div class="mt-1 text-3xl font-black text-slate-950 dark:text-white">{pkg.price}</div>
+					<p class="mt-1 text-xs leading-5 font-semibold text-orange-700 dark:text-orange-300">
+						{pkg.sessionPrice}
+					</p>
+					<a
+						href={packageWhatsappUrl(pkg)}
+						target="_blank"
+						rel="external noopener noreferrer"
+						class="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-lg bg-orange-600 px-4 py-3 text-sm font-black text-white transition hover:bg-orange-500 active:scale-95"
+					>
+						Pilih Paket Ini
+						<svg
+							class="h-4 w-4"
+							fill="none"
+							stroke="currentColor"
+							viewBox="0 0 24 24"
+							aria-hidden="true"
+						>
+							<path
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								stroke-width="2.5"
+								d="M17 8l4 4m0 0l-4 4m4-4H3"
+							/>
+						</svg>
+					</a>
+				</div>
+			</div>
+		</div>
+	</article>
+{/snippet}
 
 <svelte:head>
 	<title>{content.seo.title}</title>
@@ -302,14 +426,20 @@
 	{#if sectionId === 'authority'}
 		<section class="relative overflow-hidden bg-gray-950 py-20 sm:py-28">
 			<!-- Subtle geometric pattern overlay -->
-			<div class="pointer-events-none absolute inset-0 opacity-[0.04] [background-image:linear-gradient(30deg,rgba(255,255,255,0.5)_12%,transparent_12.5%,transparent_87%,rgba(255,255,255,0.5)_87.5%)] [background-size:60px_60px]"></div>
+			<div
+				class="pointer-events-none absolute inset-0 [background-image:linear-gradient(30deg,rgba(255,255,255,0.5)_12%,transparent_12.5%,transparent_87%,rgba(255,255,255,0.5)_87.5%)] [background-size:60px_60px] opacity-[0.04]"
+			></div>
 			<!-- Top border glow -->
-			<div class="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-orange-300/60 to-transparent dark:via-orange-700/50"></div>
+			<div
+				class="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-orange-300/60 to-transparent dark:via-orange-700/50"
+			></div>
 
 			<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 				<!-- Section header -->
 				<div class="mx-auto mb-16 max-w-3xl text-center">
-					<h2 class="text-3xl leading-tight font-extrabold sm:text-4xl lg:text-5xl heading-gradient">
+					<h2
+						class="heading-gradient text-3xl leading-tight font-extrabold sm:text-4xl lg:text-5xl"
+					>
 						{content.authority.title}
 					</h2>
 					<p class="mt-5 text-base leading-8 text-slate-300">
@@ -320,15 +450,26 @@
 				<!-- Desktop: Alternating storytelling layout -->
 				<div class="relative hidden lg:block">
 					<!-- Vertical timeline line -->
-					<div class="absolute left-1/2 top-0 h-full w-px -translate-x-1/2 bg-gradient-to-b from-orange-500/30 via-orange-300/20 to-transparent"></div>
+					<div
+						class="absolute top-0 left-1/2 h-full w-px -translate-x-1/2 bg-gradient-to-b from-orange-500/30 via-orange-300/20 to-transparent"
+					></div>
 
 					<div class="space-y-20">
 						{#each content.authority.activities as item, index (item.title)}
 							{@const isEven = index % 2 === 0}
 							{@const isFirst = index === 0}
-							<div class="relative grid grid-cols-2 items-center gap-12" class:grid-cols-[1.2fr_0.8fr]={isFirst && isEven} class:grid-cols-[0.8fr_1.2fr]={!isFirst && !isEven} class:grid-cols-[1.1fr_0.9fr]={!isFirst && isEven}>
+							<div
+								class="relative grid grid-cols-2 items-center gap-12"
+								class:grid-cols-[1.2fr_0.8fr]={isFirst && isEven}
+								class:grid-cols-[0.8fr_1.2fr]={!isFirst && !isEven}
+								class:grid-cols-[1.1fr_0.9fr]={!isFirst && isEven}
+							>
 								<!-- Large numbered badge -->
-								<div class="pointer-events-none absolute -top-6 text-7xl font-black text-orange-500/15" class:left-4={isEven} class:right-4={!isEven}>
+								<div
+									class="pointer-events-none absolute -top-6 text-7xl font-black text-orange-500/15"
+									class:left-4={isEven}
+									class:right-4={!isEven}
+								>
 									{String(index + 1).padStart(2, '0')}
 								</div>
 
@@ -336,41 +477,69 @@
 									<!-- Image LEFT, text RIGHT -->
 									<div class="relative">
 										<!-- Subtle radial glow behind image -->
-										<div class="absolute -inset-4 rounded-2xl bg-[radial-gradient(circle_at_center,rgba(249,115,22,0.10),transparent_70%)]"></div>
+										<div
+											class="absolute -inset-4 rounded-2xl bg-[radial-gradient(circle_at_center,rgba(249,115,22,0.10),transparent_70%)]"
+										></div>
 										{#if item.image}
-											<div class="relative overflow-hidden rounded-xl {isFirst ? 'aspect-[16/10]' : 'aspect-[16/9]'}">
+											<div
+												class="relative overflow-hidden rounded-xl {isFirst
+													? 'aspect-[16/10]'
+													: 'aspect-[16/9]'}"
+											>
 												<img src={item.image} alt={item.title} class="h-full w-full object-cover" />
-												<div class="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-gray-950/80 to-transparent"></div>
+												<div
+													class="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-gray-950/80 to-transparent"
+												></div>
 											</div>
 										{:else}
-											<div class="relative flex {isFirst ? 'aspect-[16/10]' : 'aspect-[16/9]'} items-center justify-center rounded-xl bg-[radial-gradient(circle_at_28%_22%,rgba(249,115,22,0.20),transparent_40%),linear-gradient(135deg,#0f172a,#111827)]">
-												<div class="absolute inset-0 [background-image:linear-gradient(30deg,rgba(255,255,255,0.06)_12%,transparent_12.5%,transparent_87%,rgba(255,255,255,0.06)_87.5%)] [background-size:48px_48px] opacity-30"></div>
+											<div
+												class="relative flex {isFirst
+													? 'aspect-[16/10]'
+													: 'aspect-[16/9]'} items-center justify-center rounded-xl bg-[radial-gradient(circle_at_28%_22%,rgba(249,115,22,0.20),transparent_40%),linear-gradient(135deg,#0f172a,#111827)]"
+											>
+												<div
+													class="absolute inset-0 [background-image:linear-gradient(30deg,rgba(255,255,255,0.06)_12%,transparent_12.5%,transparent_87%,rgba(255,255,255,0.06)_87.5%)] [background-size:48px_48px] opacity-30"
+												></div>
 												<p class="relative text-lg font-bold text-white/70">{item.title}</p>
 											</div>
 										{/if}
 									</div>
 									<div class="flex flex-col justify-center">
-										<span class="mb-3 w-fit rounded-full border border-orange-500/30 bg-orange-500/10 px-3 py-1 text-[10px] font-black tracking-[0.14em] text-orange-300 uppercase">{activityBadge(item)}</span>
+										<span
+											class="mb-3 w-fit rounded-full border border-orange-500/30 bg-orange-500/10 px-3 py-1 text-[10px] font-black tracking-[0.14em] text-orange-300 uppercase"
+											>{activityBadge(item)}</span
+										>
 										<h3 class="text-2xl font-bold text-white">{item.title}</h3>
 										<p class="mt-3 text-base leading-7 text-slate-300">{item.description}</p>
 									</div>
 								{:else}
 									<!-- Text LEFT, image RIGHT -->
 									<div class="flex flex-col justify-center">
-										<span class="mb-3 w-fit rounded-full border border-orange-500/30 bg-orange-500/10 px-3 py-1 text-[10px] font-black tracking-[0.14em] text-orange-300 uppercase">{activityBadge(item)}</span>
+										<span
+											class="mb-3 w-fit rounded-full border border-orange-500/30 bg-orange-500/10 px-3 py-1 text-[10px] font-black tracking-[0.14em] text-orange-300 uppercase"
+											>{activityBadge(item)}</span
+										>
 										<h3 class="text-2xl font-bold text-white">{item.title}</h3>
 										<p class="mt-3 text-base leading-7 text-slate-300">{item.description}</p>
 									</div>
 									<div class="relative">
-										<div class="absolute -inset-4 rounded-2xl bg-[radial-gradient(circle_at_center,rgba(249,115,22,0.10),transparent_70%)]"></div>
+										<div
+											class="absolute -inset-4 rounded-2xl bg-[radial-gradient(circle_at_center,rgba(249,115,22,0.10),transparent_70%)]"
+										></div>
 										{#if item.image}
-											<div class="relative overflow-hidden rounded-xl aspect-[16/9]">
+											<div class="relative aspect-[16/9] overflow-hidden rounded-xl">
 												<img src={item.image} alt={item.title} class="h-full w-full object-cover" />
-												<div class="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-gray-950/80 to-transparent"></div>
+												<div
+													class="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-gray-950/80 to-transparent"
+												></div>
 											</div>
 										{:else}
-											<div class="relative flex aspect-[16/9] items-center justify-center rounded-xl bg-[radial-gradient(circle_at_28%_22%,rgba(249,115,22,0.20),transparent_40%),linear-gradient(135deg,#0f172a,#111827)]">
-												<div class="absolute inset-0 [background-image:linear-gradient(30deg,rgba(255,255,255,0.06)_12%,transparent_12.5%,transparent_87%,rgba(255,255,255,0.06)_87.5%)] [background-size:48px_48px] opacity-30"></div>
+											<div
+												class="relative flex aspect-[16/9] items-center justify-center rounded-xl bg-[radial-gradient(circle_at_28%_22%,rgba(249,115,22,0.20),transparent_40%),linear-gradient(135deg,#0f172a,#111827)]"
+											>
+												<div
+													class="absolute inset-0 [background-image:linear-gradient(30deg,rgba(255,255,255,0.06)_12%,transparent_12.5%,transparent_87%,rgba(255,255,255,0.06)_87.5%)] [background-size:48px_48px] opacity-30"
+												></div>
 												<p class="relative text-lg font-bold text-white/70">{item.title}</p>
 											</div>
 										{/if}
@@ -385,30 +554,43 @@
 				<div class="lg:hidden">
 					<div class="relative space-y-10 pl-10">
 						<!-- Timeline line -->
-						<div class="absolute left-[15px] top-2 h-[calc(100%-1rem)] w-px bg-gradient-to-b from-orange-500/30 via-orange-300/20 to-transparent"></div>
+						<div
+							class="absolute top-2 left-[15px] h-[calc(100%-1rem)] w-px bg-gradient-to-b from-orange-500/30 via-orange-300/20 to-transparent"
+						></div>
 
 						{#each content.authority.activities as item, index (item.title)}
 							<div class="relative">
 								<!-- Timeline dot -->
-								<div class="absolute -left-10 top-1 flex h-[30px] w-[30px] items-center justify-center rounded-full border border-orange-500/40 bg-gray-950 text-xs font-black text-orange-400">
+								<div
+									class="absolute top-1 -left-10 flex h-[30px] w-[30px] items-center justify-center rounded-full border border-orange-500/40 bg-gray-950 text-xs font-black text-orange-400"
+								>
 									{index + 1}
 								</div>
 
 								<!-- Image -->
 								{#if item.image}
-									<div class="relative mb-4 overflow-hidden rounded-xl aspect-[16/9]">
+									<div class="relative mb-4 aspect-[16/9] overflow-hidden rounded-xl">
 										<img src={item.image} alt={item.title} class="h-full w-full object-cover" />
-										<div class="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-gray-950/80 to-transparent"></div>
+										<div
+											class="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-gray-950/80 to-transparent"
+										></div>
 									</div>
 								{:else}
-									<div class="relative mb-4 flex aspect-[16/9] items-center justify-center rounded-xl bg-[radial-gradient(circle_at_28%_22%,rgba(249,115,22,0.20),transparent_40%),linear-gradient(135deg,#0f172a,#111827)]">
-										<div class="absolute inset-0 [background-image:linear-gradient(30deg,rgba(255,255,255,0.06)_12%,transparent_12.5%,transparent_87%,rgba(255,255,255,0.06)_87.5%)] [background-size:48px_48px] opacity-30"></div>
+									<div
+										class="relative mb-4 flex aspect-[16/9] items-center justify-center rounded-xl bg-[radial-gradient(circle_at_28%_22%,rgba(249,115,22,0.20),transparent_40%),linear-gradient(135deg,#0f172a,#111827)]"
+									>
+										<div
+											class="absolute inset-0 [background-image:linear-gradient(30deg,rgba(255,255,255,0.06)_12%,transparent_12.5%,transparent_87%,rgba(255,255,255,0.06)_87.5%)] [background-size:48px_48px] opacity-30"
+										></div>
 										<p class="relative text-lg font-bold text-white/70">{item.title}</p>
 									</div>
 								{/if}
 
 								<!-- Text -->
-								<span class="mb-2 inline-block rounded-full border border-orange-500/30 bg-orange-500/10 px-3 py-1 text-[10px] font-black tracking-[0.14em] text-orange-300 uppercase">{activityBadge(item)}</span>
+								<span
+									class="mb-2 inline-block rounded-full border border-orange-500/30 bg-orange-500/10 px-3 py-1 text-[10px] font-black tracking-[0.14em] text-orange-300 uppercase"
+									>{activityBadge(item)}</span
+								>
 								<h3 class="text-xl font-bold text-white">{item.title}</h3>
 								<p class="mt-2 text-sm leading-7 text-slate-300">{item.description}</p>
 							</div>
@@ -500,7 +682,7 @@
 		<section class="bg-white py-20 dark:bg-gray-950" id="testimonials">
 			<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 				<div class="mx-auto mb-12 max-w-3xl text-center">
-					<h2 class="text-3xl font-extrabold sm:text-4xl heading-gradient">
+					<h2 class="heading-gradient text-3xl font-extrabold sm:text-4xl">
 						{content.testimonials.title}
 					</h2>
 					<p class="mt-4 text-base leading-8 text-slate-600 dark:text-slate-300">
@@ -520,7 +702,7 @@
 			></div>
 			<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 				<div class="relative mx-auto max-w-4xl text-center">
-					<h2 class="text-3xl leading-tight font-black sm:text-4xl heading-gradient">
+					<h2 class="heading-gradient text-3xl leading-tight font-black sm:text-4xl">
 						{content.usp.title}
 					</h2>
 					{#if content.usp.description}
@@ -536,7 +718,9 @@
 						<div
 							class="relative overflow-hidden rounded-lg border border-orange-400/35 bg-orange-500/[0.08] p-6"
 						>
-							<div class="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_85%_15%,rgba(249,115,22,0.10),transparent_60%)]"></div>
+							<div
+								class="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_85%_15%,rgba(249,115,22,0.10),transparent_60%)]"
+							></div>
 							<div
 								class="mb-5 flex h-12 w-12 items-center justify-center rounded-lg border border-white/10 bg-white/[0.08] text-orange-200"
 							>
@@ -640,55 +824,140 @@
 	{#if sectionId === 'pricing'}
 		<section class="scroll-mt-20 bg-white py-16 sm:py-20 dark:bg-gray-950" id="pricing">
 			<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-				<div class="grid gap-10 lg:grid-cols-[1fr_0.9fr] lg:items-center">
-					<div>
+				<div class="mx-auto max-w-4xl text-center">
+					<div
+						class="mb-4 inline-flex rounded-full border border-orange-200 bg-orange-50 px-3 py-2 text-[11px] font-black tracking-[0.14em] text-orange-700 uppercase dark:border-orange-900/60 dark:bg-orange-950/30 dark:text-orange-200"
+					>
+						{content.pricing.eyebrow || 'Pilihan Paket Masterclass'}
+					</div>
+					<h2 class="heading-gradient text-3xl leading-tight font-extrabold sm:text-5xl">
+						{content.pricing.title}
+					</h2>
+					<p class="mx-auto mt-5 max-w-3xl text-base leading-8 text-slate-600 dark:text-slate-300">
+						{content.pricing.description}
+					</p>
+					{#if content.pricing.dateCard?.date}
 						<div
-							class="mb-4 inline-flex rounded-full border border-orange-200 bg-orange-50 px-3 py-2 text-[11px] font-black tracking-[0.14em] text-orange-700 uppercase dark:border-orange-900/60 dark:bg-orange-950/30 dark:text-orange-200"
+							class="mt-7 inline-flex max-w-full flex-col gap-3 rounded-lg border border-orange-200 bg-orange-50/60 px-5 py-4 text-left sm:flex-row sm:items-center sm:gap-5 dark:border-orange-900/50 dark:bg-orange-950/20"
 						>
-							Kuota Mentoring Terbatas
-						</div>
-						<h2
-							class="text-3xl leading-tight font-extrabold sm:text-4xl heading-gradient"
-						>
-							{content.pricing.title}
-						</h2>
-						<p class="mt-5 text-base leading-8 text-slate-600 dark:text-slate-300">
-							{content.pricing.description}
-						</p>
-						{#if content.pricing.dateCard?.date}
-							<div class="mt-8 inline-block rounded-xl border border-orange-200 bg-orange-50/50 p-5 dark:border-orange-900/50 dark:bg-orange-950/20">
-								<p class="text-xs font-black tracking-[0.14em] text-orange-700 uppercase dark:text-orange-400">
+							<div>
+								<p
+									class="text-xs font-black tracking-[0.14em] text-orange-700 uppercase dark:text-orange-400"
+								>
 									{content.pricing.dateCard.label}
 								</p>
-								<p class="mt-2 text-xl font-extrabold text-slate-900 dark:text-white">
+								<p class="mt-1 text-lg font-extrabold text-slate-900 dark:text-white">
 									{content.pricing.dateCard.date}
 								</p>
-								{#if content.pricing.dateCard.time}
-									<div class="mt-3 flex items-center gap-2 text-sm font-semibold text-slate-700 dark:text-slate-300">
-										<svg class="h-4 w-4 text-orange-600 dark:text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-											<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-										</svg>
-										{content.pricing.dateCard.time}
-									</div>
-								{/if}
+							</div>
+							{#if content.pricing.dateCard.time}
+								<div
+									class="flex items-center gap-2 text-sm font-semibold text-slate-700 dark:text-slate-300"
+								>
+									<svg
+										class="h-4 w-4 shrink-0 text-orange-600 dark:text-orange-400"
+										fill="none"
+										stroke="currentColor"
+										viewBox="0 0 24 24"
+										aria-hidden="true"
+									>
+										<path
+											stroke-linecap="round"
+											stroke-linejoin="round"
+											stroke-width="2"
+											d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+										/>
+									</svg>
+									{content.pricing.dateCard.time}
+								</div>
+							{/if}
+						</div>
+					{/if}
+				</div>
+
+				{#if pricingPackages.length > 0}
+					<div class="mt-12 lg:hidden">
+						<div
+							class="grid grid-cols-4 gap-2 rounded-lg border border-slate-200 bg-slate-50 p-1 dark:border-slate-800 dark:bg-slate-900"
+							role="tablist"
+							aria-label="Pilihan paket masterclass"
+						>
+							{#each pricingPackages as pkg, index (pkg.code)}
+								<button
+									type="button"
+									role="tab"
+									aria-selected={selectedPricingPackageIndex === index}
+									onclick={() => selectPricingPackage(index)}
+									class={selectedPricingPackageIndex === index
+										? 'rounded-md bg-orange-600 px-3 py-3 text-sm font-black text-white shadow-sm'
+										: 'rounded-md px-3 py-3 text-sm font-black text-slate-600 transition hover:bg-white hover:text-orange-700 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-orange-300'}
+								>
+									{pkg.code.replace('Paket ', '')}
+								</button>
+							{/each}
+						</div>
+						{#if selectedPricingPackage}
+							<div class="mt-5">
+								{@render pricingPackageCard(selectedPricingPackage)}
 							</div>
 						{/if}
 					</div>
 
+					<div class="mt-12 hidden gap-5 lg:grid lg:grid-cols-2 xl:grid-cols-4">
+						{#each pricingPackages as pkg (pkg.code)}
+							{@render pricingPackageCard(pkg)}
+						{/each}
+					</div>
+				{/if}
+
+				<div class="mt-12 grid gap-6 lg:grid-cols-[1.05fr_0.95fr] lg:items-stretch">
 					<div
-						class="relative overflow-hidden rounded-lg border border-orange-200 bg-orange-50 p-6 shadow-xl shadow-orange-950/10 dark:border-orange-900/60 dark:bg-orange-950/20"
+						class="rounded-lg border border-slate-800 bg-slate-950 p-6 text-white shadow-xl shadow-black/20"
 					>
-						<div
-							class="absolute -top-12 -right-10 h-36 w-36 rounded-full bg-orange-300/30 blur-2xl dark:bg-orange-500/20"
-						></div>
-						<div class="relative">
-							<span
-								class="inline-flex rounded-full bg-orange-600 px-3 py-1.5 text-[11px] font-black tracking-[0.14em] text-white uppercase"
-							>
-								{content.pricing.priceBadge || 'Special Price'}
-							</span>
-						</div>
-						<div class="mt-6 flex items-end gap-3">
+						<p class="text-xs font-black tracking-[0.14em] text-orange-300 uppercase">
+							Semua paket mendapatkan
+						</p>
+						<ul class="mt-5 grid gap-4 text-sm leading-6 text-slate-200 sm:grid-cols-2">
+							{#each pricingPackageBenefits as point (point)}
+								<li class="flex gap-3">
+									<span
+										class="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-orange-400 text-slate-950"
+									>
+										<svg
+											class="h-3.5 w-3.5"
+											fill="none"
+											stroke="currentColor"
+											viewBox="0 0 24 24"
+											aria-hidden="true"
+										>
+											<path
+												stroke-linecap="round"
+												stroke-linejoin="round"
+												stroke-width="3"
+												d="M5 13l4 4L19 7"
+											/>
+										</svg>
+									</span>
+									<span>{point}</span>
+								</li>
+							{/each}
+						</ul>
+					</div>
+
+					<div
+						class="rounded-lg border border-orange-200 bg-orange-50 p-6 shadow-xl shadow-orange-950/10 dark:border-orange-900/60 dark:bg-orange-950/20"
+					>
+						<span
+							class="inline-flex rounded-full bg-orange-600 px-3 py-1.5 text-[11px] font-black tracking-[0.14em] text-white uppercase"
+						>
+							{content.pricing.priceBadge || 'Special Price'}
+						</span>
+						<p
+							class="mt-5 text-sm font-black tracking-[0.14em] text-orange-700 uppercase dark:text-orange-300"
+						>
+							Paket lengkap 4 modul
+						</p>
+						<div class="mt-4 flex items-end gap-3">
 							<span class="text-lg font-bold text-slate-500 line-through"
 								>{content.pricing.originalPrice}</span
 							>
@@ -700,36 +969,29 @@
 							{content.pricing.note}
 						</p>
 						{#if pricingProgramItems.length > 0}
-							<div
-								class="mt-6 rounded-lg border border-orange-200 bg-white/75 p-4 dark:border-orange-900/50 dark:bg-slate-950/70"
+							<ul
+								class="mt-6 grid gap-3 text-sm leading-6 text-slate-700 sm:grid-cols-2 lg:grid-cols-1 dark:text-slate-300"
 							>
-								<p
-									class="text-xs font-black tracking-[0.14em] text-orange-700 uppercase dark:text-orange-300"
-								>
-									Termasuk dalam program
-								</p>
-								<ul class="mt-4 space-y-3 text-sm leading-6 text-slate-700 dark:text-slate-300">
-									{#each pricingProgramItems as point (point)}
-										<li class="flex gap-3">
-											<svg
-												class="mt-1 h-4 w-4 shrink-0 text-orange-600 dark:text-orange-400"
-												fill="none"
-												stroke="currentColor"
-												viewBox="0 0 24 24"
-												aria-hidden="true"
-											>
-												<path
-													stroke-linecap="round"
-													stroke-linejoin="round"
-													stroke-width="2.5"
-													d="M5 13l4 4L19 7"
-												/>
-											</svg>
-											<span>{point}</span>
-										</li>
-									{/each}
-								</ul>
-							</div>
+								{#each pricingProgramItems as point (point)}
+									<li class="flex gap-3">
+										<svg
+											class="mt-1 h-4 w-4 shrink-0 text-orange-600 dark:text-orange-400"
+											fill="none"
+											stroke="currentColor"
+											viewBox="0 0 24 24"
+											aria-hidden="true"
+										>
+											<path
+												stroke-linecap="round"
+												stroke-linejoin="round"
+												stroke-width="2.5"
+												d="M5 13l4 4L19 7"
+											/>
+										</svg>
+										<span>{point}</span>
+									</li>
+								{/each}
+							</ul>
 						{/if}
 						<a
 							href={whatsappUrl}
@@ -763,9 +1025,7 @@
 		<section class="scroll-mt-20 bg-slate-50 py-16 sm:py-20 dark:bg-slate-900" id="curriculum">
 			<div class="mx-auto max-w-[90rem] px-4 sm:px-6 lg:px-8">
 				<div class="mx-auto mb-12 max-w-4xl text-center">
-					<h2
-						class="text-3xl leading-tight font-extrabold sm:text-5xl heading-gradient"
-					>
+					<h2 class="heading-gradient text-3xl leading-tight font-extrabold sm:text-5xl">
 						{content.curriculum.title}
 					</h2>
 					{#if content.curriculum.description}
@@ -790,7 +1050,7 @@
 						>
 							{#each content.curriculum.schedule as day, dayIndex (day.stage)}
 								<div
-									class="relative flex h-full flex-col rounded-lg border border-slate-200 bg-white p-5 shadow-sm shadow-slate-950/5 shadow-[inset_0_1px_0_rgba(249,115,22,0.12)] before:absolute before:top-6 before:-left-[2.05rem] before:h-4 before:w-4 before:rounded-full before:border-4 before:border-slate-50 before:bg-orange-500 md:p-6 md:before:hidden dark:border-slate-700 dark:bg-slate-950 dark:before:border-slate-900"
+									class="relative flex h-full flex-col rounded-lg border border-slate-200 bg-white p-5 shadow-[inset_0_1px_0_rgba(249,115,22,0.12)] shadow-sm shadow-slate-950/5 before:absolute before:top-6 before:-left-[2.05rem] before:h-4 before:w-4 before:rounded-full before:border-4 before:border-slate-50 before:bg-orange-500 md:p-6 md:before:hidden dark:border-slate-700 dark:bg-slate-950 dark:before:border-slate-900"
 								>
 									<button
 										type="button"
@@ -813,9 +1073,22 @@
 												{day.date}
 											</p>
 											{#if day.time}
-												<p class="mt-1 flex items-center gap-2 text-sm font-medium text-slate-500 dark:text-slate-400">
-													<svg class="h-3.5 w-3.5 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-														<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+												<p
+													class="mt-1 flex items-center gap-2 text-sm font-medium text-slate-500 dark:text-slate-400"
+												>
+													<svg
+														class="h-3.5 w-3.5 text-orange-500"
+														fill="none"
+														stroke="currentColor"
+														viewBox="0 0 24 24"
+														aria-hidden="true"
+													>
+														<path
+															stroke-linecap="round"
+															stroke-linejoin="round"
+															stroke-width="2"
+															d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+														/>
 													</svg>
 													{day.time}
 												</p>
@@ -868,7 +1141,6 @@
 														>
 															{session}
 														</p>
-
 													</div>
 												</li>
 											{/each}
@@ -918,27 +1190,34 @@
 					</div>
 				{/if}
 
-				<div class="relative mt-14 overflow-hidden rounded-2xl bg-slate-900 p-8 sm:p-10 dark:bg-slate-950">
+				<div
+					class="relative mt-14 overflow-hidden rounded-2xl bg-slate-900 p-8 sm:p-10 dark:bg-slate-950"
+				>
 					<!-- Top gradient border accent -->
-					<div class="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-orange-500 via-amber-400 to-teal-400"></div>
+					<div
+						class="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-orange-500 via-amber-400 to-teal-400"
+					></div>
 					<!-- Subtle geometric pattern -->
-					<div class="pointer-events-none absolute inset-0 [background-image:linear-gradient(30deg,rgba(255,255,255,0.04)_12%,transparent_12.5%,transparent_87%,rgba(255,255,255,0.04)_87.5%),linear-gradient(150deg,rgba(255,255,255,0.04)_12%,transparent_12.5%,transparent_87%,rgba(255,255,255,0.04)_87.5%)] [background-size:48px_48px] [background-position:0_0,24px_24px]"></div>
+					<div
+						class="pointer-events-none absolute inset-0 [background-image:linear-gradient(30deg,rgba(255,255,255,0.04)_12%,transparent_12.5%,transparent_87%,rgba(255,255,255,0.04)_87.5%),linear-gradient(150deg,rgba(255,255,255,0.04)_12%,transparent_12.5%,transparent_87%,rgba(255,255,255,0.04)_87.5%)] [background-size:48px_48px] [background-position:0_0,24px_24px]"
+					></div>
 					<div class="relative grid gap-8 lg:grid-cols-[1fr_0.9fr] lg:items-start">
 						{#if content.curriculum.outcomes.length > 0}
 							<div>
-								<h3
-									class="text-2xl leading-tight font-extrabold sm:text-3xl heading-gradient"
-								>
+								<h3 class="heading-gradient text-2xl leading-tight font-extrabold sm:text-3xl">
 									Setelah 4 hari, peserta akan lebih siap untuk:
 								</h3>
-								<ul
-									class="mt-7 grid gap-3 text-base leading-8 text-slate-100 sm:grid-cols-2"
-								>
+								<ul class="mt-7 grid gap-3 text-base leading-8 text-slate-100 sm:grid-cols-2">
 									{#each content.curriculum.outcomes as outcome, index (outcome)}
 										<li
-											class="flex gap-3 rounded-lg border-l-4 {index % 2 === 0 ? 'border-l-orange-500' : 'border-l-emerald-500'} bg-slate-800/60 p-4 font-semibold shadow-sm shadow-orange-500/5"
+											class="flex gap-3 rounded-lg border-l-4 {index % 2 === 0
+												? 'border-l-orange-500'
+												: 'border-l-emerald-500'} bg-slate-800/60 p-4 font-semibold shadow-sm shadow-orange-500/5"
 										>
-											<span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-orange-500/20 text-xs font-black text-orange-300">{index + 1}</span>
+											<span
+												class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-orange-500/20 text-xs font-black text-orange-300"
+												>{index + 1}</span
+											>
 											<svg
 												class="mt-1 h-5 w-5 shrink-0 text-orange-400"
 												fill="none"
@@ -1026,9 +1305,7 @@
 							{content.instructors.eyebrow}
 						</p>
 					{/if}
-					<h2
-						class="text-3xl leading-tight font-extrabold sm:text-4xl heading-gradient"
-					>
+					<h2 class="heading-gradient text-3xl leading-tight font-extrabold sm:text-4xl">
 						{content.instructors.title}
 					</h2>
 					<p class="mt-4 max-w-3xl text-base leading-8 text-slate-600 dark:text-slate-300">
@@ -1049,7 +1326,6 @@
 									alt={instructor.name}
 									class="h-full w-full object-cover object-[center_22%] brightness-[1.03] contrast-[1.04] saturate-[0.96]"
 								/>
-
 							</div>
 							<div class="flex flex-1 flex-col p-5 sm:p-6">
 								<div class="mb-5 flex flex-col">
@@ -1067,7 +1343,6 @@
 										<p class="mt-2 min-h-6 text-sm font-bold text-slate-500 dark:text-slate-400">
 											{instructor.credentials}
 										</p>
-
 									</div>
 
 									<div class="mt-5 border-t border-slate-100 pt-5 dark:border-slate-800">
@@ -1215,7 +1490,7 @@
 		<section class="scroll-mt-20 bg-white py-16 sm:py-20 dark:bg-gray-950" id="faq">
 			<div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
 				<div class="mb-10 text-center">
-					<h2 class="text-3xl font-extrabold sm:text-4xl heading-gradient">
+					<h2 class="heading-gradient text-3xl font-extrabold sm:text-4xl">
 						{content.faq.title}
 					</h2>
 				</div>
