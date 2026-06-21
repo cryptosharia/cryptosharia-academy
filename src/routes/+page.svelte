@@ -83,14 +83,6 @@
 		openFaqIndex = openFaqIndex === index ? null : index;
 	}
 
-	function resolveCtaHref(cta: { href: string }) {
-		return cta.href?.trim() || whatsappUrl;
-	}
-
-	function isExternalHref(href: string) {
-		return /^https?:\/\//.test(href);
-	}
-
 	function selectPricingPackage(index: number) {
 		selectedPricingPackageIndex = index;
 	}
@@ -1175,109 +1167,6 @@
 							<p class="mt-1 text-2xl font-black text-orange-600 dark:text-orange-300">
 								{content.curriculum.investmentSummary.totalPrice}
 							</p>
-						</div>
-					</div>
-				</div>
-
-				<div
-					class="relative mt-14 overflow-hidden rounded-2xl bg-slate-900 p-8 sm:p-10 dark:bg-slate-950"
-				>
-					<!-- Top gradient border accent -->
-					<div
-						class="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-orange-500 via-amber-400 to-teal-400"
-					></div>
-					<!-- Subtle geometric pattern -->
-					<div
-						class="pointer-events-none absolute inset-0 [background-image:linear-gradient(30deg,rgba(255,255,255,0.04)_12%,transparent_12.5%,transparent_87%,rgba(255,255,255,0.04)_87.5%),linear-gradient(150deg,rgba(255,255,255,0.04)_12%,transparent_12.5%,transparent_87%,rgba(255,255,255,0.04)_87.5%)] [background-size:48px_48px] [background-position:0_0,24px_24px]"
-					></div>
-					<div class="relative grid gap-8 lg:grid-cols-[1fr_0.9fr] lg:items-start">
-						{#if content.curriculum.outcomes.length > 0}
-							<div>
-								<h3 class="heading-gradient text-2xl leading-tight font-extrabold sm:text-3xl">
-									Setelah 4 hari, peserta akan lebih siap untuk:
-								</h3>
-								<ul class="mt-7 grid gap-3 text-base leading-8 text-slate-100 sm:grid-cols-2">
-									{#each content.curriculum.outcomes as outcome, index (outcome)}
-										<li
-											class="flex gap-3 rounded-lg border-l-4 {index % 2 === 0
-												? 'border-l-orange-500'
-												: 'border-l-emerald-500'} bg-slate-800/60 p-4 font-semibold shadow-sm shadow-orange-500/5"
-										>
-											<span
-												class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-orange-500/20 text-xs font-black text-orange-300"
-												>{index + 1}</span
-											>
-											<svg
-												class="mt-1 h-5 w-5 shrink-0 text-orange-400"
-												fill="none"
-												stroke="currentColor"
-												viewBox="0 0 24 24"
-												aria-hidden="true"
-											>
-												<path
-													stroke-linecap="round"
-													stroke-linejoin="round"
-													stroke-width="2.5"
-													d="M5 13l4 4L19 7"
-												/>
-											</svg>
-											<span>{outcome}</span>
-										</li>
-									{/each}
-								</ul>
-								{#if content.curriculum.disclaimer}
-									<p class="mt-6 text-xs leading-6 text-slate-400">
-										{content.curriculum.disclaimer}
-									</p>
-								{/if}
-							</div>
-						{/if}
-
-						<div
-							class="rounded-lg border border-slate-200 bg-slate-950 p-7 text-white shadow-xl shadow-slate-950/10 dark:border-orange-900/40"
-						>
-							<h3 class="text-2xl leading-snug font-extrabold">
-								{content.curriculum.ctaTitle}
-							</h3>
-							<p class="mt-3 text-[15px] leading-8 text-slate-300">
-								{content.curriculum.ctaDescription}
-							</p>
-							<div class="mt-6 flex flex-col gap-3 sm:flex-row lg:flex-col xl:flex-row">
-								<a
-									href={resolveCtaHref(content.curriculum.primaryCta)}
-									target={isExternalHref(resolveCtaHref(content.curriculum.primaryCta))
-										? '_blank'
-										: undefined}
-									rel="external noopener noreferrer"
-									class="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-orange-600 px-5 py-3.5 text-sm font-bold whitespace-nowrap text-white transition hover:bg-orange-500 active:scale-95"
-								>
-									{content.curriculum.primaryCta.label}
-									<svg
-										class="h-4 w-4"
-										fill="none"
-										stroke="currentColor"
-										viewBox="0 0 24 24"
-										aria-hidden="true"
-									>
-										<path
-											stroke-linecap="round"
-											stroke-linejoin="round"
-											stroke-width="2.5"
-											d="M17 8l4 4m0 0l-4 4m4-4H3"
-										/>
-									</svg>
-								</a>
-								<a
-									href={resolveCtaHref(content.curriculum.secondaryCta)}
-									target={isExternalHref(resolveCtaHref(content.curriculum.secondaryCta))
-										? '_blank'
-										: undefined}
-									rel="external noopener noreferrer"
-									class="inline-flex w-full items-center justify-center rounded-lg border border-white/20 px-5 py-3.5 text-sm font-bold whitespace-nowrap text-white transition hover:border-orange-300 hover:bg-white/10"
-								>
-									{content.curriculum.secondaryCta.label}
-								</a>
-							</div>
 						</div>
 					</div>
 				</div>
