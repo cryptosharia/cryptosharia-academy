@@ -24,8 +24,6 @@
 	const sections = $derived(content.layout.filter((s) => s.visible).map((s) => s.id));
 
 	let openFaqIndex = $state<number | null>(0);
-	let openCurriculumIndex = $state<number | null>(0);
-	let openInstructorIndex = $state<number | null>(null);
 	let showAllFaqs = $state(false);
 
 	const visibleFaqItems = $derived(
@@ -83,14 +81,6 @@
 
 	function toggleFaq(index: number) {
 		openFaqIndex = openFaqIndex === index ? null : index;
-	}
-
-	function toggleInstructor(index: number) {
-		openInstructorIndex = openInstructorIndex === index ? null : index;
-	}
-
-	function toggleCurriculum(index: number) {
-		openCurriculumIndex = openCurriculumIndex === index ? null : index;
 	}
 
 	function resolveCtaHref(cta: { href: string }) {
@@ -1023,8 +1013,15 @@
 
 	{#if sectionId === 'curriculum'}
 		<section class="scroll-mt-20 bg-slate-50 py-16 sm:py-20 dark:bg-slate-900" id="curriculum">
-			<div class="mx-auto max-w-[90rem] px-4 sm:px-6 lg:px-8">
+			<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 				<div class="mx-auto mb-12 max-w-4xl text-center">
+					{#if content.curriculum.eyebrow}
+						<p
+							class="mb-3 text-sm font-black tracking-[0.16em] text-orange-600 uppercase dark:text-orange-300"
+						>
+							{content.curriculum.eyebrow}
+						</p>
+					{/if}
 					<h2 class="heading-gradient text-3xl leading-tight font-extrabold sm:text-5xl">
 						{content.curriculum.title}
 					</h2>
@@ -1038,135 +1035,91 @@
 				</div>
 
 				{#if content.curriculum.schedule.length > 0}
-					<div class="relative">
-						<div
-							class="pointer-events-none absolute top-4 bottom-4 left-[0.45rem] w-px bg-gradient-to-b from-orange-300 via-slate-300 to-teal-300 md:hidden dark:from-orange-700 dark:via-slate-700 dark:to-teal-700"
-						></div>
-						<div
-							class="pointer-events-none absolute top-16 right-10 left-10 hidden h-px bg-gradient-to-r from-orange-200 via-slate-300 to-teal-200 xl:block dark:from-orange-900/70 dark:via-slate-700 dark:to-teal-900/60"
-						></div>
-						<div
-							class="relative space-y-5 pl-6 md:grid md:grid-cols-2 md:items-stretch md:gap-6 md:space-y-0 md:pl-0 xl:grid-cols-4"
-						>
-							{#each content.curriculum.schedule as day, dayIndex (day.stage)}
-								<div
-									class="relative flex h-full flex-col rounded-lg border border-slate-200 bg-white p-5 shadow-[inset_0_1px_0_rgba(249,115,22,0.12)] shadow-sm shadow-slate-950/5 before:absolute before:top-6 before:-left-[2.05rem] before:h-4 before:w-4 before:rounded-full before:border-4 before:border-slate-50 before:bg-orange-500 md:p-6 md:before:hidden dark:border-slate-700 dark:bg-slate-950 dark:before:border-slate-900"
-								>
-									<button
-										type="button"
-										onclick={() => toggleCurriculum(dayIndex)}
-										class="flex w-full items-start justify-between gap-4 text-left md:pointer-events-none md:min-h-[8.75rem]"
-										aria-expanded={openCurriculumIndex === dayIndex}
-									>
+					<div class="space-y-8">
+						{#each content.curriculum.schedule as day, dayIndex (day.stage)}
+							<article
+								class="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-lg shadow-slate-950/5 dark:border-slate-700 dark:bg-slate-950 dark:shadow-black/20"
+							>
+								<div class="p-5 sm:p-7 lg:p-8">
+									<div class="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
 										<div class="min-w-0">
-											<p class="text-xs font-black tracking-[0.18em] text-orange-600 uppercase">
-												Hari {dayIndex + 1}
+											<p class="text-sm font-black text-orange-600 dark:text-orange-300">
+												Hari {dayIndex + 1} — {day.date.replace(/^(Sabtu|Minggu),\s*/, '')}
 											</p>
 											<h3
-												class="mt-2 text-2xl leading-tight font-extrabold break-words text-slate-900 dark:text-white"
+												class="mt-2 text-2xl leading-tight font-black text-slate-950 sm:text-3xl dark:text-white"
 											>
 												{day.stage}
 											</h3>
-											<p
-												class="mt-3 text-[15px] leading-6 font-bold text-slate-600 dark:text-slate-300"
+										</div>
+										{#if day.time}
+											<div
+												class="inline-flex w-fit shrink-0 items-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-4 py-2 text-xs font-bold text-slate-600 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300"
 											>
-												{day.date}
-											</p>
-											{#if day.time}
-												<p
-													class="mt-1 flex items-center gap-2 text-sm font-medium text-slate-500 dark:text-slate-400"
+												<svg
+													class="h-4 w-4 text-orange-500"
+													fill="none"
+													stroke="currentColor"
+													viewBox="0 0 24 24"
+													aria-hidden="true"
 												>
-													<svg
-														class="h-3.5 w-3.5 text-orange-500"
-														fill="none"
-														stroke="currentColor"
-														viewBox="0 0 24 24"
-														aria-hidden="true"
-													>
-														<path
-															stroke-linecap="round"
-															stroke-linejoin="round"
-															stroke-width="2"
-															d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-														/>
-													</svg>
-													{day.time}
-												</p>
-											{/if}
-										</div>
-										<div class="flex shrink-0 items-center gap-3">
-											<span
-												class="flex h-11 w-11 items-center justify-center rounded-full border border-orange-200 bg-orange-50 text-sm font-black text-orange-700 dark:border-orange-900/60 dark:bg-orange-950/40 dark:text-orange-300"
-											>
-												{String(dayIndex + 1).padStart(2, '0')}
-											</span>
-											<svg
-												class="h-5 w-5 text-orange-600 transition md:hidden dark:text-orange-300 {openCurriculumIndex ===
-												dayIndex
-													? 'rotate-180'
-													: ''}"
-												fill="none"
-												stroke="currentColor"
-												viewBox="0 0 24 24"
-												aria-hidden="true"
-											>
-												<path
-													stroke-linecap="round"
-													stroke-linejoin="round"
-													stroke-width="2.5"
-													d="M19 9l-7 7-7-7"
-												/>
-											</svg>
-										</div>
-									</button>
-
-									<div
-										class="{openCurriculumIndex === dayIndex
-											? 'block'
-											: 'hidden'} md:flex md:flex-1 md:flex-col"
-									>
-										<ol
-											class="mt-5 space-y-4 border-t border-slate-100 pt-5 md:mt-0 md:space-y-5 md:pt-6 dark:border-slate-800"
-										>
-											{#each day.sessions as session, sessionIndex (session)}
-												<li class="flex gap-3">
-													<span
-														class="mt-0.5 inline-flex h-8 min-w-16 shrink-0 items-center justify-center rounded-md bg-slate-900 px-3 text-xs font-black text-white dark:bg-orange-600"
-													>
-														Sesi {sessionIndex + 1}
-													</span>
-													<div class="min-w-0">
-														<p
-															class="text-base leading-8 font-bold break-words text-slate-800 dark:text-white"
-														>
-															{session}
-														</p>
-													</div>
-												</li>
-											{/each}
-										</ol>
+													<path
+														stroke-linecap="round"
+														stroke-linejoin="round"
+														stroke-width="2"
+														d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+													/>
+												</svg>
+												{day.time}
+											</div>
+										{/if}
 									</div>
 
-									{#if day.outcome}
-										<div
-											class="mt-6 border-t border-slate-100 pt-5 md:mt-auto md:min-h-[9.75rem] md:pt-6 dark:border-slate-800 {openCurriculumIndex ===
-											dayIndex
-												? 'block'
-												: 'hidden'} md:!block"
-										>
-											<p
-												class="text-[11px] font-black tracking-[0.16em] text-teal-700 uppercase dark:text-teal-300"
+									<p class="mt-4 max-w-5xl text-base leading-7 text-slate-700 dark:text-slate-300">
+										{day.description}
+									</p>
+
+									<div class="mt-7 grid gap-4 lg:grid-cols-2">
+										{#each day.sessions as session, sessionIndex (session.title)}
+											<section
+												class="rounded-lg border border-orange-200 bg-orange-50/80 p-5 dark:border-orange-900/60 dark:bg-orange-950/20"
 											>
-												Outcome
-											</p>
-											<p class="mt-3 text-base leading-relaxed text-slate-700 dark:text-slate-300">
-												{day.outcome}
-											</p>
-										</div>
-									{/if}
+												<div
+													class="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between"
+												>
+													<h4
+														class="text-lg leading-snug font-black text-slate-950 dark:text-white"
+													>
+														Sesi {sessionIndex + 1}: {session.title}
+													</h4>
+													<p
+														class="shrink-0 text-sm font-bold text-orange-600 italic dark:text-orange-300"
+													>
+														{session.price}
+													</p>
+												</div>
+												<ul
+													class="mt-5 space-y-3 text-[15px] leading-6 text-slate-800 dark:text-slate-200"
+												>
+													{#each session.topics as topic (topic)}
+														<li class="flex gap-3">
+															<span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-orange-500"
+															></span>
+															<span>{topic}</span>
+														</li>
+													{/each}
+												</ul>
+											</section>
+										{/each}
+									</div>
 								</div>
-							{/each}
-						</div>
+								<div
+									class="border-t border-orange-200 bg-orange-50 px-5 py-3 text-sm font-black text-orange-700 sm:px-7 lg:px-8 dark:border-orange-900/60 dark:bg-orange-950/30 dark:text-orange-300"
+								>
+									Total Paket Hari {dayIndex + 1}: {day.packagePrice}
+								</div>
+							</article>
+						{/each}
 					</div>
 				{:else}
 					<div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
@@ -1189,6 +1142,42 @@
 						{/each}
 					</div>
 				{/if}
+
+				<div class="mt-12">
+					<h3
+						class="border-b-2 border-orange-500 pb-2 text-2xl font-black tracking-wide text-orange-600 uppercase dark:text-orange-300"
+					>
+						Ringkasan Investasi
+					</h3>
+					<div
+						class="mt-4 grid overflow-hidden rounded-lg border border-orange-200 bg-orange-50 sm:grid-cols-3 dark:border-orange-900/60 dark:bg-orange-950/20"
+					>
+						<div
+							class="p-5 text-center sm:border-r sm:border-orange-200 dark:sm:border-orange-900/60"
+						>
+							<p class="text-sm font-black text-slate-900 dark:text-white">Per Sesi</p>
+							<p class="mt-1 text-2xl font-black text-orange-600 dark:text-orange-300">
+								{content.curriculum.investmentSummary.sessionPrice}
+							</p>
+						</div>
+						<div
+							class="border-t border-orange-200 p-5 text-center sm:border-t-0 sm:border-r dark:border-orange-900/60"
+						>
+							<p class="text-sm font-black text-slate-900 dark:text-white">Per Paket (1 Hari)</p>
+							<p class="mt-1 text-2xl font-black text-orange-600 dark:text-orange-300">
+								{content.curriculum.investmentSummary.packagePrice}
+							</p>
+						</div>
+						<div
+							class="border-t border-orange-200 p-5 text-center sm:border-t-0 dark:border-orange-900/60"
+						>
+							<p class="text-sm font-black text-slate-900 dark:text-white">Total 4 Paket</p>
+							<p class="mt-1 text-2xl font-black text-orange-600 dark:text-orange-300">
+								{content.curriculum.investmentSummary.totalPrice}
+							</p>
+						</div>
+					</div>
+				</div>
 
 				<div
 					class="relative mt-14 overflow-hidden rounded-2xl bg-slate-900 p-8 sm:p-10 dark:bg-slate-950"
@@ -1314,7 +1303,7 @@
 				</div>
 
 				<div class="grid items-stretch gap-6 md:grid-cols-2 xl:grid-cols-3">
-					{#each content.instructors.items as instructor, instructorIndex (instructor.name)}
+					{#each content.instructors.items as instructor (instructor.name)}
 						<div
 							class="group flex h-full flex-col overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm transition hover:border-orange-200 hover:shadow-lg hover:shadow-orange-950/5 dark:border-slate-800 dark:bg-slate-900 dark:hover:border-orange-900/70"
 						>

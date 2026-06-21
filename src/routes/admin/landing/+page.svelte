@@ -1854,6 +1854,11 @@
 
 {#snippet curriculumForm()}
 	{@render textField(
+		'Label Atas',
+		() => content.curriculum.eyebrow,
+		(v) => (content.curriculum.eyebrow = v)
+	)}
+	{@render textField(
 		'Judul',
 		() => content.curriculum.title,
 		(v) => (content.curriculum.title = v)
@@ -1871,13 +1876,17 @@
 					stage: '',
 					date: '',
 					time: '',
-					sessions: ['', ''],
-					sessionSpeakers: ['', ''],
+					description: '',
+					sessions: [
+						{ title: '', price: 'Rp500k per sesi', topics: [''], speaker: '' },
+						{ title: '', price: 'Rp500k per sesi', topics: [''], speaker: '' }
+					],
+					packagePrice: 'Rp750k',
 					outcome: ''
 				}))
 		)}
 		<div class="mt-3 space-y-3">
-			{#each content.curriculum.schedule as day, i}
+			{#each content.curriculum.schedule as day, i (i)}
 				<div class="space-y-3 {cardClass}">
 					<div class="flex items-center justify-between">
 						<span class="text-[10px] font-bold text-gray-400">HARI {i + 1}</span>
@@ -1887,12 +1896,12 @@
 					</div>
 					<input
 						bind:value={day.stage}
-						placeholder="Tahap, contoh: Foundation"
+						placeholder="Nama paket, contoh: Pondasi Crypto & Financial Planning"
 						class={inputClass}
 					/>
 					<input
 						bind:value={day.date}
-						placeholder="Tanggal, contoh: Sabtu, 27 Juni 2026"
+						placeholder="Tanggal, contoh: Sabtu, 4 Juli 2026"
 						class={inputClass}
 					/>
 					<input
@@ -1900,27 +1909,73 @@
 						placeholder="Waktu (opsional), contoh: 08.30 - 12.00 WIB"
 						class={inputClass}
 					/>
+					<textarea
+						bind:value={day.description}
+						rows="4"
+						placeholder="Deskripsi dan manfaat paket hari ini"
+						class="{inputClass} resize-y"
+					></textarea>
+					<input
+						bind:value={day.packagePrice}
+						placeholder="Harga paket hari ini"
+						class={inputClass}
+					/>
 					<div class="space-y-2">
-						{#each day.sessions as _, j}
-							<div class="grid gap-2 md:grid-cols-[72px_1fr_1fr_auto] md:items-center">
-								<span class="text-xs font-bold text-gray-400">Sesi {j + 1}</span>
-								<input bind:value={day.sessions[j]} placeholder="Judul sesi" class={inputClass} />
+						{#each day.sessions as session, j (j)}
+							<div
+								class="space-y-3 rounded-lg border border-gray-200 bg-white p-3 dark:border-gray-700 dark:bg-gray-950"
+							>
+								<div class="flex items-center justify-between">
+									<span class="text-xs font-bold text-gray-400">SESI {j + 1}</span>
+									{@render removeBtn(() => (day.sessions = removeItem(day.sessions, j)))}
+								</div>
+								<div class="grid gap-2 md:grid-cols-2">
+									<input bind:value={session.title} placeholder="Judul sesi" class={inputClass} />
+									<input bind:value={session.price} placeholder="Harga sesi" class={inputClass} />
+								</div>
 								<input
-									bind:value={day.sessionSpeakers[j]}
+									bind:value={session.speaker}
 									placeholder="Pemateri sesi"
 									class={inputClass}
 								/>
-								{@render removeBtn(() => {
-									day.sessions = removeItem(day.sessions, j);
-									day.sessionSpeakers = removeItem(day.sessionSpeakers, j);
-								})}
+								<div class="space-y-2">
+									<div class="flex items-center justify-between">
+										<span class="text-xs font-bold text-gray-500 dark:text-gray-400"
+											>Materi sesi</span
+										>
+										<button
+											type="button"
+											onclick={() => (session.topics = [...session.topics, ''])}
+											class="text-primary-600 hover:text-primary-700 text-xs font-semibold"
+										>
+											+ Tambah materi
+										</button>
+									</div>
+									{#each session.topics as topic, topicIndex (topicIndex)}
+										<div class="flex items-center gap-2">
+											<span class="text-xs font-bold text-gray-400">{topicIndex + 1}.</span>
+											<input
+												value={topic}
+												oninput={(event) =>
+													(session.topics[topicIndex] = event.currentTarget.value)}
+												placeholder="Materi sesi"
+												class={inputClass}
+											/>
+											{@render removeBtn(
+												() => (session.topics = removeItem(session.topics, topicIndex))
+											)}
+										</div>
+									{/each}
+								</div>
 							</div>
 						{/each}
 						<button
 							type="button"
 							onclick={() => {
-								day.sessions = [...day.sessions, ''];
-								day.sessionSpeakers = [...day.sessionSpeakers, ''];
+								day.sessions = [
+									...day.sessions,
+									{ title: '', price: 'Rp500k per sesi', topics: [''], speaker: '' }
+								];
 							}}
 							class="text-primary-600 hover:text-primary-700 text-xs font-semibold"
 							>+ Tambah sesi</button
@@ -1934,6 +1989,28 @@
 					></textarea>
 				</div>
 			{/each}
+		</div>
+	</div>
+	<div class="border-t border-gray-100 pt-4 dark:border-gray-700">
+		<p class="mb-3 text-xs font-bold tracking-wide text-gray-500 uppercase dark:text-gray-400">
+			Ringkasan Investasi
+		</p>
+		<div class="grid gap-3 md:grid-cols-3">
+			<input
+				bind:value={content.curriculum.investmentSummary.sessionPrice}
+				placeholder="Harga per sesi"
+				class={inputClass}
+			/>
+			<input
+				bind:value={content.curriculum.investmentSummary.packagePrice}
+				placeholder="Harga per paket"
+				class={inputClass}
+			/>
+			<input
+				bind:value={content.curriculum.investmentSummary.totalPrice}
+				placeholder="Total empat paket"
+				class={inputClass}
+			/>
 		</div>
 	</div>
 	<div class="border-t border-gray-100 pt-4 dark:border-gray-700">

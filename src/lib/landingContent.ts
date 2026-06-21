@@ -40,12 +40,19 @@ export type PricingPackage = {
 	sessionPrice: string;
 	ctaMessage: string;
 };
+export type CurriculumSession = {
+	title: string;
+	price: string;
+	topics: string[];
+	speaker: string;
+};
 export type CurriculumDay = {
 	stage: string;
 	date: string;
 	time?: string;
-	sessions: string[];
-	sessionSpeakers: string[];
+	description: string;
+	sessions: CurriculumSession[];
+	packagePrice: string;
 	outcome: string;
 };
 export type Instructor = {
@@ -120,6 +127,11 @@ export type LandingContent = {
 		title: string;
 		description: string;
 		schedule: CurriculumDay[];
+		investmentSummary: {
+			sessionPrice: string;
+			packagePrice: string;
+			totalPrice: string;
+		};
 		topics: string[];
 		outcomes: string[];
 		disclaimer: string;
@@ -409,81 +421,84 @@ export const defaultLandingContent: LandingContent = {
 			'Program intensif untuk memahami crypto dari sudut pandang syariah, praktik, dan risiko secara lebih terarah.',
 		dateCard: {
 			label: 'Jadwal Pelaksanaan',
-			date: '27 Juni – 5 Juli 2026',
+			date: '4–12 Juli 2026',
 			time: '08.30 - 12.00 WIB (2 Sesi/Hari)'
 		},
 		packages: [
 			{
 				code: 'Paket A',
-				title: 'Fundamental',
+				title: 'Pondasi Crypto & Financial Planning',
 				description:
-					'Cocok untuk pemula yang ingin membangun pondasi crypto, keamanan aset, dan perencanaan risiko sebelum mulai berinvestasi.',
+					'Bangun fondasi yang solid untuk memahami crypto, Web3, perencanaan keuangan, dan manajemen risiko sebelum mulai berinvestasi.',
 				image: '/images/packages/paket-a-fundamental.jpeg',
 				lessons: [
-					'Pengenalan Ekosistem Crypto & Web3',
-					'Keamanan Aset & Praktik Dompet Digital',
-					'Penyusunan Financial Planning',
-					'Manajemen Risiko Fundamental',
-					'Psikologi Investor'
+					'Pengenalan blockchain dan cryptocurrency',
+					'Ekosistem Web3 dan aplikasinya',
+					'Peran dan keamanan aset digital',
+					'Strategi perencanaan keuangan personal',
+					'Manajemen risiko investasi crypto',
+					'Strategi membangun portfolio jangka panjang'
 				],
 				price: 'Rp750.000',
-				sessionPrice: 'Harga per sesi: Sesi 1 400k, Sesi 2 400k',
+				sessionPrice: 'Harga per sesi: Rp500.000',
 				ctaMessage:
-					"Assalamu'alaikum admin, saya tertarik ikut Paket A Fundamental Crypto Sharia Masterclass."
+					"Assalamu'alaikum admin, saya tertarik ikut Paket A Pondasi Crypto & Financial Planning."
 			},
 			{
 				code: 'Paket B',
-				title: 'Market Analysis',
+				title: 'Analisis Fundamental & Global Macro',
 				description:
-					'Cocok untuk peserta yang ingin membaca kondisi pasar, tokenomics, narasi, dan data on-chain secara lebih terarah.',
+					'Tingkatkan kualitas keputusan investasi dengan analisis proyek crypto dan sinyal makroekonomi global yang berbasis data.',
 				image: '/images/packages/paket-b-market-analysis.jpeg',
 				lessons: [
-					'Analisis Fundamental Kripto',
-					'Bedah Tokenomics',
-					'Analisis Makro Global',
-					'Siklus Pasar & Analisis Narasi',
-					'Pengenalan Data On-Chain Dasar'
+					'Evaluasi whitepaper dan tim proyek',
+					'Analisis utility token dan use case',
+					'Penilaian sustainabilitas proyek jangka panjang',
+					'Dampak kebijakan ekonomi global pada crypto',
+					'Membaca indikator makroekonomi untuk timing pasar',
+					'Analisis sentimen dan tren pasar crypto'
 				],
 				price: 'Rp750.000',
-				sessionPrice: 'Harga per sesi: Sesi 1 400k, Sesi 2 400k',
+				sessionPrice: 'Harga per sesi: Rp500.000',
 				ctaMessage:
-					"Assalamu'alaikum admin, saya tertarik ikut Paket B Market Analysis Crypto Sharia Masterclass."
+					"Assalamu'alaikum admin, saya tertarik ikut Paket B Analisis Fundamental & Global Macro."
 			},
 			{
 				code: 'Paket C',
-				title: 'Technical Analysis',
+				title: 'Analisis Teknikal',
 				description:
-					'Cocok untuk peserta yang ingin memahami price action, area kunci, indikator, dan menyusun trading plan dengan risiko terukur.',
+					'Pelajari price action, pola grafik, indikator teknikal, dan eksekusi trading dengan manajemen risiko yang solid.',
 				image: '/images/packages/paket-c-technical-analysis.jpeg',
 				lessons: [
-					'Anatomi Candlestick & Price Action',
-					'Pemetaan Area Kunci',
-					'Penggunaan Indikator Esensial',
-					'Setup Trading Plan',
-					'Risk/Reward Ratio (RR) & Position Sizing'
+					'Pengenalan analisis teknikal dan anatomi grafik',
+					'Chart pattern untuk membaca struktur besar grafik',
+					'Candlestick pattern untuk navigasi jangka pendek dan timing',
+					'Technical indicator analysis sebagai alat bantu konfirmasi matematis',
+					'Market cycle, struktur, dan prospect sebagai sintesis peta besar',
+					'Praktik penggunaan jurnal trading untuk mengukur progress'
 				],
 				price: 'Rp750.000',
-				sessionPrice: 'Harga per sesi: Sesi 1 400k, Sesi 2 400k',
-				ctaMessage:
-					"Assalamu'alaikum admin, saya tertarik ikut Paket C Technical Analysis Crypto Sharia Masterclass."
+				sessionPrice: 'Harga per sesi: Rp500.000',
+				ctaMessage: "Assalamu'alaikum admin, saya tertarik ikut Paket C Analisis Teknikal."
 			},
 			{
 				code: 'Paket D',
-				title: 'Sharia Coin Screening',
+				title: 'Analisis Syariah & Screening Koin',
 				description:
-					'Cocok untuk peserta yang ingin menilai aset crypto dari sisi fikih muamalah, kriteria syariah, dan praktik screening.',
+					'Pahami fikih muamalah, fatwa crypto, screening aset halal, dan pengelolaan zakat untuk investasi yang sesuai prinsip Islam.',
 				image: '/images/packages/paket-d-sharia-screening.jpeg',
 				lessons: [
-					'Fikih Muamalah Kripto',
-					'Kriteria Penyaringan Syariah',
-					'Praktik Screening Platform',
-					'Bedah Kasus Ekosistem',
-					'Zakat Aset Kripto'
+					'Landasan fikih muamalah dalam transaksi digital',
+					'Fatwa dan pandangan ulama tentang cryptocurrency',
+					'Zakat aset crypto dan pengelolaan kewajiban',
+					'Framework screening aset crypto yang halal',
+					'Studi kasus evaluasi berbagai cryptocurrency',
+					'Praktik membuat keputusan investasi sesuai syariah'
 				],
 				price: 'Rp750.000',
-				sessionPrice: 'Harga per sesi: Sesi 1 400k, Sesi 2 400k',
+				sessionPrice: 'Harga per sesi: Rp500.000',
 				ctaMessage:
-					"Assalamu'alaikum admin, saya tertarik ikut Paket D Sharia Coin Screening Crypto Sharia Masterclass."
+					"Assalamu'alaikum admin, saya tertarik ikut Paket D Analisis Syariah & Screening Koin."
 			}
 		],
 		packageBenefits: [
@@ -501,63 +516,161 @@ export const defaultLandingContent: LandingContent = {
 			'Networking komunitas CryptoSharia',
 			'Sertifikat kelulusan program'
 		],
-		priceBadge: 'PROMO 10 PESERTA AWAL',
-		originalPrice: 'Rp5.000.000',
+		priceBadge: 'PAKET LENGKAP 4 HARI',
+		originalPrice: 'Rp4.000.000',
 		price: 'Rp3.000.000',
-		note: 'Harga promo hanya untuk 10 peserta awal. Kuota mentoring dibatasi agar pendampingan tetap fokus.',
+		note: 'Ambil empat paket sekaligus dan hemat Rp1.000.000 dibandingkan pembelian per sesi.',
 		ctaLabel: 'Amankan Kursi Sekarang'
 	},
 	curriculum: {
-		eyebrow: '',
-		title: 'Kurikulum 4 Hari: Dari Dasar Crypto hingga Portfolio Syariah',
+		eyebrow: 'Masterclass Crypto Sharia',
+		title: 'Jadwal & Pembagian Materi',
 		description:
-			'Peserta akan memahami crypto dari peta industri, manajemen risiko, analisis pasar, prinsip syariah, hingga penyusunan portfolio jangka panjang yang lebih terarah.',
+			'Empat paket pembelajaran intensif dari pondasi crypto hingga screening aset sesuai prinsip syariah.',
 		schedule: [
 			{
-				stage: 'Foundation',
-				date: 'Sabtu, 27 Juni 2026',
+				stage: 'Pondasi Crypto & Financial Planning',
+				date: 'Sabtu, 4 Juli 2026',
 				time: '08.30 - 12.00 WIB',
-				sessions: ['Peta Industri Crypto & Web3', 'Financial Planning & Manajemen Risiko'],
-				sessionSpeakers: ['Sholahuddin Al Ayyubi', 'Muhammad Ghithrif Gustomo Putra'],
+				description:
+					'Bangun fondasi yang solid untuk memulai perjalanan crypto dengan percaya diri. Setelah modul ini, kamu akan memahami cara kerja blockchain, mengidentifikasi peluang di ekosistem Web3, dan membuat rencana investasi yang terstruktur sesuai profil risiko kamu—sehingga siap untuk langkah investasi berikutnya dengan strategi yang jelas.',
+				sessions: [
+					{
+						title: 'Crypto & Web3 Industry Map',
+						price: 'Rp500k per sesi',
+						topics: [
+							'Pengenalan blockchain dan cryptocurrency',
+							'Ekosistem Web3 dan aplikasinya',
+							'Peran dan keamanan aset digital'
+						],
+						speaker: 'Sholahuddin Al Ayyubi'
+					},
+					{
+						title: 'Financial Planning & Risk Management',
+						price: 'Rp500k per sesi',
+						topics: [
+							'Strategi perencanaan keuangan personal',
+							'Manajemen risiko investasi crypto',
+							'Strategi building long-term portfolio'
+						],
+						speaker: 'Muhammad Ghithrif Gustomo Putra'
+					}
+				],
+				packagePrice: 'Rp750k',
 				outcome:
 					'Peserta memahami gambaran besar industri crypto serta cara mengelola risiko sebelum mengambil keputusan investasi.'
 			},
 			{
-				stage: 'Market Analysis',
-				date: 'Minggu, 28 Juni 2026',
+				stage: 'Analisis Fundamental & Global Macro',
+				date: 'Minggu, 5 Juli 2026',
 				time: '08.30 - 12.00 WIB',
-				sessions: ['Analisis Fundamental & Narasi Pasar', 'Analisis Makro Global'],
-				sessionSpeakers: ['Muhammad Ghithrif Gustomo Putra', 'Muhammad Ghithrif Gustomo Putra'],
+				description:
+					'Tingkatkan keputusan investasi kamu dari speculative menjadi data-driven. Dengan modul ini, kamu dapat menganalisis proyek crypto secara mendalam, membaca sinyal makroekonomi global, dan mengidentifikasi aset terbaik di tengah volatilitas pasar—sehingga meningkatkan akurasi entry point dan confidence level saat bertransaksi.',
+				sessions: [
+					{
+						title: 'Analisis Fundamental Crypto',
+						price: 'Rp500k per sesi',
+						topics: [
+							'Evaluasi whitepaper dan tim proyek',
+							'Analisis utility token dan use case',
+							'Penilaian sustainabilitas proyek jangka panjang'
+						],
+						speaker: 'Muhammad Ghithrif Gustomo Putra'
+					},
+					{
+						title: 'Analisis Makro Global',
+						price: 'Rp500k per sesi',
+						topics: [
+							'Dampak kebijakan ekonomi global pada crypto',
+							'Membaca indikator makroekonomi untuk timing pasar',
+							'Analisis sentimen dan tren pasar crypto'
+						],
+						speaker: 'Muhammad Ghithrif Gustomo Putra'
+					}
+				],
+				packagePrice: 'Rp750k',
 				outcome:
 					'Peserta belajar membaca kualitas aset, narasi pasar, dan pengaruh kondisi makro terhadap pergerakan crypto.'
 			},
 			{
-				stage: 'Technical & Sharia Screening',
-				date: 'Sabtu, 4 Juli 2026',
+				stage: 'Analisis Teknikal',
+				date: 'Sabtu, 11 Juli 2026',
 				time: '08.30 - 12.00 WIB',
-				sessions: ['Analisis Teknikal Dasar', 'Analisis Coin Syariah'],
-				sessionSpeakers: ['Muhammad Ghithrif Gustomo Putra', 'Devin Halim'],
+				description:
+					'Kuasai timing yang tepat untuk entry dan exit dengan presisi tinggi. Modul ini mengajari kamu membaca price action seperti seorang profesional trader, mengenali pola-pola yang berulang, dan menggunakan indikator teknikal sebagai tools konfirmasi—sehingga kamu bisa mengambil keuntungan maksimal dari setiap pergerakan pasar dan meminimalkan kerugian dengan risk management yang solid.',
+				sessions: [
+					{
+						title: 'Fondasi & Pattern Grafik',
+						price: 'Rp500k per sesi',
+						topics: [
+							'Pengenalan analisis teknikal & anatomi grafik',
+							'Chart pattern (membaca struktur besar grafik)',
+							'Candlestick pattern (navigasi jangka pendek & timing)'
+						],
+						speaker: 'Muhammad Ghithrif Gustomo Putra'
+					},
+					{
+						title: 'Indikator & Eksekusi Trading',
+						price: 'Rp500k per sesi',
+						topics: [
+							'Technical indicator analysis (alat bantu konfirmasi matematis)',
+							'Market cycle, struktur & prospect (sintesis peta besar)',
+							'Praktik penggunaan jurnal trading untuk mengukur progress'
+						],
+						speaker: 'Muhammad Ghithrif Gustomo Putra'
+					}
+				],
+				packagePrice: 'Rp750k',
 				outcome:
-					'Peserta memahami dasar membaca chart dan prinsip menilai aset crypto dari perspektif syariah.'
+					'Peserta memahami cara membaca chart, menggunakan indikator, dan menyusun eksekusi trading dengan risiko terukur.'
 			},
 			{
-				stage: 'Strategy & Portfolio',
-				date: 'Minggu, 5 Juli 2026',
+				stage: 'Analisis Syariah & Screening Koin',
+				date: 'Minggu, 12 Juli 2026',
 				time: '08.30 - 12.00 WIB',
-				sessions: ['Analisis Teknikal Lanjutan', 'Strategi Portfolio Jangka Panjang'],
-				sessionSpeakers: ['Muhammad Ghithrif Gustomo Putra', 'Sholahuddin Al Ayyubi'],
+				description:
+					'Investasi crypto dengan full confidence dan ketenangan hati sesuai prinsip Islam. Modul ini memberikan kamu framework lengkap untuk screening aset halal, memahami hukum syariah dalam crypto, dan mengelola zakat dengan benar—sehingga kamu bisa berkembang finansial tanpa khawatir dan sepenuh hati yakin bahwa setiap langkah investasi sesuai dengan nilai-nilai Islam yang kamu anut.',
+				sessions: [
+					{
+						title: 'Fikih Muamalah & Fatwa Crypto',
+						price: 'Rp500k per sesi',
+						topics: [
+							'Landasan fikih muamalah dalam transaksi digital',
+							'Fatwa dan pandangan ulama tentang cryptocurrency',
+							'Zakat aset crypto dan pengelolaan kewajiban'
+						],
+						speaker: 'Devin Halim'
+					},
+					{
+						title: 'Screening Koin & Bedah Kasus',
+						price: 'Rp500k per sesi',
+						topics: [
+							'Framework screening aset crypto yang halal',
+							'Studi kasus evaluasi berbagai cryptocurrency',
+							'Praktik membuat keputusan investasi sesuai syariah'
+						],
+						speaker: 'Sholahuddin Al Ayyubi'
+					}
+				],
+				packagePrice: 'Rp750k',
 				outcome:
-					'Peserta belajar menyusun strategi portfolio crypto dengan pendekatan jangka panjang dan manajemen risiko.'
+					'Peserta memahami prinsip fikih muamalah dan mampu mempraktikkan screening aset crypto sesuai syariah.'
 			}
 		],
+		investmentSummary: {
+			sessionPrice: 'Rp500k',
+			packagePrice: 'Rp750k',
+			totalPrice: 'Rp3.000.000'
+		},
 		topics: [
-			'Peta Industri Crypto & Web3',
-			'Financial Planning & Manajemen Risiko',
-			'Analisis Fundamental & Narasi Pasar',
+			'Crypto & Web3 Industry Map',
+			'Financial Planning & Risk Management',
+			'Analisis Fundamental Crypto',
 			'Analisis Makro Global',
-			'Analisis Teknikal Dasar dan Lanjutan',
-			'Analisis Coin Syariah',
-			'Strategi Portfolio Jangka Panjang'
+			'Fondasi & Pattern Grafik',
+			'Indikator & Eksekusi Trading',
+			'Fikih Muamalah & Fatwa Crypto',
+			'Screening Koin & Bedah Kasus'
 		],
 		outcomes: [
 			'Memahami peta besar industri crypto dan Web3.',
@@ -1056,14 +1169,17 @@ function normalizeCurriculum(
 	]);
 	const oldEyebrows = new Set(['Detail Kurikulum', 'Kurikulum Bootcamp']);
 	const oldDescriptions = new Set([
-		'Peserta akan belajar memahami crypto dari peta industri, manajemen risiko, analisis pasar, prinsip syariah, hingga penyusunan portfolio jangka panjang yang lebih terarah.'
+		'Peserta akan belajar memahami crypto dari peta industri, manajemen risiko, analisis pasar, prinsip syariah, hingga penyusunan portfolio jangka panjang yang lebih terarah.',
+		'Peserta akan memahami crypto dari peta industri, manajemen risiko, analisis pasar, prinsip syariah, hingga penyusunan portfolio jangka panjang yang lebih terarah.'
 	]);
 	const oldCtaTitles = new Set(['Siap mengikuti alur belajar 4 hari ini?']);
 	const oldCtaDescriptions = new Set([
 		'Lihat detail benefit peserta atau konsultasikan kebutuhan belajar Anda sebelum mendaftar.'
 	]);
 
-	if (oldEyebrows.has(curriculum.eyebrow?.trim() ?? '')) curriculum.eyebrow = '';
+	if (!curriculum.eyebrow?.trim() || oldEyebrows.has(curriculum.eyebrow.trim())) {
+		curriculum.eyebrow = defaults.eyebrow;
+	}
 	if (!curriculum.title?.trim() || oldTitles.has(curriculum.title.trim())) {
 		curriculum.title = defaults.title;
 	}
@@ -1071,6 +1187,7 @@ function normalizeCurriculum(
 		curriculum.description = defaults.description;
 	}
 	curriculum.schedule = normalizeCurriculumSchedule(curriculum.schedule);
+	curriculum.investmentSummary = normalizeInvestmentSummary(curriculum.investmentSummary);
 	curriculum.topics = normalizeCurriculumTopics(curriculum.topics);
 	curriculum.outcomes = normalizeStringList(curriculum.outcomes, defaults.outcomes);
 	if (!curriculum.disclaimer?.trim()) curriculum.disclaimer = defaults.disclaimer;
@@ -1092,31 +1209,68 @@ function normalizeCurriculum(
 	return curriculum;
 }
 
-function normalizeCurriculumSchedule(schedule: CurriculumDay[] | undefined): CurriculumDay[] {
+function normalizeInvestmentSummary(
+	summary: Partial<LandingContent['curriculum']['investmentSummary']> | undefined
+): LandingContent['curriculum']['investmentSummary'] {
+	const fallback = defaultLandingContent.curriculum.investmentSummary;
+	const legacyValues = new Set(['Rp400k', 'Rp400.000']);
+	const sessionPrice = summary?.sessionPrice?.trim() ?? '';
+
+	return {
+		sessionPrice:
+			!sessionPrice || legacyValues.has(sessionPrice) ? fallback.sessionPrice : sessionPrice,
+		packagePrice: summary?.packagePrice?.trim() || fallback.packagePrice,
+		totalPrice: summary?.totalPrice?.trim() || fallback.totalPrice
+	};
+}
+
+function normalizeCurriculumSchedule(schedule: unknown): CurriculumDay[] {
 	const sourceDays = Array.isArray(schedule) ? schedule : [];
-	if (sourceDays.length === 0) return [...defaultLandingContent.curriculum.schedule];
+	if (sourceDays.length === 0 || isStaleCurriculumSchedule(sourceDays)) {
+		return structuredClone(defaultLandingContent.curriculum.schedule);
+	}
 
 	return sourceDays.map((day, index) => normalizeCurriculumDay(day, index));
 }
 
-function normalizeCurriculumDay(day: Partial<CurriculumDay>, index: number): CurriculumDay {
+function isStaleCurriculumSchedule(schedule: unknown[]): boolean {
+	const staleStages = new Set([
+		'Foundation',
+		'Market Analysis',
+		'Technical & Sharia Screening',
+		'Strategy & Portfolio'
+	]);
+
+	return schedule.some((value) => {
+		if (!isRecord(value)) return true;
+		const date = typeof value.date === 'string' ? value.date : '';
+		const stage = typeof value.stage === 'string' ? value.stage : '';
+		return /27 Juni|28 Juni/.test(date) || staleStages.has(stage);
+	});
+}
+
+function normalizeCurriculumDay(dayValue: unknown, index: number): CurriculumDay {
 	const fallback =
 		defaultLandingContent.curriculum.schedule[index] ??
 		defaultLandingContent.curriculum.schedule[0];
-	const sessions = normalizeCurriculumSessions(day.sessions, fallback.sessions);
-	const speakers = Array.isArray(day.sessionSpeakers)
-		? day.sessionSpeakers.map((speaker) => speaker.trim()).filter((speaker) => speaker.length > 0)
-		: [];
+	const day = isRecord(dayValue) ? dayValue : {};
+	const speakers = Array.isArray(day.sessionSpeakers) ? day.sessionSpeakers : [];
+	const sessions = normalizeCurriculumSessions(day.sessions, fallback.sessions, speakers);
+	const stage = typeof day.stage === 'string' ? day.stage.trim() : '';
+	const date = typeof day.date === 'string' ? day.date.trim() : '';
+	const time = typeof day.time === 'string' ? day.time.trim() : '';
+	const description = typeof day.description === 'string' ? day.description.trim() : '';
+	const packagePrice = typeof day.packagePrice === 'string' ? day.packagePrice.trim() : '';
+	const outcome = typeof day.outcome === 'string' ? day.outcome : undefined;
 
 	return {
-		stage: day.stage?.trim() || fallback.stage,
-		date: day.date?.trim() || fallback.date,
-		time: day.time?.trim() || fallback.time,
+		stage: stage || fallback.stage,
+		date: date || fallback.date,
+		time: time || fallback.time,
+		description: description || fallback.description,
 		sessions,
-		sessionSpeakers: sessions.map((_, sessionIndex) => {
-			return speakers[sessionIndex] || fallback.sessionSpeakers[sessionIndex] || '';
-		}),
-		outcome: normalizeCurriculumOutcome(day.outcome, fallback.outcome)
+		packagePrice: packagePrice || fallback.packagePrice,
+		outcome: normalizeCurriculumOutcome(outcome, fallback.outcome)
 	};
 }
 
@@ -1133,37 +1287,92 @@ function normalizeCurriculumOutcome(outcome: string | undefined, fallback: strin
 	return normalized || fallback;
 }
 
-function normalizeCurriculumSessions(sessions: string[] | undefined, fallback: string[]): string[] {
+function normalizeCurriculumSessions(
+	sessionsValue: unknown,
+	fallback: CurriculumSession[],
+	legacySpeakers: unknown[]
+): CurriculumSession[] {
 	const oldCopy = new Map([
-		['Crypto Industry Map & Web3', 'Peta Industri Crypto & Web3'],
-		['Financial Planning & Risk Management', 'Financial Planning & Manajemen Risiko'],
-		['Fundamental & Narrative Analysis', 'Analisis Fundamental & Narasi Pasar'],
+		['Crypto Industry Map & Web3', 'Crypto & Web3 Industry Map'],
+		['Peta Industri Crypto & Web3', 'Crypto & Web3 Industry Map'],
+		['Financial Planning & Manajemen Risiko', 'Financial Planning & Risk Management'],
+		['Fundamental & Narrative Analysis', 'Analisis Fundamental Crypto'],
+		['Analisis Fundamental & Narasi Pasar', 'Analisis Fundamental Crypto'],
 		['Global Macro Analysis', 'Analisis Makro Global'],
-		['Technical Analysis (Session 1)', 'Analisis Teknikal Dasar'],
-		['Technical Analysis (Session 2)', 'Analisis Teknikal Lanjutan'],
-		['Sharia Coin Analysis', 'Analisis Coin Syariah'],
-		['Long-Term Portfolio Building', 'Strategi Portfolio Jangka Panjang'],
-		['Membangun Portfolio Jangka Panjang', 'Strategi Portfolio Jangka Panjang']
+		['Technical Analysis (Session 1)', 'Fondasi & Pattern Grafik'],
+		['Analisis Teknikal Dasar', 'Fondasi & Pattern Grafik'],
+		['Technical Analysis (Session 2)', 'Indikator & Eksekusi Trading'],
+		['Analisis Teknikal Lanjutan', 'Indikator & Eksekusi Trading'],
+		['Sharia Coin Analysis', 'Screening Koin & Bedah Kasus'],
+		['Analisis Coin Syariah', 'Screening Koin & Bedah Kasus']
 	]);
-	const values = Array.isArray(sessions)
-		? sessions
-				.map((session) => oldCopy.get(session.trim()) ?? session.trim())
-				.filter((session) => session.length > 0)
-		: [];
+	const sessions = Array.isArray(sessionsValue) ? sessionsValue : [];
+	const normalized = sessions
+		.map((session, sessionIndex): CurriculumSession | null => {
+			const fallbackSession = fallback[sessionIndex] ?? fallback[0];
+			if (typeof session === 'string') {
+				const title = oldCopy.get(session.trim()) ?? session.trim();
+				const legacySpeaker = legacySpeakers[sessionIndex];
+				return title
+					? {
+							title,
+							price: fallbackSession.price,
+							topics: [...fallbackSession.topics],
+							speaker:
+								typeof legacySpeaker === 'string' && legacySpeaker.trim()
+									? legacySpeaker.trim()
+									: fallbackSession.speaker
+						}
+					: null;
+			}
+			if (!isRecord(session)) return null;
 
-	return values.length > 0 ? values : [...fallback];
+			const rawTitle = typeof session.title === 'string' ? session.title.trim() : '';
+			const rawPrice = typeof session.price === 'string' ? session.price.trim() : '';
+			const rawSpeaker = typeof session.speaker === 'string' ? session.speaker.trim() : '';
+			return {
+				title: (oldCopy.get(rawTitle) ?? rawTitle) || fallbackSession.title,
+				price: /400k|400\.000/i.test(rawPrice)
+					? fallbackSession.price
+					: rawPrice || fallbackSession.price,
+				topics: normalizeStringList(
+					Array.isArray(session.topics)
+						? session.topics.filter((topic): topic is string => typeof topic === 'string')
+						: undefined,
+					fallbackSession.topics
+				),
+				speaker: rawSpeaker || fallbackSession.speaker
+			};
+		})
+		.filter((session): session is CurriculumSession => session !== null);
+
+	return normalized.length > 0 ? normalized : structuredClone(fallback);
 }
 
 function normalizeCurriculumTopics(topics: string[] | undefined): string[] {
+	const staleTopics = new Set([
+		'Peta Industri Crypto & Web3',
+		'Financial Planning & Manajemen Risiko',
+		'Analisis Fundamental & Narasi Pasar',
+		'Analisis Teknikal Dasar dan Lanjutan',
+		'Analisis Coin Syariah',
+		'Strategi Portfolio Jangka Panjang'
+	]);
+	if (topics?.some((topic) => staleTopics.has(topic.trim()))) {
+		return structuredClone(defaultLandingContent.curriculum.topics);
+	}
+
 	const oldCopy = new Map([
-		['Crypto Industry Map & Web3', 'Peta Industri Crypto & Web3'],
-		['Financial Planning & Risk Management', 'Financial Planning & Manajemen Risiko'],
-		['Fundamental & Narrative Analysis', 'Analisis Fundamental & Narasi Pasar'],
+		['Crypto Industry Map & Web3', 'Crypto & Web3 Industry Map'],
+		['Peta Industri Crypto & Web3', 'Crypto & Web3 Industry Map'],
+		['Financial Planning & Manajemen Risiko', 'Financial Planning & Risk Management'],
+		['Fundamental & Narrative Analysis', 'Analisis Fundamental Crypto'],
+		['Analisis Fundamental & Narasi Pasar', 'Analisis Fundamental Crypto'],
 		['Global Macro Analysis', 'Analisis Makro Global'],
-		['Technical Analysis', 'Analisis Teknikal Dasar dan Lanjutan'],
-		['Sharia Coin Analysis', 'Analisis Coin Syariah'],
-		['Long-Term Portfolio Building', 'Strategi Portfolio Jangka Panjang'],
-		['Membangun Portfolio Jangka Panjang', 'Strategi Portfolio Jangka Panjang']
+		['Technical Analysis', 'Fondasi & Pattern Grafik'],
+		['Analisis Teknikal Dasar dan Lanjutan', 'Fondasi & Pattern Grafik'],
+		['Sharia Coin Analysis', 'Screening Koin & Bedah Kasus'],
+		['Analisis Coin Syariah', 'Screening Koin & Bedah Kasus']
 	]);
 	const values = Array.isArray(topics)
 		? topics
@@ -1335,6 +1544,14 @@ function normalizePricing(pricing: LandingContent['pricing']): LandingContent['p
 		'Bootcamp berlangsung 4 hari pada 27-28 Juni 2026 dan 4-5 Juli 2026 dengan dua sesi materi di setiap hari belajar.',
 		'Program ini akan dilaksanakan pada tanggal 27 Juni - 5 Juli 2026'
 	]);
+	const hasStalePackages = pricing.packages?.some((pkg) => {
+		return (
+			/400k|400\.000/i.test(pkg.sessionPrice ?? '') ||
+			['Fundamental', 'Market Analysis', 'Technical Analysis', 'Sharia Coin Screening'].includes(
+				pkg.title?.trim() ?? ''
+			)
+		);
+	});
 
 	const firstValueStack = pricing.programIncludes?.length
 		? pricing.programIncludes
@@ -1361,16 +1578,34 @@ function normalizePricing(pricing: LandingContent['pricing']): LandingContent['p
 	}
 	if (!pricing.dateCard) {
 		pricing.dateCard = defaults.dateCard;
-	} else if (pricing.dateCard.label === 'Tanggal Program' && !pricing.dateCard.time) {
-		pricing.dateCard.label = defaults.dateCard.label;
-		pricing.dateCard.time = defaults.dateCard.time;
+	} else {
+		if (
+			pricing.dateCard.label === 'Tanggal Program' ||
+			/27 Juni|28 Juni/.test(pricing.dateCard.date ?? '')
+		) {
+			pricing.dateCard = structuredClone(defaults.dateCard);
+		} else if (!pricing.dateCard.time) {
+			pricing.dateCard.time = defaults.dateCard.time;
+		}
 	}
-	if (!pricing.priceBadge?.trim()) pricing.priceBadge = defaults.priceBadge;
-	if (!pricing.originalPrice?.trim()) pricing.originalPrice = defaults.originalPrice;
+	if (!pricing.priceBadge?.trim() || pricing.priceBadge === 'PROMO 10 PESERTA AWAL') {
+		pricing.priceBadge = defaults.priceBadge;
+	}
+	if (!pricing.originalPrice?.trim() || pricing.originalPrice === 'Rp5.000.000') {
+		pricing.originalPrice = defaults.originalPrice;
+	}
 	if (!pricing.price?.trim()) pricing.price = defaults.price;
-	if (!pricing.note?.trim()) pricing.note = defaults.note;
+	if (
+		!pricing.note?.trim() ||
+		pricing.note.includes('10 peserta awal') ||
+		pricing.note.includes('Kuota mentoring dibatasi')
+	) {
+		pricing.note = defaults.note;
+	}
 	if (!pricing.ctaLabel?.trim()) pricing.ctaLabel = defaults.ctaLabel;
-	pricing.packages = normalizePricingPackages(pricing.packages, defaults.packages);
+	pricing.packages = hasStalePackages
+		? structuredClone(defaults.packages)
+		: normalizePricingPackages(pricing.packages, defaults.packages);
 	pricing.packageBenefits = normalizeStringList(pricing.packageBenefits, defaults.packageBenefits);
 
 	pricing.programIncludes =
