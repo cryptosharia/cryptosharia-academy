@@ -761,9 +761,10 @@ export const defaultLandingContent: LandingContent = {
 		]
 	},
 	urgency: {
-		eyebrow: '',
-		title: 'Harga Spesial untuk 10 Peserta Pertama',
-		description: 'Kuota terbatas untuk menjaga kualitas mentoring dan diskusi tetap optimal.',
+		eyebrow: 'KUOTA TERBATAS',
+		title: 'Harga Spesial Khusus 10 Peserta Pertama',
+		description:
+			'Slot sengaja dibatasi agar setiap peserta mendapat ruang diskusi dan mentoring yang lebih optimal.',
 		ctaLabel: 'Daftar Sekarang'
 	},
 	faq: {
@@ -1019,10 +1020,23 @@ function normalizeAuthorityActivities(
 
 function normalizeUrgency(urgency: LandingContent['urgency']): LandingContent['urgency'] {
 	const defaults = defaultLandingContent.urgency;
-	const oldTitles = new Set(['Special Price for 10 Pax Only']);
+	const oldEyebrows = new Set(['URGENCY / SCARCITY', 'LIMITED SLOT', 'Limited Slot']);
+	const oldTitles = new Set([
+		'Special Price for 10 Pax Only',
+		'Harga Spesial untuk 10 Peserta Pertama'
+	]);
+	const oldDescriptions = new Set([
+		'Kuota terbatas untuk menjaga kualitas mentoring dan diskusi tetap optimal.'
+	]);
 
+	if (!urgency.eyebrow?.trim() || oldEyebrows.has(urgency.eyebrow.trim())) {
+		urgency.eyebrow = defaults.eyebrow;
+	}
 	if (!urgency.title?.trim() || oldTitles.has(urgency.title.trim())) {
 		urgency.title = defaults.title;
+	}
+	if (!urgency.description?.trim() || oldDescriptions.has(urgency.description.trim())) {
+		urgency.description = defaults.description;
 	}
 	if (!urgency.ctaLabel?.trim()) urgency.ctaLabel = defaults.ctaLabel;
 

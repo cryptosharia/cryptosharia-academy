@@ -42,8 +42,15 @@
 	let uspSection = $state<HTMLElement | null>(null);
 	let uspProgress = $state(0);
 	let uspAnimationsReady = $state(false);
+	let urgencySection = $state<HTMLElement | null>(null);
+	let urgencyProgress = $state(0);
+	let urgencyAnimationsReady = $state(false);
 	const selectedPricingPackage = $derived(
 		pricingPackages[selectedPricingPackageIndex] ?? pricingPackages[0]
+	);
+	const urgencyTitleLines = $derived(splitUrgencyTitle(content.urgency.title));
+	const urgencyMotionProgress = $derived(
+		!urgencyAnimationsReady || bundleReducedMotion ? 1 : urgencyProgress
 	);
 
 	function splitHeroHeadline(value: string) {
@@ -73,6 +80,20 @@
 			prefix: value.slice(0, highlightIndex).trim(),
 			highlight: value.slice(highlightIndex).trim()
 		};
+	}
+
+	function splitUrgencyTitle(value: string) {
+		const trimmed = value.trim();
+		const slotMatch = trimmed.match(/^(.*?)(\b10\s+(?:Peserta|Pendaftar)\s+Pertama\b.*)$/i);
+		if (slotMatch?.[1]?.trim() && slotMatch[2]?.trim()) {
+			return [slotMatch[1].trim(), slotMatch[2].trim()];
+		}
+
+		const words = trimmed.split(/\s+/).filter(Boolean);
+		if (words.length <= 4) return [trimmed];
+
+		const midpoint = Math.ceil(words.length / 2);
+		return [words.slice(0, midpoint).join(' '), words.slice(midpoint).join(' ')];
 	}
 
 	function mapFaqItems(items: LandingContent['faq']['items']) {
@@ -126,6 +147,14 @@
 
 	function uspVisible(threshold: number) {
 		return !uspAnimationsReady || bundleReducedMotion || uspProgress >= threshold;
+	}
+
+	function urgencyVisible(threshold: number) {
+		return !urgencyAnimationsReady || bundleReducedMotion || urgencyProgress >= threshold;
+	}
+
+	function urgencyDelay(milliseconds: number) {
+		return `${bundleDesktop || bundleReducedMotion ? 0 : milliseconds}ms`;
 	}
 
 	function updateUspSpotlight(event: MouseEvent) {
@@ -267,16 +296,39 @@
 			uspProgress = Math.min(1, Math.max(0, (revealStart - rect.top) / revealDistance));
 		}
 
+		function updateUrgencyAnimation() {
+			if (bundleReducedMotion) {
+				urgencyProgress = 1;
+				return;
+			}
+
+			const element = urgencySection;
+			if (!element) return;
+			const rect = element.getBoundingClientRect();
+			const viewportHeight = window.innerHeight;
+
+			if (!bundleDesktop) {
+				if (rect.top <= viewportHeight * 0.86 && rect.bottom >= 0) urgencyProgress = 1;
+				return;
+			}
+
+			const revealStart = viewportHeight * 0.76;
+			const revealDistance = 980;
+			urgencyProgress = Math.min(1, Math.max(0, (revealStart - rect.top) / revealDistance));
+		}
+
 		function updatePageAnimations() {
 			bundleDesktop = desktopQuery.matches;
 			bundleReducedMotion = reducedMotionQuery.matches;
 			updateBundleAnimation();
 			updateUspAnimation();
+			updateUrgencyAnimation();
 		}
 
 		const beginAnimation = window.requestAnimationFrame(() => {
 			bundleAnimationsReady = true;
 			uspAnimationsReady = true;
+			urgencyAnimationsReady = true;
 			updatePageAnimations();
 		});
 		window.addEventListener('scroll', updatePageAnimations, { passive: true });
@@ -1642,53 +1694,156 @@
 	{/if}
 
 	{#if sectionId === 'urgency'}
-		<section class="relative overflow-hidden bg-orange-600 py-14 text-white sm:py-16">
-			<div
-				class="absolute inset-0 bg-[radial-gradient(circle_at_20%_25%,rgba(255,255,255,0.24),transparent_28%),linear-gradient(30deg,rgba(255,255,255,0.12)_12%,transparent_12.5%,transparent_87%,rgba(255,255,255,0.12)_87.5%,rgba(255,255,255,0.12)),linear-gradient(150deg,rgba(255,255,255,0.12)_12%,transparent_12.5%,transparent_87%,rgba(255,255,255,0.12)_87.5%,rgba(255,255,255,0.12))] [background-size:auto,56px_56px,56px_56px] [background-position:0_0,0_0,28px_28px] opacity-45"
-			></div>
-			<div
-				class="pointer-events-none absolute -right-4 -bottom-8 text-[10rem] leading-none font-black text-white/10 sm:right-10 sm:text-[13rem]"
-			>
-				10
-			</div>
-			<div
-				class="relative mx-auto flex max-w-7xl flex-col items-start justify-between gap-6 px-4 sm:px-6 lg:flex-row lg:items-center lg:px-8"
-			>
-				<div>
-					<div
-						class="mb-4 inline-flex rounded-full bg-white/15 px-3 py-2 text-[11px] font-black tracking-[0.14em] uppercase"
-					>
-						Limited Slot
-					</div>
-					<h2 class="max-w-2xl text-3xl leading-tight font-black sm:text-4xl">
-						{content.urgency.title}
-					</h2>
-					<p class="mt-3 max-w-2xl text-sm leading-7 text-orange-50">
-						{content.urgency.description}
-					</p>
-				</div>
-				<a
-					href={whatsappUrl}
-					target="_blank"
-					rel="external noopener noreferrer"
-					class="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-white px-6 py-4 text-sm font-bold text-orange-700 transition hover:bg-orange-50 active:scale-95 sm:w-auto"
+		<section
+			id="urgency"
+			bind:this={urgencySection}
+			class="relative scroll-mt-20 bg-slate-950 text-white"
+		>
+			<div class={bundleReducedMotion ? '' : 'lg:min-h-[calc(100vh+920px)]'}>
+				<div
+					class="relative overflow-hidden bg-orange-600 py-14 transition-all duration-700 ease-out motion-reduce:transform-none motion-reduce:transition-none sm:py-16 lg:sticky lg:top-20 {urgencyVisible(
+						0.02
+					)
+						? 'scale-100 opacity-100'
+						: 'scale-[0.98] opacity-0'}"
 				>
-					{content.urgency.ctaLabel}
-					<svg
-						class="h-4 w-4"
-						fill="none"
-						stroke="currentColor"
-						viewBox="0 0 24 24"
-						aria-hidden="true"
+					<div
+						class="absolute inset-0 bg-[linear-gradient(120deg,#ea580c,#f97316_46%,#fb923c)]"
+					></div>
+					<div
+						class="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_25%,rgba(255,255,255,0.24),transparent_28%),linear-gradient(30deg,rgba(255,255,255,0.12)_12%,transparent_12.5%,transparent_87%,rgba(255,255,255,0.12)_87.5%,rgba(255,255,255,0.12)),linear-gradient(150deg,rgba(255,255,255,0.12)_12%,transparent_12.5%,transparent_87%,rgba(255,255,255,0.12)_87.5%,rgba(255,255,255,0.12))] [background-size:auto,56px_56px,56px_56px] [background-position:0_0,0_0,28px_28px] transition-[opacity,transform] duration-700 ease-out motion-reduce:transition-none"
+						style:transform={`translate3d(${(1 - urgencyMotionProgress) * 28}px, 0, 0)`}
+						style:opacity={`${0.34 + urgencyMotionProgress * 0.16}`}
+					></div>
+					<div
+						class="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_80%_44%,rgba(255,255,255,0.18),transparent_30%)] opacity-80"
+					></div>
+					<div
+						class="pointer-events-none absolute right-[-3.5rem] bottom-[-5rem] hidden text-[16rem] leading-none font-black text-white lg:block"
+						style:transform={`translate3d(${(1 - urgencyMotionProgress) * 80}px, 0, 0) scale(${1 + (1 - urgencyMotionProgress) * 0.08})`}
+						style:opacity={`${0.06 + urgencyMotionProgress * 0.1}`}
 					>
-						<path
-							stroke-linecap="round"
-							stroke-linejoin="round"
-							stroke-width="2.5"
-							d="M17 8l4 4m0 0l-4 4m4-4H3"
-						/>
-					</svg>
-				</a>
+						10
+					</div>
+
+					<div
+						class="relative mx-auto grid max-w-7xl gap-8 px-4 sm:px-6 lg:grid-cols-[minmax(0,1fr)_minmax(18rem,25rem)] lg:items-center lg:px-8"
+					>
+						<div class="max-w-3xl min-w-0">
+							<div
+								class="mb-4 inline-flex rounded-full bg-slate-950 px-3.5 py-2 text-[11px] font-black tracking-[0.14em] uppercase shadow-lg shadow-orange-950/25 transition-all duration-500 ease-out motion-reduce:transition-none {urgencyVisible(
+									0.18
+								)
+									? 'translate-y-0 opacity-100'
+									: '-translate-y-3 opacity-0'}"
+								style:transition-delay={urgencyDelay(80)}
+							>
+								{content.urgency.eyebrow || 'KUOTA TERBATAS'}
+							</div>
+							<h2 class="max-w-3xl text-3xl leading-tight font-black sm:text-4xl lg:text-5xl">
+								{#each urgencyTitleLines as line, index (`${line}-${index}`)}
+									<span class="block overflow-hidden">
+										<span
+											class="block transition-all duration-700 ease-out motion-reduce:transform-none motion-reduce:transition-none {urgencyVisible(
+												0.3 + index * 0.12
+											)
+												? 'translate-y-0 opacity-100'
+												: 'translate-y-full opacity-0'}"
+											style:transition-delay={urgencyDelay(180 + index * 130)}
+										>
+											{line}
+										</span>
+									</span>
+								{/each}
+							</h2>
+							<p
+								class="mt-4 max-w-2xl text-sm leading-7 text-orange-50 transition-all duration-500 ease-out motion-reduce:transition-none sm:text-base {urgencyVisible(
+									0.62
+								)
+									? 'translate-y-0 opacity-100'
+									: 'translate-y-3 opacity-0'}"
+								style:transition-delay={urgencyDelay(520)}
+							>
+								{content.urgency.description}
+							</p>
+						</div>
+
+						<div class="relative min-w-0 lg:justify-self-end">
+							<div
+								class="pointer-events-none absolute -right-8 -bottom-10 text-[10rem] leading-none font-black text-white/10 sm:right-0 lg:hidden"
+							>
+								10
+							</div>
+							<div class="relative z-10 flex flex-col gap-5">
+								<div
+									class="hidden transition-all duration-700 ease-out motion-reduce:transition-none lg:block {urgencyVisible(
+										0.5
+									)
+										? 'translate-x-0 opacity-100'
+										: 'translate-x-12 opacity-0'}"
+								>
+									<p
+										class="text-right text-xs font-black tracking-[0.18em] text-orange-100 uppercase"
+									>
+										Promo Slot
+									</p>
+									<div class="mt-1 flex items-end justify-end gap-3">
+										<span class="text-8xl leading-none font-black text-white">10</span>
+										<span
+											class="mb-4 max-w-28 text-left text-sm leading-5 font-black tracking-[0.08em] text-orange-50 uppercase"
+										>
+											Peserta Pertama
+										</span>
+									</div>
+								</div>
+
+								<a
+									href={whatsappUrl}
+									target="_blank"
+									rel="external noopener noreferrer"
+									class="group/urgency-cta inline-flex w-full items-center justify-center gap-2 rounded-lg bg-white px-6 py-4 text-sm font-black text-orange-700 shadow-lg shadow-orange-950/20 transition-all duration-500 ease-out hover:-translate-y-0.5 hover:bg-orange-50 hover:shadow-xl hover:shadow-orange-950/25 active:scale-95 motion-reduce:transition-none sm:w-auto lg:w-full {urgencyVisible(
+										0.86
+									)
+										? 'translate-y-0 opacity-100'
+										: 'translate-y-4 opacity-0'}"
+									style:transition-delay={urgencyDelay(720)}
+								>
+									{content.urgency.ctaLabel}
+									<svg
+										class="h-4 w-4 transition-transform duration-300 group-hover/urgency-cta:translate-x-1 motion-reduce:transition-none"
+										fill="none"
+										stroke="currentColor"
+										viewBox="0 0 24 24"
+										aria-hidden="true"
+									>
+										<path
+											stroke-linecap="round"
+											stroke-linejoin="round"
+											stroke-width="2.5"
+											d="M17 8l4 4m0 0l-4 4m4-4H3"
+										/>
+									</svg>
+								</a>
+
+								<div
+									class="flex items-end gap-3 transition-all duration-700 ease-out motion-reduce:transition-none lg:hidden {urgencyVisible(
+										0.72
+									)
+										? 'translate-y-0 opacity-100'
+										: 'translate-y-5 opacity-0'}"
+									style:transition-delay={urgencyDelay(860)}
+								>
+									<span class="text-7xl leading-none font-black text-white">10</span>
+									<span
+										class="mb-3 max-w-32 text-sm leading-5 font-black tracking-[0.08em] text-orange-50 uppercase"
+									>
+										Peserta Pertama
+									</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
 		</section>
 	{/if}
