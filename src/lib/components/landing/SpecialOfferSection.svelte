@@ -320,7 +320,7 @@
 		class="pointer-events-none absolute inset-x-6 top-0 h-px bg-gradient-to-r from-transparent via-white to-transparent opacity-90"
 	></span>
 	<span
-		class="flex h-7 w-7 items-center justify-center rounded-full bg-orange-600 text-white shadow-sm shadow-orange-950/20 transition-all duration-300 group-hover:scale-105 group-hover:bg-orange-500 motion-reduce:transition-none motion-reduce:group-hover:scale-100"
+		class="flex h-7 w-7 items-center justify-center rounded-full bg-orange-600 text-white shadow-sm shadow-orange-950/20 transition-all duration-300 group-hover:translate-x-0.5 group-hover:scale-105 group-hover:bg-orange-500 motion-reduce:transition-none motion-reduce:group-hover:translate-x-0 motion-reduce:group-hover:scale-100"
 	>
 		<svg
 			class="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-0.5 motion-reduce:transition-none motion-reduce:group-hover:translate-x-0"
@@ -342,12 +342,16 @@
 <section
 	id="urgency"
 	bind:this={rootElement}
-	class="relative isolate scroll-mt-20 overflow-hidden bg-slate-950 text-white"
+	class="relative isolate scroll-mt-16 overflow-hidden bg-slate-950 text-white"
 >
 	<div
 		bind:this={surfaceElement}
 		class="relative min-h-0 overflow-hidden bg-[linear-gradient(120deg,#c2410c_0%,#ea580c_42%,#fb923c_100%)] py-14 sm:py-16 lg:min-h-[560px] lg:py-0 xl:min-h-[600px]"
 	>
+		<div
+			aria-hidden="true"
+			class="pointer-events-none absolute inset-x-0 top-0 z-[2] h-px bg-gradient-to-r from-transparent via-orange-100/80 to-transparent"
+		></div>
 		<div
 			bind:this={patternElement}
 			aria-hidden="true"
@@ -361,7 +365,7 @@
 		<div
 			bind:this={mobileNumberElement}
 			aria-hidden="true"
-			class="pointer-events-none absolute -right-8 -bottom-8 text-[13rem] leading-none font-black text-white opacity-10 sm:-right-2 sm:text-[16rem] lg:hidden"
+			class="pointer-events-none absolute -right-4 -bottom-4 text-[11rem] leading-none font-black text-white opacity-8 sm:-right-2 sm:text-[14rem] lg:hidden"
 		>
 			{slot.number}
 		</div>
@@ -372,15 +376,15 @@
 			<div class="max-w-[46rem] min-w-0">
 				<div
 					bind:this={badgeElement}
-					class="inline-flex w-fit items-center gap-2 rounded-full bg-slate-950 px-3.5 py-2 text-[11px] font-black tracking-[0.15em] text-orange-100 uppercase shadow-lg shadow-orange-950/25"
+					class="inline-flex h-8 w-fit items-center gap-2 rounded-full bg-slate-950 px-3.5 text-[11px] leading-none font-black tracking-[0.15em] text-orange-100 uppercase shadow-lg shadow-orange-950/25"
 				>
-					<span aria-hidden="true" class="h-1.5 w-1.5 rounded-full bg-orange-300"></span>
-					{eyebrow}
+					<span aria-hidden="true" class="h-1.5 w-1.5 shrink-0 rounded-full bg-orange-300"></span>
+					<span>{eyebrow}</span>
 				</div>
 
 				<h2
 					bind:this={headlineElement}
-					class="mt-5 max-w-3xl text-[clamp(2.25rem,8vw,3.4rem)] leading-[1.01] font-black tracking-[-0.025em] text-white sm:text-[clamp(2.6rem,5.6vw,3.65rem)] lg:text-[clamp(2.65rem,4vw,3.65rem)]"
+					class="mt-5 max-w-3xl text-[clamp(2.25rem,8vw,3.4rem)] leading-[1.01] font-black tracking-[-0.025em] text-white sm:text-[clamp(2.6rem,5.6vw,3.65rem)] lg:text-[clamp(2.55rem,3.8vw,3.45rem)]"
 				>
 					{#each titleLines as line, index (`${line}-${index}`)}
 						<span class="block overflow-hidden pb-1">
@@ -411,7 +415,7 @@
 						href={ctaHref}
 						target="_blank"
 						rel="external noopener noreferrer"
-						class="group relative mt-8 inline-flex w-full items-center justify-center gap-3 overflow-hidden rounded-2xl bg-[linear-gradient(180deg,#ffffff_0%,#fff7ed_100%)] px-5 py-3.5 text-[15px] font-black text-slate-950 shadow-[0_14px_34px_rgba(124,45,18,0.3)] ring-1 ring-white/70 transition-all duration-300 hover:-translate-y-1 hover:scale-[1.01] hover:shadow-[0_22px_48px_rgba(124,45,18,0.38)] focus-visible:ring-3 focus-visible:ring-white/80 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-600 focus-visible:outline-none active:scale-[0.98] motion-reduce:transition-none motion-reduce:hover:translate-y-0 motion-reduce:hover:scale-100 motion-reduce:active:scale-100 sm:w-auto lg:hidden"
+						class="group relative mt-8 inline-flex w-full items-center justify-center gap-3 overflow-hidden rounded-2xl bg-[linear-gradient(180deg,#ffffff_0%,#fff7ed_100%)] px-5 py-3.5 text-[15px] font-black text-slate-950 shadow-[0_14px_34px_rgba(124,45,18,0.3)] ring-1 ring-white/70 transition-all duration-300 hover:-translate-y-1 hover:scale-[1.005] hover:shadow-[0_24px_52px_rgba(124,45,18,0.42)] focus-visible:ring-3 focus-visible:ring-white/80 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-600 focus-visible:outline-none active:scale-[0.98] motion-reduce:transition-none motion-reduce:hover:translate-y-0 motion-reduce:hover:scale-100 motion-reduce:active:scale-100 sm:w-auto lg:hidden"
 					>
 						{@render ctaContent()}
 					</a>
@@ -419,7 +423,7 @@
 					<a
 						bind:this={mobileCtaElement}
 						href={resolve(ctaHref as '/')}
-						class="group relative mt-8 inline-flex w-full items-center justify-center gap-3 overflow-hidden rounded-2xl bg-[linear-gradient(180deg,#ffffff_0%,#fff7ed_100%)] px-5 py-3.5 text-[15px] font-black text-slate-950 shadow-[0_14px_34px_rgba(124,45,18,0.3)] ring-1 ring-white/70 transition-all duration-300 hover:-translate-y-1 hover:scale-[1.01] hover:shadow-[0_22px_48px_rgba(124,45,18,0.38)] focus-visible:ring-3 focus-visible:ring-white/80 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-600 focus-visible:outline-none active:scale-[0.98] motion-reduce:transition-none motion-reduce:hover:translate-y-0 motion-reduce:hover:scale-100 motion-reduce:active:scale-100 sm:w-auto lg:hidden"
+						class="group relative mt-8 inline-flex w-full items-center justify-center gap-3 overflow-hidden rounded-2xl bg-[linear-gradient(180deg,#ffffff_0%,#fff7ed_100%)] px-5 py-3.5 text-[15px] font-black text-slate-950 shadow-[0_14px_34px_rgba(124,45,18,0.3)] ring-1 ring-white/70 transition-all duration-300 hover:-translate-y-1 hover:scale-[1.005] hover:shadow-[0_24px_52px_rgba(124,45,18,0.42)] focus-visible:ring-3 focus-visible:ring-white/80 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-600 focus-visible:outline-none active:scale-[0.98] motion-reduce:transition-none motion-reduce:hover:translate-y-0 motion-reduce:hover:scale-100 motion-reduce:active:scale-100 sm:w-auto lg:hidden"
 					>
 						{@render ctaContent()}
 					</a>
@@ -448,7 +452,7 @@
 
 			<div
 				bind:this={desktopOfferElement}
-				class="relative hidden min-h-[420px] min-w-0 overflow-hidden rounded-[2rem] border border-white/25 bg-[linear-gradient(145deg,rgba(15,23,42,0.78)_0%,rgba(15,23,42,0.62)_58%,rgba(67,20,7,0.48)_100%)] p-7 shadow-[0_32px_90px_rgba(124,45,18,0.28),inset_0_1px_0_rgba(255,255,255,0.24)] backdrop-blur-xl lg:flex lg:flex-col lg:justify-center xl:p-8"
+				class="relative hidden min-h-[420px] min-w-0 overflow-hidden rounded-[2rem] border border-white/22 bg-[linear-gradient(145deg,rgba(15,23,42,0.8)_0%,rgba(15,23,42,0.65)_58%,rgba(67,20,7,0.5)_100%)] p-7 shadow-[0_36px_90px_-28px_rgba(15,23,42,0.78),0_20px_52px_-28px_rgba(124,45,18,0.48),inset_0_1px_0_rgba(255,255,255,0.28)] backdrop-blur-lg lg:flex lg:flex-col lg:justify-center xl:p-8"
 			>
 				<div
 					aria-hidden="true"
@@ -506,7 +510,7 @@
 						href={ctaHref}
 						target="_blank"
 						rel="external noopener noreferrer"
-						class="group relative z-10 mt-6 inline-flex w-full items-center justify-center gap-3 overflow-hidden rounded-2xl bg-[linear-gradient(180deg,#ffffff_0%,#fff7ed_100%)] px-6 py-3.5 text-[15px] font-black text-slate-950 shadow-[0_16px_40px_rgba(0,0,0,0.25),0_10px_30px_rgba(234,88,12,0.24)] ring-1 ring-white/80 transition-all duration-300 hover:-translate-y-1 hover:scale-[1.015] hover:shadow-[0_22px_52px_rgba(0,0,0,0.3),0_12px_36px_rgba(251,146,60,0.38)] focus-visible:ring-3 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 focus-visible:outline-none active:scale-[0.985] motion-reduce:transition-none motion-reduce:hover:translate-y-0 motion-reduce:hover:scale-100 motion-reduce:active:scale-100"
+						class="group relative z-10 mt-6 inline-flex w-full items-center justify-center gap-3 overflow-hidden rounded-2xl bg-[linear-gradient(180deg,#ffffff_0%,#fff7ed_100%)] px-6 py-3.5 text-[15px] font-black text-slate-950 shadow-[0_16px_40px_rgba(0,0,0,0.25),0_10px_30px_rgba(234,88,12,0.24)] ring-1 ring-white/80 transition-all duration-300 hover:-translate-y-1 hover:scale-[1.005] hover:shadow-[0_24px_56px_rgba(0,0,0,0.34),0_14px_40px_rgba(251,146,60,0.42)] focus-visible:ring-3 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 focus-visible:outline-none active:scale-[0.985] motion-reduce:transition-none motion-reduce:hover:translate-y-0 motion-reduce:hover:scale-100 motion-reduce:active:scale-100"
 					>
 						{@render ctaContent()}
 					</a>
@@ -514,14 +518,14 @@
 					<a
 						bind:this={desktopCtaElement}
 						href={resolve(ctaHref as '/')}
-						class="group relative z-10 mt-6 inline-flex w-full items-center justify-center gap-3 overflow-hidden rounded-2xl bg-[linear-gradient(180deg,#ffffff_0%,#fff7ed_100%)] px-6 py-3.5 text-[15px] font-black text-slate-950 shadow-[0_16px_40px_rgba(0,0,0,0.25),0_10px_30px_rgba(234,88,12,0.24)] ring-1 ring-white/80 transition-all duration-300 hover:-translate-y-1 hover:scale-[1.015] hover:shadow-[0_22px_52px_rgba(0,0,0,0.3),0_12px_36px_rgba(251,146,60,0.38)] focus-visible:ring-3 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 focus-visible:outline-none active:scale-[0.985] motion-reduce:transition-none motion-reduce:hover:translate-y-0 motion-reduce:hover:scale-100 motion-reduce:active:scale-100"
+						class="group relative z-10 mt-6 inline-flex w-full items-center justify-center gap-3 overflow-hidden rounded-2xl bg-[linear-gradient(180deg,#ffffff_0%,#fff7ed_100%)] px-6 py-3.5 text-[15px] font-black text-slate-950 shadow-[0_16px_40px_rgba(0,0,0,0.25),0_10px_30px_rgba(234,88,12,0.24)] ring-1 ring-white/80 transition-all duration-300 hover:-translate-y-1 hover:scale-[1.005] hover:shadow-[0_24px_56px_rgba(0,0,0,0.34),0_14px_40px_rgba(251,146,60,0.42)] focus-visible:ring-3 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 focus-visible:outline-none active:scale-[0.985] motion-reduce:transition-none motion-reduce:hover:translate-y-0 motion-reduce:hover:scale-100 motion-reduce:active:scale-100"
 					>
 						{@render ctaContent()}
 					</a>
 				{/if}
 				<p
 					bind:this={desktopUrgencyElement}
-					class="relative z-10 mt-4 flex items-start justify-center gap-2 text-center text-[11px] leading-5 font-semibold text-white/65"
+					class="relative z-10 mt-4 flex items-start justify-center gap-2 text-center text-xs leading-5 font-semibold text-white/76"
 				>
 					<svg
 						class="mt-0.5 h-3.5 w-3.5 shrink-0 text-orange-200"

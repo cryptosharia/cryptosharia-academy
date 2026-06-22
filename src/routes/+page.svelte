@@ -597,7 +597,7 @@
 	{/if}
 
 	{#if sectionId === 'authority'}
-		<section class="relative overflow-hidden bg-gray-950 py-20 sm:py-28">
+		<section class="relative overflow-hidden bg-gray-950 pt-20 pb-16 sm:pt-28 sm:pb-[5.5rem]">
 			<!-- Subtle geometric pattern overlay -->
 			<div
 				class="pointer-events-none absolute inset-0 [background-image:linear-gradient(30deg,rgba(255,255,255,0.5)_12%,transparent_12.5%,transparent_87%,rgba(255,255,255,0.5)_87.5%)] [background-size:60px_60px] opacity-[0.04]"
