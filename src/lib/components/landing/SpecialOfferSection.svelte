@@ -15,6 +15,7 @@
 	const eyebrow = $derived(normalizeEyebrow(urgency.eyebrow));
 	const slot = $derived(extractSlotCopy(urgency.title));
 	const ctaExternal = $derived(isExternalHref(ctaHref));
+	const urgencyNote = 'Harga kembali normal setelah kuota promo terpenuhi.';
 
 	let rootElement = $state<HTMLElement | null>(null);
 	let surfaceElement = $state<HTMLDivElement | null>(null);
@@ -28,8 +29,11 @@
 	let desktopNumberElement = $state<HTMLSpanElement | null>(null);
 	let desktopSeatLabelElement = $state<HTMLSpanElement | null>(null);
 	let desktopCtaElement = $state<HTMLAnchorElement | null>(null);
+	let desktopUrgencyElement = $state<HTMLParagraphElement | null>(null);
 	let mobileCtaElement = $state<HTMLAnchorElement | null>(null);
+	let mobileUrgencyElement = $state<HTMLParagraphElement | null>(null);
 	let mobileNumberElement = $state<HTMLDivElement | null>(null);
+	let displayedSlotNumber = $derived(slot.number);
 
 	function splitOfferTitle(value: string) {
 		const trimmed = value.trim();
@@ -93,7 +97,9 @@
 				desktopNumberElement,
 				desktopSeatLabelElement,
 				desktopCtaElement,
+				desktopUrgencyElement,
 				mobileCtaElement,
+				mobileUrgencyElement,
 				mobileNumberElement
 			].filter((element): element is HTMLElement => Boolean(element));
 
@@ -126,6 +132,7 @@
 		const showStaticState = () => {
 			destroyAnimationRuntime();
 			clearInlineAnimationStyles();
+			displayedSlotNumber = slot.number;
 		};
 
 		const setupAnimations = () => {
@@ -162,15 +169,19 @@
 				gsap.ticker.add(tickerCallback);
 
 				context = gsap.context(() => {
+					const isDesktop = desktopQuery.matches;
 					const headlineLines = Array.from(
 						rootElement?.querySelectorAll<HTMLElement>('[data-offer-headline-line]') ?? []
 					);
 					const labelElements = [desktopPromoLabelElement, desktopSeatLabelElement].filter(
 						(element): element is HTMLElement => Boolean(element)
 					);
-					const ctaElements = [mobileCtaElement, desktopCtaElement].filter(
-						(element): element is HTMLAnchorElement => Boolean(element)
-					);
+					const activeCtaElement = isDesktop ? desktopCtaElement : mobileCtaElement;
+					const activeUrgencyElement = isDesktop ? desktopUrgencyElement : mobileUrgencyElement;
+					const countElement = isDesktop ? desktopNumberElement : null;
+					const targetCount = Number.parseInt(slot.number, 10);
+					const canCount = Boolean(countElement && Number.isFinite(targetCount));
+					const countState = { value: 0 };
 
 					const timeline = gsap.timeline({
 						defaults: { ease: 'power3.out' },
@@ -186,32 +197,60 @@
 						scale: 0.98,
 						transformOrigin: 'center center'
 					});
-					gsap.set([descriptionElement, ...ctaElements], {
+					gsap.set([descriptionElement, activeCtaElement], {
 						opacity: 0,
 						y: 20
 					});
+					gsap.set(activeUrgencyElement, { opacity: 0, y: 10 });
 					gsap.set(badgeElement, { opacity: 0, y: -12 });
 					gsap.set(headlineLines, { opacity: 0, yPercent: 110 });
-					gsap.set(desktopOfferElement, { opacity: 0, x: 24 });
-					gsap.set(desktopNumberElement, { opacity: 0, x: 80, scale: 1.08 });
-					gsap.set(labelElements, { opacity: 0, y: 12 });
-					gsap.set(mobileNumberElement, { opacity: 0, scale: 1.06 });
 					gsap.set(glowElement, { opacity: 0.45 });
+
+					if (isDesktop) {
+						gsap.set(desktopOfferElement, { opacity: 0, y: 28, scale: 0.97 });
+						gsap.set(desktopNumberElement, { opacity: 0, x: 54, scale: 1.06 });
+						gsap.set(labelElements, { opacity: 0, y: 12 });
+						if (canCount) displayedSlotNumber = '0';
+					} else {
+						gsap.set(mobileNumberElement, { opacity: 0, scale: 1.04 });
+					}
 
 					timeline
 						.to(surfaceElement, { opacity: 1, scale: 1, duration: 0.72 })
 						.to(badgeElement, { opacity: 1, y: 0, duration: 0.46 }, '-=0.18')
 						.to(headlineLines, { opacity: 1, yPercent: 0, duration: 0.68, stagger: 0.1 }, '-=0.16')
-						.to(descriptionElement, { opacity: 1, y: 0, duration: 0.52 }, '-=0.18')
-						.to(mobileNumberElement, { opacity: 0.1, scale: 1, duration: 0.62 }, '-=0.42')
-						.to(
-							desktopOfferElement,
-							{ opacity: 1, x: 0, duration: 0.62 },
-							desktopQuery.matches ? '-=0.46' : '<'
-						)
-						.to(desktopNumberElement, { opacity: 1, x: 0, scale: 1, duration: 0.74 }, '-=0.48')
-						.to(labelElements, { opacity: 1, y: 0, duration: 0.36, stagger: 0.08 }, '-=0.28')
-						.to(ctaElements, { opacity: 1, y: 0, duration: 0.48, stagger: 0.08 }, '-=0.16');
+						.to(descriptionElement, { opacity: 1, y: 0, duration: 0.52 }, '-=0.18');
+
+					if (isDesktop) {
+						timeline
+							.to(desktopOfferElement, { opacity: 1, y: 0, scale: 1, duration: 0.68 }, '-=0.38')
+							.to(desktopNumberElement, { opacity: 1, x: 0, scale: 1, duration: 0.72 }, '-=0.42');
+
+						if (canCount && countElement) {
+							timeline.to(
+								countState,
+								{
+									value: targetCount,
+									duration: 0.82,
+									ease: 'power2.out',
+									onUpdate: () => {
+										displayedSlotNumber = String(Math.round(countState.value));
+									}
+								},
+								'<'
+							);
+						}
+
+						timeline
+							.to(labelElements, { opacity: 1, y: 0, duration: 0.36, stagger: 0.08 }, '-=0.3')
+							.to(activeCtaElement, { opacity: 1, y: 0, duration: 0.5 }, '-=0.12')
+							.to(activeUrgencyElement, { opacity: 1, y: 0, duration: 0.4 }, '-=0.22');
+					} else {
+						timeline
+							.to(mobileNumberElement, { opacity: 0.08, scale: 1, duration: 0.54 }, '-=0.34')
+							.to(activeCtaElement, { opacity: 1, y: 0, duration: 0.46 }, '-=0.28')
+							.to(activeUrgencyElement, { opacity: 1, y: 0, duration: 0.36 }, '-=0.2');
+					}
 
 					gsap.to(patternElement, {
 						x: () => (desktopQuery.matches ? 36 : 12),
@@ -226,19 +265,8 @@
 						}
 					});
 
-					gsap.to(desktopNumberElement, {
-						y: -36,
-						ease: 'none',
-						scrollTrigger: {
-							trigger: rootElement,
-							start: 'top bottom',
-							end: 'bottom top',
-							scrub: 0.85
-						}
-					});
-
-					gsap.to(mobileNumberElement, {
-						y: -18,
+					gsap.to(isDesktop ? desktopNumberElement : mobileNumberElement, {
+						y: isDesktop ? -28 : -14,
 						ease: 'none',
 						scrollTrigger: {
 							trigger: rootElement,
@@ -287,20 +315,28 @@
 
 {#snippet ctaContent()}
 	{urgency.ctaLabel}
-	<svg
-		class="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1 motion-reduce:transition-none motion-reduce:group-hover:translate-x-0"
-		fill="none"
-		stroke="currentColor"
-		viewBox="0 0 24 24"
+	<span
 		aria-hidden="true"
+		class="pointer-events-none absolute inset-x-6 top-0 h-px bg-gradient-to-r from-transparent via-white to-transparent opacity-90"
+	></span>
+	<span
+		class="flex h-7 w-7 items-center justify-center rounded-full bg-orange-600 text-white shadow-sm shadow-orange-950/20 transition-all duration-300 group-hover:scale-105 group-hover:bg-orange-500 motion-reduce:transition-none motion-reduce:group-hover:scale-100"
 	>
-		<path
-			stroke-linecap="round"
-			stroke-linejoin="round"
-			stroke-width="2.5"
-			d="M17 8l4 4m0 0l-4 4m4-4H3"
-		/>
-	</svg>
+		<svg
+			class="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-0.5 motion-reduce:transition-none motion-reduce:group-hover:translate-x-0"
+			fill="none"
+			stroke="currentColor"
+			viewBox="0 0 24 24"
+			aria-hidden="true"
+		>
+			<path
+				stroke-linecap="round"
+				stroke-linejoin="round"
+				stroke-width="2.5"
+				d="M17 8l4 4m0 0l-4 4m4-4H3"
+			/>
+		</svg>
+	</span>
 {/snippet}
 
 <section
@@ -331,9 +367,9 @@
 		</div>
 
 		<div
-			class="relative z-10 mx-auto grid max-w-7xl gap-9 px-4 sm:px-6 lg:min-h-[560px] lg:grid-cols-[minmax(0,1fr)_minmax(19rem,27rem)] lg:items-center lg:gap-12 lg:px-8 xl:min-h-[600px]"
+			class="relative z-10 mx-auto grid max-w-7xl gap-9 px-4 sm:px-6 lg:min-h-[560px] lg:grid-cols-[minmax(0,1fr)_minmax(21rem,28rem)] lg:items-center lg:gap-14 lg:px-8 xl:min-h-[600px]"
 		>
-			<div class="max-w-3xl min-w-0">
+			<div class="max-w-[46rem] min-w-0">
 				<div
 					bind:this={badgeElement}
 					class="inline-flex w-fit items-center gap-2 rounded-full bg-slate-950 px-3.5 py-2 text-[11px] font-black tracking-[0.15em] text-orange-100 uppercase shadow-lg shadow-orange-950/25"
@@ -344,7 +380,7 @@
 
 				<h2
 					bind:this={headlineElement}
-					class="mt-5 max-w-4xl text-[clamp(2.35rem,8vw,3.65rem)] leading-[0.98] font-black tracking-normal text-white sm:text-[clamp(2.75rem,6vw,4rem)] lg:text-[clamp(2.8rem,4.8vw,4rem)]"
+					class="mt-5 max-w-3xl text-[clamp(2.25rem,8vw,3.4rem)] leading-[1.01] font-black tracking-[-0.025em] text-white sm:text-[clamp(2.6rem,5.6vw,3.65rem)] lg:text-[clamp(2.65rem,4vw,3.65rem)]"
 				>
 					{#each titleLines as line, index (`${line}-${index}`)}
 						<span class="block overflow-hidden pb-1">
@@ -375,7 +411,7 @@
 						href={ctaHref}
 						target="_blank"
 						rel="external noopener noreferrer"
-						class="group mt-8 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-white px-6 py-4 text-sm font-black text-orange-700 shadow-xl shadow-orange-950/25 transition-all duration-300 hover:-translate-y-1 hover:bg-orange-50 hover:shadow-[0_18px_42px_rgba(124,45,18,0.28)] focus-visible:ring-3 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-600 focus-visible:outline-none active:scale-[0.98] motion-reduce:transition-none motion-reduce:hover:translate-y-0 motion-reduce:active:scale-100 sm:w-auto lg:hidden"
+						class="group relative mt-8 inline-flex w-full items-center justify-center gap-3 overflow-hidden rounded-2xl bg-[linear-gradient(180deg,#ffffff_0%,#fff7ed_100%)] px-5 py-3.5 text-[15px] font-black text-slate-950 shadow-[0_14px_34px_rgba(124,45,18,0.3)] ring-1 ring-white/70 transition-all duration-300 hover:-translate-y-1 hover:scale-[1.01] hover:shadow-[0_22px_48px_rgba(124,45,18,0.38)] focus-visible:ring-3 focus-visible:ring-white/80 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-600 focus-visible:outline-none active:scale-[0.98] motion-reduce:transition-none motion-reduce:hover:translate-y-0 motion-reduce:hover:scale-100 motion-reduce:active:scale-100 sm:w-auto lg:hidden"
 					>
 						{@render ctaContent()}
 					</a>
@@ -383,41 +419,86 @@
 					<a
 						bind:this={mobileCtaElement}
 						href={resolve(ctaHref as '/')}
-						class="group mt-8 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-white px-6 py-4 text-sm font-black text-orange-700 shadow-xl shadow-orange-950/25 transition-all duration-300 hover:-translate-y-1 hover:bg-orange-50 hover:shadow-[0_18px_42px_rgba(124,45,18,0.28)] focus-visible:ring-3 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-600 focus-visible:outline-none active:scale-[0.98] motion-reduce:transition-none motion-reduce:hover:translate-y-0 motion-reduce:active:scale-100 sm:w-auto lg:hidden"
+						class="group relative mt-8 inline-flex w-full items-center justify-center gap-3 overflow-hidden rounded-2xl bg-[linear-gradient(180deg,#ffffff_0%,#fff7ed_100%)] px-5 py-3.5 text-[15px] font-black text-slate-950 shadow-[0_14px_34px_rgba(124,45,18,0.3)] ring-1 ring-white/70 transition-all duration-300 hover:-translate-y-1 hover:scale-[1.01] hover:shadow-[0_22px_48px_rgba(124,45,18,0.38)] focus-visible:ring-3 focus-visible:ring-white/80 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-600 focus-visible:outline-none active:scale-[0.98] motion-reduce:transition-none motion-reduce:hover:translate-y-0 motion-reduce:hover:scale-100 motion-reduce:active:scale-100 sm:w-auto lg:hidden"
 					>
 						{@render ctaContent()}
 					</a>
 				{/if}
+				<p
+					bind:this={mobileUrgencyElement}
+					class="mt-4 flex items-start gap-2 text-xs leading-5 font-semibold text-orange-50/90 lg:hidden"
+				>
+					<svg
+						class="mt-0.5 h-4 w-4 shrink-0"
+						fill="none"
+						stroke="currentColor"
+						viewBox="0 0 24 24"
+						aria-hidden="true"
+					>
+						<path
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							stroke-width="2"
+							d="M12 8v4l2.5 2.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+						/>
+					</svg>
+					{urgencyNote}
+				</p>
 			</div>
 
 			<div
 				bind:this={desktopOfferElement}
-				class="relative hidden min-h-[390px] min-w-0 flex-col justify-center rounded-[2rem] border border-white/20 bg-slate-950/20 p-7 shadow-[0_30px_80px_rgba(124,45,18,0.22)] backdrop-blur-[3px] lg:flex xl:p-8"
+				class="relative hidden min-h-[420px] min-w-0 overflow-hidden rounded-[2rem] border border-white/25 bg-[linear-gradient(145deg,rgba(15,23,42,0.78)_0%,rgba(15,23,42,0.62)_58%,rgba(67,20,7,0.48)_100%)] p-7 shadow-[0_32px_90px_rgba(124,45,18,0.28),inset_0_1px_0_rgba(255,255,255,0.24)] backdrop-blur-xl lg:flex lg:flex-col lg:justify-center xl:p-8"
 			>
 				<div
 					aria-hidden="true"
-					class="pointer-events-none absolute inset-0 rounded-[inherit] bg-[radial-gradient(circle_at_82%_18%,rgba(255,255,255,0.16),transparent_34%)]"
+					class="pointer-events-none absolute inset-0 rounded-[inherit] bg-[radial-gradient(circle_at_82%_12%,rgba(255,255,255,0.2),transparent_30%),linear-gradient(135deg,rgba(255,255,255,0.08),transparent_32%)]"
 				></div>
-				<p
-					bind:this={desktopPromoLabelElement}
-					class="relative text-xs font-black tracking-[0.2em] text-orange-100 uppercase"
-				>
-					Promo Slot
-				</p>
-				<div class="relative mt-4 flex items-end gap-4">
+				<div
+					aria-hidden="true"
+					class="pointer-events-none absolute inset-x-10 top-0 h-px bg-gradient-to-r from-transparent via-white/90 to-transparent"
+				></div>
+				<div class="relative z-10 flex items-center justify-between gap-4">
+					<p
+						bind:this={desktopPromoLabelElement}
+						class="flex items-center gap-2 text-xs font-black tracking-[0.2em] text-orange-100 uppercase"
+					>
+						<span
+							aria-hidden="true"
+							class="h-1.5 w-1.5 rotate-45 bg-orange-300 shadow-[0_0_12px_rgba(253,186,116,0.8)]"
+						></span>
+						Promo Slot
+					</p>
+					<span
+						class="rounded-full border border-white/15 bg-white/8 px-2.5 py-1 text-[9px] font-black tracking-[0.16em] text-white/75 uppercase"
+						>Terbatas</span
+					>
+				</div>
+				<div class="relative z-10 mt-5 flex items-end gap-4">
+					<span class="sr-only">{slot.number} {slot.label}</span>
+					<div
+						aria-hidden="true"
+						class="pointer-events-none absolute -top-7 -left-6 h-44 w-44 rounded-full bg-orange-300/24 blur-3xl"
+					></div>
 					<span
 						bind:this={desktopNumberElement}
-						class="text-[clamp(8.5rem,13vw,11.5rem)] leading-[0.72] font-black text-white drop-shadow-[0_24px_56px_rgba(124,45,18,0.24)]"
+						aria-hidden="true"
+						class="relative text-[clamp(8.25rem,12vw,10.75rem)] leading-[0.72] font-black tracking-[-0.08em] text-white drop-shadow-[0_24px_56px_rgba(124,45,18,0.3)]"
 					>
-						{slot.number}
+						{displayedSlotNumber}
 					</span>
 					<span
 						bind:this={desktopSeatLabelElement}
-						class="mb-2 max-w-32 text-left text-sm leading-5 font-black tracking-[0.1em] text-orange-50 uppercase"
+						aria-hidden="true"
+						class="relative mb-2 max-w-32 text-left text-sm leading-5 font-black tracking-[0.1em] text-orange-50 uppercase"
 					>
 						{slot.label}
 					</span>
 				</div>
+				<div
+					aria-hidden="true"
+					class="relative z-10 mt-7 h-px bg-gradient-to-r from-white/20 via-white/8 to-transparent"
+				></div>
 
 				{#if ctaExternal}
 					<a
@@ -425,7 +506,7 @@
 						href={ctaHref}
 						target="_blank"
 						rel="external noopener noreferrer"
-						class="group relative mt-9 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-white px-7 py-4 text-sm font-black text-orange-700 shadow-xl shadow-orange-950/25 transition-all duration-300 hover:-translate-y-1 hover:bg-orange-50 hover:shadow-[0_18px_42px_rgba(124,45,18,0.28)] focus-visible:ring-3 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-600 focus-visible:outline-none active:scale-[0.98] motion-reduce:transition-none motion-reduce:hover:translate-y-0 motion-reduce:active:scale-100"
+						class="group relative z-10 mt-6 inline-flex w-full items-center justify-center gap-3 overflow-hidden rounded-2xl bg-[linear-gradient(180deg,#ffffff_0%,#fff7ed_100%)] px-6 py-3.5 text-[15px] font-black text-slate-950 shadow-[0_16px_40px_rgba(0,0,0,0.25),0_10px_30px_rgba(234,88,12,0.24)] ring-1 ring-white/80 transition-all duration-300 hover:-translate-y-1 hover:scale-[1.015] hover:shadow-[0_22px_52px_rgba(0,0,0,0.3),0_12px_36px_rgba(251,146,60,0.38)] focus-visible:ring-3 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 focus-visible:outline-none active:scale-[0.985] motion-reduce:transition-none motion-reduce:hover:translate-y-0 motion-reduce:hover:scale-100 motion-reduce:active:scale-100"
 					>
 						{@render ctaContent()}
 					</a>
@@ -433,11 +514,31 @@
 					<a
 						bind:this={desktopCtaElement}
 						href={resolve(ctaHref as '/')}
-						class="group relative mt-9 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-white px-7 py-4 text-sm font-black text-orange-700 shadow-xl shadow-orange-950/25 transition-all duration-300 hover:-translate-y-1 hover:bg-orange-50 hover:shadow-[0_18px_42px_rgba(124,45,18,0.28)] focus-visible:ring-3 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-600 focus-visible:outline-none active:scale-[0.98] motion-reduce:transition-none motion-reduce:hover:translate-y-0 motion-reduce:active:scale-100"
+						class="group relative z-10 mt-6 inline-flex w-full items-center justify-center gap-3 overflow-hidden rounded-2xl bg-[linear-gradient(180deg,#ffffff_0%,#fff7ed_100%)] px-6 py-3.5 text-[15px] font-black text-slate-950 shadow-[0_16px_40px_rgba(0,0,0,0.25),0_10px_30px_rgba(234,88,12,0.24)] ring-1 ring-white/80 transition-all duration-300 hover:-translate-y-1 hover:scale-[1.015] hover:shadow-[0_22px_52px_rgba(0,0,0,0.3),0_12px_36px_rgba(251,146,60,0.38)] focus-visible:ring-3 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 focus-visible:outline-none active:scale-[0.985] motion-reduce:transition-none motion-reduce:hover:translate-y-0 motion-reduce:hover:scale-100 motion-reduce:active:scale-100"
 					>
 						{@render ctaContent()}
 					</a>
 				{/if}
+				<p
+					bind:this={desktopUrgencyElement}
+					class="relative z-10 mt-4 flex items-start justify-center gap-2 text-center text-[11px] leading-5 font-semibold text-white/65"
+				>
+					<svg
+						class="mt-0.5 h-3.5 w-3.5 shrink-0 text-orange-200"
+						fill="none"
+						stroke="currentColor"
+						viewBox="0 0 24 24"
+						aria-hidden="true"
+					>
+						<path
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							stroke-width="2"
+							d="M12 8v4l2.5 2.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+						/>
+					</svg>
+					{urgencyNote}
+				</p>
 			</div>
 		</div>
 	</div>
