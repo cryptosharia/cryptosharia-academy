@@ -49,6 +49,7 @@
 		pricingPackages[selectedPricingPackageIndex] ?? pricingPackages[0]
 	);
 	const urgencyTitleLines = $derived(splitUrgencyTitle(content.urgency.title));
+	const urgencyEyebrow = $derived(normalizeUrgencyEyebrow(content.urgency.eyebrow));
 	const urgencyMotionProgress = $derived(
 		!urgencyAnimationsReady || bundleReducedMotion ? 1 : urgencyProgress
 	);
@@ -94,6 +95,16 @@
 
 		const midpoint = Math.ceil(words.length / 2);
 		return [words.slice(0, midpoint).join(' '), words.slice(midpoint).join(' ')];
+	}
+
+	function normalizeUrgencyEyebrow(value: string) {
+		const trimmed = value.trim();
+		const normalized = trimmed.toUpperCase();
+		if (!normalized || normalized === 'URGENCY / SCARCITY' || normalized === 'LIMITED SLOT') {
+			return 'KUOTA TERBATAS';
+		}
+
+		return trimmed;
 	}
 
 	function mapFaqItems(items: LandingContent['faq']['items']) {
@@ -1738,7 +1749,7 @@
 									: '-translate-y-3 opacity-0'}"
 								style:transition-delay={urgencyDelay(80)}
 							>
-								{content.urgency.eyebrow || 'KUOTA TERBATAS'}
+								{urgencyEyebrow}
 							</div>
 							<h2 class="max-w-3xl text-3xl leading-tight font-black sm:text-4xl lg:text-5xl">
 								{#each urgencyTitleLines as line, index (`${line}-${index}`)}
