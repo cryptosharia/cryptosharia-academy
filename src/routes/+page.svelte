@@ -19,6 +19,7 @@
 	const heroVideo = $derived(resolveVideoEmbed(content.hero.videoUrl));
 	const heroHeadlineWords = $derived(splitHeroHeadline(content.hero.badge));
 	const quoteParts = $derived(splitQuoteAttribution(content.usp.quote));
+	const uspTitleParts = $derived(splitUspTitle(content.usp.title));
 
 	// Only render sections that are marked visible, in the admin-defined order.
 	const sections = $derived(content.layout.filter((s) => s.visible).map((s) => s.id));
@@ -38,6 +39,9 @@
 	let bundleAnimationsReady = $state(false);
 	let bundleDesktop = $state(false);
 	let bundleReducedMotion = $state(false);
+	let uspSection = $state<HTMLElement | null>(null);
+	let uspProgress = $state(0);
+	let uspAnimationsReady = $state(false);
 	const selectedPricingPackage = $derived(
 		pricingPackages[selectedPricingPackageIndex] ?? pricingPackages[0]
 	);
@@ -57,6 +61,17 @@
 		return {
 			text: text || trimmed,
 			attribution: text && text !== trimmed ? 'Warren Buffett' : ''
+		};
+	}
+
+	function splitUspTitle(value: string) {
+		const highlightPhrase = 'Crypto Sharia Masterclass';
+		const highlightIndex = value.toLowerCase().indexOf(highlightPhrase.toLowerCase());
+		if (highlightIndex < 0) return { prefix: value, highlight: '' };
+
+		return {
+			prefix: value.slice(0, highlightIndex).trim(),
+			highlight: value.slice(highlightIndex).trim()
 		};
 	}
 
@@ -107,6 +122,23 @@
 
 	function bundleDelay(milliseconds: number) {
 		return `${bundleDesktop || bundleReducedMotion ? 0 : milliseconds}ms`;
+	}
+
+	function uspVisible(threshold: number) {
+		return !uspAnimationsReady || bundleReducedMotion || uspProgress >= threshold;
+	}
+
+	function updateUspSpotlight(event: MouseEvent) {
+		const card = event.currentTarget as HTMLElement;
+		const rect = card.getBoundingClientRect();
+		card.style.setProperty('--spotlight-x', `${event.clientX - rect.left}px`);
+		card.style.setProperty('--spotlight-y', `${event.clientY - rect.top}px`);
+	}
+
+	function resetUspSpotlight(event: MouseEvent) {
+		const card = event.currentTarget as HTMLElement;
+		card.style.removeProperty('--spotlight-x');
+		card.style.removeProperty('--spotlight-y');
 	}
 
 	function packageTone(pkg: PricingPackage) {
@@ -200,8 +232,6 @@
 		const reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
 
 		function updateBundleAnimation() {
-			bundleDesktop = desktopQuery.matches;
-			bundleReducedMotion = reducedMotionQuery.matches;
 			if (bundleReducedMotion) {
 				bundleProgress = 1;
 				return;
@@ -222,22 +252,45 @@
 			bundleProgress = Math.min(1, Math.max(0, (revealStart - rect.top) / revealDistance));
 		}
 
+		function updateUspAnimation() {
+			if (bundleReducedMotion) {
+				uspProgress = 1;
+				return;
+			}
+
+			const element = uspSection;
+			if (!element) return;
+			const rect = element.getBoundingClientRect();
+			const viewportHeight = window.innerHeight;
+			const revealStart = viewportHeight * 0.86;
+			const revealDistance = Math.max(rect.height + viewportHeight * 0.15, 1);
+			uspProgress = Math.min(1, Math.max(0, (revealStart - rect.top) / revealDistance));
+		}
+
+		function updatePageAnimations() {
+			bundleDesktop = desktopQuery.matches;
+			bundleReducedMotion = reducedMotionQuery.matches;
+			updateBundleAnimation();
+			updateUspAnimation();
+		}
+
 		const beginAnimation = window.requestAnimationFrame(() => {
 			bundleAnimationsReady = true;
-			updateBundleAnimation();
+			uspAnimationsReady = true;
+			updatePageAnimations();
 		});
-		window.addEventListener('scroll', updateBundleAnimation, { passive: true });
-		window.addEventListener('resize', updateBundleAnimation);
-		desktopQuery.addEventListener('change', updateBundleAnimation);
-		reducedMotionQuery.addEventListener('change', updateBundleAnimation);
+		window.addEventListener('scroll', updatePageAnimations, { passive: true });
+		window.addEventListener('resize', updatePageAnimations);
+		desktopQuery.addEventListener('change', updatePageAnimations);
+		reducedMotionQuery.addEventListener('change', updatePageAnimations);
 
 		return () => {
 			unsubscribe();
 			window.cancelAnimationFrame(beginAnimation);
-			window.removeEventListener('scroll', updateBundleAnimation);
-			window.removeEventListener('resize', updateBundleAnimation);
-			desktopQuery.removeEventListener('change', updateBundleAnimation);
-			reducedMotionQuery.removeEventListener('change', updateBundleAnimation);
+			window.removeEventListener('scroll', updatePageAnimations);
+			window.removeEventListener('resize', updatePageAnimations);
+			desktopQuery.removeEventListener('change', updatePageAnimations);
+			reducedMotionQuery.removeEventListener('change', updatePageAnimations);
 		};
 	});
 </script>
@@ -738,33 +791,78 @@
 	{/if}
 
 	{#if sectionId === 'usp'}
-		<section class="relative overflow-hidden bg-slate-950 py-16 text-white sm:py-20">
+		<section
+			bind:this={uspSection}
+			class="relative overflow-hidden bg-slate-950 py-16 text-white sm:py-20"
+		>
 			<div
 				class="absolute inset-0 [background-image:radial-gradient(circle_at_18%_12%,rgba(249,115,22,0.18),transparent_30%),linear-gradient(30deg,rgba(255,255,255,0.05)_12%,transparent_12.5%,transparent_87%,rgba(255,255,255,0.05)_87.5%,rgba(255,255,255,0.05)),linear-gradient(150deg,rgba(255,255,255,0.05)_12%,transparent_12.5%,transparent_87%,rgba(255,255,255,0.05)_87.5%,rgba(255,255,255,0.05))] [background-size:auto,56px_56px,56px_56px] [background-position:0_0,0_0,28px_28px] opacity-60"
+				style:background-position={`0 0, ${uspProgress * 16}px ${uspProgress * 16}px, ${28 + uspProgress * 16}px ${28 + uspProgress * 16}px`}
 			></div>
 			<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 				<div class="relative mx-auto max-w-4xl text-center">
-					<h2 class="heading-gradient text-3xl leading-tight font-black sm:text-4xl">
-						{content.usp.title}
+					<h2 class="text-3xl leading-tight font-black sm:text-4xl">
+						<span
+							class="block transition-all duration-700 ease-out motion-reduce:transition-none {uspVisible(
+								0.04
+							)
+								? 'translate-y-0 opacity-100'
+								: 'translate-y-6 opacity-0'}"
+						>
+							{uspTitleParts.prefix}
+						</span>
+						{#if uspTitleParts.highlight}
+							<span
+								class="mt-1 block bg-gradient-to-r from-orange-200 via-orange-400 to-amber-200 bg-clip-text text-transparent transition-all delay-100 duration-700 ease-out motion-reduce:transition-none {uspVisible(
+									0.1
+								)
+									? 'usp-title-highlight-active translate-y-0 opacity-100'
+									: 'translate-y-6 opacity-0'}"
+							>
+								{uspTitleParts.highlight}
+							</span>
+						{/if}
 					</h2>
 					{#if content.usp.description}
-						<p class="mx-auto mt-5 max-w-3xl text-base leading-8 text-slate-300 sm:text-lg">
+						<p
+							class="mx-auto mt-5 max-w-3xl text-base leading-8 text-slate-300 transition-all delay-150 duration-700 ease-out motion-reduce:transition-none sm:text-lg {uspVisible(
+								0.17
+							)
+								? 'translate-y-0 opacity-100'
+								: 'translate-y-4 opacity-0'}"
+						>
 							{content.usp.description}
 						</p>
 					{/if}
 				</div>
 
 				<div class="relative mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-					{#each content.usp.items as item (item.title)}
+					{#each content.usp.items as item, index (item.title)}
 						{@const iconKey = benefitIconKey(item.title)}
 						<div
-							class="relative overflow-hidden rounded-lg border border-orange-400/35 bg-orange-500/[0.08] p-6"
+							class="group relative overflow-hidden rounded-lg border border-orange-400/35 bg-orange-500/[0.08] p-6 transition-all duration-600 ease-out hover:-translate-y-1 hover:border-orange-300/70 hover:shadow-[0_18px_45px_rgba(249,115,22,0.12)] motion-reduce:transition-none {uspVisible(
+								0.25 + index * 0.065
+							)
+								? 'usp-card-revealed translate-y-0 scale-100 opacity-100'
+								: 'translate-y-9 scale-[0.96] opacity-0'}"
+							onmousemove={updateUspSpotlight}
+							onmouseleave={resetUspSpotlight}
+							role="group"
+							aria-label={item.title}
 						>
 							<div
 								class="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_85%_15%,rgba(249,115,22,0.10),transparent_60%)]"
 							></div>
 							<div
-								class="mb-5 flex h-12 w-12 items-center justify-center rounded-lg border border-white/10 bg-white/[0.08] text-orange-200"
+								class="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+								style="background: radial-gradient(260px circle at var(--spotlight-x, 85%) var(--spotlight-y, 15%), rgba(251,146,60,0.16), transparent 65%);"
+							></div>
+							<div
+								class="relative mb-5 flex h-12 w-12 items-center justify-center rounded-lg border border-white/10 bg-white/[0.08] text-orange-200 transition-all duration-600 ease-out group-hover:border-orange-300/40 group-hover:bg-orange-400/15 group-hover:shadow-[0_0_24px_rgba(249,115,22,0.18)] motion-reduce:transition-none {uspVisible(
+									0.25 + index * 0.065
+								)
+									? 'scale-100 rotate-0 opacity-100'
+									: 'scale-[0.7] -rotate-[6deg] opacity-0'}"
 							>
 								{#if iconKey === 'layers'}
 									<svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -831,21 +929,44 @@
 									</svg>
 								{/if}
 							</div>
-							<h3 class="text-xl leading-snug font-extrabold text-white">{item.title}</h3>
-							<p class="mt-3 text-[15px] leading-7 text-slate-300">{item.description}</p>
+							<h3
+								class="relative text-xl leading-snug font-extrabold text-white transition-colors duration-300 group-hover:text-orange-100"
+							>
+								{item.title}
+							</h3>
+							<p class="relative mt-3 text-[15px] leading-7 text-slate-300">
+								{item.description}
+							</p>
 						</div>
 					{/each}
 				</div>
 
 				<div
-					class="relative mx-auto mt-12 max-w-4xl overflow-hidden rounded-lg border border-orange-500/30 bg-[linear-gradient(135deg,rgba(249,115,22,0.12),rgba(255,255,255,0.04)_48%,rgba(20,184,166,0.08))] p-6 text-left shadow-2xl shadow-orange-950/10 sm:p-8"
+					class="relative mx-auto mt-16 max-w-4xl overflow-hidden rounded-lg border border-orange-500/30 bg-[linear-gradient(135deg,rgba(249,115,22,0.12),rgba(255,255,255,0.04)_48%,rgba(20,184,166,0.08))] p-6 text-left shadow-2xl shadow-orange-950/10 transition-all duration-700 ease-out motion-reduce:transition-none sm:p-8 {uspVisible(
+						0.66
+					)
+						? 'translate-y-0 scale-100 opacity-100'
+						: 'translate-y-11 scale-[0.98] opacity-0'}"
 				>
-					<div class="absolute top-2 right-6 text-8xl leading-none font-black text-orange-400/10">
+					<div
+						class="absolute top-2 right-6 text-8xl leading-none font-black text-orange-400 transition-all duration-700 ease-out motion-reduce:transform-none motion-reduce:transition-none {uspVisible(
+							0.69
+						)
+							? 'opacity-20'
+							: 'opacity-0'}"
+						style:transform={`translateY(${bundleReducedMotion ? 0 : Math.max(0, 1 - uspProgress) * 18}px) scale(${uspVisible(0.69) ? 1 : 0.8})`}
+					>
 						"
 					</div>
 					<div class="relative grid gap-6 sm:grid-cols-[8rem_1fr] sm:items-center">
 						{#if content.usp.quoteImage}
-							<figure>
+							<figure
+								class="transition-all duration-700 ease-out motion-reduce:transition-none {uspVisible(
+									0.72
+								)
+									? 'translate-y-0 scale-100 opacity-100'
+									: 'translate-y-5 scale-[0.94] opacity-0'}"
+							>
 								<img
 									src={content.usp.quoteImage}
 									alt="Warren Buffett"
@@ -854,14 +975,35 @@
 								/>
 							</figure>
 						{/if}
-						<div class="border-l-4 border-orange-400 pl-5">
-							<blockquote
-								class="text-xl leading-8 font-extrabold text-white sm:text-2xl sm:leading-9"
+						<div class="relative overflow-hidden pl-5">
+							<div
+								class="absolute top-0 left-0 w-1 bg-orange-400 transition-[height,opacity] duration-700 ease-out motion-reduce:transition-none {uspVisible(
+									0.76
+								)
+									? 'h-full opacity-100'
+									: 'h-0 opacity-0'}"
+							></div>
+							<div
+								class="transition-all duration-700 ease-out motion-reduce:transition-none {uspVisible(
+									0.8
+								)
+									? 'translate-x-0 opacity-100'
+									: '-translate-x-6 opacity-0'}"
 							>
-								{quoteParts.text}
-							</blockquote>
+								<blockquote
+									class="text-xl leading-8 font-extrabold text-white sm:text-2xl sm:leading-9"
+								>
+									{quoteParts.text}
+								</blockquote>
+							</div>
 							{#if quoteParts.attribution}
-								<p class="mt-4 text-xs font-black tracking-[0.16em] text-orange-200 uppercase">
+								<p
+									class="mt-4 text-xs font-black tracking-[0.16em] text-orange-200 uppercase transition-all duration-500 ease-out motion-reduce:transition-none {uspVisible(
+										0.9
+									)
+										? 'translate-y-0 opacity-100'
+										: 'translate-y-3 opacity-0'}"
+								>
 									{quoteParts.attribution}
 								</p>
 							{/if}
@@ -1686,3 +1828,44 @@
 		</section>
 	{/if}
 {/each}
+
+<style>
+	@keyframes usp-title-glow {
+		0% {
+			filter: drop-shadow(0 0 0 rgba(251, 146, 60, 0));
+		}
+		45% {
+			filter: drop-shadow(0 0 14px rgba(251, 146, 60, 0.38));
+		}
+		100% {
+			filter: drop-shadow(0 0 0 rgba(251, 146, 60, 0));
+		}
+	}
+
+	@keyframes usp-card-glow {
+		0% {
+			box-shadow: 0 0 0 rgba(249, 115, 22, 0);
+		}
+		45% {
+			box-shadow: 0 0 24px rgba(249, 115, 22, 0.16);
+		}
+		100% {
+			box-shadow: 0 0 0 rgba(249, 115, 22, 0);
+		}
+	}
+
+	.usp-title-highlight-active {
+		animation: usp-title-glow 900ms ease-out;
+	}
+
+	.usp-card-revealed {
+		animation: usp-card-glow 850ms ease-out;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.usp-title-highlight-active,
+		.usp-card-revealed {
+			animation: none;
+		}
+	}
+</style>
