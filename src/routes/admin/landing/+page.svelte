@@ -1765,7 +1765,7 @@
 					</div>
 					<input
 						bind:value={pkg.badge}
-						placeholder="Badge sorotan, contoh: Mulai dari Sini (opsional)"
+						placeholder="Badge sorotan, contoh: Best Deal (opsional)"
 						class={inputClass}
 					/>
 					<textarea

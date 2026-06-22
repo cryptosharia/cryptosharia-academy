@@ -431,7 +431,7 @@ export const defaultLandingContent: LandingContent = {
 		packages: [
 			{
 				code: 'Paket A',
-				badge: 'Mulai dari Sini',
+				badge: '',
 				title: 'Pondasi Crypto & Financial Planning',
 				description:
 					'Bangun fondasi yang solid untuk memahami crypto, Web3, perencanaan keuangan, dan manajemen risiko sebelum mulai berinvestasi.',
@@ -490,7 +490,7 @@ export const defaultLandingContent: LandingContent = {
 			},
 			{
 				code: 'Paket D',
-				badge: '',
+				badge: 'Best Deal',
 				title: 'Analisis Syariah & Screening Koin',
 				description:
 					'Pahami fikih muamalah, fatwa crypto, screening aset halal, dan pengelolaan zakat untuk investasi yang sesuai prinsip Islam.',
@@ -1416,12 +1416,22 @@ function normalizePricingPackages(
 	fallback: PricingPackage[]
 ): PricingPackage[] {
 	const values = Array.isArray(packages) ? packages : [];
+	const hasLegacyRecommendation = values.some(
+		(pkg) => typeof pkg.badge === 'string' && pkg.badge.trim() === 'Mulai dari Sini'
+	);
 	const normalized = values
 		.map((pkg, index) => {
 			const defaultPackage = fallback[index] ?? fallback[0];
+			const storedBadge = typeof pkg.badge === 'string' ? pkg.badge.trim() : undefined;
 			return {
 				code: pkg.code?.trim() || defaultPackage.code,
-				badge: typeof pkg.badge === 'string' ? pkg.badge.trim() : defaultPackage.badge,
+				badge: hasLegacyRecommendation
+					? index === 3
+						? defaultPackage.badge
+						: storedBadge === 'Mulai dari Sini'
+							? ''
+							: (storedBadge ?? defaultPackage.badge)
+					: (storedBadge ?? defaultPackage.badge),
 				title: pkg.title?.trim() || defaultPackage.title,
 				description: pkg.description?.trim() || defaultPackage.description,
 				image: pkg.image?.trim() || defaultPackage.image,
