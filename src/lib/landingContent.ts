@@ -192,14 +192,14 @@ export type LandingContent = {
 
 export const SECTION_LABELS: Record<SectionId, string> = {
 	hero: 'Hero / Banner Utama',
-	authority: 'Kredibilitas',
+	authority: 'Pengalaman Edukasi',
 	valueProps: 'Manfaat Utama',
 	testimonials: 'Testimoni',
-	usp: 'Keunggulan Program',
+	usp: 'Kenapa Harus Crypto Sharia Masterclass',
 	curriculum: 'Kurikulum',
 	instructors: 'Pemateri',
-	pricing: 'Harga & Jadwal',
-	urgency: 'Urgensi & Kuota',
+	pricing: 'Paket Masterclass',
+	urgency: 'CTA / Hard Selling',
 	faq: 'FAQ',
 	finalCta: 'Penutup / CTA Akhir'
 };
@@ -208,15 +208,15 @@ export const defaultLandingContent: LandingContent = {
 	layout: [
 		{ id: 'hero', visible: true },
 		{ id: 'testimonials', visible: true },
-		{ id: 'usp', visible: true },
-		{ id: 'curriculum', visible: true },
-		{ id: 'valueProps', visible: true },
-		{ id: 'instructors', visible: true },
 		{ id: 'pricing', visible: true },
+		{ id: 'usp', visible: true },
+		{ id: 'instructors', visible: true },
 		{ id: 'authority', visible: true },
 		{ id: 'urgency', visible: true },
 		{ id: 'faq', visible: true },
-		{ id: 'finalCta', visible: true }
+		{ id: 'curriculum', visible: false },
+		{ id: 'valueProps', visible: false },
+		{ id: 'finalCta', visible: false }
 	],
 	whatsapp: {
 		phone: '6282186584279',
@@ -236,7 +236,7 @@ export const defaultLandingContent: LandingContent = {
 		description:
 			'Belajar langsung bersama founder Crypto Sharia, founder Qualifin, dan pakar fiqih muamalah dengan pendekatan sistematis, praktis, dan sesuai prinsip syariah.',
 		primaryCtaLabel: 'Daftar Sekarang',
-		secondaryCta: { label: 'Lihat Kurikulum', href: '#curriculum' },
+		secondaryCta: { label: 'Lihat Paket', href: '#pricing' },
 		videoUrl: '',
 		videoLabel: 'intro-masterclass.mp4',
 		videoTitle: 'Video Perkenalan Program',
@@ -697,7 +697,7 @@ export const defaultLandingContent: LandingContent = {
 		ctaTitle: 'Siap memahami crypto syariah secara lebih utuh?',
 		ctaDescription:
 			'Belajar dari tiga perspektif: industri crypto, strategi keuangan, dan prinsip fiqih muamalah.',
-		primaryCta: { label: 'Lihat Kurikulum', href: '#curriculum' },
+		primaryCta: { label: 'Lihat Paket Masterclass', href: '#pricing' },
 		secondaryCta: { label: 'Diskusi via WhatsApp', href: '' },
 		items: [
 			{
@@ -949,6 +949,12 @@ function normalizeHero(hero: LandingContent['hero']): LandingContent['hero'] {
 	}
 	if (!hero.primaryCtaLabel?.trim() || oldCtas.has(hero.primaryCtaLabel.trim())) {
 		hero.primaryCtaLabel = defaults.primaryCtaLabel;
+	}
+	if (
+		hero.secondaryCta.href === '#curriculum' ||
+		hero.secondaryCta.label.trim() === 'Lihat Kurikulum'
+	) {
+		hero.secondaryCta = { ...defaults.secondaryCta };
 	}
 
 	return hero;
@@ -1454,6 +1460,12 @@ function normalizeInstructors(
 	if ((instructors.primaryCta.label ?? '').trim() === 'Lihat Kurikulum Bootcamp') {
 		instructors.primaryCta.label = defaults.primaryCta.label;
 	}
+	if (
+		instructors.primaryCta.href === '#curriculum' ||
+		instructors.primaryCta.label.trim() === 'Lihat Kurikulum'
+	) {
+		instructors.primaryCta = { ...defaults.primaryCta };
+	}
 	if ((instructors.secondaryCta.label ?? '').trim() === 'Konsultasi via WhatsApp') {
 		instructors.secondaryCta.label = defaults.secondaryCta.label;
 	}
@@ -1749,7 +1761,7 @@ function reorderLayoutForConversion(
 	if (!shouldUseConversionOrder(layout)) return layout;
 
 	const visibility = new Map(layout.map((entry) => [entry.id, entry.visible]));
-	const useDefaultVisibility = new Set<SectionId>(['valueProps']);
+	const useDefaultVisibility = new Set<SectionId>(['curriculum', 'valueProps', 'finalCta']);
 	const forceVisible: Set<SectionId> = new Set(['testimonials', 'authority', 'usp']);
 	return defaultEntries.map((entry) => {
 		let vis = useDefaultVisibility.has(entry.id)
@@ -1763,6 +1775,19 @@ function reorderLayoutForConversion(
 function shouldUseConversionOrder(layout: LayoutEntry[]): boolean {
 	const order = layout.map((entry) => entry.id);
 	const legacyOrders: SectionId[][] = [
+		[
+			'hero',
+			'testimonials',
+			'usp',
+			'curriculum',
+			'valueProps',
+			'instructors',
+			'pricing',
+			'authority',
+			'urgency',
+			'faq',
+			'finalCta'
+		],
 		[
 			'hero',
 			'authority',

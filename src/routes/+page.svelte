@@ -128,6 +128,7 @@
 </script>
 
 {#snippet pricingPackageCard(pkg: PricingPackage)}
+	{@const curriculumDay = content.curriculum.schedule.find((day) => day.stage === pkg.title)}
 	<article
 		class="group flex h-full min-h-[680px] flex-col overflow-hidden rounded-lg border border-orange-200 bg-white shadow-lg shadow-orange-950/5 transition hover:-translate-y-1 hover:border-orange-300 hover:shadow-xl hover:shadow-orange-950/10 dark:border-orange-900/50 dark:bg-slate-950 dark:shadow-black/20 dark:hover:border-orange-500/70"
 	>
@@ -168,33 +169,50 @@
 				<p
 					class="text-[11px] font-black tracking-[0.14em] text-orange-700 uppercase dark:text-orange-300"
 				>
-					Materi yang dipelajari
+					Detail per sesi
 				</p>
-				<ul class="mt-3 space-y-3 text-sm leading-6 text-slate-700 dark:text-slate-300">
-					{#each pkg.lessons as lesson (lesson)}
-						<li class="flex gap-3">
-							<span
-								class="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-orange-100 text-orange-700 dark:bg-orange-500/15 dark:text-orange-300"
+				{#if curriculumDay}
+					<div class="mt-3 space-y-3">
+						{#each curriculumDay.sessions as session, sessionIndex (session.title)}
+							<div
+								class="rounded-md border border-orange-100 bg-orange-50/60 p-3 dark:border-orange-900/50 dark:bg-orange-950/20"
 							>
-								<svg
-									class="h-3.5 w-3.5"
-									fill="none"
-									stroke="currentColor"
-									viewBox="0 0 24 24"
-									aria-hidden="true"
-								>
-									<path
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										stroke-width="3"
-										d="M5 13l4 4L19 7"
-									/>
-								</svg>
-							</span>
-							<span>{lesson}</span>
-						</li>
-					{/each}
-				</ul>
+								<div class="flex flex-wrap items-start justify-between gap-2">
+									<div>
+										<p
+											class="text-[10px] font-black tracking-[0.12em] text-orange-700 uppercase dark:text-orange-300"
+										>
+											Sesi {sessionIndex + 1}
+										</p>
+										<h4 class="mt-1 text-sm leading-5 font-black text-slate-900 dark:text-white">
+											{session.title}
+										</h4>
+									</div>
+									<span class="text-[11px] font-bold text-orange-700 dark:text-orange-300">
+										{session.price}
+									</span>
+								</div>
+								<ul class="mt-2 space-y-1.5 text-xs leading-5 text-slate-600 dark:text-slate-300">
+									{#each session.topics as topic (topic)}
+										<li class="flex gap-2">
+											<span class="mt-2 h-1 w-1 shrink-0 rounded-full bg-orange-500"></span>
+											<span>{topic}</span>
+										</li>
+									{/each}
+								</ul>
+							</div>
+						{/each}
+					</div>
+				{:else}
+					<ul class="mt-3 space-y-2 text-sm leading-6 text-slate-700 dark:text-slate-300">
+						{#each pkg.lessons as lesson (lesson)}
+							<li class="flex gap-2">
+								<span class="mt-2.5 h-1 w-1 shrink-0 rounded-full bg-orange-500"></span>
+								<span>{lesson}</span>
+							</li>
+						{/each}
+					</ul>
+				{/if}
 			</div>
 
 			<div class="mt-auto pt-6">
@@ -210,7 +228,7 @@
 						rel="external noopener noreferrer"
 						class="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-lg bg-orange-600 px-4 py-3 text-sm font-black text-white transition hover:bg-orange-500 active:scale-95"
 					>
-						Detail Info
+						Info Detail
 						<svg
 							class="h-4 w-4"
 							fill="none"
