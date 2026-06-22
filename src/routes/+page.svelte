@@ -33,6 +33,11 @@
 	const pricingProgramItems = $derived(content.pricing.programIncludes ?? []);
 	const pricingBundleBonuses = $derived(content.pricing.bundleBonuses ?? []);
 	let selectedPricingPackageIndex = $state(0);
+	let bundleScrollContainer = $state<HTMLDivElement | null>(null);
+	let bundleProgress = $state(0);
+	let bundleAnimationsReady = $state(false);
+	let bundleDesktop = $state(false);
+	let bundleReducedMotion = $state(false);
 	const selectedPricingPackage = $derived(
 		pricingPackages[selectedPricingPackageIndex] ?? pricingPackages[0]
 	);
@@ -94,6 +99,14 @@
 				pkg.ctaMessage?.trim() ||
 				`Assalamu'alaikum admin, saya tertarik ikut ${pkg.code} ${pkg.title} Crypto Sharia Masterclass.`
 		});
+	}
+
+	function bundleVisible(threshold: number) {
+		return !bundleAnimationsReady || bundleReducedMotion || bundleProgress >= threshold;
+	}
+
+	function bundleDelay(milliseconds: number) {
+		return `${bundleDesktop || bundleReducedMotion ? 0 : milliseconds}ms`;
 	}
 
 	function packageTone(pkg: PricingPackage) {
@@ -180,9 +193,52 @@
 	}
 
 	onMount(() => {
-		return subscribeLandingContent((c) => {
+		const unsubscribe = subscribeLandingContent((c) => {
 			content = c;
 		});
+		const desktopQuery = window.matchMedia('(min-width: 1024px)');
+		const reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+		function updateBundleAnimation() {
+			bundleDesktop = desktopQuery.matches;
+			bundleReducedMotion = reducedMotionQuery.matches;
+			if (bundleReducedMotion) {
+				bundleProgress = 1;
+				return;
+			}
+
+			const element = bundleScrollContainer;
+			if (!element) return;
+			const rect = element.getBoundingClientRect();
+			const viewportHeight = window.innerHeight;
+
+			if (!bundleDesktop) {
+				if (rect.top <= viewportHeight * 0.85 && rect.bottom >= 0) bundleProgress = 1;
+				return;
+			}
+
+			const revealStart = viewportHeight * 0.78;
+			const revealDistance = Math.max(rect.height - viewportHeight * 0.25, 1);
+			bundleProgress = Math.min(1, Math.max(0, (revealStart - rect.top) / revealDistance));
+		}
+
+		const beginAnimation = window.requestAnimationFrame(() => {
+			bundleAnimationsReady = true;
+			updateBundleAnimation();
+		});
+		window.addEventListener('scroll', updateBundleAnimation, { passive: true });
+		window.addEventListener('resize', updateBundleAnimation);
+		desktopQuery.addEventListener('change', updateBundleAnimation);
+		reducedMotionQuery.addEventListener('change', updateBundleAnimation);
+
+		return () => {
+			unsubscribe();
+			window.cancelAnimationFrame(beginAnimation);
+			window.removeEventListener('scroll', updateBundleAnimation);
+			window.removeEventListener('resize', updateBundleAnimation);
+			desktopQuery.removeEventListener('change', updateBundleAnimation);
+			reducedMotionQuery.removeEventListener('change', updateBundleAnimation);
+		};
 	});
 </script>
 
@@ -905,94 +961,231 @@
 					</div>
 				{/if}
 
-				<article
-					class="mt-12 overflow-hidden rounded-xl border border-orange-200 bg-orange-50 shadow-xl shadow-orange-950/10 dark:border-orange-900/60 dark:bg-orange-950/20"
+				<div
+					bind:this={bundleScrollContainer}
+					class="relative mt-12 {bundleReducedMotion ? '' : 'lg:min-h-[165vh]'}"
 				>
-					<div class="grid lg:grid-cols-[0.8fr_1.2fr]">
+					<article
+						class="relative overflow-hidden rounded-xl border border-orange-300 bg-orange-50 transition-all duration-700 ease-out motion-reduce:transform-none motion-reduce:transition-none dark:border-orange-900/70 dark:bg-orange-950/20 {bundleReducedMotion
+							? ''
+							: 'lg:sticky lg:top-20'} {bundleVisible(0.01)
+							? 'translate-y-0 opacity-100 shadow-[0_18px_55px_rgba(249,115,22,0.16)]'
+							: 'translate-y-10 opacity-0 shadow-none'}"
+					>
 						<div
-							class="flex flex-col bg-slate-950 p-6 text-white sm:p-8 lg:border-r lg:border-orange-500/25 lg:p-10"
-						>
-							<span
-								class="inline-flex w-fit rounded-full bg-orange-600 px-3 py-1.5 text-[11px] font-black tracking-[0.14em] text-white uppercase"
-							>
-								{content.pricing.priceBadge || 'Promo Bundling'}
-							</span>
-							<h3 class="mt-5 text-3xl leading-tight font-black sm:text-4xl">
-								{content.pricing.bundleTitle}
-							</h3>
+							class="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_35%,rgba(249,115,22,0.18),transparent_38%)] transition-opacity duration-700 {bundleVisible(
+								0.04
+							)
+								? 'opacity-100'
+								: 'opacity-0'}"
+						></div>
+						<div
+							class="absolute top-0 left-[40%] z-20 hidden w-px bg-orange-500/55 transition-[height,opacity] duration-700 ease-out lg:block {bundleVisible(
+								0.43
+							)
+								? 'h-full opacity-100'
+								: 'h-0 opacity-0'}"
+						></div>
 
-							<div class="mt-8">
-								<p class="text-sm font-bold text-slate-400">Total Value</p>
-								<p class="mt-1 text-2xl font-black text-slate-400 line-through decoration-2">
-									{content.pricing.originalPrice}
-								</p>
-							</div>
-
-							<div class="mt-6">
-								<p class="text-sm font-black tracking-wide text-orange-300 uppercase">
-									Promo Diskon Bundling Jadi
-								</p>
-								<p class="mt-2 text-5xl leading-none font-black sm:text-6xl">
-									{content.pricing.price}
-								</p>
-							</div>
-
-							<a
-								href={whatsappUrl}
-								target="_blank"
-								rel="external noopener noreferrer"
-								class="mt-8 inline-flex w-full items-center justify-center gap-2 rounded-lg bg-orange-600 px-6 py-4 text-sm font-bold text-white transition hover:bg-orange-500 active:scale-95 lg:mt-auto"
-							>
-								{content.pricing.ctaLabel}
-								<svg
-									class="h-4 w-4"
-									fill="none"
-									stroke="currentColor"
-									viewBox="0 0 24 24"
-									aria-hidden="true"
+						<div class="relative z-10 grid lg:grid-cols-[0.8fr_1.2fr]">
+							<div class="flex flex-col bg-slate-950 p-6 text-white sm:p-8 lg:p-10">
+								<span
+									class="inline-flex w-fit rounded-full bg-orange-600 px-3 py-1.5 text-[11px] font-black tracking-[0.14em] text-white uppercase transition-all duration-500 ease-out motion-reduce:transition-none {bundleVisible(
+										0.08
+									)
+										? 'translate-y-0 opacity-100'
+										: 'translate-y-4 opacity-0'}"
+									style:transition-delay={bundleDelay(0)}
 								>
-									<path
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										stroke-width="2.5"
-										d="M17 8l4 4m0 0l-4 4m4-4H3"
-									/>
-								</svg>
-							</a>
-						</div>
+									{content.pricing.priceBadge || 'Promo Bundling'}
+								</span>
+								<h3
+									class="mt-5 text-3xl leading-tight font-black transition-all duration-600 ease-out motion-reduce:transition-none sm:text-4xl {bundleVisible(
+										0.15
+									)
+										? 'translate-y-0 opacity-100'
+										: 'translate-y-6 opacity-0'}"
+									style:transition-delay={bundleDelay(120)}
+								>
+									{content.pricing.bundleTitle}
+								</h3>
 
-						<div class="grid gap-8 p-6 sm:p-8 xl:grid-cols-2 xl:p-10">
-							<div>
-								<h4 class="text-lg font-black text-slate-900 dark:text-white">Yang Didapat:</h4>
-								<ul class="mt-5 space-y-4 text-sm leading-6 text-slate-700 dark:text-slate-200">
-									{#each pricingProgramItems as point (point)}
-										<li class="flex gap-3">
+								<div
+									class="mt-8 transition-all duration-600 ease-out motion-reduce:transition-none {bundleVisible(
+										0.22
+									)
+										? 'translate-y-0 opacity-100'
+										: 'translate-y-5 opacity-0'}"
+									style:transition-delay={bundleDelay(260)}
+								>
+									<p class="text-sm font-bold text-slate-400">Total Value</p>
+									<p class="mt-1 text-2xl font-black text-slate-400">
+										<span class="relative inline-block">
+											{content.pricing.originalPrice}
 											<span
-												class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-orange-600 text-xs font-black text-white"
-												aria-hidden="true">✓</span
-											>
-											<span>{point}</span>
-										</li>
-									{/each}
-								</ul>
+												class="absolute top-1/2 left-0 h-[3px] -translate-y-1/2 bg-slate-400 transition-[width] duration-700 ease-out motion-reduce:transition-none {bundleVisible(
+													0.3
+												)
+													? 'w-full'
+													: 'w-0'}"
+												style:transition-delay={bundleDelay(400)}
+											></span>
+										</span>
+									</p>
+								</div>
+
+								<div
+									class="mt-6 transition-all duration-700 ease-out motion-reduce:transition-none {bundleVisible(
+										0.36
+									)
+										? 'translate-y-0 scale-100 opacity-100'
+										: 'translate-y-5 scale-[0.92] opacity-0'}"
+									style:transition-delay={bundleDelay(520)}
+								>
+									<p class="text-sm font-black tracking-wide text-orange-300 uppercase">
+										Promo Diskon Bundling Jadi
+									</p>
+									<p
+										class="mt-2 text-5xl leading-none font-black transition-[filter] duration-700 sm:text-6xl {bundleVisible(
+											0.4
+										)
+											? 'drop-shadow-[0_0_18px_rgba(251,146,60,0.3)]'
+											: ''}"
+									>
+										{content.pricing.price}
+									</p>
+								</div>
+
+								<a
+									href={whatsappUrl}
+									target="_blank"
+									rel="external noopener noreferrer"
+									class="group/cta mt-8 hidden w-full items-center justify-center gap-2 rounded-lg bg-orange-600 px-6 py-4 text-sm font-bold text-white shadow-lg shadow-orange-500/25 transition-all duration-500 hover:-translate-y-0.5 hover:bg-orange-500 hover:shadow-orange-500/40 active:scale-95 motion-reduce:transition-none lg:mt-auto lg:inline-flex {bundleVisible(
+										0.94
+									)
+										? 'scale-100 opacity-100'
+										: 'scale-[0.97] opacity-0'}"
+								>
+									{content.pricing.ctaLabel}
+									<svg
+										class="h-4 w-4 transition-transform group-hover/cta:translate-x-1"
+										fill="none"
+										stroke="currentColor"
+										viewBox="0 0 24 24"
+										aria-hidden="true"
+									>
+										<path
+											stroke-linecap="round"
+											stroke-linejoin="round"
+											stroke-width="2.5"
+											d="M17 8l4 4m0 0l-4 4m4-4H3"
+										/>
+									</svg>
+								</a>
 							</div>
 
-							<div>
-								<h4 class="text-lg font-black text-slate-900 dark:text-white">
-									Bonus Tambahan Spesial:
-								</h4>
-								<ul class="mt-5 space-y-4 text-sm leading-6 text-slate-700 dark:text-slate-200">
-									{#each pricingBundleBonuses as bonus (bonus)}
-										<li class="flex gap-3">
-											<span class="text-lg leading-6" aria-hidden="true">🎁</span>
-											<span>{bonus}</span>
-										</li>
-									{/each}
-								</ul>
+							<div class="grid gap-8 p-6 sm:p-8 xl:grid-cols-2 xl:p-10">
+								<div>
+									<h4
+										class="text-lg font-black text-slate-900 transition-all duration-500 motion-reduce:transition-none dark:text-white {bundleVisible(
+											0.47
+										)
+											? 'translate-y-0 opacity-100'
+											: 'translate-y-4 opacity-0'}"
+										style:transition-delay={bundleDelay(700)}
+									>
+										Yang Didapat:
+									</h4>
+									<ul class="mt-5 space-y-4 text-sm leading-6 text-slate-700 dark:text-slate-200">
+										{#each pricingProgramItems as point, index (point)}
+											<li
+												class="flex gap-3 transition-all duration-500 ease-out motion-reduce:transition-none {bundleVisible(
+													0.5 + index * 0.045
+												)
+													? 'translate-x-0 opacity-100'
+													: '-translate-x-3 opacity-0'}"
+												style:transition-delay={bundleDelay(820 + index * 140)}
+											>
+												<span
+													class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-orange-600 text-xs font-black text-white transition-transform duration-500 motion-reduce:transition-none {bundleVisible(
+														0.5 + index * 0.045
+													)
+														? 'scale-100'
+														: 'scale-75'}"
+													aria-hidden="true">✓</span
+												>
+												<span>{point}</span>
+											</li>
+										{/each}
+									</ul>
+								</div>
+
+								<div>
+									<h4
+										class="text-lg font-black text-slate-900 transition-all duration-500 motion-reduce:transition-none dark:text-white {bundleVisible(
+											0.73
+										)
+											? 'translate-y-0 opacity-100'
+											: 'translate-y-4 opacity-0'}"
+										style:transition-delay={bundleDelay(1580)}
+									>
+										Bonus Tambahan Spesial:
+									</h4>
+									<ul class="mt-5 space-y-4 text-sm leading-6 text-slate-700 dark:text-slate-200">
+										{#each pricingBundleBonuses as bonus, index (bonus)}
+											<li
+												class="flex gap-3 transition-all duration-500 ease-out motion-reduce:transition-none {bundleVisible(
+													0.76 + index * 0.05
+												)
+													? 'translate-y-0 opacity-100'
+													: 'translate-y-4 opacity-0'}"
+												style:transition-delay={bundleDelay(1720 + index * 140)}
+											>
+												<span
+													class="text-lg leading-6 transition-all duration-500 motion-reduce:transition-none {bundleVisible(
+														0.76 + index * 0.05
+													)
+														? 'scale-100 rotate-0 opacity-100'
+														: 'scale-[0.8] -rotate-[8deg] opacity-0'}"
+													aria-hidden="true">🎁</span
+												>
+												<span>{bonus}</span>
+											</li>
+										{/each}
+									</ul>
+								</div>
+
+								<a
+									href={whatsappUrl}
+									target="_blank"
+									rel="external noopener noreferrer"
+									class="group/cta inline-flex w-full items-center justify-center gap-2 rounded-lg bg-orange-600 px-6 py-4 text-sm font-bold text-white shadow-lg shadow-orange-500/25 transition-all duration-500 hover:-translate-y-0.5 hover:bg-orange-500 hover:shadow-orange-500/40 active:scale-95 motion-reduce:transition-none lg:hidden xl:col-span-2 {bundleVisible(
+										0.94
+									)
+										? 'scale-100 opacity-100'
+										: 'scale-[0.97] opacity-0'}"
+									style:transition-delay={bundleDelay(2360)}
+								>
+									{content.pricing.ctaLabel}
+									<svg
+										class="h-4 w-4 transition-transform group-hover/cta:translate-x-1"
+										fill="none"
+										stroke="currentColor"
+										viewBox="0 0 24 24"
+										aria-hidden="true"
+									>
+										<path
+											stroke-linecap="round"
+											stroke-linejoin="round"
+											stroke-width="2.5"
+											d="M17 8l4 4m0 0l-4 4m4-4H3"
+										/>
+									</svg>
+								</a>
 							</div>
 						</div>
-					</div>
-				</article>
+					</article>
+				</div>
 			</div>
 		</section>
 	{/if}
