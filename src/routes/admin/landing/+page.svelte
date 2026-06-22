@@ -1633,7 +1633,7 @@
 		(v) => (content.usp.quote = v)
 	)}
 	{@render imageField(
-		'Foto Tokoh Quote',
+		'Foto Warren Buffett',
 		'usp-quote-image',
 		() => content.usp.quoteImage,
 		(v) => (content.usp.quoteImage = v)
