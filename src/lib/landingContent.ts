@@ -32,6 +32,7 @@ export type BenefitCard = { title: string; items: string[] };
 export type LayoutEntry = { id: SectionId; visible: boolean };
 export type PricingPackage = {
 	code: string;
+	badge: string;
 	title: string;
 	description: string;
 	image: string;
@@ -430,6 +431,7 @@ export const defaultLandingContent: LandingContent = {
 		packages: [
 			{
 				code: 'Paket A',
+				badge: 'Mulai dari Sini',
 				title: 'Pondasi Crypto & Financial Planning',
 				description:
 					'Bangun fondasi yang solid untuk memahami crypto, Web3, perencanaan keuangan, dan manajemen risiko sebelum mulai berinvestasi.',
@@ -449,6 +451,7 @@ export const defaultLandingContent: LandingContent = {
 			},
 			{
 				code: 'Paket B',
+				badge: '',
 				title: 'Analisis Fundamental & Global Macro',
 				description:
 					'Tingkatkan kualitas keputusan investasi dengan analisis proyek crypto dan sinyal makroekonomi global yang berbasis data.',
@@ -468,6 +471,7 @@ export const defaultLandingContent: LandingContent = {
 			},
 			{
 				code: 'Paket C',
+				badge: '',
 				title: 'Analisis Teknikal',
 				description:
 					'Pelajari price action, pola grafik, indikator teknikal, dan eksekusi trading dengan manajemen risiko yang solid.',
@@ -486,6 +490,7 @@ export const defaultLandingContent: LandingContent = {
 			},
 			{
 				code: 'Paket D',
+				badge: '',
 				title: 'Analisis Syariah & Screening Koin',
 				description:
 					'Pahami fikih muamalah, fatwa crypto, screening aset halal, dan pengelolaan zakat untuk investasi yang sesuai prinsip Islam.',
@@ -1416,6 +1421,7 @@ function normalizePricingPackages(
 			const defaultPackage = fallback[index] ?? fallback[0];
 			return {
 				code: pkg.code?.trim() || defaultPackage.code,
+				badge: typeof pkg.badge === 'string' ? pkg.badge.trim() : defaultPackage.badge,
 				title: pkg.title?.trim() || defaultPackage.title,
 				description: pkg.description?.trim() || defaultPackage.description,
 				image: pkg.image?.trim() || defaultPackage.image,

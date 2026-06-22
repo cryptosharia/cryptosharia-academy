@@ -131,7 +131,9 @@
 {#snippet pricingPackageCard(pkg: PricingPackage)}
 	{@const curriculumDay = content.curriculum.schedule.find((day) => day.stage === pkg.title)}
 	<article
-		class="group flex h-full min-h-[680px] flex-col overflow-hidden rounded-lg border border-orange-200 bg-white shadow-lg shadow-orange-950/5 transition hover:-translate-y-1 hover:border-orange-300 hover:shadow-xl hover:shadow-orange-950/10 dark:border-orange-900/50 dark:bg-slate-950 dark:shadow-black/20 dark:hover:border-orange-500/70"
+		class="group flex h-full min-h-[680px] flex-col overflow-hidden rounded-lg border border-orange-200 bg-white shadow-lg shadow-orange-950/5 transition hover:-translate-y-1 hover:border-orange-300 hover:shadow-xl hover:shadow-orange-950/10 dark:border-orange-900/50 dark:bg-slate-950 dark:shadow-black/20 dark:hover:border-orange-500/70 {pkg.badge
+			? 'ring-2 ring-orange-400 ring-offset-2 ring-offset-white dark:ring-offset-gray-950'
+			: ''}"
 	>
 		<div class="relative aspect-[4/3] overflow-hidden bg-slate-950">
 			{#if pkg.image}
@@ -156,6 +158,13 @@
 			>
 				{pkg.code}
 			</div>
+			{#if pkg.badge}
+				<div
+					class="absolute top-4 right-4 rounded-full bg-white px-3 py-1.5 text-[10px] font-black tracking-[0.1em] text-orange-700 uppercase shadow-lg shadow-black/20"
+				>
+					★ {pkg.badge}
+				</div>
+			{/if}
 		</div>
 
 		<div class="flex flex-1 flex-col p-5">

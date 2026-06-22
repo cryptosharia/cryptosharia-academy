@@ -1740,6 +1740,7 @@
 			() =>
 				(content.pricing.packages = addItem(content.pricing.packages, {
 					code: '',
+					badge: '',
 					title: '',
 					description: '',
 					image: '',
@@ -1762,6 +1763,11 @@
 						<input bind:value={pkg.code} placeholder="Kode, contoh: Paket A" class={inputClass} />
 						<input bind:value={pkg.title} placeholder="Judul paket" class={inputClass} />
 					</div>
+					<input
+						bind:value={pkg.badge}
+						placeholder="Badge sorotan, contoh: Mulai dari Sini (opsional)"
+						class={inputClass}
+					/>
 					<textarea
 						bind:value={pkg.description}
 						rows="2"
