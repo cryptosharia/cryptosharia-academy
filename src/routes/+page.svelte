@@ -31,6 +31,7 @@
 	);
 	const pricingPackages = $derived(content.pricing.packages ?? []);
 	const pricingProgramItems = $derived(content.pricing.programIncludes ?? []);
+	const pricingBundleBonuses = $derived(content.pricing.bundleBonuses ?? []);
 	let selectedPricingPackageIndex = $state(0);
 	const selectedPricingPackage = $derived(
 		pricingPackages[selectedPricingPackageIndex] ?? pricingPackages[0]
@@ -723,21 +724,40 @@
 					<div class="absolute top-2 right-6 text-8xl leading-none font-black text-orange-400/10">
 						"
 					</div>
-					<div class="relative border-l-4 border-orange-400 pl-5">
-						<blockquote class="text-xl leading-8 font-extrabold text-white">
-							{quoteParts.text}
-						</blockquote>
-						{#if quoteParts.attribution}
-							<p class="mt-3 text-xs font-black tracking-[0.16em] text-orange-200 uppercase">
-								{quoteParts.attribution}
-							</p>
+					<div class="relative grid gap-6 sm:grid-cols-[8rem_1fr] sm:items-center">
+						{#if content.usp.quoteImage}
+							<figure>
+								<img
+									src={content.usp.quoteImage}
+									alt="Warren Buffett"
+									class="mx-auto aspect-square w-28 rounded-xl border-2 border-orange-400/60 object-cover shadow-lg shadow-black/30 sm:w-32"
+									loading="lazy"
+								/>
+								<figcaption class="mt-2 text-center text-[9px] leading-4 text-slate-500">
+									Foto:
+									<a
+										href="https://commons.wikimedia.org/wiki/File:Scott_McGovern_and_Warren_Buffett_(cropped).jpg"
+										target="_blank"
+										rel="external noopener noreferrer"
+										class="underline transition hover:text-orange-300"
+										>Garysays / Wikimedia Commons</a
+									>
+								</figcaption>
+							</figure>
 						{/if}
+						<div class="border-l-4 border-orange-400 pl-5">
+							<blockquote
+								class="text-xl leading-8 font-extrabold text-white sm:text-2xl sm:leading-9"
+							>
+								{quoteParts.text}
+							</blockquote>
+							{#if quoteParts.attribution}
+								<p class="mt-4 text-xs font-black tracking-[0.16em] text-orange-200 uppercase">
+									{quoteParts.attribution}
+								</p>
+							{/if}
+						</div>
 					</div>
-					{#if content.usp.quoteNote}
-						<p class="relative mt-5 max-w-2xl text-sm leading-7 text-slate-300 sm:text-base">
-							{content.usp.quoteNote}
-						</p>
-					{/if}
 				</div>
 			</div>
 		</section>
@@ -832,80 +852,94 @@
 					</div>
 				{/if}
 
-				<div class="mx-auto mt-12 max-w-xl">
-					<div
-						class="rounded-lg border border-orange-200 bg-orange-50 p-6 shadow-xl shadow-orange-950/10 dark:border-orange-900/60 dark:bg-orange-950/20"
-					>
-						<span
-							class="inline-flex rounded-full bg-orange-600 px-3 py-1.5 text-[11px] font-black tracking-[0.14em] text-white uppercase"
+				<article
+					class="mt-12 overflow-hidden rounded-xl border border-orange-200 bg-orange-50 shadow-xl shadow-orange-950/10 dark:border-orange-900/60 dark:bg-orange-950/20"
+				>
+					<div class="grid lg:grid-cols-[0.8fr_1.2fr]">
+						<div
+							class="flex flex-col bg-slate-950 p-6 text-white sm:p-8 lg:border-r lg:border-orange-500/25 lg:p-10"
 						>
-							{content.pricing.priceBadge || 'Special Price'}
-						</span>
-						<p
-							class="mt-5 text-sm font-black tracking-[0.14em] text-orange-700 uppercase dark:text-orange-300"
-						>
-							Paket lengkap 4 modul
-						</p>
-						<div class="mt-4 flex items-end gap-3">
-							<span class="text-lg font-bold text-slate-500 line-through"
-								>{content.pricing.originalPrice}</span
+							<span
+								class="inline-flex w-fit rounded-full bg-orange-600 px-3 py-1.5 text-[11px] font-black tracking-[0.14em] text-white uppercase"
 							>
+								{content.pricing.priceBadge || 'Promo Bundling'}
+							</span>
+							<h3 class="mt-5 text-3xl leading-tight font-black sm:text-4xl">
+								{content.pricing.bundleTitle}
+							</h3>
+
+							<div class="mt-8">
+								<p class="text-sm font-bold text-slate-400">Total Value</p>
+								<p class="mt-1 text-2xl font-black text-slate-400 line-through decoration-2">
+									{content.pricing.originalPrice}
+								</p>
+							</div>
+
+							<div class="mt-6">
+								<p class="text-sm font-black tracking-wide text-orange-300 uppercase">
+									Promo Diskon Bundling Jadi
+								</p>
+								<p class="mt-2 text-5xl leading-none font-black sm:text-6xl">
+									{content.pricing.price}
+								</p>
+							</div>
+
+							<a
+								href={whatsappUrl}
+								target="_blank"
+								rel="external noopener noreferrer"
+								class="mt-8 inline-flex w-full items-center justify-center gap-2 rounded-lg bg-orange-600 px-6 py-4 text-sm font-bold text-white transition hover:bg-orange-500 active:scale-95 lg:mt-auto"
+							>
+								{content.pricing.ctaLabel}
+								<svg
+									class="h-4 w-4"
+									fill="none"
+									stroke="currentColor"
+									viewBox="0 0 24 24"
+									aria-hidden="true"
+								>
+									<path
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										stroke-width="2.5"
+										d="M17 8l4 4m0 0l-4 4m4-4H3"
+									/>
+								</svg>
+							</a>
 						</div>
-						<div class="mt-2 text-5xl font-black text-slate-900 dark:text-white">
-							{content.pricing.price}
+
+						<div class="grid gap-8 p-6 sm:p-8 xl:grid-cols-2 xl:p-10">
+							<div>
+								<h4 class="text-lg font-black text-slate-900 dark:text-white">Yang Didapat:</h4>
+								<ul class="mt-5 space-y-4 text-sm leading-6 text-slate-700 dark:text-slate-200">
+									{#each pricingProgramItems as point (point)}
+										<li class="flex gap-3">
+											<span
+												class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-orange-600 text-xs font-black text-white"
+												aria-hidden="true">✓</span
+											>
+											<span>{point}</span>
+										</li>
+									{/each}
+								</ul>
+							</div>
+
+							<div>
+								<h4 class="text-lg font-black text-slate-900 dark:text-white">
+									Bonus Tambahan Spesial:
+								</h4>
+								<ul class="mt-5 space-y-4 text-sm leading-6 text-slate-700 dark:text-slate-200">
+									{#each pricingBundleBonuses as bonus (bonus)}
+										<li class="flex gap-3">
+											<span class="text-lg leading-6" aria-hidden="true">🎁</span>
+											<span>{bonus}</span>
+										</li>
+									{/each}
+								</ul>
+							</div>
 						</div>
-						<p class="mt-4 text-sm leading-7 text-slate-700 dark:text-slate-300">
-							{content.pricing.note}
-						</p>
-						{#if pricingProgramItems.length > 0}
-							<ul
-								class="mt-6 grid gap-3 text-sm leading-6 text-slate-700 sm:grid-cols-2 lg:grid-cols-1 dark:text-slate-300"
-							>
-								{#each pricingProgramItems as point (point)}
-									<li class="flex gap-3">
-										<svg
-											class="mt-1 h-4 w-4 shrink-0 text-orange-600 dark:text-orange-400"
-											fill="none"
-											stroke="currentColor"
-											viewBox="0 0 24 24"
-											aria-hidden="true"
-										>
-											<path
-												stroke-linecap="round"
-												stroke-linejoin="round"
-												stroke-width="2.5"
-												d="M5 13l4 4L19 7"
-											/>
-										</svg>
-										<span>{point}</span>
-									</li>
-								{/each}
-							</ul>
-						{/if}
-						<a
-							href={whatsappUrl}
-							target="_blank"
-							rel="external noopener noreferrer"
-							class="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-lg bg-orange-600 px-6 py-4 text-sm font-bold text-white transition hover:bg-orange-500 active:scale-95"
-						>
-							{content.pricing.ctaLabel}
-							<svg
-								class="h-4 w-4"
-								fill="none"
-								stroke="currentColor"
-								viewBox="0 0 24 24"
-								aria-hidden="true"
-							>
-								<path
-									stroke-linecap="round"
-									stroke-linejoin="round"
-									stroke-width="2.5"
-									d="M17 8l4 4m0 0l-4 4m4-4H3"
-								/>
-							</svg>
-						</a>
 					</div>
-				</div>
+				</article>
 			</div>
 		</section>
 	{/if}

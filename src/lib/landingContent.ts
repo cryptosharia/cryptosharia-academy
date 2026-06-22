@@ -119,6 +119,7 @@ export type LandingContent = {
 		description: string;
 		quote: string;
 		quoteNote: string;
+		quoteImage: string;
 		items: Feature[];
 	};
 
@@ -161,8 +162,10 @@ export type LandingContent = {
 		packages: PricingPackage[];
 		packageBenefits: string[];
 		programIncludes: string[];
+		bundleBonuses: string[];
 		benefitCards?: BenefitCard[];
 		priceBadge: string;
+		bundleTitle: string;
 		originalPrice: string;
 		price: string;
 		note: string;
@@ -375,8 +378,8 @@ export const defaultLandingContent: LandingContent = {
 		description:
 			'Program ini tidak hanya membahas teori crypto, tetapi dirancang agar peserta belajar secara lebih terarah melalui praktik, mentoring, evaluasi, dan pendekatan sesuai prinsip syariah.',
 		quote: '"The best investment you can make is an investment in yourself." — Warren Buffett',
-		quoteNote:
-			'Sebelum masuk ke market yang volatile, peserta perlu membangun ilmu, cara berpikir, dan manajemen risiko yang lebih matang.',
+		quoteNote: '',
+		quoteImage: '/images/warren-buffett.jpg',
 		items: [
 			{
 				label: '',
@@ -508,18 +511,23 @@ export const defaultLandingContent: LandingContent = {
 			'Sertifikat penyelesaian program'
 		],
 		programIncludes: [
-			'4 sesi live masterclass terstruktur',
-			'Akses materi dan rekaman kelas',
-			'Tugas praktik untuk memahami konsep',
-			'Evaluasi akhir sebagai ukuran progres',
-			'FGD dan mentoring bersama mentor',
-			'Networking komunitas CryptoSharia',
-			'Sertifikat kelulusan program'
+			'4 Modul / 8 Sesi Live Masterclass',
+			'Akses Materi & Rekaman Kelas',
+			'FGD & Mentoring bersama Para Mentor',
+			'Sertifikat Kelulusan Program',
+			'Akses Networking Komunitas Eksklusif CryptoSharia'
 		],
-		priceBadge: 'PAKET LENGKAP 4 HARI',
+		bundleBonuses: [
+			'Member Discord Premium 6 Bulan (Senilai Rp999.000)',
+			'E-Book Cara Gampang Riset Crypto (Senilai Rp200.000)',
+			'Template Jurnal Trading & Investment (Senilai Rp150.000)',
+			'Framework Screening Syariah Checklist (Senilai Rp150.000)'
+		],
+		priceBadge: 'PROMO BUNDLING',
+		bundleTitle: 'Paket Bundling Masterclass',
 		originalPrice: 'Rp5.000.000',
 		price: 'Rp3.000.000',
-		note: 'Ambil empat paket sekaligus dan hemat Rp1.000.000 dibandingkan pembelian per sesi.',
+		note: 'Hemat Rp2.000.000 dengan mengambil seluruh paket masterclass.',
 		ctaLabel: 'Amankan Kursi Sekarang'
 	},
 	curriculum: {
@@ -1112,7 +1120,8 @@ function normalizeUsp(usp: LandingContent['usp']): LandingContent['usp'] {
 	if (!usp.title?.trim()) usp.title = defaults.title;
 	if (!usp.description?.trim()) usp.description = defaults.description;
 	if (!usp.quote?.trim() || oldQuotes.has(usp.quote.trim())) usp.quote = defaults.quote;
-	if (!usp.quoteNote?.trim()) usp.quoteNote = defaults.quoteNote;
+	usp.quoteNote = '';
+	if (!usp.quoteImage?.trim()) usp.quoteImage = defaults.quoteImage;
 	usp.items = normalizeUspItems(usp.items, defaults.items, oldTitles, oldDescriptions);
 
 	return usp;
@@ -1600,9 +1609,13 @@ function normalizePricing(pricing: LandingContent['pricing']): LandingContent['p
 			pricing.dateCard.time = defaults.dateCard.time;
 		}
 	}
-	if (!pricing.priceBadge?.trim() || pricing.priceBadge === 'PROMO 10 PESERTA AWAL') {
+	if (
+		!pricing.priceBadge?.trim() ||
+		['PROMO 10 PESERTA AWAL', 'PAKET LENGKAP 4 HARI'].includes(pricing.priceBadge.trim())
+	) {
 		pricing.priceBadge = defaults.priceBadge;
 	}
+	if (!pricing.bundleTitle?.trim()) pricing.bundleTitle = defaults.bundleTitle;
 	if (!pricing.originalPrice?.trim() || pricing.originalPrice === 'Rp5.000.000') {
 		pricing.originalPrice = defaults.originalPrice;
 	}
@@ -1610,7 +1623,8 @@ function normalizePricing(pricing: LandingContent['pricing']): LandingContent['p
 	if (
 		!pricing.note?.trim() ||
 		pricing.note.includes('10 peserta awal') ||
-		pricing.note.includes('Kuota mentoring dibatasi')
+		pricing.note.includes('Kuota mentoring dibatasi') ||
+		pricing.note.includes('hemat Rp1.000.000')
 	) {
 		pricing.note = defaults.note;
 	}
@@ -1624,6 +1638,7 @@ function normalizePricing(pricing: LandingContent['pricing']): LandingContent['p
 		firstValueStack.length > 0 && !hasOldValueStack && !incompleteValueStack
 			? firstValueStack
 			: defaults.programIncludes;
+	pricing.bundleBonuses = normalizeStringList(pricing.bundleBonuses, defaults.bundleBonuses);
 
 	delete pricing.benefitCards;
 
@@ -1910,17 +1925,25 @@ export function sectionCompleteness(
 		}
 		case 'usp': {
 			const c = content.usp;
-			return countFields([c.title, c.description, c.quote, c.quoteNote, c.items.length ? 'x' : '']);
+			return countFields([
+				c.title,
+				c.description,
+				c.quote,
+				c.quoteImage,
+				c.items.length ? 'x' : ''
+			]);
 		}
 		case 'pricing': {
 			const c = content.pricing;
 			return countFields([
 				c.title,
+				c.bundleTitle,
 				c.price,
 				c.ctaLabel,
 				c.packages.length ? 'x' : '',
 				c.packageBenefits.length ? 'x' : '',
 				c.programIncludes.length ? 'x' : '',
+				c.bundleBonuses.length ? 'x' : '',
 				c.dateCard?.date
 			]);
 		}

@@ -1632,10 +1632,11 @@
 		() => content.usp.quote,
 		(v) => (content.usp.quote = v)
 	)}
-	{@render areaField(
-		'Catatan Quote',
-		() => content.usp.quoteNote,
-		(v) => (content.usp.quoteNote = v)
+	{@render imageField(
+		'Foto Tokoh Quote',
+		'usp-quote-image',
+		() => content.usp.quoteImage,
+		(v) => (content.usp.quoteImage = v)
 	)}
 	<div class="border-t border-gray-100 pt-4 dark:border-gray-700">
 		{@render listHeader(
@@ -1702,6 +1703,18 @@
 			'Label Tombol',
 			() => content.pricing.ctaLabel,
 			(v) => (content.pricing.ctaLabel = v)
+		)}
+	</div>
+	<div class="grid grid-cols-2 gap-4">
+		{@render textField(
+			'Label Promo Bundling',
+			() => content.pricing.priceBadge,
+			(v) => (content.pricing.priceBadge = v)
+		)}
+		{@render textField(
+			'Judul Paket Bundling',
+			() => content.pricing.bundleTitle,
+			(v) => (content.pricing.bundleTitle = v)
 		)}
 	</div>
 	<div class="grid grid-cols-2 gap-4">
@@ -1845,6 +1858,28 @@
 					/>
 					{@render removeBtn(
 						() => (content.pricing.programIncludes = removeItem(content.pricing.programIncludes, i))
+					)}
+				</div>
+			{/each}
+		</div>
+	</div>
+	<div class="border-t border-gray-100 pt-4 dark:border-gray-700">
+		{@render listHeader(
+			'Bonus Tambahan Spesial',
+			() => (content.pricing.bundleBonuses = [...content.pricing.bundleBonuses, ''])
+		)}
+		<div class="mt-3 space-y-2">
+			{#each content.pricing.bundleBonuses as bonus, i (i)}
+				<div class="flex items-center gap-2">
+					<span class="text-xs font-bold text-gray-400">{i + 1}.</span>
+					<input
+						value={bonus}
+						oninput={(e) => (content.pricing.bundleBonuses[i] = e.currentTarget.value)}
+						placeholder="Bonus bundling"
+						class={inputClass}
+					/>
+					{@render removeBtn(
+						() => (content.pricing.bundleBonuses = removeItem(content.pricing.bundleBonuses, i))
 					)}
 				</div>
 			{/each}
