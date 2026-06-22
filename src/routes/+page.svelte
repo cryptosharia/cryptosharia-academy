@@ -210,7 +210,7 @@
 						rel="external noopener noreferrer"
 						class="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-lg bg-orange-600 px-4 py-3 text-sm font-black text-white transition hover:bg-orange-500 active:scale-95"
 					>
-						Pilih Paket Ini
+						Detail Info
 						<svg
 							class="h-4 w-4"
 							fill="none"
