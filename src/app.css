@@ -1,6 +1,7 @@
 /* Import Google Sans Flex & Arvo fonts (consistent with CryptoSharia ecosystem) */
 @import url('https://fonts.googleapis.com/css2?family=Arvo:ital,wght@0,400;0,700;1,400;1,700&family=Google+Sans+Flex:opsz,wght@6..144,1..1000&display=swap');
 
+@import 'lenis/dist/lenis.css';
 @import 'tailwindcss';
 
 @custom-variant dark (&:where(.dark, .dark *));
