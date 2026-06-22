@@ -517,7 +517,7 @@ export const defaultLandingContent: LandingContent = {
 			'Sertifikat kelulusan program'
 		],
 		priceBadge: 'PAKET LENGKAP 4 HARI',
-		originalPrice: 'Rp4.000.000',
+		originalPrice: 'Rp5.000.000',
 		price: 'Rp3.000.000',
 		note: 'Ambil empat paket sekaligus dan hemat Rp1.000.000 dibandingkan pembelian per sesi.',
 		ctaLabel: 'Amankan Kursi Sekarang'
