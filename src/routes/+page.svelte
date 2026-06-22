@@ -733,18 +733,6 @@
 									class="mx-auto aspect-square w-28 rounded-xl border-2 border-orange-400/60 object-cover shadow-lg shadow-black/30 sm:w-32"
 									loading="lazy"
 								/>
-								{#if content.usp.quoteImage === '/images/warren-buffett.jpg'}
-									<figcaption class="mt-2 text-center text-[9px] leading-4 text-slate-500">
-										Foto:
-										<a
-											href="https://commons.wikimedia.org/wiki/File:Scott_McGovern_and_Warren_Buffett_(cropped).jpg"
-											target="_blank"
-											rel="external noopener noreferrer"
-											class="underline transition hover:text-orange-300"
-											>Garysays / Wikimedia Commons</a
-										>
-									</figcaption>
-								{/if}
 							</figure>
 						{/if}
 						<div class="border-l-4 border-orange-400 pl-5">
