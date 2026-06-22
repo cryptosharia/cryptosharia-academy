@@ -426,7 +426,7 @@ export const defaultLandingContent: LandingContent = {
 		dateCard: {
 			label: 'Jadwal Pelaksanaan',
 			date: '4–12 Juli 2026',
-			time: '08.30 - 12.00 WIB (2 Sesi/Hari)'
+			time: '08.00 - 12.00 WIB (2 Sesi/Hari)'
 		},
 		packages: [
 			{
@@ -490,7 +490,7 @@ export const defaultLandingContent: LandingContent = {
 			},
 			{
 				code: 'Paket D',
-				badge: 'Best Deal',
+				badge: 'Most Popular',
 				title: 'Analisis Syariah & Screening Koin',
 				description:
 					'Pahami fikih muamalah, fatwa crypto, screening aset halal, dan pengelolaan zakat untuk investasi yang sesuai prinsip Islam.',
@@ -544,7 +544,7 @@ export const defaultLandingContent: LandingContent = {
 			{
 				stage: 'Pondasi Crypto & Financial Planning',
 				date: 'Sabtu, 4 Juli 2026',
-				time: '08.30 - 12.00 WIB',
+				time: '08.00 - 12.00 WIB',
 				description:
 					'Bangun fondasi yang solid untuk memulai perjalanan crypto dengan percaya diri. Setelah modul ini, kamu akan memahami cara kerja blockchain, mengidentifikasi peluang di ekosistem Web3, dan membuat rencana investasi yang terstruktur sesuai profil risiko kamu—sehingga siap untuk langkah investasi berikutnya dengan strategi yang jelas.',
 				sessions: [
@@ -576,7 +576,7 @@ export const defaultLandingContent: LandingContent = {
 			{
 				stage: 'Analisis Fundamental & Global Macro',
 				date: 'Minggu, 5 Juli 2026',
-				time: '08.30 - 12.00 WIB',
+				time: '08.00 - 12.00 WIB',
 				description:
 					'Tingkatkan keputusan investasi kamu dari speculative menjadi data-driven. Dengan modul ini, kamu dapat menganalisis proyek crypto secara mendalam, membaca sinyal makroekonomi global, dan mengidentifikasi aset terbaik di tengah volatilitas pasar—sehingga meningkatkan akurasi entry point dan confidence level saat bertransaksi.',
 				sessions: [
@@ -608,7 +608,7 @@ export const defaultLandingContent: LandingContent = {
 			{
 				stage: 'Analisis Teknikal',
 				date: 'Sabtu, 11 Juli 2026',
-				time: '08.30 - 12.00 WIB',
+				time: '08.00 - 12.00 WIB',
 				description:
 					'Kuasai timing yang tepat untuk entry dan exit dengan presisi tinggi. Modul ini mengajari kamu membaca price action seperti seorang profesional trader, mengenali pola-pola yang berulang, dan menggunakan indikator teknikal sebagai tools konfirmasi—sehingga kamu bisa mengambil keuntungan maksimal dari setiap pergerakan pasar dan meminimalkan kerugian dengan risk management yang solid.',
 				sessions: [
@@ -640,7 +640,7 @@ export const defaultLandingContent: LandingContent = {
 			{
 				stage: 'Analisis Syariah & Screening Koin',
 				date: 'Minggu, 12 Juli 2026',
-				time: '08.30 - 12.00 WIB',
+				time: '08.00 - 12.00 WIB',
 				description:
 					'Investasi crypto dengan full confidence dan ketenangan hati sesuai prinsip Islam. Modul ini memberikan kamu framework lengkap untuk screening aset halal, memahami hukum syariah dalam crypto, dan mengelola zakat dengan benar—sehingga kamu bisa berkembang finansial tanpa khawatir dan sepenuh hati yakin bahwa setiap langkah investasi sesuai dengan nilai-nilai Islam yang kamu anut.',
 				sessions: [

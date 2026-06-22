@@ -1765,7 +1765,7 @@
 					</div>
 					<input
 						bind:value={pkg.badge}
-						placeholder="Badge sorotan, contoh: Best Deal (opsional)"
+						placeholder="Badge sorotan, contoh: Most Popular"
 						class={inputClass}
 					/>
 					<textarea
@@ -1947,7 +1947,7 @@
 					/>
 					<input
 						bind:value={day.time}
-						placeholder="Waktu (opsional), contoh: 08.30 - 12.00 WIB"
+						placeholder="Waktu (opsional), contoh: 08.00 - 12.00 WIB"
 						class={inputClass}
 					/>
 					<textarea
