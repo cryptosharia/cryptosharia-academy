@@ -30,7 +30,6 @@
 		showAllFaqs ? mapFaqItems(content.faq.items) : buildInitialFaqItems(content.faq.items)
 	);
 	const pricingPackages = $derived(content.pricing.packages ?? []);
-	const pricingPackageBenefits = $derived(content.pricing.packageBenefits ?? []);
 	const pricingProgramItems = $derived(content.pricing.programIncludes ?? []);
 	let selectedPricingPackageIndex = $state(0);
 	const selectedPricingPackage = $derived(
@@ -583,83 +582,6 @@
 		</section>
 	{/if}
 
-	{#if sectionId === 'valueProps'}
-		<section class="bg-slate-50 py-16 sm:py-20 dark:bg-slate-900" id="program">
-			<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-				<div class="mx-auto mb-12 max-w-3xl text-center">
-					{#if content.valueProps.eyebrow}
-						<p
-							class="text-primary-600 dark:text-primary-400 mb-3 text-xs leading-6 font-black tracking-[0.16em] uppercase"
-						>
-							{content.valueProps.eyebrow}
-						</p>
-					{/if}
-					<h2
-						class="text-3xl leading-tight font-extrabold text-slate-900 sm:text-4xl dark:text-white"
-					>
-						{content.valueProps.title}
-					</h2>
-				</div>
-
-				<div class="grid gap-5 md:grid-cols-3">
-					{#each content.valueProps.items as item, index (item.title)}
-						{@const marker = item.label?.trim() || String(index + 1).padStart(2, '0')}
-						<div
-							class="relative min-h-64 overflow-hidden rounded-lg border border-orange-200 bg-white p-6 shadow-sm shadow-slate-950/5 dark:border-orange-400/35 dark:bg-orange-500/[0.08]"
-						>
-							<div
-								class="absolute -right-2 -bottom-4 text-8xl leading-none font-black text-orange-100 dark:text-orange-950/50"
-							>
-								{marker}
-							</div>
-							<div
-								class="relative mb-8 flex h-12 w-12 items-center justify-center rounded-lg border border-orange-200 bg-orange-50 text-sm font-black text-orange-700 dark:border-orange-900/70 dark:bg-orange-950/30 dark:text-orange-200"
-							>
-								{marker}
-							</div>
-							<h3 class="relative text-xl leading-snug font-black text-slate-900 dark:text-white">
-								{item.title}
-							</h3>
-							<p class="relative mt-4 text-sm leading-7 text-slate-600 dark:text-slate-400">
-								{item.description}
-							</p>
-						</div>
-					{/each}
-				</div>
-
-				{#if content.valueProps.docImages.length > 0}
-					<div
-						class="mt-10 overflow-hidden rounded-lg border border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-950"
-					>
-						<div class="grid gap-0 lg:grid-cols-[0.9fr_1.1fr]">
-							<div class="p-6 sm:p-8">
-								<h3 class="text-2xl font-extrabold text-slate-900 dark:text-white">
-									{content.valueProps.docTitle}
-								</h3>
-								<p class="mt-4 text-sm leading-7 text-slate-600 dark:text-slate-400">
-									{content.valueProps.docDescription}
-								</p>
-							</div>
-							<div class="grid grid-cols-2 gap-3 bg-slate-100 p-4 dark:bg-slate-900">
-								{#each content.valueProps.docImages as img (img)}
-									<div
-										class="aspect-[4/3] overflow-hidden rounded-md border border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-950"
-									>
-										<img
-											src={img}
-											alt={content.valueProps.docTitle}
-											class="h-full w-full object-cover"
-										/>
-									</div>
-								{/each}
-							</div>
-						</div>
-					</div>
-				{/if}
-			</div>
-		</section>
-	{/if}
-
 	{#if sectionId === 'testimonials'}
 		<section class="bg-white py-20 dark:bg-gray-950" id="testimonials">
 			<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -892,40 +814,7 @@
 					</div>
 				{/if}
 
-				<div class="mt-12 grid gap-6 lg:grid-cols-[1.05fr_0.95fr] lg:items-stretch">
-					<div
-						class="rounded-lg border border-slate-800 bg-slate-950 p-6 text-white shadow-xl shadow-black/20"
-					>
-						<p class="text-xs font-black tracking-[0.14em] text-orange-300 uppercase">
-							Semua paket mendapatkan
-						</p>
-						<ul class="mt-5 grid gap-4 text-sm leading-6 text-slate-200 sm:grid-cols-2">
-							{#each pricingPackageBenefits as point (point)}
-								<li class="flex gap-3">
-									<span
-										class="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-orange-400 text-slate-950"
-									>
-										<svg
-											class="h-3.5 w-3.5"
-											fill="none"
-											stroke="currentColor"
-											viewBox="0 0 24 24"
-											aria-hidden="true"
-										>
-											<path
-												stroke-linecap="round"
-												stroke-linejoin="round"
-												stroke-width="3"
-												d="M5 13l4 4L19 7"
-											/>
-										</svg>
-									</span>
-									<span>{point}</span>
-								</li>
-							{/each}
-						</ul>
-					</div>
-
+				<div class="mx-auto mt-12 max-w-xl">
 					<div
 						class="rounded-lg border border-orange-200 bg-orange-50 p-6 shadow-xl shadow-orange-950/10 dark:border-orange-900/60 dark:bg-orange-950/20"
 					>
