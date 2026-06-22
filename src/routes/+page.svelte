@@ -1701,7 +1701,7 @@
 		>
 			<div class={bundleReducedMotion ? '' : 'lg:min-h-[calc(100vh+920px)]'}>
 				<div
-					class="relative overflow-hidden bg-orange-600 py-14 transition-all duration-700 ease-out motion-reduce:transform-none motion-reduce:transition-none sm:py-16 lg:sticky lg:top-20 {urgencyVisible(
+					class="relative overflow-hidden bg-orange-600 py-14 transition-all duration-700 ease-out motion-reduce:transform-none motion-reduce:transition-none sm:py-16 lg:sticky lg:top-20 lg:min-h-[70vh] {urgencyVisible(
 						0.02
 					)
 						? 'scale-100 opacity-100'
