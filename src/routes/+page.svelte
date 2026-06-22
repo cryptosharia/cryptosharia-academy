@@ -96,6 +96,64 @@
 		});
 	}
 
+	function packageTone(pkg: PricingPackage) {
+		const packageCode = pkg.code.trim().toUpperCase();
+
+		if (packageCode.endsWith('B')) {
+			return {
+				bar: 'bg-gradient-to-r from-sky-400 to-cyan-400',
+				card: 'border-sky-300 shadow-sky-950/5 hover:border-sky-400 hover:shadow-sky-950/15 dark:border-sky-800/70 dark:hover:border-sky-500',
+				featured: 'ring-2 ring-sky-400 ring-offset-2 ring-offset-white dark:ring-offset-gray-950',
+				badge: 'bg-sky-400 text-sky-950',
+				text: 'text-sky-700 dark:text-sky-300',
+				panel: 'border-sky-100 bg-sky-50/70 dark:border-sky-900/60 dark:bg-sky-950/25',
+				dot: 'bg-sky-500',
+				button: 'bg-sky-600 text-white hover:bg-sky-500'
+			};
+		}
+
+		if (packageCode.endsWith('C')) {
+			return {
+				bar: 'bg-gradient-to-r from-violet-500 to-fuchsia-400',
+				card: 'border-violet-300 shadow-violet-950/5 hover:border-violet-400 hover:shadow-violet-950/15 dark:border-violet-800/70 dark:hover:border-violet-500',
+				featured:
+					'ring-2 ring-violet-400 ring-offset-2 ring-offset-white dark:ring-offset-gray-950',
+				badge: 'bg-violet-500 text-white',
+				text: 'text-violet-700 dark:text-violet-300',
+				panel: 'border-violet-100 bg-violet-50/70 dark:border-violet-900/60 dark:bg-violet-950/25',
+				dot: 'bg-violet-500',
+				button: 'bg-violet-600 text-white hover:bg-violet-500'
+			};
+		}
+
+		if (packageCode.endsWith('D')) {
+			return {
+				bar: 'bg-gradient-to-r from-emerald-500 to-teal-400',
+				card: 'border-emerald-400 shadow-emerald-950/10 hover:border-emerald-300 hover:shadow-emerald-950/20 dark:border-emerald-700 dark:hover:border-emerald-400',
+				featured:
+					'ring-2 ring-emerald-400 ring-offset-2 ring-offset-white dark:ring-offset-gray-950',
+				badge: 'bg-emerald-400 text-emerald-950',
+				text: 'text-emerald-700 dark:text-emerald-300',
+				panel:
+					'border-emerald-100 bg-emerald-50/70 dark:border-emerald-900/60 dark:bg-emerald-950/25',
+				dot: 'bg-emerald-500',
+				button:
+					'bg-emerald-500 text-emerald-950 shadow-lg shadow-emerald-950/20 hover:bg-emerald-400'
+			};
+		}
+
+		return {
+			bar: 'bg-gradient-to-r from-orange-500 to-amber-400',
+			card: 'border-orange-300 shadow-orange-950/5 hover:border-orange-400 hover:shadow-orange-950/15 dark:border-orange-800/70 dark:hover:border-orange-500',
+			featured: 'ring-2 ring-orange-400 ring-offset-2 ring-offset-white dark:ring-offset-gray-950',
+			badge: 'bg-orange-400 text-slate-950',
+			text: 'text-orange-700 dark:text-orange-300',
+			panel: 'border-orange-100 bg-orange-50/70 dark:border-orange-900/60 dark:bg-orange-950/25',
+			dot: 'bg-orange-500',
+			button: 'bg-orange-600 text-white hover:bg-orange-500'
+		};
+	}
+
 	function faqCategory(index: number) {
 		if (index <= 2) return 'Tentang Program';
 		if (index <= 6) return 'Teknis Kelas';
@@ -130,11 +188,13 @@
 
 {#snippet pricingPackageCard(pkg: PricingPackage)}
 	{@const curriculumDay = content.curriculum.schedule.find((day) => day.stage === pkg.title)}
+	{@const tone = packageTone(pkg)}
 	<article
-		class="group flex h-full min-h-[680px] flex-col overflow-hidden rounded-lg border bg-white shadow-lg transition hover:-translate-y-1 hover:shadow-xl dark:bg-slate-950 dark:shadow-black/20 {pkg.badge
-			? 'border-emerald-400 ring-2 shadow-emerald-950/15 ring-emerald-400 ring-offset-2 ring-offset-white hover:border-emerald-300 hover:shadow-emerald-950/25 dark:border-emerald-400 dark:ring-offset-gray-950'
-			: 'border-orange-200 shadow-orange-950/5 hover:border-orange-300 hover:shadow-orange-950/10 dark:border-orange-900/50 dark:hover:border-orange-500/70'}"
+		class="group flex h-full min-h-[680px] flex-col overflow-hidden rounded-lg border bg-white shadow-lg transition hover:-translate-y-1 hover:shadow-xl dark:bg-slate-950 dark:shadow-black/20 {tone.card} {pkg.badge
+			? tone.featured
+			: ''}"
 	>
+		<div class="h-1.5 w-full shrink-0 {tone.bar}"></div>
 		<div class="relative aspect-[4/3] overflow-hidden bg-slate-950">
 			{#if pkg.image}
 				<img
@@ -154,15 +214,13 @@
 				</div>
 			{/if}
 			<div
-				class="absolute top-4 left-4 rounded-full px-3 py-1.5 text-[11px] font-black tracking-[0.14em] uppercase shadow-lg shadow-black/20 {pkg.badge
-					? 'bg-emerald-400 text-emerald-950'
-					: 'bg-orange-400 text-slate-950'}"
+				class="absolute top-4 left-4 rounded-full px-3 py-1.5 text-[11px] font-black tracking-[0.14em] uppercase shadow-lg shadow-black/20 {tone.badge}"
 			>
 				{pkg.code}
 			</div>
 			{#if pkg.badge}
 				<div
-					class="absolute top-4 right-4 rounded-full bg-emerald-400 px-3 py-1.5 text-[10px] font-black tracking-[0.1em] text-emerald-950 uppercase shadow-lg shadow-emerald-950/40"
+					class="absolute top-4 right-4 rounded-full px-3 py-1.5 text-[10px] font-black tracking-[0.1em] uppercase shadow-lg shadow-black/30 {tone.badge}"
 				>
 					★ {pkg.badge}
 				</div>
@@ -178,36 +236,30 @@
 			</p>
 
 			<div class="mt-5">
-				<p
-					class="text-[11px] font-black tracking-[0.14em] text-orange-700 uppercase dark:text-orange-300"
-				>
+				<p class="text-[11px] font-black tracking-[0.14em] uppercase {tone.text}">
 					Detail per sesi
 				</p>
 				{#if curriculumDay}
 					<div class="mt-3 space-y-3">
 						{#each curriculumDay.sessions as session, sessionIndex (session.title)}
-							<div
-								class="rounded-md border border-orange-100 bg-orange-50/60 p-3 dark:border-orange-900/50 dark:bg-orange-950/20"
-							>
+							<div class="rounded-md border p-3 {tone.panel}">
 								<div class="flex flex-wrap items-start justify-between gap-2">
 									<div>
-										<p
-											class="text-[10px] font-black tracking-[0.12em] text-orange-700 uppercase dark:text-orange-300"
-										>
+										<p class="text-[10px] font-black tracking-[0.12em] uppercase {tone.text}">
 											Sesi {sessionIndex + 1}
 										</p>
 										<h4 class="mt-1 text-sm leading-5 font-black text-slate-900 dark:text-white">
 											{session.title}
 										</h4>
 									</div>
-									<span class="text-[11px] font-bold text-orange-700 dark:text-orange-300">
+									<span class="text-[11px] font-bold {tone.text}">
 										{session.price}
 									</span>
 								</div>
 								<ul class="mt-2 space-y-1.5 text-xs leading-5 text-slate-600 dark:text-slate-300">
 									{#each session.topics as topic (topic)}
 										<li class="flex gap-2">
-											<span class="mt-2 h-1 w-1 shrink-0 rounded-full bg-orange-500"></span>
+											<span class="mt-2 h-1 w-1 shrink-0 rounded-full {tone.dot}"></span>
 											<span>{topic}</span>
 										</li>
 									{/each}
@@ -219,7 +271,7 @@
 					<ul class="mt-3 space-y-2 text-sm leading-6 text-slate-700 dark:text-slate-300">
 						{#each pkg.lessons as lesson (lesson)}
 							<li class="flex gap-2">
-								<span class="mt-2.5 h-1 w-1 shrink-0 rounded-full bg-orange-500"></span>
+								<span class="mt-2.5 h-1 w-1 shrink-0 rounded-full {tone.dot}"></span>
 								<span>{lesson}</span>
 							</li>
 						{/each}
@@ -231,16 +283,14 @@
 				<div class="border-t border-slate-200 pt-5 dark:border-slate-800">
 					<p class="text-xs font-bold text-slate-500 dark:text-slate-400">Investasi ilmu</p>
 					<div class="mt-1 text-3xl font-black text-slate-950 dark:text-white">{pkg.price}</div>
-					<p class="mt-1 text-xs leading-5 font-semibold text-orange-700 dark:text-orange-300">
+					<p class="mt-1 text-xs leading-5 font-semibold {tone.text}">
 						{pkg.sessionPrice}
 					</p>
 					<a
 						href={packageWhatsappUrl(pkg)}
 						target="_blank"
 						rel="external noopener noreferrer"
-						class="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-lg px-4 py-3 text-sm font-black transition active:scale-95 {pkg.badge
-							? 'bg-emerald-500 text-emerald-950 shadow-lg shadow-emerald-950/20 hover:bg-emerald-400'
-							: 'bg-orange-600 text-white hover:bg-orange-500'}"
+						class="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-lg px-4 py-3 text-sm font-black transition active:scale-95 {tone.button}"
 					>
 						Info Detail
 						<svg
