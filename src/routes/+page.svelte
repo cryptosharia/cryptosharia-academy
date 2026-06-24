@@ -12,6 +12,8 @@
 	import SpecialOfferSection from '$lib/components/landing/SpecialOfferSection.svelte';
 
 	type PricingPackage = LandingContent['pricing']['packages'][number];
+	type AuthorityActivity = LandingContent['authority']['activities'][number];
+	type AuthorityStat = LandingContent['authority']['stats'][number];
 
 	let content = $state<LandingContent>(structuredClone(defaultLandingContent));
 	const INITIAL_FAQ_INDEXES = [0, 1, 3, 4, 5, 7, 10];
@@ -43,6 +45,7 @@
 	let uspSection = $state<HTMLElement | null>(null);
 	let uspProgress = $state(0);
 	let uspAnimationsReady = $state(false);
+	let experienceSection = $state<HTMLElement | null>(null);
 	const selectedPricingPackage = $derived(
 		pricingPackages[selectedPricingPackageIndex] ?? pricingPackages[0]
 	);
@@ -214,6 +217,22 @@
 		return 'Dokumentasi Event';
 	}
 
+	function formatIndonesianNumber(value: number) {
+		return new Intl.NumberFormat('id-ID').format(value);
+	}
+
+	function authorityStatValue(stat: AuthorityStat) {
+		return `${formatIndonesianNumber(stat.value)}${stat.suffix}`;
+	}
+
+	function activityParticipantLabel(item: AuthorityActivity) {
+		if (item.participantLabel?.trim()) return item.participantLabel;
+		if (Number.isFinite(item.participants)) {
+			return `${formatIndonesianNumber(item.participants ?? 0)} peserta`;
+		}
+		return '';
+	}
+
 	function benefitIconKey(title: string) {
 		const value = title.toLowerCase();
 		if (value.includes('materi')) return 'layers';
@@ -292,6 +311,167 @@
 			window.removeEventListener('resize', updatePageAnimations);
 			desktopQuery.removeEventListener('change', updatePageAnimations);
 			reducedMotionQuery.removeEventListener('change', updatePageAnimations);
+		};
+	});
+
+	onMount(() => {
+		const reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+		const desktopQuery = window.matchMedia('(min-width: 1024px)');
+		let disposed = false;
+		let context: { revert: () => void } | null = null;
+		let setupPromise: Promise<void> | null = null;
+
+		function setExperienceCountersFinal() {
+			const counters =
+				experienceSection?.querySelectorAll<HTMLElement>('[data-experience-stat-value]') ?? [];
+
+			for (const counter of counters) {
+				const value = Number(counter.dataset.value);
+				const suffix = counter.dataset.suffix ?? '';
+				counter.textContent = `${formatIndonesianNumber(Number.isFinite(value) ? value : 0)}${suffix}`;
+			}
+		}
+
+		function clearExperienceAnimations() {
+			context?.revert();
+			context = null;
+			setExperienceCountersFinal();
+		}
+
+		async function setupExperienceAnimations() {
+			if (context || setupPromise || reducedMotionQuery.matches || !experienceSection) {
+				if (reducedMotionQuery.matches) setExperienceCountersFinal();
+				return;
+			}
+
+			setupPromise = (async () => {
+				const [{ gsap }, { ScrollTrigger }] = await Promise.all([
+					import('gsap'),
+					import('gsap/ScrollTrigger')
+				]);
+
+				const root = experienceSection;
+				if (disposed || reducedMotionQuery.matches || !root) {
+					setExperienceCountersFinal();
+					return;
+				}
+
+				gsap.registerPlugin(ScrollTrigger);
+
+				context = gsap.context(() => {
+					const heading = root.querySelectorAll<HTMLElement>('.experience-heading');
+					const lead = root.querySelectorAll<HTMLElement>('.experience-lead');
+					const statCards = gsap.utils.toArray<HTMLElement>('.experience-stat-card');
+					const counters = gsap.utils.toArray<HTMLElement>('[data-experience-stat-value]');
+					const visibleEventCards = gsap.utils
+						.toArray<HTMLElement>('.experience-event-card')
+						.filter((card) => card.getClientRects().length > 0);
+
+					const introTimeline = gsap.timeline({
+						defaults: { ease: 'power3.out' },
+						scrollTrigger: {
+							trigger: root,
+							start: 'top 72%',
+							once: true
+						}
+					});
+
+					introTimeline
+						.from(heading, { opacity: 0, y: 32, duration: 0.72 })
+						.from(lead, { opacity: 0, y: 22, duration: 0.58 }, '-=0.4')
+						.from(statCards, { opacity: 0, y: 18, duration: 0.5, stagger: 0.1 }, '-=0.2');
+
+					for (const counter of counters) {
+						const target = Number(counter.dataset.value);
+						const suffix = counter.dataset.suffix ?? '';
+						const state = { value: 0 };
+						counter.textContent = `0${suffix}`;
+
+						introTimeline.to(
+							state,
+							{
+								value: Number.isFinite(target) ? target : 0,
+								duration: 0.9,
+								ease: 'power2.out',
+								onUpdate: () => {
+									counter.textContent = `${formatIndonesianNumber(Math.round(state.value))}${suffix}`;
+								}
+							},
+							'<'
+						);
+					}
+
+					for (const card of visibleEventCards) {
+						const side = card.dataset.experienceSide;
+						const fromX = side === 'left' ? -32 : side === 'right' ? 32 : 0;
+						const image = card.querySelector<HTMLElement>('.experience-event-image');
+						const copyElements = card.querySelectorAll<HTMLElement>('.experience-event-copy > *');
+						const participantBadge = card.querySelector<HTMLElement>(
+							'.experience-participant-badge'
+						);
+						const eventTimeline = gsap.timeline({
+							defaults: { ease: 'power3.out' },
+							scrollTrigger: {
+								trigger: card,
+								start: 'top 82%',
+								once: true
+							}
+						});
+
+						eventTimeline.from(card, { opacity: 0, y: 28, x: fromX, duration: 0.65 });
+						if (image) eventTimeline.from(image, { scale: 1.04, duration: 0.78 }, '<');
+						if (copyElements.length) {
+							eventTimeline.from(
+								copyElements,
+								{ opacity: 0, y: 14, duration: 0.42, stagger: 0.06 },
+								'-=0.45'
+							);
+						}
+						if (participantBadge) {
+							eventTimeline.from(
+								participantBadge,
+								{ opacity: 0, scale: 0.92, duration: 0.28 },
+								'-=0.25'
+							);
+						}
+					}
+
+					if (desktopQuery.matches) {
+						for (const image of gsap.utils.toArray<HTMLElement>('.experience-event-image')) {
+							if (image.getClientRects().length === 0) continue;
+							gsap.to(image, {
+								yPercent: -4,
+								ease: 'none',
+								scrollTrigger: {
+									trigger: image,
+									start: 'top bottom',
+									end: 'bottom top',
+									scrub: 0.7
+								}
+							});
+						}
+					}
+				}, root);
+
+				ScrollTrigger.refresh();
+			})();
+
+			await setupPromise;
+			setupPromise = null;
+		}
+
+		function handleReducedMotionChange() {
+			if (reducedMotionQuery.matches) clearExperienceAnimations();
+			else void setupExperienceAnimations();
+		}
+
+		void setupExperienceAnimations();
+		reducedMotionQuery.addEventListener('change', handleReducedMotionChange);
+
+		return () => {
+			disposed = true;
+			reducedMotionQuery.removeEventListener('change', handleReducedMotionChange);
+			clearExperienceAnimations();
 		};
 	});
 </script>
@@ -422,6 +602,55 @@
 			</div>
 		</div>
 	</article>
+{/snippet}
+
+{#snippet authorityActivityImage(item: AuthorityActivity, aspectClass: string)}
+	{#if item.image}
+		<div class="experience-image-frame relative overflow-hidden rounded-xl {aspectClass}">
+			<img
+				src={item.image}
+				alt={item.title}
+				class="experience-event-image h-[112%] w-full object-cover"
+				loading="lazy"
+			/>
+			<div
+				class="pointer-events-none absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-gray-950/80 to-transparent"
+			></div>
+		</div>
+	{:else}
+		<div
+			class="experience-image-frame relative flex {aspectClass} items-center justify-center overflow-hidden rounded-xl bg-[radial-gradient(circle_at_28%_22%,rgba(249,115,22,0.20),transparent_40%),linear-gradient(135deg,#0f172a,#111827)]"
+		>
+			<div
+				class="pointer-events-none absolute inset-0 [background-image:linear-gradient(30deg,rgba(255,255,255,0.06)_12%,transparent_12.5%,transparent_87%,rgba(255,255,255,0.06)_87.5%)] [background-size:48px_48px] opacity-30"
+			></div>
+			<p class="experience-event-image relative text-lg font-bold text-white/70">{item.title}</p>
+		</div>
+	{/if}
+{/snippet}
+
+{#snippet authorityActivityCopy(
+	item: AuthorityActivity,
+	titleClass: string,
+	descriptionClass: string
+)}
+	{@const participant = activityParticipantLabel(item)}
+	<div class="experience-event-copy flex flex-col justify-center">
+		<div class="mb-3 flex flex-wrap items-center gap-2">
+			<span
+				class="w-fit rounded-full border border-orange-500/30 bg-orange-500/10 px-3 py-1 text-[10px] font-black tracking-[0.14em] text-orange-300 uppercase"
+				>{activityBadge(item)}</span
+			>
+			{#if participant}
+				<span
+					class="experience-participant-badge w-fit rounded-full border border-amber-300/25 bg-amber-400/10 px-3 py-1 text-[10px] font-black tracking-[0.1em] text-amber-200 uppercase shadow-sm shadow-orange-950/20"
+					>{participant}</span
+				>
+			{/if}
+		</div>
+		<h3 class="{titleClass} font-bold text-white">{item.title}</h3>
+		<p class="mt-3 {descriptionClass} leading-7 text-slate-300">{item.description}</p>
+	</div>
 {/snippet}
 
 <svelte:head>
@@ -597,7 +826,10 @@
 	{/if}
 
 	{#if sectionId === 'authority'}
-		<section class="relative overflow-hidden bg-gray-950 pt-20 pb-16 sm:pt-28 sm:pb-[5.5rem]">
+		<section
+			bind:this={experienceSection}
+			class="experience-section relative overflow-hidden bg-gray-950 pt-20 pb-16 sm:pt-28 sm:pb-[5.5rem]"
+		>
 			<!-- Subtle geometric pattern overlay -->
 			<div
 				class="pointer-events-none absolute inset-0 [background-image:linear-gradient(30deg,rgba(255,255,255,0.5)_12%,transparent_12.5%,transparent_87%,rgba(255,255,255,0.5)_87.5%)] [background-size:60px_60px] opacity-[0.04]"
@@ -610,14 +842,38 @@
 			<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 				<!-- Section header -->
 				<div class="mx-auto mb-16 max-w-3xl text-center">
+					{#if content.authority.eyebrow}
+						<p class="mb-4 text-xs font-black tracking-[0.22em] text-orange-300 uppercase">
+							{content.authority.eyebrow}
+						</p>
+					{/if}
 					<h2
-						class="heading-gradient text-3xl leading-tight font-extrabold sm:text-4xl lg:text-5xl"
+						class="experience-heading heading-gradient text-3xl leading-tight font-extrabold sm:text-4xl lg:text-5xl"
 					>
 						{content.authority.title}
 					</h2>
-					<p class="mt-5 text-base leading-8 text-slate-300">
+					<p class="experience-lead mt-5 text-base leading-8 text-slate-300">
 						{content.authority.description}
 					</p>
+					<dl class="mt-8 grid gap-3 sm:grid-cols-3">
+						{#each content.authority.stats as stat (stat.label)}
+							<div
+								class="experience-stat-card rounded-lg border border-white/10 bg-white/[0.045] px-4 py-4 text-left shadow-lg shadow-black/10 backdrop-blur sm:text-center"
+							>
+								<dt
+									class="text-2xl leading-none font-black text-white sm:text-3xl"
+									data-experience-stat-value
+									data-value={stat.value}
+									data-suffix={stat.suffix}
+								>
+									{authorityStatValue(stat)}
+								</dt>
+								<dd class="mt-2 text-xs leading-5 font-bold text-slate-400">
+									{stat.label}
+								</dd>
+							</div>
+						{/each}
+					</dl>
 				</div>
 
 				<!-- Desktop: Alternating storytelling layout -->
@@ -632,10 +888,11 @@
 							{@const isEven = index % 2 === 0}
 							{@const isFirst = index === 0}
 							<div
-								class="relative grid grid-cols-2 items-center gap-12"
+								class="experience-event-card relative grid grid-cols-2 items-center gap-12"
 								class:grid-cols-[1.2fr_0.8fr]={isFirst && isEven}
 								class:grid-cols-[0.8fr_1.2fr]={!isFirst && !isEven}
 								class:grid-cols-[1.1fr_0.9fr]={!isFirst && isEven}
+								data-experience-side={isEven ? 'left' : 'right'}
 							>
 								<!-- Large numbered badge -->
 								<div
@@ -653,69 +910,20 @@
 										<div
 											class="absolute -inset-4 rounded-2xl bg-[radial-gradient(circle_at_center,rgba(249,115,22,0.10),transparent_70%)]"
 										></div>
-										{#if item.image}
-											<div
-												class="relative overflow-hidden rounded-xl {isFirst
-													? 'aspect-[16/10]'
-													: 'aspect-[16/9]'}"
-											>
-												<img src={item.image} alt={item.title} class="h-full w-full object-cover" />
-												<div
-													class="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-gray-950/80 to-transparent"
-												></div>
-											</div>
-										{:else}
-											<div
-												class="relative flex {isFirst
-													? 'aspect-[16/10]'
-													: 'aspect-[16/9]'} items-center justify-center rounded-xl bg-[radial-gradient(circle_at_28%_22%,rgba(249,115,22,0.20),transparent_40%),linear-gradient(135deg,#0f172a,#111827)]"
-											>
-												<div
-													class="absolute inset-0 [background-image:linear-gradient(30deg,rgba(255,255,255,0.06)_12%,transparent_12.5%,transparent_87%,rgba(255,255,255,0.06)_87.5%)] [background-size:48px_48px] opacity-30"
-												></div>
-												<p class="relative text-lg font-bold text-white/70">{item.title}</p>
-											</div>
-										{/if}
+										{@render authorityActivityImage(
+											item,
+											isFirst ? 'aspect-[16/10]' : 'aspect-[16/9]'
+										)}
 									</div>
-									<div class="flex flex-col justify-center">
-										<span
-											class="mb-3 w-fit rounded-full border border-orange-500/30 bg-orange-500/10 px-3 py-1 text-[10px] font-black tracking-[0.14em] text-orange-300 uppercase"
-											>{activityBadge(item)}</span
-										>
-										<h3 class="text-2xl font-bold text-white">{item.title}</h3>
-										<p class="mt-3 text-base leading-7 text-slate-300">{item.description}</p>
-									</div>
+									{@render authorityActivityCopy(item, 'text-2xl', 'text-base')}
 								{:else}
 									<!-- Text LEFT, image RIGHT -->
-									<div class="flex flex-col justify-center">
-										<span
-											class="mb-3 w-fit rounded-full border border-orange-500/30 bg-orange-500/10 px-3 py-1 text-[10px] font-black tracking-[0.14em] text-orange-300 uppercase"
-											>{activityBadge(item)}</span
-										>
-										<h3 class="text-2xl font-bold text-white">{item.title}</h3>
-										<p class="mt-3 text-base leading-7 text-slate-300">{item.description}</p>
-									</div>
+									{@render authorityActivityCopy(item, 'text-2xl', 'text-base')}
 									<div class="relative">
 										<div
 											class="absolute -inset-4 rounded-2xl bg-[radial-gradient(circle_at_center,rgba(249,115,22,0.10),transparent_70%)]"
 										></div>
-										{#if item.image}
-											<div class="relative aspect-[16/9] overflow-hidden rounded-xl">
-												<img src={item.image} alt={item.title} class="h-full w-full object-cover" />
-												<div
-													class="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-gray-950/80 to-transparent"
-												></div>
-											</div>
-										{:else}
-											<div
-												class="relative flex aspect-[16/9] items-center justify-center rounded-xl bg-[radial-gradient(circle_at_28%_22%,rgba(249,115,22,0.20),transparent_40%),linear-gradient(135deg,#0f172a,#111827)]"
-											>
-												<div
-													class="absolute inset-0 [background-image:linear-gradient(30deg,rgba(255,255,255,0.06)_12%,transparent_12.5%,transparent_87%,rgba(255,255,255,0.06)_87.5%)] [background-size:48px_48px] opacity-30"
-												></div>
-												<p class="relative text-lg font-bold text-white/70">{item.title}</p>
-											</div>
-										{/if}
+										{@render authorityActivityImage(item, 'aspect-[16/9]')}
 									</div>
 								{/if}
 							</div>
@@ -732,7 +940,7 @@
 						></div>
 
 						{#each content.authority.activities as item, index (item.title)}
-							<div class="relative">
+							<div class="experience-event-card relative" data-experience-side="mobile">
 								<!-- Timeline dot -->
 								<div
 									class="absolute top-1 -left-10 flex h-[30px] w-[30px] items-center justify-center rounded-full border border-orange-500/40 bg-gray-950 text-xs font-black text-orange-400"
@@ -741,31 +949,12 @@
 								</div>
 
 								<!-- Image -->
-								{#if item.image}
-									<div class="relative mb-4 aspect-[16/9] overflow-hidden rounded-xl">
-										<img src={item.image} alt={item.title} class="h-full w-full object-cover" />
-										<div
-											class="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-gray-950/80 to-transparent"
-										></div>
-									</div>
-								{:else}
-									<div
-										class="relative mb-4 flex aspect-[16/9] items-center justify-center rounded-xl bg-[radial-gradient(circle_at_28%_22%,rgba(249,115,22,0.20),transparent_40%),linear-gradient(135deg,#0f172a,#111827)]"
-									>
-										<div
-											class="absolute inset-0 [background-image:linear-gradient(30deg,rgba(255,255,255,0.06)_12%,transparent_12.5%,transparent_87%,rgba(255,255,255,0.06)_87.5%)] [background-size:48px_48px] opacity-30"
-										></div>
-										<p class="relative text-lg font-bold text-white/70">{item.title}</p>
-									</div>
-								{/if}
+								<div class="mb-4">
+									{@render authorityActivityImage(item, 'aspect-[16/9]')}
+								</div>
 
 								<!-- Text -->
-								<span
-									class="mb-2 inline-block rounded-full border border-orange-500/30 bg-orange-500/10 px-3 py-1 text-[10px] font-black tracking-[0.14em] text-orange-300 uppercase"
-									>{activityBadge(item)}</span
-								>
-								<h3 class="text-xl font-bold text-white">{item.title}</h3>
-								<p class="mt-2 text-sm leading-7 text-slate-300">{item.description}</p>
+								{@render authorityActivityCopy(item, 'text-xl', 'text-sm')}
 							</div>
 						{/each}
 					</div>

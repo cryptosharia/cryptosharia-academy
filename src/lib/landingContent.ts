@@ -25,7 +25,19 @@ export type SectionId =
 export type Highlight = { symbol: string; performance: string };
 export type Feature = { label: string; title: string; description: string };
 export type ProofItem = { meta: string; title: string; description: string; image?: string };
-export type Activity = { meta: string; title: string; description: string; image: string };
+export type AuthorityStat = {
+	value: number;
+	suffix: string;
+	label: string;
+};
+export type Activity = {
+	meta: string;
+	title: string;
+	description: string;
+	image: string;
+	participants?: number;
+	participantLabel?: string;
+};
 export type Faq = { question: string; answer: string };
 export type Cta = { label: string; href: string };
 export type BenefitCard = { title: string; items: string[] };
@@ -93,6 +105,7 @@ export type LandingContent = {
 		eyebrow: string;
 		title: string;
 		description: string;
+		stats: AuthorityStat[];
 		activities: Activity[];
 		cards: { label: string; description: string }[];
 	};
@@ -254,36 +267,49 @@ export const defaultLandingContent: LandingContent = {
 		]
 	},
 	authority: {
-		eyebrow: '',
+		eyebrow: 'REAL COMMUNITY EXPERIENCE',
 		title: 'Dibangun dari pengalaman edukasi dan komunitas nyata.',
 		description:
 			'Materi masterclass ini disusun dari pengalaman edukasi, diskusi komunitas, dan kebutuhan nyata peserta dalam memahami crypto secara lebih terarah dan sesuai prinsip syariah. Berbasis pengalaman edukasi bersama 4.000+ member komunitas CryptoSharia.',
+		stats: [
+			{ value: 7100, suffix: '+', label: 'peserta tersentuh' },
+			{ value: 4, suffix: '', label: 'kegiatan edukasi & komunitas' },
+			{ value: 4000, suffix: '+', label: 'member komunitas' }
+		],
 		activities: [
 			{
 				meta: 'Event 2025',
 				title: 'Nushafest 2025',
 				description:
 					'Dokumentasi edukasi publik bersama komunitas yang tertarik pada aset digital halal.',
-				image: '/events/nushafest.png'
+				image: '/events/nushafest.png',
+				participants: 2000,
+				participantLabel: '2.000+ peserta'
 			},
 			{
 				meta: 'Event 2025',
 				title: 'Halal Kulture Market 2025',
 				description: 'Aktivasi edukasi crypto syariah untuk memperluas literasi investor Muslim.',
-				image: '/events/halalkulture.png'
+				image: '/events/halalkulture.png',
+				participants: 5000,
+				participantLabel: '5.000+ peserta'
 			},
 			{
-				meta: 'Event 2025',
-				title: 'Bootcamp Crypto Sharia 2025',
+				meta: 'Event 2026',
+				title: 'Bootcamp CryptoSharia 2026',
 				description:
 					'Workshop intensif dan praktik langsung untuk peserta yang ingin memahami crypto secara mendalam.',
-				image: '/events/bootcamp.png'
+				image: '/events/bootcamp.png',
+				participants: 50,
+				participantLabel: '50 peserta'
 			},
 			{
-				meta: 'Event 2025',
-				title: 'Kopdar Crypto Sharia 2025',
+				meta: 'Event 2026',
+				title: 'Kopdar CryptoSharia 2026',
 				description: 'Diskusi kecil dan networking antar member untuk memperkuat proses belajar.',
-				image: '/events/kopdar.png'
+				image: '/events/kopdar.png',
+				participants: 50,
+				participantLabel: '50 peserta'
 			}
 		],
 		cards: [
@@ -996,9 +1022,27 @@ function normalizeAuthority(authority: LandingContent['authority']): LandingCont
 	) {
 		authority.cards = defaults.cards;
 	}
+	authority.stats = normalizeAuthorityStats(authority.stats, defaults.stats);
 	authority.activities = normalizeAuthorityActivities(authority.activities, defaults.activities);
 
 	return authority;
+}
+
+function normalizeAuthorityStats(
+	stats: LandingContent['authority']['stats'] | undefined,
+	fallback: LandingContent['authority']['stats']
+): LandingContent['authority']['stats'] {
+	const source = Array.isArray(stats) && stats.length > 0 ? stats : fallback;
+
+	return source.map((stat, index) => {
+		const fallbackStat = fallback[index] ?? fallback[0];
+		const value = Number.isFinite(stat.value) ? stat.value : fallbackStat.value;
+		return {
+			value,
+			suffix: stat.suffix ?? fallbackStat.suffix,
+			label: stat.label?.trim() || fallbackStat.label
+		};
+	});
 }
 
 function normalizeAuthorityActivities(
@@ -1009,11 +1053,20 @@ function normalizeAuthorityActivities(
 
 	return source.map((activity, index) => {
 		const fallbackActivity = fallback[index] ?? fallback[0];
+		const title = activity.title?.trim() || fallbackActivity.title;
+		const meta = activity.meta?.trim() || fallbackActivity.meta;
+		const shouldUseFallbackCopy =
+			(index === 2 && title === 'Bootcamp Crypto Sharia 2025') ||
+			(index === 3 && title === 'Kopdar Crypto Sharia 2025');
 		return {
-			meta: activity.meta?.trim() || fallbackActivity.meta,
-			title: activity.title?.trim() || fallbackActivity.title,
+			meta: shouldUseFallbackCopy ? fallbackActivity.meta : meta,
+			title: shouldUseFallbackCopy ? fallbackActivity.title : title,
 			description: activity.description?.trim() || fallbackActivity.description,
-			image: activity.image?.trim() || fallbackActivity.image
+			image: activity.image?.trim() || fallbackActivity.image,
+			participants: Number.isFinite(activity.participants)
+				? activity.participants
+				: fallbackActivity.participants,
+			participantLabel: activity.participantLabel?.trim() || fallbackActivity.participantLabel
 		};
 	});
 }
