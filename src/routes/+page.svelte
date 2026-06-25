@@ -740,7 +740,7 @@
 							</svg>
 						</a>
 						<a
-							href="#curriculum"
+							href={content.hero.secondaryCta.href || '#pricing'}
 							class="inline-flex w-full items-center justify-center rounded-lg border border-white/20 bg-white/[0.04] px-6 py-4 text-sm font-bold text-slate-100 transition hover:border-orange-300 hover:bg-white/10 sm:w-auto"
 						>
 							{content.hero.secondaryCta.label}
