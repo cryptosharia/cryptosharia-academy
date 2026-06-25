@@ -36,7 +36,6 @@
 	const pricingPackages = $derived(content.pricing.packages ?? []);
 	const pricingProgramItems = $derived(content.pricing.programIncludes ?? []);
 	const pricingBundleBonuses = $derived(content.pricing.bundleBonuses ?? []);
-	let selectedPricingPackageIndex = $state(0);
 	let bundleScrollContainer = $state<HTMLDivElement | null>(null);
 	let bundleProgress = $state(0);
 	let bundleAnimationsReady = $state(false);
@@ -46,9 +45,6 @@
 	let uspProgress = $state(0);
 	let uspAnimationsReady = $state(false);
 	let experienceSection = $state<HTMLElement | null>(null);
-	const selectedPricingPackage = $derived(
-		pricingPackages[selectedPricingPackageIndex] ?? pricingPackages[0]
-	);
 
 	function splitHeroHeadline(value: string) {
 		const words = value.trim().split(/\s+/).filter(Boolean);
@@ -105,10 +101,6 @@
 
 	function toggleFaq(index: number) {
 		openFaqIndex = openFaqIndex === index ? null : index;
-	}
-
-	function selectPricingPackage(index: number) {
-		selectedPricingPackageIndex = index;
 	}
 
 	function packageWhatsappUrl(pkg: PricingPackage) {
@@ -1259,34 +1251,7 @@
 				</div>
 
 				{#if pricingPackages.length > 0}
-					<div class="mt-12 lg:hidden">
-						<div
-							class="grid grid-cols-4 gap-2 rounded-lg border border-slate-200 bg-slate-50 p-1 dark:border-slate-800 dark:bg-slate-900"
-							role="tablist"
-							aria-label="Pilihan paket masterclass"
-						>
-							{#each pricingPackages as pkg, index (pkg.code)}
-								<button
-									type="button"
-									role="tab"
-									aria-selected={selectedPricingPackageIndex === index}
-									onclick={() => selectPricingPackage(index)}
-									class={selectedPricingPackageIndex === index
-										? 'rounded-md bg-orange-600 px-3 py-3 text-sm font-black text-white shadow-sm'
-										: 'rounded-md px-3 py-3 text-sm font-black text-slate-600 transition hover:bg-white hover:text-orange-700 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-orange-300'}
-								>
-									{pkg.code.replace('Paket ', '')}
-								</button>
-							{/each}
-						</div>
-						{#if selectedPricingPackage}
-							<div class="mt-5">
-								{@render pricingPackageCard(selectedPricingPackage)}
-							</div>
-						{/if}
-					</div>
-
-					<div class="mt-12 hidden gap-5 lg:grid lg:grid-cols-2 xl:grid-cols-4">
+					<div class="mt-12 grid gap-5 lg:grid-cols-2 xl:grid-cols-4">
 						{#each pricingPackages as pkg (pkg.code)}
 							{@render pricingPackageCard(pkg)}
 						{/each}
