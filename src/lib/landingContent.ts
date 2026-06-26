@@ -282,7 +282,7 @@ export const defaultLandingContent: LandingContent = {
 				title: 'Nushafest 2025',
 				description:
 					'Dokumentasi edukasi publik bersama komunitas yang tertarik pada aset digital halal.',
-				image: '/events/nushafest.png',
+				image: '/events/nushafest-3.jpeg',
 				participants: 2000,
 				participantLabel: '2.000+ peserta'
 			},
