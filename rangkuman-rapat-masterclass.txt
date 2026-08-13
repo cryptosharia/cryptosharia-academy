@@ -1,0 +1,35 @@
+Berdasarkan dokumen notulensi dari URL dan foto catatan rapat, berikut adalah Rangkuman Eksekutif dan Poin Tindak Lanjut (Action Items) terkait Persiapan Masterclass:
+
+1. Evaluasi & Perombakan Landing Page
+- Hook 3 Detik Pertama: Bagian paling atas (hero section) belum cukup menarik perhatian. Arahan dari Bang Adi adalah memperbaiki hook ini dan memperjelas value proposition sebelum langsung masuk ke materi.
+- Tombol CTA: Warna tombol "Lihat Kurikulum" di bagian awal perlu diubah agar lebih menonjol.
+- Testimoni: Penggunaan screenshot tidak mobile-friendly. Solusinya: Ubah format testimoni menjadi teks dengan format italic, serta buat dalam bentuk slider/auto-swipe.
+
+2. Evaluasi Strategi Harga (Tiering Pricing)
+Banyak leads yang keberatan jika hanya ada satu opsi harga penuh (Rp 3.000.000). Solusinya adalah membuat Opsi Skema Paket Bertingkat:
+- Paket A (Rp 500.000): Hanya Kelas A
+- Paket B (Rp 1.000.000): Kelas A + B
+- Paket C (Rp 1.500.000): Kelas A + B + C
+- Paket D (Rp 2.000.000): Kelas A + B + C + D
+- Paket E (Rp 3.000.000 - Paket Lengkap): Semua kelas + Recording seumur hidup + Coaching 1 bulan + FGD langsung dengan mentor.
+
+3. Implementasi AI Chatbot
+- Usulan Daffa Ilhami disetujui: Rapat sepakat untuk memasang AI Customer Service (chatbot) di landing page untuk mengurangi friksi calon peserta yang diarahkan ke admin WA.
+- Kebutuhan: Membangun knowledge base yang berisi informasi materi, jadwal, benefit, FAQ, dan harga.
+
+4. Penetapan Susunan Petugas & Mentor (Fix)
+- Mentor Masterclass: Axell, Rifat, Fikri, Adam, dan Daffa Ilhami.
+- MC: Gholib, Adi, Haidar
+- Host: Faiqoh
+- Co-Host: Amira / tim akhwat lainnya
+- Live Report: Bergantian antara Host dan Co-Host.
+
+5. Update Divisi & Modul
+- Modul: Wajib cross-check materi sebelum hari-H. Jika desain final belum selesai, gunakan draft konten sementara.
+- Marketing: Pertimbangkan pembuatan grup affiliate untuk jangkauan penjualan.
+- Media: Merencanakan webinar pemanasan (Road to Masterclass) tentang TradingView.
+- Komunitas: Follow-up dengan Indodax (lanjutan 19 Juni 2026) dan kerja sama dengan UI.
+
+Poin Utama Perhatian Pimpinan (Highlight):
+"Tolong komunikasinya kita perbaiki yaa, dua arah harus enak."
+Ada penekanan kuat bahwa komunikasi antar anggota dan antar divisi harus diperbaiki karena timeline Masterclass tinggal sekitar 1 pekan lagi.

@@ -1,0 +1,45 @@
+Berdasarkan analisis mendalam dari website Glosia (https://glosia.biz.id/) dan Dokumentasinya (https://glosia.biz.id/docs), Glosia adalah sebuah platform AI Customer Service berbasis Retrieval-Augmented Generation (RAG).
+
+Untuk website Cryptosharia Academy, ada banyak fitur dan nilai tambah dari Glosia yang bisa langsung kita manfaatkan secara strategis.
+
+Berikut adalah rincian detail apa saja yang bisa kita manfaatkan:
+
+1. Pemasangan Customer Service AI Tanpa Repot (Otomatisasi 24/7)
+Kita bisa memanfaatkan Glosia untuk menangani pertanyaan calon siswa di Cryptosharia Academy kapan saja tanpa perlu CS manusia (human agent) yang standby 24 jam.
+- Pendekatan Bebas Gesekan (Frictionless): Glosia menawarkan chat 100% anonim tanpa form. Pengunjung tidak perlu menginput email atau nomor WhatsApp sebelum bertanya. Ini akan meningkatkan interaksi (engagement) calon siswa di website Anda.
+- Akurasi Tinggi Tanpa Halusinasi (RAG System): Bot hanya akan menjawab berdasarkan sumber data/dokumen yang kita berikan. Jika informasinya tidak ada di dokumen, bot akan mengatakan tidak tahu. Bot juga akan mencantumkan sumber dokumennya di setiap jawaban.
+
+2. Membangun Basis Pengetahuan (Knowledge Base) Spesifik Academy
+Kita dapat mengunggah berbagai macam dokumen ke sistem Glosia untuk melatih chatbot tersebut khusus bagi kebutuhan Cryptosharia Academy:
+- Dokumen Kurikulum/Silabus: File PDF tentang apa saja yang dipelajari, durasi kelas, dan roadmap pembelajaran.
+- Dokumen Harga & Paket Pembelajaran: Informasi mengenai biaya kursus, opsi cicilan, diskon promo, atau beasiswa.
+- Kebijakan (Terms & Conditions): Aturan kelas, kebijakan pengembalian dana (refund), syarat kelulusan.
+- Format yang Didukung: PDF, teks mentah (raw text), atau menautkan URL dari halaman web akademi itu sendiri.
+
+3. Kustomisasi Persona Bot (Sesuai Identitas Brand)
+Karena ini adalah akademi dengan niche kripto dan syariah, kita bisa memanfaatkan fitur kustomisasi Glosia:
+- Gaya Bahasa: Kita bisa mengatur agar bot membalas dengan nada yang profesional, edukatif, dan ramah (misalnya menggunakan sapaan "Halo, Sobat Crypto").
+- Visual (Warna & Avatar): Kita bisa mengubah warna dominan widget Glosia agar selaras dengan palet warna UI Cryptosharia Academy. Avatar bot juga bisa diubah menggunakan logo akademi.
+- Pesan Sapaan (Greeting): Kita bisa mengubah pesan pertama yang muncul ketika pengunjung membuka chat (tersedia di Paket Pro).
+
+4. Dua Opsi Tampilan Widget
+Glosia menyediakan 2 opsi pemasangan yang sangat cocok untuk aplikasi Svelte Anda:
+- Mode Floating Bubble: Ikon chat melayang di pojok kanan/kiri bawah layar. Sangat cocok diletakkan di Navbar atau layout utama agar muncul di semua halaman.
+- Mode On-Page Widget: Tampilan chat yang "tertanam" langsung di dalam halaman tertentu (misal halaman /bantuan).
+
+5. Instalasi Sangat Mudah di Svelte
+Hanya dengan meletakkan tag <script> bawaan Glosia (seperti <script async src="https://glosia.biz.id/embed/..."></script>) di dalam file root HTML Svelte Anda (biasanya app.html), chatbot akan langsung bekerja.
+
+6. Analitik & Riwayat Percakapan
+Kita bisa memanfaatkan dashboard Glosia untuk melihat apa saja yang paling sering ditanyakan oleh pengunjung.
+- Insight Calon Siswa: Dari riwayat chat, kita bisa mengetahui materi apa yang paling membingungkan atau fitur apa yang paling diharapkan, yang kemudian bisa menjadi bahan evaluasi perbaikan copywriting di Landing Page.
+
+7. Opsi Paket yang Bisa Dimanfaatkan
+- Tahap Awal (Testing): Paket Starter (Gratis). Mendapatkan 1 bot, 100 chat/bulan, dan 3 dokumen (maksimal 10MB).
+- Peluncuran (Launch): Promo Early Access (1 bulan gratis untuk paket Plus). 3.000 chat/bulan, 10 dokumen, dan fitur kustomisasi Persona/Avatar.
+
+Rekomendasi Langkah Selanjutnya:
+1. Daftar/Login ke dashboard Glosia.
+2. Kumpulkan Dokumen (PDF kurikulum, FAQ, dll).
+3. Setup Bot, upload dokumen, dan sesuaikan Persona.
+4. Pasang Script Tag dari Glosia ke dalam SvelteKit (app.html).

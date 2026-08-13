@@ -1,0 +1,179 @@
+Rekomendasi animasi scrolling terbaik
+1. Saat section mulai masuk viewport
+
+Container utama muncul halus:
+
+fade in + translateY 40px → 0
+border orange glow tipis muncul
+background radial glow orange sangat lembut
+
+Jangan terlalu ramai. Kesan yang dicari: premium, mahal, eksklusif.
+
+2. Kolom kiri dibuat paling dramatis
+
+Urutan animasi:
+
+Promo Bundling pill muncul dulu
+↓
+Judul "Paket Bundling Masterclass" fade-up
+↓
+Total Value Rp5.000.000 muncul
+↓
+Garis coret harga lama dianimasikan dari kiri ke kanan
+↓
+Harga Rp3.000.000 muncul besar dengan count-up / scale sedikit
+↓
+CTA button muncul terakhir
+
+Bagian harga ini harus jadi highlight utama.
+
+Saran detail:
+
+Rp5.000.000:
+opacity 0 → 1
+lalu garis coret bergerak width 0% → 100%
+
+Rp3.000.000:
+scale 0.92 → 1
+opacity 0 → 1
+sedikit glow orange/white saat selesai
+
+Ini membuat user merasa:
+“oh value-nya 5 juta, sekarang cuma 3 juta.”
+
+3. Kolom “Yang Didapat” muncul stagger satu per satu
+
+Jangan langsung muncul semua. Buat checklist muncul berurutan:
+
+check icon pop-in
+teks slide dari kiri 12px
+delay antar item 0.12s - 0.18s
+
+Contoh feel-nya:
+
+✓ 4 Modul / 8 Sesi Live Masterclass
+✓ Akses Materi & Rekaman Kelas
+✓ FGD & Mentoring bersama Para Mentor
+✓ Sertifikat Kelulusan Program
+✓ Akses Networking Komunitas Eksklusif CryptoSharia
+
+Checklist ini sebaiknya muncul setelah harga promo tampil, supaya alurnya:
+
+Harga → apa yang didapat → bonus tambahan
+4. Kolom “Bonus Tambahan Spesial” dibuat lebih playful
+
+Karena pakai ikon hadiah, animasinya bisa sedikit lebih hidup:
+
+gift icon rotate kecil -8° → 0°
+scale 0.8 → 1
+teks fade-up
+
+Tapi tetap jangan terlalu kartun. Cukup subtle.
+
+Bonus bisa muncul setelah checklist utama selesai.
+
+Urutan bagusnya:
+
+Member Discord Premium
+↓
+E-Book Riset Crypto
+↓
+Template Jurnal Trading
+↓
+Framework Screening Syariah
+5. Buat section ini “sticky / pinned” di desktop
+
+Ini yang paling bikin scrolling terasa mahal.
+
+Saat user scroll ke bagian ini:
+
+section stay/pinned selama ±1.2 sampai 1.8 layar
+animasi berjalan bertahap
+setelah semua item muncul, baru lanjut ke section berikutnya
+
+Jadi bukan sekadar lewat cepat.
+
+Alur scroll-nya:
+
+0%   container masuk
+20%  harga lama dicoret
+35%  harga promo muncul
+50%  list Yang Didapat muncul
+75%  list Bonus muncul
+90%  CTA button aktif / glow
+100% lanjut section berikutnya
+
+Kalau pakai GSAP, ini cocok pakai ScrollTrigger dengan pin: true.
+
+6. CTA button diberi efek akhir yang halus
+
+Button “Amankan Kursi Sekarang” jangan animasi terus-menerus terlalu agresif. Cukup:
+
+setelah semua bonus muncul:
+button scale 1 → 1.03 → 1
+arrow geser kanan 4px
+orange glow tipis
+
+Hover:
+
+button naik 2px
+shadow orange lebih kuat
+arrow bergerak ke kanan
+
+Ini memberi dorongan klik tanpa terlihat murahan.
+
+7. Divider tengah bisa dianimasikan
+
+Garis vertikal orange di tengah bisa dibuat:
+
+height 0% → 100%
+opacity 0 → 1
+
+Muncul setelah card kiri masuk, sebelum list kanan muncul.
+
+Ini kecil, tapi membuat layout terasa lebih intentional.
+
+8. Mobile jangan pakai pin terlalu berat
+
+Untuk mobile, lebih aman:
+
+tanpa sticky/pin
+pakai fade-up stagger biasa
+harga tetap paling dramatis
+CTA muncul setelah semua benefit
+
+Karena pinned scroll di mobile kadang terasa berat dan bikin UX aneh.
+
+Formula animasi paling ideal
+
+Menurutku urutan terbaiknya begini:
+
+1. Section fade-up masuk
+2. Border orange glow muncul
+3. Promo pill muncul
+4. Judul muncul
+5. Harga lama muncul lalu dicoret
+6. Harga promo pop-in
+7. Divider tengah tumbuh
+8. Checklist “Yang Didapat” muncul satu per satu
+9. Bonus muncul satu per satu
+10. CTA button glow halus
+Yang sebaiknya dihindari
+
+Jangan semua elemen fade-in bersamaan, karena terasa template.
+
+Jangan terlalu banyak bounce, karena produk masterclass crypto syariah lebih cocok terasa premium, tenang, dan terpercaya.
+
+Jangan bikin harga terlalu banyak berkedip. Cukup satu kali highlight.
+
+Jangan membuat gift icon animasi terus-menerus, nanti terlihat seperti landing page murahan.
+
+Saran paling kuat dariku
+
+Buat section ini sebagai pinned pricing moment.
+
+Saat user scroll, section berhenti sebentar, lalu cerita value-nya dibuka pelan-pelan:
+
+Harga asli → harga promo → isi paket → bonus → CTA
+
+Ini jauh lebih kuat daripada sekadar card biasa yang muncul dari bawah. Section ini akan terasa seperti “momen penawaran utama” di landing page.

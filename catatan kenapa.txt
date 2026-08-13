@@ -1,0 +1,219 @@
+Alur animasi yang paling bagus
+1. Background pattern bergerak sangat halus
+
+Karena background-nya sudah punya pattern kecil, ini bisa dibuat hidup sedikit:
+
+background pattern bergerak sangat pelan diagonal
+opacity rendah
+tidak mencolok
+
+Efeknya bikin section terasa tidak statis, tapi tetap premium.
+
+Jangan sampai pattern terlalu kelihatan bergerak, cukup seperti ambience.
+
+2. Judul muncul dengan highlight warna
+
+Bagian:
+
+Kenapa Harus Crypto Sharia Masterclass?
+
+Animasi:
+
+judul fade-up dari bawah
+kata "Crypto Sharia Masterclass" muncul sedikit lebih lambat
+warna gold/orange glow tipis sebentar
+
+Urutan bagus:
+
+"Kenapa Harus" muncul dulu
+lalu "Crypto Sharia Masterclass?" muncul dengan highlight
+
+Ini membuat headline terasa lebih berkelas.
+
+3. Subtitle muncul setelah judul
+
+Subtitle jangan muncul bareng judul. Kasih delay sedikit:
+
+opacity 0 → 1
+translateY 16px → 0
+delay 0.2s setelah judul
+
+Tujuannya supaya user membaca headline dulu, baru penjelasan.
+
+4. Card benefit muncul stagger dari tengah ke luar
+
+Ini bagian paling penting.
+
+Karena ada 6 card, jangan muncul dari kiri ke kanan biasa saja. Menurutku lebih bagus pakai pola:
+
+card tengah atas muncul dulu
+lalu kiri-kanan
+lalu baris kedua
+
+Atau urutan natural:
+
+1. Materi Terstruktur
+2. Sharia Compliant
+3. Tugas Praktik Langsung
+4. FGD & Mentoring
+5. Komunitas Global
+6. Sertifikat Kelulusan
+
+Animasi tiap card:
+
+opacity 0 → 1
+translateY 35px → 0
+scale 0.96 → 1
+border orange menyala tipis saat card selesai muncul
+
+Delay antar card:
+
+0.12s – 0.16s
+
+Jangan terlalu lambat, nanti scrolling terasa berat.
+
+5. Icon card pakai micro animation
+
+Ikon kecil di atas card bisa dibuat lebih hidup:
+
+icon scale 0.7 → 1
+sedikit rotate -6° → 0°
+background icon glow tipis
+
+Tapi hanya satu kali saat card muncul.
+
+Untuk hover desktop:
+
+card naik 4px
+border orange lebih terang
+icon background glow
+judul sedikit lebih terang
+
+Ini bagus untuk membuat card terasa interaktif.
+
+6. Card diberi efek “spotlight hover”
+
+Saat cursor masuk card:
+
+radial light mengikuti mouse di dalam card
+warna amber/orange sangat lembut
+
+Ini cocok banget untuk style crypto/fintech premium.
+
+Contoh feel:
+
+card gelap
+border orange
+saat hover ada cahaya halus mengikuti cursor
+
+Tapi jangan sampai seperti game. Tetap halus.
+
+7. Quote card muncul sebagai penutup section
+
+Bagian quote Warren Buffett jangan muncul bersamaan dengan 6 card. Jadikan dia “closing statement”.
+
+Alurnya:
+
+6 benefit selesai muncul
+↓
+quote card fade-up dari bawah
+↓
+foto muncul
+↓
+garis orange vertikal tumbuh
+↓
+teks quote muncul
+↓
+nama WARREN BUFFETT muncul terakhir
+
+Animasi detail:
+
+quote card:
+opacity 0 → 1
+translateY 45px → 0
+scale 0.98 → 1
+
+garis orange:
+height 0% → 100%
+
+teks quote:
+clip/reveal dari kiri ke kanan atau fade-up per baris
+
+Ini bikin quote terasa seperti kesimpulan:
+“Investasi terbaik adalah investasi ke diri sendiri.”
+
+8. Quote mark besar di kanan dibuat parallax
+
+Tanda kutip besar di kanan atas quote card bisa dibuat:
+
+bergerak naik sedikit saat scroll
+opacity 0.15 → 0.3
+
+Atau saat quote muncul:
+
+scale 0.8 → 1
+opacity 0 → 0.25
+
+Ini kecil, tapi memberi kesan editorial/premium.
+
+9. Gunakan scroll reveal, jangan pinned terlalu lama
+
+Karena section pricing sebelumnya lebih cocok dijadikan pinned moment, section ini sebaiknya tidak terlalu lama dipin.
+
+Untuk section ini lebih enak:
+
+normal scroll
+smooth reveal
+sedikit parallax
+staggered cards
+quote closing
+
+Kalau terlalu banyak section pinned, landing page terasa berat dan melelahkan.
+
+Formula animasi final yang aku rekomendasikan
+1. Background pattern bergerak pelan
+2. Heading fade-up
+3. Highlight "Crypto Sharia Masterclass" menyala halus
+4. Subtitle fade-up
+5. Card benefit muncul satu per satu
+6. Icon card pop-in halus
+7. Border card glow sebentar
+8. Quote card muncul setelah semua benefit
+9. Garis orange quote tumbuh
+10. Quote text reveal
+Detail feel yang paling cocok
+
+Untuk section ini, mood animasinya:
+
+educational
+premium
+trust-building
+calm confidence
+tidak agresif
+tidak terlalu salesy
+
+Karena ini bukan bagian closing/CTA, jangan terlalu banyak efek mendesak. Biarkan user merasa:
+
+“Oh, program ini memang terstruktur, serius, dan tidak asal ngajarin crypto.”
+
+Yang sebaiknya dihindari
+
+Jangan semua card muncul sekaligus.
+
+Jangan pakai bounce berlebihan.
+
+Jangan bikin icon muter terus-menerus.
+
+Jangan terlalu banyak glow orange, karena section bisa terlihat murahan.
+
+Jangan quote muncul dari awal, karena nanti kehilangan fungsi sebagai penutup.
+
+Saran tambahan desain
+
+Aku juga akan pertimbangkan 2 hal kecil:
+
+Pertama, card bagian bawah bisa diberi sedikit jarak lebih lega dari quote, supaya section tidak terasa padat.
+
+Kedua, pastikan foto dan quote punya hak pakai yang aman. Kalau tidak yakin, bisa diganti dengan ilustrasi/faceless icon “investment in knowledge” agar lebih aman secara branding.
+
+Secara keseluruhan, section ini paling bagus dibuat sebagai “alasan percaya” yang terbuka perlahan saat scroll, lalu ditutup dengan quote card sebagai penguat emosional.

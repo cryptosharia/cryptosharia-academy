@@ -1,0 +1,406 @@
+Penilaian Umum
+
+Section ini sudah punya pondasi visual yang kuat:
+
+Warna orange sangat standout.
+Headline cukup jelas.
+CTA “Daftar Sekarang” mudah terlihat.
+Elemen angka 10 di kanan sudah mendukung pesan “10 peserta pertama”.
+Background pattern memberi kesan modern dan tidak polos.
+
+Tapi dari sisi UI/UX dan conversion, bagian ini masih bisa dibuat jauh lebih kuat, terutama karena section ini membawa pesan penting: harga spesial dan kuota terbatas.
+
+Menurut saya, animasi scrolling di bagian ini jangan sekadar “fade in”, tapi harus memperkuat rasa:
+
+“Slot ini terbatas, cepat ambil sebelum habis.”
+
+1. Masukan UI/UX Utama
+A. Badge “LIMITED SLOT” sebaiknya dibuat lebih relevan dengan bahasa landing page
+
+Saat ini teksnya:
+
+LIMITED SLOT
+
+Karena mayoritas copy memakai bahasa Indonesia, akan lebih natural kalau diganti menjadi:
+
+KUOTA TERBATAS
+
+Atau:
+
+HANYA 10 SLOT PERTAMA
+
+Lebih kuat lagi:
+
+PROMO 10 PESERTA PERTAMA
+
+Ini lebih langsung menjelaskan manfaatnya, bukan hanya memberi label.
+
+B. Headline sudah bagus, tapi bisa dibuat lebih tajam
+
+Headline sekarang:
+
+Harga Spesial untuk 10 Peserta Pertama
+
+Sudah jelas, tapi masih terasa informatif saja. Untuk landing page, bisa dibuat lebih mendorong urgency.
+
+Alternatif yang lebih kuat:
+
+Harga Spesial Khusus 10 Peserta Pertama
+
+Atau:
+
+Kuota Promo Terbatas untuk 10 Peserta Pertama
+
+Atau yang lebih direct:
+
+Ambil Harga Spesial Sebelum 10 Slot Pertama Habis
+
+Kalau ingin tetap clean, saya rekomendasikan:
+
+Harga Spesial Khusus 10 Peserta Pertama
+
+Karena singkat, jelas, dan tetap formal.
+
+C. Subheadline perlu sedikit dibuat lebih emosional
+
+Teks sekarang:
+
+Kuota terbatas untuk menjaga kualitas mentoring dan diskusi tetap optimal.
+
+Ini bagus, karena menjelaskan alasan kuota dibatasi. Tapi bisa dibuat lebih kuat:
+
+Kuota dibatasi agar sesi mentoring, diskusi, dan pendampingan peserta tetap maksimal.
+
+Atau:
+
+Slot sengaja dibatasi agar setiap peserta tetap mendapat ruang diskusi dan mentoring yang optimal.
+
+Saya lebih suka versi ini:
+
+Slot sengaja dibatasi agar setiap peserta mendapat ruang diskusi dan mentoring yang lebih optimal.
+
+Kalimat ini lebih manusiawi dan lebih terasa “premium”.
+
+D. CTA terlalu sendirian di kanan
+
+Tombol “Daftar Sekarang” sudah terlihat, tapi posisinya agak terlalu jauh dari headline. Secara visual, mata pengguna membaca dari kiri ke kanan, lalu harus lompat cukup jauh ke kanan.
+
+Saran:
+
+Desktop boleh tetap kanan, tapi beri elemen penghubung visual.
+Misalnya angka “10” di kanan dibuat lebih dominan, lalu CTA berada di dekat angka tersebut.
+Atau CTA dibuat dalam satu grup dengan teks kecil seperti:
+Promo terbatas
+[Daftar Sekarang →]
+
+Contoh struktur kanan:
+
+10
+Slot Promo Pertama
+
+[Daftar Sekarang →]
+
+Ini membuat sisi kanan tidak terasa kosong dan lebih bermakna.
+
+2. Masukan Design Visual
+A. Angka “10” sebaiknya dibuat lebih intentional
+
+Saat ini angka 10 besar di kanan terlihat sebagai dekorasi transparan. Bagus, tapi belum cukup “berbicara”.
+
+Saran desain:
+
+Angka 10 dibuat sedikit lebih terlihat.
+Tambahkan label kecil di dekatnya:
+10
+Slot Pertama
+
+Atau:
+
+10
+Peserta Pertama
+
+Jadi angka 10 bukan hanya background, tapi bagian dari pesan utama.
+
+Secara visual, bisa dibuat begini:
+
+Angka 10 besar tetap transparan.
+Di atasnya muncul teks kecil: PROMO SLOT
+Di bawahnya: PESERTA PERTAMA
+B. Background pattern sudah bagus, tapi animasinya harus halus
+
+Pattern di background memberi kesan tech/crypto. Untuk animasi, jangan dibuat bergerak terlalu ramai. Cukup:
+
+Pattern bergerak sangat pelan ke kanan/kiri saat scroll.
+Opacity pattern sedikit berubah.
+Gradient orange bisa bergeser tipis.
+
+Tujuannya agar section terasa hidup, tapi tidak mengganggu headline.
+
+C. Tambahkan depth/layer
+
+Saat ini section terasa cukup flat. Supaya lebih premium, bisa dibuat 3 layer:
+
+Layer belakang: angka 10 besar.
+Layer tengah: pattern orange.
+Layer depan: teks dan CTA.
+
+Saat scroll:
+
+Layer angka 10 bergerak lebih lambat.
+Pattern bergerak sedikit.
+Teks naik/fade in.
+CTA muncul terakhir.
+
+Ini memberi efek parallax yang elegan.
+
+3. Rekomendasi Animasi Scroll Terbaik
+
+Saya sarankan animasinya dibuat dengan konsep:
+
+“Scarcity Reveal Animation”
+Saat user scroll ke section ini, elemen muncul bertahap untuk membangun perhatian: badge → headline → subtext → angka 10 → CTA.
+
+Urutan Animasi yang Ideal
+Tahap 1 — Section masuk layar
+
+Saat bagian orange mulai masuk viewport:
+
+Background orange muncul dengan efek fade + slight scale.
+Pattern bergerak pelan dari kanan ke kiri.
+Section terasa “terbuka” secara halus.
+
+Efek:
+
+opacity: 0 → 1
+scale: 0.98 → 1
+duration: 0.6s
+
+Jangan terlalu dramatis.
+
+Tahap 2 — Badge muncul lebih dulu
+
+Badge “KUOTA TERBATAS” muncul pertama.
+
+Animasi:
+
+Fade in.
+Slide sedikit dari atas.
+Ada micro bounce kecil, tapi jangan berlebihan.
+
+Efek yang cocok:
+
+opacity: 0 → 1
+y: -12px → 0
+duration: 0.4s
+delay: 0.1s
+
+Kenapa badge dulu?
+
+Karena user langsung diberi sinyal bahwa ini bagian penting dan terbatas.
+
+Tahap 3 — Headline muncul per baris
+
+Headline:
+
+Harga Spesial Khusus
+10 Peserta Pertama
+
+Sebaiknya dibuat dua baris seperti sekarang. Saat scroll, animasinya:
+
+Baris pertama muncul.
+Baris kedua muncul 0.1–0.2 detik setelahnya.
+Bisa pakai efek clip reveal dari bawah, bukan sekadar fade.
+
+Efek visual:
+
+overflow hidden
+text naik dari bawah
+opacity naik
+
+Ini membuat headline terasa lebih premium.
+
+Tahap 4 — Subheadline muncul setelah headline
+
+Subheadline tidak perlu animasi ramai. Cukup:
+
+opacity: 0 → 1
+y: 12px → 0
+duration: 0.4s
+
+Subheadline harus muncul setelah headline agar hierarki bacanya rapi.
+
+Tahap 5 — Angka 10 muncul dari kanan
+
+Angka 10 besar di kanan bisa menjadi elemen animasi utama.
+
+Animasi yang saya rekomendasikan:
+
+Angka 10 awalnya berada sedikit di kanan.
+Saat scroll masuk, angka bergerak ke kiri.
+Opacity naik dari sangat transparan ke transparan sedang.
+Scale turun sedikit dari besar ke normal.
+
+Efek:
+
+x: 80px → 0
+scale: 1.08 → 1
+opacity: 0 → 0.16
+duration: 0.8s
+
+Jangan terlalu terang agar tidak mengalahkan CTA.
+
+Tahap 6 — CTA muncul terakhir
+
+Tombol “Daftar Sekarang” muncul terakhir agar menjadi tujuan akhir perhatian user.
+
+Animasi:
+
+Fade in.
+Slide sedikit dari bawah.
+Setelah muncul, beri micro-interaction.
+
+Contoh micro-interaction:
+
+Saat hover: tombol naik 2px.
+Shadow sedikit muncul.
+Arrow bergeser ke kanan 4px.
+
+Efek hover:
+
+transform: translateY(-2px)
+arrow: translateX(4px)
+
+Ini kecil, tapi terasa profesional.
+
+4. Animasi Scroll yang Lebih Kuat: Pin Section
+
+Kalau ingin lebih premium, section ini bisa dibuat pinned saat scroll sebentar.
+
+Maksudnya:
+
+Saat user scroll ke area ini, section orange “tertahan” selama 0.8–1.2 detik scroll, lalu elemen muncul bertahap.
+
+Urutannya:
+
+Scroll 0–20%:
+Background orange masuk.
+
+Scroll 20–40%:
+Badge dan headline muncul.
+
+Scroll 40–60%:
+Angka 10 muncul dari kanan.
+
+Scroll 60–80%:
+Subheadline muncul.
+
+Scroll 80–100%:
+CTA muncul dan siap diklik.
+
+Ini cocok kalau section ini sangat penting untuk conversion.
+
+Tapi catatan: jangan terlalu lama di-pin. Kalau terlalu lama, user merasa terganggu.
+
+Durasi ideal:
+
+Pin: 800–1200px scroll distance
+5. Rekomendasi Animasi per Elemen
+Elemen	Animasi Masuk	Fungsi UX
+Background orange	Fade + scale halus	Membuat section terasa hidup
+Pattern	Parallax lambat	Memberi nuansa dinamis
+Badge	Slide down + fade	Menarik perhatian awal
+Headline	Reveal per baris	Memperkuat pesan utama
+Subheadline	Fade up	Menjelaskan alasan promo
+Angka 10	Slide dari kanan + parallax	Menekankan kuota
+CTA	Fade up terakhir	Mengarahkan tindakan user
+Arrow CTA	Hover geser kanan	Memberi rasa interaktif
+6. Saran Layout yang Lebih Kuat
+Versi layout yang saya rekomendasikan
+
+Kiri:
+
+[KUOTA TERBATAS]
+
+Harga Spesial Khusus
+10 Peserta Pertama
+
+Slot sengaja dibatasi agar setiap peserta mendapat ruang diskusi dan mentoring yang lebih optimal.
+
+Kanan:
+
+10
+Peserta Pertama
+
+[Daftar Sekarang →]
+
+Ini lebih kuat daripada angka 10 hanya menjadi dekorasi.
+
+7. Saran Copy Final untuk Section Ini
+
+Saya sarankan pakai copy seperti ini:
+
+KUOTA TERBATAS
+
+Harga Spesial Khusus
+10 Peserta Pertama
+
+Slot sengaja dibatasi agar setiap peserta mendapat ruang diskusi dan mentoring yang lebih optimal.
+
+Daftar Sekarang →
+
+Atau versi yang lebih urgency:
+
+PROMO TERBATAS
+
+Harga Spesial untuk
+10 Pendaftar Pertama
+
+Setelah 10 slot pertama terpenuhi, harga akan kembali normal.
+
+Daftar Sekarang →
+
+Kalau memang benar harga naik setelah 10 peserta, versi kedua lebih kuat untuk conversion.
+
+8. Hal yang Perlu Dihindari
+Jangan terlalu banyak efek
+
+Karena section ini tujuannya conversion, animasi jangan sampai mengganggu klik. Hindari:
+
+Teks berputar.
+Angka 10 terlalu besar sampai menutup CTA.
+Pattern bergerak terlalu cepat.
+CTA muncul terlalu lambat.
+Animasi loop yang terlalu ramai.
+Efek glitch berlebihan.
+
+Untuk landing page premium, animasi yang bagus itu terasa halus, cepat, dan mendukung pesan.
+
+9. Rekomendasi Mobile View
+
+Di mobile, jangan pakai layout kiri-kanan. Buat menjadi stack:
+
+[KUOTA TERBATAS]
+
+Harga Spesial Khusus
+10 Peserta Pertama
+
+Slot sengaja dibatasi agar setiap peserta mendapat ruang diskusi dan mentoring yang lebih optimal.
+
+[Daftar Sekarang →]
+
+10
+
+Untuk mobile:
+
+Angka 10 bisa jadi background di bawah teks.
+CTA harus full-width atau minimal 80–100% lebar container.
+Jangan buat animasi horizontal terlalu jauh, karena layar kecil mudah terasa berantakan.
+Gunakan animasi fade-up sederhana.
+
+Mobile animation:
+
+Badge: fade up
+Headline: fade up
+Subheadline: fade up
+CTA: fade up
+Number 10: opacity reveal di background
