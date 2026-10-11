@@ -1,0 +1,44 @@
+{
+	"purpose": "DESIGN ONLY \u2014 NOT A SEED OR APPROVAL",
+	"baselineManifest": "../academy-phase1c/curated-content-manifest.example.json",
+	"curriculum": {
+		"proposedId": "pilot-fundamental-l1-c1-lesson1",
+		"subjectId": "fundamental",
+		"level": 1,
+		"chapterNumber": 1,
+		"lessonOrder": 1,
+		"parentId": null,
+		"scopeId": null,
+		"title": null,
+		"learningOutcomes": null,
+		"mappingVerified": false,
+		"contentVersion": 1
+	},
+	"asset": {
+		"privateEvidenceRecord": null,
+		"stage": "UNKNOWN",
+		"actualFinalDurationSeconds": null,
+		"instructorOwnershipVerified": false,
+		"embeddingPermissionApproved": false,
+		"captionStatus": "UNKNOWN",
+		"intendedDomainAvailabilityVerified": false
+	},
+	"review": {
+		"contentApprovedVersion": null,
+		"syariahRequired": "OWNER DECISION PENDING",
+		"syariahApprovedVersion": null,
+		"privateReviewerEvidenceRecord": null
+	},
+	"publication": {
+		"status": "unapproved-design",
+		"ready": false,
+		"blockers": [
+			"Curriculum identity/title/outcomes",
+			"Final edited asset and actual duration",
+			"Instructor ownership/embedding rights",
+			"Caption/accessibility",
+			"Content/syariah exact-version approval",
+			"Approved protected target availability"
+		]
+	}
+}
