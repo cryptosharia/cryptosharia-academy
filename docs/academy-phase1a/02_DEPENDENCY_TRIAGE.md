@@ -1,0 +1,38 @@
+# Phase 1A — dependency triage
+
+Audit registry 11 Oktober 2026. Baseline lock remote direproduksi: 14 affected package entries (2 critical, 9 high, 2 moderate, 1 low). Final lock: empat low, nol moderate/high/critical. Angka ini menghitung package entries, bukan empat vulnerability independen atau sertifikasi bebas risiko. `npm audit` final exit 1 / FAIL.
+
+Update mengikuti rentang semver major manifest yang ada. Firebase tetap major 12; Kit tetap major 2; tidak memakai `npm audit fix --force`. `@firebase/rules-unit-testing@5.0.2` dipilih untuk peer Firebase 12. Override eksplisit `@grpc/grpc-js: 1.13.6` diperlukan karena constraint upstream masih mengarah pada versi terdampak; npm menyarankan downgrade Firebase yang tidak diambil. Kompatibilitas override diuji dengan operasi SDK Auth/Firestore, bukan hanya audit count.
+
+## Seluruh finding baseline
+
+Chain berikut adalah jalur representatif dari `npm explain`; jalur peer/compat tambahan juga ada. Reachability adalah tinjauan source dan peran dependency, bukan exploit test pada production.
+
+| Package baseline / severity        | Chain representatif                                              | Reachability / batas bukti                                                                                                               | Final locked version / hasil                                  |
+| ---------------------------------- | ---------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
+| `@grpc/grpc-js` high               | Firebase → Firestore → gRPC                                      | Transport SDK Node; dijalankan hanya terhadap emulator dalam suite ini. Exploit production NOT VERIFIED                                  | 1.13.6, PASS untuk advisory baseline                          |
+| `@sveltejs/kit` moderate           | Direct framework / adapter peer                                  | HTTP/SSR framework digunakan aplikasi; bukan dependency yang dapat dianggap tidak terjangkau                                             | 2.70.3, direct advisories patched; residual cookie tetap FAIL |
+| `brace-expansion` high             | ESLint → minimatch → brace-expansion; juga tracing build         | Tooling/build globbing; tidak ditemukan penggunaan langsung oleh aplikasi runtime                                                        | 5.0.12, PASS                                                  |
+| `cookie` low                       | Kit → cookie                                                     | Framework HTTP cookie handling; tidak ada custom cookie name/path/domain API yang ditemukan di source. Tidak membuktikan nonreachability | 0.6.0, FAIL                                                   |
+| `devalue` high                     | Svelte / Kit → devalue                                           | Serialization SSR framework digunakan; bukan sekadar dev dependency                                                                      | 5.9.4, PASS                                                   |
+| `nanoid` high                      | Vite → PostCSS → nanoid                                          | CSS tooling ID generation; aplikasi tidak mengimpor langsung                                                                             | 3.3.20, PASS                                                  |
+| `postcss` high                     | Vite → PostCSS                                                   | CSS parsing/build dan dev server; input sumber build, bukan parser runtime aplikasi langsung                                             | 8.5.29, PASS                                                  |
+| `postcss-selector-parser` moderate | ESLint Svelte → svelte-eslint-parser → selector parser           | Lint/source analysis; tidak ada import runtime aplikasi langsung                                                                         | 7.1.6, PASS                                                   |
+| `protobufjs` high                  | Firebase → Firestore → proto-loader → protobufjs                 | Transport Node Firestore; suite emulator melakukan operasi nyata                                                                         | 7.6.6, PASS                                                   |
+| `source-map-js` high               | Vite → PostCSS → source-map-js                                   | Source maps dalam CSS tooling; tidak ada runtime import langsung                                                                         | 1.2.2, PASS                                                   |
+| `tar` critical                     | adapter-vercel → nft → node-pre-gyp → tar                        | Build/install extraction chain; build lokal dijalankan. Tidak dinilai sebagai client runtime                                             | 7.5.22, PASS                                                  |
+| `undici` high                      | Vercel Blob → undici                                             | Server upload transport; endpoint ada, tetapi upload eksternal diblok dalam test mode. Tidak melakukan upload nyata                      | 6.29.0, PASS                                                  |
+| `vite` high                        | Direct dev/build tool                                            | Dev-server surface dan build; server pengujian hanya loopback, tidak diekspos publik                                                     | 8.3.4, PASS                                                   |
+| `websocket-driver` critical        | Firebase → Realtime Database → faye-websocket → websocket-driver | Source tidak mengimpor Realtime Database. Tidak mengklaim tree-shaking/deployed artifact nonreachability tanpa evidence                  | 0.7.5, PASS                                                   |
+
+PASS pada baris patch berarti advisory yang dilaporkan baseline tidak muncul lagi pada versi locked saat audit, bukan seluruh risiko package sudah hilang. Rincian raw advisory/chain disimpan di evidence lokal privat; manifest final juga memuat Svelte 5.57.2, adapter-vercel 6.3.4 dan Vercel Blob 2.8.1.
+
+## Empat low yang tersisa
+
+Satu advisory cookie, [GHSA-pxg6-pf52-xh8x](https://github.com/advisories/GHSA-pxg6-pf52-xh8x), dipropagasikan menjadi entries `cookie`, `@sveltejs/kit`, `@sveltejs/adapter-vercel`, `@sveltejs/adapter-auto`. Cookie 0.6.0 berada di bawah patched 0.7.0. Adapter-auto tidak dipakai `svelte.config.js`, tetapi tetap ada dalam dependency tree; menghapusnya saja tidak menyelesaikan cookie di Kit.
+
+Perbaikan yang ditawarkan registry mencakup Kit 3.0.1 dan major adapter terkait. Ini berada di luar patch kompatibel Phase 1A. Tidak memaksakan transitive cookie API upgrade tanpa memverifikasi kontrak framework.
+
+Mitigasi sementara: Academy tetap default-OFF dan live Academy tidak diaktifkan; local dev hanya loopback; tidak memperkenalkan custom cookie configuration atau checkout/session flow baru. Ini pembatasan exposure, bukan remediasi advisory atau acceptance risiko production. Owner perlu menyetujui scope major migration, reviewer, framework/adapter compatibility checks dan target runtime sebelum preview/pilot. Residual-risk approval: BLOCKED; deployment reachability/exploitability: NOT VERIFIED.
+
+Validasi setelah patch: ci, check, lint, unit tests, rules emulator, dan build test Linux lulus. Review ulang registry dan audit pada commit/target berikutnya karena advisory dapat berubah.
