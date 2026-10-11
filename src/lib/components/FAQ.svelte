@@ -49,7 +49,7 @@
 		</div>
 
 		<div class="space-y-4">
-			{#each faqs as faq, i}
+			{#each faqs as faq, i (i)}
 				<div
 					class="overflow-hidden rounded-2xl border border-slate-200 transition-all duration-300 dark:border-gray-800 {openIndex ===
 					i

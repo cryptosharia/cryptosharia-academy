@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { resolve } from '$app/paths';
 	import { goto, beforeNavigate } from '$app/navigation';
 	import { onMount } from 'svelte';
 	import { ADMIN_EMAILS } from '$lib/admin';
@@ -50,7 +51,7 @@
 
 	$effect(() => {
 		if (!userAuth.loading && !isAdmin) {
-			goto('/');
+			goto(resolve('/'));
 		}
 	});
 
@@ -313,7 +314,7 @@
 					</p>
 				</div>
 				<a
-					href="/"
+					href={resolve('/')}
 					target="_blank"
 					class="inline-flex shrink-0 items-center gap-1.5 rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm font-semibold text-gray-700 transition-all hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-700"
 				>
@@ -400,7 +401,7 @@
 						<option value="global">SEO & WhatsApp</option>
 					</optgroup>
 					<optgroup label="Konten Landing Page">
-						{#each SECTION_ORDER as id, idx}
+						{#each SECTION_ORDER as id, idx (idx)}
 							<option value={id}>{idx + 1}. {SECTION_LABELS[id]}</option>
 						{/each}
 					</optgroup>
@@ -1165,7 +1166,7 @@
 			</div>
 		{:else}
 			<div class="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-3">
-				{#each getList() as _, i}
+				{#each getList() as item, i (item)}
 					<div
 						class="space-y-2 rounded-lg border border-gray-200 bg-gray-50 p-2 dark:border-gray-700 dark:bg-gray-900"
 					>
@@ -1417,7 +1418,7 @@
 				}))
 		)}
 		<div class="mt-3 space-y-2">
-			{#each content.hero.highlights as h, i}
+			{#each content.hero.highlights as h, i (i)}
 				<div class="flex items-center gap-2 {cardClass}">
 					<input bind:value={h.symbol} placeholder="Simbol" class={inputClass} />
 					<input bind:value={h.performance} placeholder="cth. +400%" class={inputClass} />
@@ -1453,7 +1454,7 @@
 				}))
 		)}
 		<div class="mt-3 space-y-3">
-			{#each content.authority.activities as a, i}
+			{#each content.authority.activities as a, i (i)}
 				<div class="space-y-2 {cardClass}">
 					<div class="flex items-center justify-between">
 						<span class="text-[10px] font-bold text-gray-400">ITEM {i + 1}</span>
@@ -1485,7 +1486,7 @@
 				(content.authority.cards = addItem(content.authority.cards, { label: '', description: '' }))
 		)}
 		<div class="mt-3 space-y-3">
-			{#each content.authority.cards as c, i}
+			{#each content.authority.cards as c, i (i)}
 				<div class="space-y-2 {cardClass}">
 					<div class="flex items-center justify-between">
 						<span class="text-[10px] font-bold text-gray-400">KARTU {i + 1}</span>
@@ -1523,7 +1524,7 @@
 				}))
 		)}
 		<div class="mt-3 space-y-3">
-			{#each content.valueProps.items as item, i}
+			{#each content.valueProps.items as item, i (i)}
 				<div class="space-y-2 {cardClass}">
 					<div class="flex items-center justify-between">
 						<span class="text-[10px] font-bold text-gray-400">ITEM {i + 1}</span>
@@ -1589,7 +1590,7 @@
 				}))
 		)}
 		<div class="mt-3 space-y-3">
-			{#each content.testimonials.items as item, i}
+			{#each content.testimonials.items as item, i (i)}
 				<div class="space-y-2 {cardClass}">
 					<div class="flex items-center justify-between">
 						<span class="text-[10px] font-bold text-gray-400">ITEM {i + 1}</span>
@@ -1645,7 +1646,7 @@
 				(content.usp.items = addItem(content.usp.items, { label: '', title: '', description: '' }))
 		)}
 		<div class="mt-3 space-y-3">
-			{#each content.usp.items as item, i}
+			{#each content.usp.items as item, i (i)}
 				<div class="space-y-2 {cardClass}">
 					<div class="flex items-center justify-between">
 						<span class="text-[10px] font-bold text-gray-400">ITEM {i + 1}</span>
@@ -2060,7 +2061,7 @@
 			() => (content.curriculum.outcomes = [...content.curriculum.outcomes, ''])
 		)}
 		<div class="mt-3 space-y-2">
-			{#each content.curriculum.outcomes as _, i}
+			{#each content.curriculum.outcomes as item, i (item)}
 				<div class="flex items-center gap-2">
 					<span class="text-xs font-bold text-gray-400">{i + 1}.</span>
 					<input
@@ -2120,7 +2121,7 @@
 			() => (content.curriculum.topics = [...content.curriculum.topics, ''])
 		)}
 		<div class="mt-3 space-y-2">
-			{#each content.curriculum.topics as _, i}
+			{#each content.curriculum.topics as item, i (item)}
 				<div class="flex items-center gap-2">
 					<span class="text-xs font-bold text-gray-400">{i + 1}.</span>
 					<input
@@ -2200,7 +2201,7 @@
 				}))
 		)}
 		<div class="mt-3 space-y-3">
-			{#each content.instructors.items as instructor, i}
+			{#each content.instructors.items as instructor, i (i)}
 				<div class="space-y-3 {cardClass}">
 					<div class="flex items-center justify-between">
 						<span class="text-[10px] font-bold text-gray-400">PEMATERI {i + 1}</span>
@@ -2227,7 +2228,7 @@
 								+ Tambah
 							</button>
 						</div>
-						{#each instructor.highlights as highlight, j}
+						{#each instructor.highlights as highlight, j (highlight)}
 							<div class="flex items-center gap-2">
 								<input
 									bind:value={instructor.highlights[j]}
@@ -2288,7 +2289,7 @@
 			() => (content.faq.items = addItem(content.faq.items, { question: '', answer: '' }))
 		)}
 		<div class="mt-3 space-y-3">
-			{#each content.faq.items as item, i}
+			{#each content.faq.items as item, i (i)}
 				<div class="space-y-2 {cardClass}">
 					<div class="flex items-center justify-between">
 						<span class="text-[10px] font-bold text-gray-400">FAQ {i + 1}</span>

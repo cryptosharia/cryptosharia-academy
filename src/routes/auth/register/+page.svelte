@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { resolve } from '$app/paths';
 	import { goto } from '$app/navigation';
 	import { userAuth } from '$lib/auth.svelte';
 
@@ -18,7 +19,7 @@
 		errorMsg = '';
 		try {
 			await userAuth.loginWithGoogle();
-			goto('/');
+			goto(resolve('/'));
 		} catch {
 			errorMsg = userAuth.error || 'Gagal daftar dengan Google';
 		} finally {
@@ -33,7 +34,7 @@
 		errorMsg = '';
 		try {
 			await userAuth.registerWithEmail(email, password);
-			goto('/');
+			goto(resolve('/'));
 		} catch {
 			errorMsg = userAuth.error || 'Gagal mendaftar';
 		} finally {
@@ -48,7 +49,7 @@
 
 <div class="flex min-h-screen flex-col bg-gray-50 dark:bg-gray-950">
 	<header class="px-4 py-6">
-		<a href="/" class="group mx-auto flex w-fit items-center gap-2.5 sm:mx-0 sm:ml-8">
+		<a href={resolve('/')} class="group mx-auto flex w-fit items-center gap-2.5 sm:mx-0 sm:ml-8">
 			<img
 				src="/logo.png"
 				alt="CryptoSharia"
@@ -68,7 +69,7 @@
 				</h1>
 				<p class="mt-2 text-sm text-gray-500 dark:text-gray-400">
 					Sudah memiliki akun? <a
-						href="/auth/login"
+						href={resolve('/auth/login')}
 						class="text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 font-semibold transition-colors"
 						>Login</a
 					>

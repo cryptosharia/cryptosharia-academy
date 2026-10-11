@@ -41,7 +41,7 @@
 
 		<!-- Static Grid Display -->
 		<div class="grid grid-cols-1 gap-8 md:grid-cols-3">
-			{#each testimonials as t}
+			{#each testimonials as t (t)}
 				<div
 					class="relative flex flex-col rounded-3xl border border-slate-100 bg-slate-50 p-8 transition-all hover:-translate-y-1 hover:shadow-xl dark:border-gray-800 dark:bg-gray-900"
 				>

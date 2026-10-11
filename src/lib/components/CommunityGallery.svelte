@@ -48,7 +48,7 @@
 		</div>
 
 		<div class="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
-			{#each activities as activity, i}
+			{#each activities as activity, i (i)}
 				{@const heights = ['h-48', 'h-56', 'h-44', 'h-52', 'h-48', 'h-56']}
 				<div
 					class="group relative {heights[

@@ -1,4 +1,7 @@
 <script lang="ts">
+	import type { Pathname } from '$app/types';
+	import { resolve } from '$app/paths';
+	import type { User } from 'firebase/auth';
 	import { page } from '$app/state';
 	import { userAuth } from '$lib/auth.svelte';
 	import { buildWhatsappUrl, defaultLandingContent } from '$lib/landingContent';
@@ -6,12 +9,6 @@
 	let scrolled = $state(false);
 	let mobileMenuOpen = $state(false);
 	let userMenuOpen = $state(false);
-
-	const ADMIN_EMAILS = ['admin@cryptosharia.id'];
-
-	const isAdmin = $derived(
-		userAuth.isLoggedIn && userAuth.user?.email && ADMIN_EMAILS.includes(userAuth.user.email)
-	);
 
 	const whatsappUrl = buildWhatsappUrl(defaultLandingContent.whatsapp);
 
@@ -50,7 +47,7 @@
 		return () => window.removeEventListener('click', handleClick);
 	});
 
-	function getUserInitial(user: any): string {
+	function getUserInitial(user: User | null): string {
 		if (user?.displayName) return user.displayName[0].toUpperCase();
 		if (user?.email) return user.email[0].toUpperCase();
 		return '?';
@@ -77,7 +74,7 @@
 	<div class="mx-auto max-w-7xl px-3 sm:px-6 lg:px-8">
 		<div class="relative flex h-16 min-w-0 items-center justify-between gap-3">
 			<a
-				href="/"
+				href={resolve('/')}
 				class="group flex max-w-[10.75rem] min-w-0 items-center gap-2 sm:max-w-none sm:gap-2.5"
 			>
 				<img
@@ -91,10 +88,10 @@
 				>
 			</a>
 			<nav class="hidden items-center gap-6 md:flex">
-				{#each navLinks as link}
+				{#each navLinks as link (link)}
 					{@const active = isActiveLink(link.href)}
 					<a
-						href={link.href}
+						href={resolve(link.href as Pathname)}
 						aria-current={active ? 'page' : undefined}
 						class="rounded-lg px-2 py-2 text-base font-bold transition-colors {active
 							? 'text-primary-600 dark:text-primary-400'
@@ -109,7 +106,7 @@
 				{#if userAuth.isLoggedIn}
 					{#if !isAdminRoute && page.url.pathname === '/'}
 						<a
-							href="/profile"
+							href={resolve('/profile')}
 							class="inline-flex items-center justify-center rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm font-bold text-gray-700 shadow-sm hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-700"
 						>
 							Member Area
@@ -154,7 +151,7 @@
 									</div>
 									<!-- Menu items -->
 									<a
-										href="/profile"
+										href={resolve('/profile')}
 										class="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 transition-colors hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700"
 									>
 										<svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
@@ -168,7 +165,7 @@
 										Profil Saya
 									</a>
 									<a
-										href="/profile"
+										href={resolve('/profile')}
 										class="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 transition-colors hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700"
 									>
 										<svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
@@ -206,7 +203,7 @@
 						<a
 							href={whatsappUrl}
 							target="_blank"
-							rel="noopener noreferrer"
+							rel="external noopener noreferrer"
 							class="bg-primary-600 orange-glow hover:bg-primary-700 inline-flex items-center rounded-lg px-3 py-2.5 text-xs font-black text-white shadow-sm transition-all active:scale-95 sm:px-6 sm:text-sm"
 							><span class="sm:hidden">Daftar</span><span class="hidden sm:inline"
 								>Daftar Sekarang</span
@@ -250,10 +247,10 @@
 			class="border-t border-gray-100 bg-white/95 backdrop-blur-md md:hidden dark:border-gray-800 dark:bg-gray-900/95"
 		>
 			<div class="space-y-1 px-4 py-3">
-				{#each navLinks as link}
+				{#each navLinks as link (link)}
 					{@const active = isActiveLink(link.href)}
 					<a
-						href={link.href}
+						href={resolve(link.href as Pathname)}
 						onclick={() => (mobileMenuOpen = false)}
 						aria-current={active ? 'page' : undefined}
 						class="block rounded-lg px-3 py-2.5 text-sm font-medium {active
@@ -282,7 +279,7 @@
 							</div>
 						</div>
 						<a
-							href="/profile"
+							href={resolve('/profile')}
 							onclick={() => (mobileMenuOpen = false)}
 							class="mt-2 block w-full rounded-full border border-gray-200 px-5 py-2.5 text-center text-sm font-semibold text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-800"
 							>Profil Saya</a
@@ -300,7 +297,7 @@
 					<a
 						href={whatsappUrl}
 						target="_blank"
-						rel="noopener noreferrer"
+						rel="external noopener noreferrer"
 						onclick={() => (mobileMenuOpen = false)}
 						class="bg-primary-600 hover:bg-primary-700 mt-2 block rounded-full px-5 py-3 text-center text-sm font-bold text-white"
 						>Daftar Sekarang</a

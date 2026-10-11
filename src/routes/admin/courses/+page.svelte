@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { resolve } from '$app/paths';
 	import { goto } from '$app/navigation';
 	import { ADMIN_EMAILS } from '$lib/admin';
 	import { userAuth } from '$lib/auth.svelte';
@@ -16,12 +17,14 @@
 		setDoc,
 		deleteDoc,
 		serverTimestamp,
-		writeBatch
+		type FieldValue
 	} from 'firebase/firestore';
-	import { db } from '$lib/firebase';
+	import { db, ensureFirebaseReady } from '$lib/firebase';
+	import { parseYouTubeUrl } from '$lib/youtube';
+	import { readAcademyCourse, type AcademyCourse, type Lesson } from '$lib/academyCourse';
 	import { onMount } from 'svelte';
 
-	let courses = $state<any[]>([]);
+	let courses = $state<AcademyCourse[]>([]);
 	let isLoading = $state(true);
 	let isProcessing = $state(false);
 	let isUploading = $state(false);
@@ -31,7 +34,7 @@
 	let modalMode = $state<'add' | 'edit'>('add');
 
 	// Form state
-	let formData = $state({
+	let formData = $state<AcademyCourse>({
 		id: '',
 		title: '',
 		description: '',
@@ -39,9 +42,9 @@
 		duration: '',
 		category: 'Blockchain',
 		image: '',
-		price: 49000,
-		originalPrice: 299000,
-		lessons: [] as { title: string; videoUrl: string; type: string; duration: string }[]
+		price: 0,
+		originalPrice: 0,
+		lessons: [] as Lesson[]
 	});
 
 	const categories = [
@@ -54,144 +57,47 @@
 		'Security'
 	];
 
-	const defaultCourses = [
-		{
-			title: 'Blockchain & Crypto Fundamentals',
-			topics: 24,
-			duration: '8 Jam',
-			category: 'Blockchain',
-			image: '/background-beranda.png'
-		},
-		{
-			title: 'Fiqh Muamalah Digital',
-			topics: 18,
-			duration: '6 Jam',
-			category: 'Syariah',
-			image: '/background-beranda.png'
-		},
-		{
-			title: 'Crypto Trading Fundamental',
-			topics: 22,
-			duration: '7 Jam',
-			category: 'Trading',
-			image: '/background-beranda.png'
-		},
-		{
-			title: 'DeFi & Yield Farming Halal',
-			topics: 16,
-			duration: '5 Jam',
-			category: 'DeFi',
-			image: '/background-beranda.png'
-		},
-		{
-			title: 'Smart Contract & Solidity',
-			topics: 30,
-			duration: '12 Jam',
-			category: 'Development',
-			image: '/background-beranda.png'
-		},
-		{
-			title: 'Token Screening Syariah',
-			topics: 14,
-			duration: '4 Jam',
-			category: 'Syariah',
-			image: '/background-beranda.png'
-		},
-		{
-			title: 'Data Analysis for Crypto',
-			topics: 20,
-			duration: '8 Jam',
-			category: 'Data & AI',
-			image: '/background-beranda.png'
-		},
-		{
-			title: 'NFT Creation & Marketing',
-			topics: 12,
-			duration: '4 Jam',
-			category: 'Blockchain',
-			image: '/background-beranda.png'
-		},
-		{
-			title: 'Web3 Frontend Development',
-			topics: 28,
-			duration: '10 Jam',
-			category: 'Development',
-			image: '/background-beranda.png'
-		},
-		{
-			title: 'Crypto Wallet & Security',
-			topics: 10,
-			duration: '3 Jam',
-			category: 'Security',
-			image: '/background-beranda.png'
-		},
-		{
-			title: 'Technical Analysis Crypto',
-			topics: 18,
-			duration: '6 Jam',
-			category: 'Trading',
-			image: '/background-beranda.png'
-		},
-		{
-			title: 'AI & Machine Learning for Crypto',
-			topics: 22,
-			duration: '8 Jam',
-			category: 'Data & AI',
-			image: '/background-beranda.png'
-		},
-		{
-			title: 'Ekonomi Syariah & Fintech',
-			topics: 16,
-			duration: '5 Jam',
-			category: 'Syariah',
-			image: '/background-beranda.png'
-		},
-		{
-			title: 'Stablecoin & CBDC Analysis',
-			topics: 12,
-			duration: '4 Jam',
-			category: 'Blockchain',
-			image: '/background-beranda.png'
-		},
-		{
-			title: 'DeFi Protocol Deep Dive',
-			topics: 20,
-			duration: '7 Jam',
-			category: 'DeFi',
-			image: '/background-beranda.png'
-		},
-		{
-			title: 'Blockchain Cybersecurity',
-			topics: 14,
-			duration: '5 Jam',
-			category: 'Security',
-			image: '/background-beranda.png'
-		}
-	];
-
 	const isAdmin = $derived(
 		userAuth.isLoggedIn && userAuth.user?.email && ADMIN_EMAILS.includes(userAuth.user.email)
 	);
 
 	$effect(() => {
 		if (!userAuth.loading && !isAdmin) {
-			goto('/');
+			goto(resolve('/'));
 		}
 	});
 
 	onMount(() => {
-		const q = query(collection(db, 'elearning_courses'), orderBy('createdAt', 'desc'));
-		const unsub = onSnapshot(q, (snap) => {
-			courses = snap.docs.map((d) => ({ id: d.id, ...d.data() }));
-			isLoading = false;
-		});
-		return unsub;
+		let active = true;
+		let unsubscribe: (() => void) | undefined;
+		void ensureFirebaseReady()
+			.then(() => {
+				if (!active) return;
+				const q = query(collection(db, 'elearning_courses'), orderBy('createdAt', 'desc'));
+				unsubscribe = onSnapshot(
+					q,
+					(snap) => {
+						courses = snap.docs.map((d) => readAcademyCourse(d.id, d.data()));
+						isLoading = false;
+					},
+					() => {
+						isLoading = false;
+					}
+				);
+			})
+			.catch(() => {
+				if (active) isLoading = false;
+			});
+		return () => {
+			active = false;
+			unsubscribe?.();
+		};
 	});
 
-	function openModal(mode: 'add' | 'edit', course: any = null) {
+	function openModal(mode: 'add' | 'edit', course: AcademyCourse | null = null) {
 		modalMode = mode;
 		if (mode === 'edit' && course) {
-			formData = { ...course };
+			formData = { ...course, lessons: course.lessons.map((lesson) => ({ ...lesson })) };
 		} else {
 			formData = {
 				id: '',
@@ -201,8 +107,8 @@
 				duration: '',
 				category: 'Blockchain',
 				image: '',
-				price: 49000,
-				originalPrice: 299000,
+				price: 0,
+				originalPrice: 0,
 				lessons: []
 			};
 		}
@@ -215,7 +121,18 @@
 		try {
 			const docId = formData.id || formData.title.toLowerCase().replace(/[^a-z0-9]+/g, '-');
 
-			const courseData: any = {
+			await ensureFirebaseReady();
+			const lessons = formData.lessons.map((lesson) => {
+				if (!lesson.videoUrl) return { ...lesson };
+				const video = lesson.type === 'video' ? parseYouTubeUrl(lesson.videoUrl) : null;
+				if (!video)
+					throw new Error('Tautan video YouTube tidak valid atau tipe materi belum didukung.');
+				return { ...lesson, videoUrl: video.embedUrl };
+			});
+			const courseData: Omit<AcademyCourse, 'id'> & {
+				updatedAt: FieldValue;
+				createdAt?: FieldValue;
+			} = {
 				title: formData.title,
 				description: formData.description,
 				topics: formData.topics,
@@ -224,7 +141,7 @@
 				image: formData.image,
 				price: formData.price || 0,
 				originalPrice: formData.originalPrice || 0,
-				lessons: formData.lessons || [],
+				lessons,
 				updatedAt: serverTimestamp()
 			};
 
@@ -236,7 +153,7 @@
 			isModalOpen = false;
 		} catch (error) {
 			console.error('Error saving course:', error);
-			alert('Gagal menyimpan materi!');
+			alert(error instanceof Error ? error.message : 'Gagal menyimpan materi!');
 		} finally {
 			isProcessing = false;
 		}
@@ -246,6 +163,7 @@
 		if (!confirm('Apakah Anda yakin ingin menghapus materi ini?')) return;
 		isProcessing = true;
 		try {
+			await ensureFirebaseReady();
 			await deleteDoc(doc(db, 'elearning_courses', id));
 		} catch (error) {
 			console.error('Error deleting course:', error);
@@ -293,33 +211,6 @@
 			target.value = '';
 		}
 	}
-
-	async function seedDefaultCourses() {
-		if (
-			!confirm('Masukkan data default ke database? Ini akan membuat dokumen baru jika belum ada.')
-		)
-			return;
-		isProcessing = true;
-		try {
-			const batch = writeBatch(db);
-			for (const c of defaultCourses) {
-				const id = c.title.toLowerCase().replace(/[^a-z0-9]+/g, '-');
-				const docRef = doc(db, 'elearning_courses', id);
-				batch.set(docRef, {
-					...c,
-					createdAt: serverTimestamp(),
-					updatedAt: serverTimestamp()
-				});
-			}
-			await batch.commit();
-			alert('Berhasil memasukkan data awal!');
-		} catch (error) {
-			console.error('Error seeding:', error);
-			alert('Gagal memproses seeding!');
-		} finally {
-			isProcessing = false;
-		}
-	}
 </script>
 
 <svelte:head>
@@ -355,7 +246,7 @@
 				</div>
 				<div class="flex gap-2">
 					<a
-						href="/profile"
+						href={resolve('/profile')}
 						class="flex items-center gap-2 rounded-lg border bg-white px-4 py-2 text-sm font-semibold text-gray-700 transition-all hover:bg-gray-50 dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-700"
 					>
 						<svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
@@ -368,15 +259,7 @@
 						>
 						Profil Saya
 					</a>
-					{#if courses.length === 0}
-						<button
-							onclick={seedDefaultCourses}
-							disabled={isProcessing}
-							class="cursor-pointer rounded-lg bg-gray-200 px-4 py-2 text-sm font-bold text-gray-700 transition-all hover:bg-gray-300 disabled:opacity-50 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
-						>
-							Initialize Default Data
-						</button>
-					{/if}
+
 					<button
 						onclick={() => openModal('add')}
 						class="bg-primary-600 hover:bg-primary-700 flex cursor-pointer items-center gap-2 rounded-lg px-4 py-2 text-sm font-bold text-white shadow-md transition-all"
@@ -491,10 +374,13 @@
 
 				<div class="space-y-4 overflow-y-auto p-6">
 					<div>
-						<label class="mb-1 block text-xs font-bold text-gray-700 dark:text-gray-300"
+						<label
+							for="course-title"
+							class="mb-1 block text-xs font-bold text-gray-700 dark:text-gray-300"
 							>Judul Materi</label
 						>
 						<input
+							id="course-title"
 							type="text"
 							bind:value={formData.title}
 							class="focus:ring-primary-500 w-full rounded-lg border border-gray-200 bg-gray-50 px-3 py-2 text-sm text-gray-900 outline-none focus:ring-2 dark:border-gray-700 dark:bg-gray-900 dark:text-white"
@@ -504,20 +390,26 @@
 
 					<div class="grid grid-cols-2 gap-4">
 						<div>
-							<label class="mb-1 block text-xs font-bold text-gray-700 dark:text-gray-300"
+							<label
+								for="course-topics"
+								class="mb-1 block text-xs font-bold text-gray-700 dark:text-gray-300"
 								>Jumlah Topik</label
 							>
 							<input
+								id="course-topics"
 								type="number"
 								bind:value={formData.topics}
 								class="focus:ring-primary-500 w-full rounded-lg border border-gray-200 bg-gray-50 px-3 py-2 text-sm text-gray-900 outline-none focus:ring-2 dark:border-gray-700 dark:bg-gray-900 dark:text-white"
 							/>
 						</div>
 						<div>
-							<label class="mb-1 block text-xs font-bold text-gray-700 dark:text-gray-300"
+							<label
+								for="course-duration"
+								class="mb-1 block text-xs font-bold text-gray-700 dark:text-gray-300"
 								>Estimasi Durasi</label
 							>
 							<input
+								id="course-duration"
 								type="text"
 								bind:value={formData.duration}
 								class="focus:ring-primary-500 w-full rounded-lg border border-gray-200 bg-gray-50 px-3 py-2 text-sm text-gray-900 outline-none focus:ring-2 dark:border-gray-700 dark:bg-gray-900 dark:text-white"
@@ -527,24 +419,29 @@
 					</div>
 
 					<div>
-						<label class="mb-1 block text-xs font-bold text-gray-700 dark:text-gray-300"
-							>Kategori</label
+						<label
+							for="course-category"
+							class="mb-1 block text-xs font-bold text-gray-700 dark:text-gray-300">Kategori</label
 						>
 						<select
+							id="course-category"
 							bind:value={formData.category}
 							class="focus:ring-primary-500 w-full rounded-lg border border-gray-200 bg-gray-50 px-3 py-2 text-sm text-gray-900 outline-none focus:ring-2 dark:border-gray-700 dark:bg-gray-900 dark:text-white"
 						>
-							{#each categories as cat}
+							{#each categories as cat (cat)}
 								<option value={cat}>{cat}</option>
 							{/each}
 						</select>
 					</div>
 
 					<div>
-						<label class="mb-1 block text-xs font-bold text-gray-700 dark:text-gray-300"
+						<label
+							for="course-description"
+							class="mb-1 block text-xs font-bold text-gray-700 dark:text-gray-300"
 							>Deskripsi Materi</label
 						>
 						<textarea
+							id="course-description"
 							bind:value={formData.description}
 							rows="3"
 							class="focus:ring-primary-500 w-full resize-none rounded-lg border border-gray-200 bg-gray-50 px-3 py-2 text-sm text-gray-900 outline-none focus:ring-2 dark:border-gray-700 dark:bg-gray-900 dark:text-white"
@@ -555,10 +452,13 @@
 					<!-- Harga Satuan (Units) -->
 					<div class="grid grid-cols-2 gap-4">
 						<div>
-							<label class="mb-1 block text-xs font-bold text-gray-700 dark:text-gray-300"
+							<label
+								for="course-price"
+								class="mb-1 block text-xs font-bold text-gray-700 dark:text-gray-300"
 								>💰 Harga Satuan (Rp)</label
 							>
 							<input
+								id="course-price"
 								type="number"
 								bind:value={formData.price}
 								class="focus:ring-primary-500 w-full rounded-lg border border-gray-200 bg-gray-50 px-3 py-2 text-sm text-gray-900 outline-none focus:ring-2 dark:border-gray-700 dark:bg-gray-900 dark:text-white"
@@ -567,10 +467,13 @@
 							<p class="mt-1 text-[10px] text-gray-400">Harga jual materi satuan di /units</p>
 						</div>
 						<div>
-							<label class="mb-1 block text-xs font-bold text-gray-700 dark:text-gray-300"
+							<label
+								for="course-originalPrice"
+								class="mb-1 block text-xs font-bold text-gray-700 dark:text-gray-300"
 								>🏷️ Harga Coret (Rp)</label
 							>
 							<input
+								id="course-originalPrice"
 								type="number"
 								bind:value={formData.originalPrice}
 								class="focus:ring-primary-500 w-full rounded-lg border border-gray-200 bg-gray-50 px-3 py-2 text-sm text-gray-900 outline-none focus:ring-2 dark:border-gray-700 dark:bg-gray-900 dark:text-white"
@@ -581,11 +484,14 @@
 					</div>
 
 					<div>
-						<label class="mb-1 block text-xs font-bold text-gray-700 dark:text-gray-300"
+						<label
+							for="course-image"
+							class="mb-1 block text-xs font-bold text-gray-700 dark:text-gray-300"
 							>Cover Image</label
 						>
 						<div class="flex gap-2">
 							<input
+								id="course-image"
 								type="text"
 								bind:value={formData.image}
 								class="focus:ring-primary-500 flex-1 rounded-lg border border-gray-200 bg-gray-50 px-3 py-2 text-sm text-gray-900 outline-none focus:ring-2 dark:border-gray-700 dark:bg-gray-900 dark:text-white"
@@ -635,9 +541,9 @@
 					<!-- Lessons / Daftar Video -->
 					<div class="border-t border-gray-100 pt-4 dark:border-gray-700">
 						<div class="mb-3 flex items-center justify-between">
-							<label class="text-xs font-bold text-gray-700 dark:text-gray-300"
-								>Daftar Video / Lesson</label
-							>
+							<h3 class="text-xs font-bold text-gray-700 dark:text-gray-300">
+								Daftar Video / Lesson
+							</h3>
 							<button
 								type="button"
 								onclick={() => {
@@ -668,7 +574,7 @@
 							</div>
 						{:else}
 							<div class="max-h-64 space-y-3 overflow-y-auto pr-1">
-								{#each formData.lessons as lesson, i}
+								{#each formData.lessons as lesson, i (i)}
 									<div
 										class="relative rounded-lg border border-gray-200 bg-gray-50 p-3 dark:border-gray-700 dark:bg-gray-900"
 									>

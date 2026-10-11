@@ -1,4 +1,5 @@
-import { PUBLIC_FIREBASE_API_KEY } from '$env/static/public';
+import * as env from '$env/static/public';
+import { resolveFirebaseSettings, requireFirebaseServices } from '$lib/firebaseConfig';
 
 type FirebaseLookupResponse = {
 	users?: Array<{
@@ -16,14 +17,17 @@ export type FirebaseAuthUser = {
 };
 
 export async function getFirebaseUserFromIdToken(idToken: string): Promise<FirebaseAuthUser> {
-	const response = await fetch(
-		`https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=${PUBLIC_FIREBASE_API_KEY}`,
-		{
-			method: 'POST',
-			headers: { 'content-type': 'application/json' },
-			body: JSON.stringify({ idToken })
-		}
-	);
+	const settings = resolveFirebaseSettings(env);
+	await requireFirebaseServices(settings);
+	const origin =
+		settings.mode === 'emulator'
+			? `${settings.authEmulatorUrl}/identitytoolkit.googleapis.com`
+			: 'https://identitytoolkit.googleapis.com';
+	const response = await fetch(`${origin}/v1/accounts:lookup?key=${settings.config.apiKey}`, {
+		method: 'POST',
+		headers: { 'content-type': 'application/json' },
+		body: JSON.stringify({ idToken })
+	});
 
 	const data = (await response.json()) as FirebaseLookupResponse;
 

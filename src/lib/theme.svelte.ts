@@ -24,7 +24,7 @@ export function initTheme() {
 	applyTheme();
 }
 
-export function setTheme(_newMode: ThemeMode = 'dark') {
+export function setTheme() {
 	if (typeof window !== 'undefined') {
 		localStorage.setItem(STORAGE_KEY, 'dark');
 	}

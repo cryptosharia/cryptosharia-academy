@@ -878,9 +878,7 @@ export function buildWhatsappUrl(whatsapp: { phone: string; message: string }): 
 }
 
 export type VideoEmbed =
-	| { kind: 'iframe'; src: string }
-	| { kind: 'file'; src: string }
-	| { kind: 'none' };
+	{ kind: 'iframe'; src: string } | { kind: 'file'; src: string } | { kind: 'none' };
 
 /**
  * Normalize a user-provided video link into something the page can render.

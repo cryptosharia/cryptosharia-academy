@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { resolve } from '$app/paths';
 	const roadmapSteps = [
 		{
 			title: 'Basic Blockchain & Web3',
@@ -61,7 +62,7 @@
 
 		<!-- Roadmap Grid -->
 		<div class="relative z-10 mb-16 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-			{#each roadmapSteps as step, i}
+			{#each roadmapSteps as step, i (i)}
 				<div
 					class="hover:border-primary-300 dark:hover:border-primary-700 group relative rounded-3xl border border-slate-200 bg-white p-8 shadow-sm transition-all duration-300 hover:shadow-xl dark:border-slate-700 dark:bg-slate-800"
 				>
@@ -161,7 +162,7 @@
 					</div>
 					<div class="flex w-full flex-col items-center md:w-auto">
 						<a
-							href="/e-learning"
+							href={resolve('/e-learning')}
 							class="bg-primary-600 hover:bg-primary-500 inline-flex w-full items-center justify-center rounded-full px-10 py-4 text-base font-bold text-white shadow-lg transition-all hover:-translate-y-1 md:w-auto"
 						>
 							Daftar Sekarang

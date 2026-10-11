@@ -20,7 +20,7 @@
 		<!-- Marquee -->
 		<div class="overflow-hidden">
 			<div class="animate-marquee flex items-center gap-14">
-				{#each [...media, ...media] as name}
+				{#each [...media, ...media] as name, index (index)}
 					<div class="flex-shrink-0 px-4">
 						<span
 							class="hover:text-primary-500 dark:hover:text-primary-400 font-display cursor-default text-lg font-extrabold tracking-tight whitespace-nowrap text-slate-200 transition-colors duration-300 select-none sm:text-xl dark:text-slate-600"

@@ -15,7 +15,7 @@
 
 	$effect(() => {
 		theme.init();
-		userAuth.init();
+		return userAuth.init();
 	});
 </script>
 

@@ -1,3 +1,4 @@
+import { firebaseSettings } from '$lib/firebase';
 import { json } from '@sveltejs/kit';
 import { handleUpload, type HandleUploadBody } from '@vercel/blob/client';
 import { env } from '$env/dynamic/private';
@@ -77,6 +78,8 @@ function getBlobReadWriteToken() {
 
 export const POST: RequestHandler = async ({ request }) => {
 	try {
+		if (firebaseSettings.mode !== 'live')
+			throw new Error('Image upload is disabled in local test mode.');
 		const body = (await request.json()) as HandleUploadBody;
 		const response = await handleUpload({
 			body,

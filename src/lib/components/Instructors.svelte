@@ -70,7 +70,7 @@
 			class="scrollbar-hide flex snap-x snap-mandatory gap-5 overflow-x-auto pb-4"
 			style="scrollbar-width: none; -ms-overflow-style: none;"
 		>
-			{#each instructors as instructor}
+			{#each instructors as instructor (instructor)}
 				<div class="w-60 flex-shrink-0 snap-start">
 					<div
 						class="group hover:border-primary-500 hover:shadow-primary-500/20 relative h-full overflow-hidden rounded-2xl border border-slate-800 bg-slate-900 transition-all duration-500 hover:-translate-y-1 hover:shadow-2xl"

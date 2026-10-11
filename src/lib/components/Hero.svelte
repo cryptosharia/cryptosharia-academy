@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { resolve } from '$app/paths';
 	// Badges that act as trust markers inline
 	const trustMarkers = ['Top Startup ID', '100% Syariah', 'Sertifikat Resmi'];
 </script>
@@ -45,7 +46,7 @@
 					class="mb-12 flex flex-col items-center justify-center gap-5 sm:flex-row lg:justify-start"
 				>
 					<a
-						href="/e-learning"
+						href={resolve('/e-learning')}
 						class="bg-primary-600 hover:bg-primary-500 inline-flex w-full items-center justify-center rounded-full px-8 py-4 text-base font-bold text-white shadow-[0_0_40px_-10px_rgba(234,88,12,0.6)] transition-all hover:-translate-y-0.5 hover:shadow-[0_0_60px_-15px_rgba(234,88,12,0.8)] active:scale-95 sm:w-auto"
 					>
 						Mulai Belajar Sekarang
@@ -85,7 +86,7 @@
 
 				<!-- Trust Markers (Clean & Minimal) -->
 				<div class="flex flex-wrap items-center justify-center gap-x-6 gap-y-3 lg:justify-start">
-					{#each trustMarkers as marker}
+					{#each trustMarkers as marker (marker)}
 						<div class="flex items-center gap-2 text-sm font-medium text-slate-400">
 							<svg
 								class="text-primary-500 h-4 w-4"

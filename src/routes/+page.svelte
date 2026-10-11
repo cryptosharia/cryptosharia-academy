@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { resolve } from '$app/paths';
+	import type { Pathname } from '$app/types';
 	import { onMount } from 'svelte';
 	import {
 		defaultLandingContent,
@@ -731,12 +733,29 @@
 								/>
 							</svg>
 						</a>
-						<a
-							href={content.hero.secondaryCta.href || '#pricing'}
-							class="inline-flex w-full items-center justify-center rounded-lg border border-white/20 bg-white/[0.04] px-6 py-4 text-sm font-bold text-slate-100 transition hover:border-orange-300 hover:bg-white/10 sm:w-auto"
-						>
-							{content.hero.secondaryCta.label}
-						</a>
+						{#if content.hero.secondaryCta.href.startsWith('/') && !content.hero.secondaryCta.href.startsWith('//')}
+							<a
+								href={resolve(content.hero.secondaryCta.href as Pathname)}
+								class="inline-flex w-full items-center justify-center rounded-lg border border-white/20 bg-white/[0.04] px-6 py-4 text-sm font-bold text-slate-100 transition hover:border-orange-300 hover:bg-white/10 sm:w-auto"
+							>
+								{content.hero.secondaryCta.label}
+							</a>
+						{:else if !content.hero.secondaryCta.href || content.hero.secondaryCta.href.startsWith('#')}
+							<a
+								href={`#${(content.hero.secondaryCta.href || '#pricing').slice(1)}`}
+								class="inline-flex w-full items-center justify-center rounded-lg border border-white/20 bg-white/[0.04] px-6 py-4 text-sm font-bold text-slate-100 transition hover:border-orange-300 hover:bg-white/10 sm:w-auto"
+							>
+								{content.hero.secondaryCta.label}
+							</a>
+						{:else}
+							<a
+								href={content.hero.secondaryCta.href}
+								rel="external"
+								class="inline-flex w-full items-center justify-center rounded-lg border border-white/20 bg-white/[0.04] px-6 py-4 text-sm font-bold text-slate-100 transition hover:border-orange-300 hover:bg-white/10 sm:w-auto"
+							>
+								{content.hero.secondaryCta.label}
+							</a>
+						{/if}
 					</div>
 					<div class="mt-7 flex flex-wrap gap-2 text-[11px] font-black tracking-[0.14em] uppercase">
 						<span
@@ -967,7 +986,7 @@
 					</p>
 				</div>
 
-				<TestimonialCarousel items={content.testimonials.items} />
+				<TestimonialCarousel />
 			</div>
 		</section>
 	{/if}

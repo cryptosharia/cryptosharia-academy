@@ -21,3 +21,8 @@ Thumbs.db
 # Vite
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
+
+# Local emulator output (existing tracked evidence remains untouched)
+firestore-debug.log
+database-debug.log
+ui-debug.log

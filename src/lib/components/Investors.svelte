@@ -11,7 +11,7 @@
 		</h2>
 
 		<div class="flex flex-wrap items-center justify-center gap-8 sm:gap-14">
-			{#each investors as investor}
+			{#each investors as investor (investor)}
 				<div
 					class="group flex items-center justify-center rounded-xl px-5 py-3 transition-all duration-300 hover:bg-white hover:shadow-sm dark:hover:bg-gray-800"
 				>

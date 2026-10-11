@@ -44,7 +44,7 @@
 		</div>
 
 		<div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
-			{#each principles as p}
+			{#each principles as p (p)}
 				<div
 					class="group hover:border-primary-200 dark:hover:border-primary-800 rounded-3xl border border-slate-100 bg-slate-50 p-8 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl dark:border-gray-800 dark:bg-gray-900"
 				>

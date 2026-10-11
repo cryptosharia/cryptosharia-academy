@@ -12,7 +12,8 @@ import {
 	type User
 } from 'firebase/auth';
 import { doc, setDoc, getDoc, serverTimestamp } from 'firebase/firestore';
-import { auth, db } from '$lib/firebase';
+import { FirebaseError } from 'firebase/app';
+import { auth, db, ensureFirebaseReady } from '$lib/firebase';
 
 let currentUser = $state<User | null>(null);
 let loading = $state(true);
@@ -45,22 +46,43 @@ async function saveUserToFirestore(user: User, provider: string) {
 /** Initialize auth state listener */
 export function initAuth() {
 	if (typeof window === 'undefined') return;
+	let cancelled = false;
+	let unsubscribe: (() => void) | undefined;
+	void ensureFirebaseReady()
+		.then(() => {
+			if (cancelled) return;
 
-	onAuthStateChanged(auth, (user) => {
-		currentUser = user;
-		loading = false;
-	});
+			unsubscribe = onAuthStateChanged(auth, (user) => {
+				currentUser = user;
+				loading = false;
+			});
+		})
+		.catch(() => {
+			if (!cancelled) {
+				error = 'Layanan akun belum tersedia.';
+				loading = false;
+				currentUser = null;
+			}
+		});
+	return () => {
+		cancelled = true;
+		unsubscribe?.();
+	};
 }
 
 /** Login with Google popup */
 export async function loginWithGoogle() {
 	error = null;
 	try {
+		await ensureFirebaseReady();
 		const result = await signInWithPopup(auth, googleProvider);
 		await saveUserToFirestore(result.user, 'google');
-	} catch (e: any) {
-		if (e.code === 'auth/popup-closed-by-user') return;
-		error = e.message || 'Gagal login dengan Google';
+	} catch (e) {
+		if ((e instanceof FirebaseError ? e.code : '') === 'auth/popup-closed-by-user') {
+			error = 'Login dibatalkan.';
+			throw e;
+		}
+		error = (e instanceof Error ? e.message : '') || 'Gagal login dengan Google';
 		throw e;
 	}
 }
@@ -69,19 +91,20 @@ export async function loginWithGoogle() {
 export async function loginWithEmail(email: string, password: string) {
 	error = null;
 	try {
+		await ensureFirebaseReady();
 		const result = await signInWithEmailAndPassword(auth, email, password);
 		await saveUserToFirestore(result.user, 'email');
-	} catch (e: any) {
+	} catch (e) {
 		if (
-			e.code === 'auth/user-not-found' ||
-			e.code === 'auth/wrong-password' ||
-			e.code === 'auth/invalid-credential'
+			(e instanceof FirebaseError ? e.code : '') === 'auth/user-not-found' ||
+			(e instanceof FirebaseError ? e.code : '') === 'auth/wrong-password' ||
+			(e instanceof FirebaseError ? e.code : '') === 'auth/invalid-credential'
 		) {
 			error = 'Email atau password salah';
-		} else if (e.code === 'auth/too-many-requests') {
+		} else if ((e instanceof FirebaseError ? e.code : '') === 'auth/too-many-requests') {
 			error = 'Terlalu banyak percobaan. Coba lagi nanti.';
 		} else {
-			error = e.message || 'Gagal login';
+			error = (e instanceof Error ? e.message : '') || 'Gagal login';
 		}
 		throw e;
 	}
@@ -91,15 +114,16 @@ export async function loginWithEmail(email: string, password: string) {
 export async function registerWithEmail(email: string, password: string) {
 	error = null;
 	try {
+		await ensureFirebaseReady();
 		const result = await createUserWithEmailAndPassword(auth, email, password);
 		await saveUserToFirestore(result.user, 'email');
-	} catch (e: any) {
-		if (e.code === 'auth/email-already-in-use') {
+	} catch (e) {
+		if ((e instanceof FirebaseError ? e.code : '') === 'auth/email-already-in-use') {
 			error = 'Email sudah terdaftar. Silakan login.';
-		} else if (e.code === 'auth/weak-password') {
+		} else if ((e instanceof FirebaseError ? e.code : '') === 'auth/weak-password') {
 			error = 'Password minimal 6 karakter';
 		} else {
-			error = e.message || 'Gagal mendaftar';
+			error = (e instanceof Error ? e.message : '') || 'Gagal mendaftar';
 		}
 		throw e;
 	}
@@ -108,6 +132,7 @@ export async function registerWithEmail(email: string, password: string) {
 /** Change password for current user */
 export async function changePassword(currentPassword: string, newPassword: string) {
 	error = null;
+	await ensureFirebaseReady();
 	if (!auth.currentUser) throw new Error('Not authenticated');
 	const user = auth.currentUser as User;
 	const hasPassword = (user.providerData || []).some((p) => p.providerId === 'password');
@@ -125,15 +150,18 @@ export async function changePassword(currentPassword: string, newPassword: strin
 		}
 		const userRef = doc(db, 'users', user.uid);
 		await setDoc(userRef, { updatedAt: serverTimestamp() }, { merge: true });
-	} catch (e: any) {
-		if (e.code === 'auth/wrong-password' || e.code === 'auth/invalid-credential') {
+	} catch (e) {
+		if (
+			(e instanceof FirebaseError ? e.code : '') === 'auth/wrong-password' ||
+			(e instanceof FirebaseError ? e.code : '') === 'auth/invalid-credential'
+		) {
 			error = 'Password lama salah';
-		} else if (e.code === 'auth/weak-password') {
+		} else if ((e instanceof FirebaseError ? e.code : '') === 'auth/weak-password') {
 			error = 'Password baru terlalu lemah (minimal 6 karakter)';
-		} else if (e.code === 'auth/provider-already-linked') {
+		} else if ((e instanceof FirebaseError ? e.code : '') === 'auth/provider-already-linked') {
 			error = 'Akun sudah memiliki password. Gunakan password lama untuk mengubah.';
 		} else {
-			error = e.message || 'Gagal mengubah password';
+			error = (e instanceof Error ? e.message : '') || 'Gagal mengubah password';
 		}
 		throw e;
 	}

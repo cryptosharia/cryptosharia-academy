@@ -265,7 +265,7 @@
 					</a>
 				</div>
 				<div class="mt-6 flex flex-wrap items-center justify-center gap-4 lg:justify-start">
-					{#each badges as badge}
+					{#each badges as badge (badge)}
 						<div class="flex items-center gap-2 text-sm font-medium text-white/80">
 							<svg class="h-4 w-4 text-yellow-300" fill="currentColor" viewBox="0 0 20 20">
 								<path
@@ -304,7 +304,7 @@
 			class="flex gap-4 overflow-x-auto pb-4"
 			style="scrollbar-width: none;"
 		>
-			{#each testimonials as t}
+			{#each testimonials as t (t)}
 				<div class="w-64 flex-shrink-0">
 					<div
 						class="h-full rounded-2xl border border-gray-200 bg-white p-5 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg dark:border-gray-700 dark:bg-gray-800"
@@ -358,7 +358,7 @@
 
 		<!-- Bootcamp cards grid -->
 		<div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
-			{#each filteredBootcamps as bootcamp}
+			{#each filteredBootcamps as bootcamp (bootcamp)}
 				<a href="#" class="group block">
 					<div
 						class="hover:border-primary-200 overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl dark:border-gray-700 dark:bg-gray-800"

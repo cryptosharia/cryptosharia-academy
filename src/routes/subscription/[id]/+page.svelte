@@ -1,19 +1,27 @@
 <script lang="ts">
+	import { resolve } from '$app/paths';
 	import { page } from '$app/state';
 	import { userAuth } from '$lib/auth.svelte';
 	import { doc, getDoc, Timestamp } from 'firebase/firestore';
-	import { db } from '$lib/firebase';
+	import { db, ensureFirebaseReady } from '$lib/firebase';
+	import { parseYouTubeUrl } from '$lib/youtube';
+	import { readAcademyCourse, type AcademyCourse } from '$lib/academyCourse';
 	import { onMount } from 'svelte';
 
 	let hasAccess = $state(false);
 	$effect(() => {
-		if (!userAuth.isLoggedIn) {
+		const user = userAuth.user;
+		if (!user) {
 			hasAccess = false;
 			return;
 		}
+		hasAccess = false;
+		let cancelled = false;
 		(async () => {
 			try {
-				const userDoc = await getDoc(doc(db, 'users', userAuth.user.uid));
+				await ensureFirebaseReady();
+				const userDoc = await getDoc(doc(db, 'users', user.uid));
+				if (cancelled) return;
 				if (userDoc.exists()) {
 					const data = userDoc.data();
 					if (data.subscriptionStatus === 'active' && data.subscriptionExpiry) {
@@ -30,42 +38,32 @@
 				}
 			} catch (e) {
 				console.error('Failed to check subscription:', e);
-				hasAccess = false;
+				if (!cancelled) hasAccess = false;
 			}
 		})();
+		return () => {
+			cancelled = true;
+		};
 	});
 
-	interface Lesson {
-		title: string;
-		videoUrl: string;
-		type: string;
-		duration: string;
-	}
-	interface Course {
-		id: string;
-		title: string;
-		description: string;
-		topics: number;
-		duration: string;
-		category: string;
-		image: string;
-		lessons: Lesson[];
-	}
-
-	let course = $state<Course | null>(null);
+	let course = $state<AcademyCourse | null>(null);
 	let isLoading = $state(true);
 	let notFound = $state(false);
 	let activeLessonIndex = $state(0);
 
 	const activeLesson = $derived(course?.lessons?.[activeLessonIndex] || null);
-	const activeVideoUrl = $derived(activeLesson?.videoUrl || '');
+	const activeVideoUrl = $derived(
+		activeLesson?.type === 'video' ? parseYouTubeUrl(activeLesson.videoUrl)?.embedUrl || '' : ''
+	);
 
 	onMount(async () => {
 		const id = page.params.id;
 		try {
+			await ensureFirebaseReady();
+			if (!id) throw new Error('Course ID is required.');
 			const snap = await getDoc(doc(db, 'elearning_courses', id));
 			if (snap.exists()) {
-				course = { id: snap.id, ...snap.data() } as Course;
+				course = readAcademyCourse(snap.id, snap.data());
 				if (!course.lessons) course.lessons = [];
 				if (!course.description) course.description = '';
 			} else {
@@ -109,7 +107,7 @@
 			Halaman yang Anda cari tidak tersedia atau sudah dihapus.
 		</p>
 		<a
-			href="/subscription"
+			href={resolve('/subscription')}
 			class="bg-primary-600 hover:bg-primary-700 inline-flex items-center rounded-full px-6 py-3 text-sm font-bold text-white transition-all"
 			>← Kembali ke Subscription</a
 		>
@@ -124,6 +122,7 @@
 						{#if activeVideoUrl}
 							<iframe
 								src={activeVideoUrl}
+								referrerpolicy="strict-origin-when-cross-origin"
 								title={activeLesson?.title || course.title}
 								frameborder="0"
 								allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -162,14 +161,10 @@
 							<p class="mb-6 max-w-xs text-sm text-gray-400">
 								Materi ini hanya dapat diakses oleh member yang memiliki langganan aktif.
 							</p>
-							<a
-								href="/subscription#pricing"
-								class="bg-primary-600 hover:bg-primary-700 orange-glow inline-flex items-center rounded-full px-6 py-3 text-sm font-semibold text-white transition"
-								>Mulai Berlangganan</a
-							>
+							<p>Pendaftaran Academy belum dibuka.</p>
 							{#if !userAuth.isLoggedIn}
 								<a
-									href="/auth/login"
+									href={resolve('/auth/login')}
 									class="mt-3 text-xs text-gray-400 underline hover:text-gray-300"
 									>Sudah punya akun? Login dulu</a
 								>
@@ -184,7 +179,7 @@
 						<h3 class="text-sm font-bold text-white">Materi ({course.lessons.length})</h3>
 					</div>
 					<div class="divide-y divide-gray-800">
-						{#each course.lessons as lesson, i}
+						{#each course.lessons as lesson, i (i)}
 							<button
 								onclick={() => {
 									activeLessonIndex = i;
@@ -270,7 +265,9 @@
 		<!-- Content Below -->
 		<div class="mx-auto max-w-5xl space-y-6 px-4 py-8 sm:px-6 lg:px-8">
 			<nav class="flex items-center gap-2 text-xs text-gray-500">
-				<a href="/subscription" class="hover:text-primary-400 transition-colors">Subscription</a>
+				<a href={resolve('/subscription')} class="hover:text-primary-400 transition-colors"
+					>Subscription</a
+				>
 				<span>›</span>
 				<span>{course.category}</span>
 				<span>›</span>
@@ -329,7 +326,7 @@
 			{/if}
 			<div>
 				<a
-					href="/subscription"
+					href={resolve('/subscription')}
 					class="text-primary-500 hover:text-primary-400 inline-flex items-center gap-2 text-sm font-semibold transition-colors"
 				>
 					<svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"

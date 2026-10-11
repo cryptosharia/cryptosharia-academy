@@ -1,8 +1,5 @@
 <script lang="ts">
 	import { onMount, onDestroy } from 'svelte';
-	import type { ProofItem } from '$lib/landingContent';
-
-	let { items = [] }: { items: ProofItem[] } = $props();
 
 	const imageTestimonials = [
 		{ name: 'Suarabangjan', image: '/images/testimonials/Suarabangjan.png' },
@@ -133,6 +130,8 @@
 
 <!-- Carousel wrapper -->
 <div
+	role="region"
+	aria-label="Testimoni peserta"
 	class="group relative mx-auto max-w-[960px]"
 	onmouseenter={() => (isPaused = true)}
 	onmouseleave={() => {

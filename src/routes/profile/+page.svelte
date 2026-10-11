@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { resolve } from '$app/paths';
 	import { goto } from '$app/navigation';
 	import { userAuth } from '$lib/auth.svelte';
 	import {
@@ -13,7 +14,7 @@
 		onSnapshot,
 		Timestamp
 	} from 'firebase/firestore';
-	import { db } from '$lib/firebase';
+	import { db, ensureFirebaseReady } from '$lib/firebase';
 
 	let activeMenu = $state('profil');
 	let isLoading = $state(true);
@@ -38,7 +39,15 @@
 	let pwdLoading = $state(false);
 	let pwdError = $state('');
 	let pwdSuccess = $state(false);
-	let userOrders = $state<any[]>([]);
+	type UserOrder = {
+		id: string;
+		packageTitle: string;
+		status: string;
+		createdAt: unknown;
+		amount: number;
+		adminNote: string;
+	};
+	let userOrders = $state<UserOrder[]>([]);
 	let ordersLoading = $state(false);
 
 	const menuItems = [
@@ -73,7 +82,7 @@
 	// Load profile from Firestore
 	$effect(() => {
 		if (!userAuth.loading && !userAuth.isLoggedIn) {
-			goto('/auth/login');
+			goto(resolve('/auth/login'));
 			return;
 		}
 		if (userAuth.isLoggedIn && userAuth.user) {
@@ -86,7 +95,17 @@
 				orderBy('createdAt', 'desc')
 			);
 			const unsub = onSnapshot(q, (snap) => {
-				userOrders = snap.docs.map((d) => ({ id: d.id, ...d.data() }));
+				userOrders = snap.docs.map((d) => {
+					const data = d.data();
+					return {
+						id: d.id,
+						packageTitle: typeof data.packageTitle === 'string' ? data.packageTitle : '',
+						status: typeof data.status === 'string' ? data.status : '',
+						createdAt: data.createdAt,
+						amount: typeof data.amount === 'number' ? data.amount : 0,
+						adminNote: typeof data.adminNote === 'string' ? data.adminNote : ''
+					};
+				});
 				ordersLoading = false;
 			});
 			return unsub;
@@ -97,6 +116,7 @@
 		if (!userAuth.user) return;
 		isLoading = true;
 		try {
+			await ensureFirebaseReady();
 			const userRef = doc(db, 'users', userAuth.user.uid);
 			const userSnap = await getDoc(userRef);
 			if (userSnap.exists()) {
@@ -125,6 +145,7 @@
 		isSaving = true;
 		saveSuccess = false;
 		try {
+			await ensureFirebaseReady();
 			const userRef = doc(db, 'users', userAuth.user.uid);
 			await setDoc(
 				userRef,
@@ -172,7 +193,8 @@
 				showChangePasswordModal = false;
 			}, 1500);
 		} catch (e) {
-			pwdError = userAuth.error || e?.message || 'Gagal mengubah password';
+			pwdError =
+				userAuth.error || (e instanceof Error ? e.message : '') || 'Gagal mengubah password';
 		} finally {
 			pwdLoading = false;
 		}
@@ -184,8 +206,8 @@
 		return '?';
 	}
 
-	function formatDate(ts: any): string {
-		if (!ts) return '-';
+	function formatDate(ts: unknown): string {
+		if (!(ts instanceof Timestamp) && typeof ts !== 'string' && typeof ts !== 'number') return '-';
 		const d = ts instanceof Timestamp ? ts.toDate() : new Date(ts);
 		return d.toLocaleDateString('id-ID', {
 			day: 'numeric',
@@ -257,7 +279,7 @@
 					>
 						Menu
 					</div>
-					{#each menuItems as item}
+					{#each menuItems as item (item)}
 						<button
 							onclick={() => {
 								activeMenu = item.id;
@@ -409,7 +431,7 @@
 										class="focus:ring-primary-500 focus:border-primary-500 w-full cursor-pointer appearance-none rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm text-gray-900 transition-all outline-none focus:ring-2 dark:border-gray-700 dark:bg-gray-800 dark:text-white"
 									>
 										<option value="">Pilih opsi...</option>
-										{#each genderOptions as opt}
+										{#each genderOptions as opt (opt)}
 											<option value={opt}>{opt}</option>
 										{/each}
 									</select>
@@ -462,7 +484,7 @@
 										class="focus:ring-primary-500 focus:border-primary-500 w-full cursor-pointer appearance-none rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm text-gray-900 transition-all outline-none focus:ring-2 dark:border-gray-700 dark:bg-gray-800 dark:text-white"
 									>
 										<option value="">Masukkan atau pilih profesi kamu...</option>
-										{#each profesiOptions as opt}
+										{#each profesiOptions as opt (opt)}
 											<option value={opt}>{opt}</option>
 										{/each}
 									</select>
@@ -479,7 +501,7 @@
 										class="focus:ring-primary-500 focus:border-primary-500 w-full cursor-pointer appearance-none rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm text-gray-900 transition-all outline-none focus:ring-2 dark:border-gray-700 dark:bg-gray-800 dark:text-white"
 									>
 										<option value="">Masukkan atau pilih target pekerjaan kamu...</option>
-										{#each targetOptions as opt}
+										{#each targetOptions as opt (opt)}
 											<option value={opt}>{opt}</option>
 										{/each}
 									</select>
@@ -583,10 +605,12 @@
 
 						{#if showChangePasswordModal}
 							<div class="fixed inset-0 z-50 flex items-center justify-center">
-								<div
+								<button
+									type="button"
+									aria-label="Tutup dialog ubah password"
 									class="absolute inset-0 bg-black/50"
 									onclick={() => (showChangePasswordModal = false)}
-								></div>
+								></button>
 								<div class="relative z-10 w-full max-w-md rounded-xl bg-white p-6 dark:bg-gray-800">
 									<h3 class="mb-3 text-lg font-bold text-gray-900 dark:text-white">
 										Ubah Password
@@ -622,11 +646,13 @@
 										{:else}
 											<div>
 												<label
+													for="currentPassword"
 													class="mb-2 block text-sm font-semibold text-gray-900 dark:text-white"
 													>Password Saat Ini</label
 												>
 												<input
 													type="password"
+													id="currentPassword"
 													bind:value={currentPassword}
 													placeholder="Masukkan password lama"
 													class="w-full rounded-xl border border-gray-200 bg-white px-3 py-2 text-sm text-gray-900 dark:border-gray-700 dark:bg-gray-800 dark:text-white"
@@ -634,22 +660,28 @@
 											</div>
 										{/if}
 										<div>
-											<label class="mb-2 block text-sm font-semibold text-gray-900 dark:text-white"
+											<label
+												for="newPassword"
+												class="mb-2 block text-sm font-semibold text-gray-900 dark:text-white"
 												>Password Baru</label
 											>
 											<input
 												type="password"
+												id="newPassword"
 												bind:value={newPassword}
 												placeholder="Masukkan password baru"
 												class="w-full rounded-xl border border-gray-200 bg-white px-3 py-2 text-sm text-gray-900 dark:border-gray-700 dark:bg-gray-800 dark:text-white"
 											/>
 										</div>
 										<div>
-											<label class="mb-2 block text-sm font-semibold text-gray-900 dark:text-white"
+											<label
+												for="confirmNewPassword"
+												class="mb-2 block text-sm font-semibold text-gray-900 dark:text-white"
 												>Konfirmasi Password Baru</label
 											>
 											<input
 												type="password"
+												id="confirmNewPassword"
 												bind:value={confirmNewPassword}
 												placeholder="Konfirmasi password baru"
 												class="w-full rounded-xl border border-gray-200 bg-white px-3 py-2 text-sm text-gray-900 dark:border-gray-700 dark:bg-gray-800 dark:text-white"
@@ -701,15 +733,15 @@
 						<!-- Subscription Section -->
 						<div>
 							<h1 class="text-2xl font-extrabold text-gray-900 dark:text-white">
-								Langganan Kamu Aktif 🎉
+								Akses Pembelajaran
 							</h1>
 							<p class="mt-2 text-sm text-gray-500 dark:text-gray-400">
-								Akses semua materi selama langganan aktif.
+								Hak akses pembelajaran masih melalui peninjauan.
 							</p>
 
 							<div class="mt-5 flex flex-wrap gap-3">
 								<a
-									href="/subscription"
+									href={resolve('/subscription')}
 									class="border-primary-500 dark:border-primary-600 text-primary-600 dark:text-primary-400 hover:bg-primary-50 dark:hover:bg-primary-900/20 inline-flex items-center gap-2 rounded-xl border px-5 py-2.5 text-sm font-semibold transition-all active:scale-[0.98]"
 								>
 									<svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
@@ -720,10 +752,10 @@
 											d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
 										/></svg
 									>
-									Perpanjang Langganan
+									Informasi Academy
 								</a>
 								<a
-									href="/subscription"
+									href={resolve('/subscription')}
 									class="bg-primary-600 hover:bg-primary-700 orange-glow inline-flex items-center gap-2 rounded-xl px-5 py-2.5 text-sm font-semibold text-white transition-all active:scale-[0.98]"
 								>
 									<svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
@@ -734,7 +766,7 @@
 											d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"
 										/></svg
 									>
-									Akses Semua Materi
+									Lihat Katalog
 								</a>
 							</div>
 						</div>
@@ -840,7 +872,7 @@
 								<div class="mb-3 text-4xl">📭</div>
 								<p class="mb-4 text-sm text-gray-500 dark:text-gray-400">Belum ada transaksi.</p>
 								<a
-									href="/subscription"
+									href={resolve('/subscription')}
 									class="bg-primary-600 hover:bg-primary-700 orange-glow inline-flex items-center gap-2 rounded-xl px-5 py-2.5 text-sm font-semibold text-white"
 								>
 									Lihat Paket Subscription
@@ -848,7 +880,7 @@
 							</div>
 						{:else}
 							<div class="space-y-3">
-								{#each userOrders as order}
+								{#each userOrders as order (order)}
 									<div
 										class="rounded-xl border border-gray-100 bg-white p-5 dark:border-gray-700 dark:bg-gray-800"
 									>

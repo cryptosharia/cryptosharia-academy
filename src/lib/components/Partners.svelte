@@ -21,7 +21,7 @@
 		</p>
 
 		<div class="flex flex-wrap items-center justify-center gap-x-12 gap-y-6">
-			{#each partners as partner}
+			{#each partners as partner (partner)}
 				<div class="group relative px-2 py-2 transition-all duration-300">
 					<span
 						class="group-hover:text-primary-500 dark:group-hover:text-primary-400 font-display text-xl font-extrabold tracking-tight text-slate-300 transition-colors duration-300 select-none sm:text-2xl dark:text-slate-600"

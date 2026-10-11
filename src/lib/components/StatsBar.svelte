@@ -17,7 +17,7 @@
 		</h2>
 
 		<div class="grid grid-cols-2 gap-6 sm:grid-cols-3 lg:grid-cols-5 lg:gap-8">
-			{#each stats as stat, i}
+			{#each stats as stat (stat)}
 				<div
 					class="group hover:bg-primary-50 dark:hover:bg-primary-900/30 hover:border-primary-200 hover:shadow-primary-100/50 flex flex-col items-center rounded-2xl border border-slate-100 bg-slate-50 p-6 text-center transition-all duration-300 hover:-translate-y-1 hover:shadow-lg dark:border-gray-700 dark:bg-gray-800"
 				>
