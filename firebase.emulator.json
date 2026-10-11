@@ -1,5 +1,5 @@
 {
-	"firestore": { "rules": "tests/fixtures/firestore.synthetic.rules" },
+	"firestore": { "rules": "firebase/academy-v1.rules" },
 	"emulators": {
 		"auth": { "host": "127.0.0.1", "port": 9099 },
 		"firestore": { "host": "127.0.0.1", "port": 8080 },

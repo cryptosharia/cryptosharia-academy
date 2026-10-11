@@ -3,5 +3,5 @@ import { resolveFirebaseSettings, requireFirebaseServices } from './firebaseConf
 import { initializeFirebaseClient } from './firebaseClient';
 
 export const firebaseSettings = resolveFirebaseSettings(env);
-export const { auth, db } = initializeFirebaseClient(firebaseSettings);
+export const { auth, db, lessonDb } = initializeFirebaseClient(firebaseSettings);
 export const ensureFirebaseReady = () => requireFirebaseServices(firebaseSettings);

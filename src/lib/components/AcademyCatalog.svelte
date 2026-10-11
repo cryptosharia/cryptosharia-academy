@@ -1,11 +1,10 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
 	import { onMount } from 'svelte';
-	import { collection, getDocs, orderBy, query } from 'firebase/firestore';
+	import { readCatalog, type CatalogLesson } from '$lib/academyData';
 	import { db, ensureFirebaseReady } from '$lib/firebase';
 
-	type CourseMetadata = { id: string; title: string; category: string; description: string };
-	let courses = $state<CourseMetadata[]>([]);
+	let courses = $state<CatalogLesson[]>([]);
 	let loading = $state(true);
 	let error = $state('');
 	const subjects = [
@@ -18,18 +17,7 @@
 	onMount(async () => {
 		try {
 			await ensureFirebaseReady();
-			const snapshot = await getDocs(
-				query(collection(db, 'elearning_courses'), orderBy('createdAt', 'desc'))
-			);
-			courses = snapshot.docs.map((document) => {
-				const data = document.data();
-				return {
-					id: document.id,
-					title: typeof data.title === 'string' ? data.title : 'Materi',
-					category: typeof data.category === 'string' ? data.category : '',
-					description: typeof data.description === 'string' ? data.description : ''
-				};
-			});
+			courses = await readCatalog(db);
 		} catch {
 			error = 'Katalog belum dapat dimuat. Silakan coba kembali nanti.';
 		} finally {
@@ -58,10 +46,11 @@
 	{:else if courses.length === 0}<p class="mt-8">Belum ada materi untuk ditampilkan.</p>
 	{:else}<ul class="mt-8 space-y-4">
 			{#each courses as course (course.id)}<li class="rounded border p-4">
-					<a class="font-semibold underline" href={resolve('/e-learning/[id]', { id: course.id })}
-						>{course.title}</a
+					<a
+						class="font-semibold underline"
+						href={resolve('/e-learning/[id]', { id: course.scopeId })}>{course.title}</a
 					>
-					<p>{course.category}</p>
+					<p>{course.subject} · Level {course.level} · {course.chapter}</p>
 					<p>{course.description}</p>
 				</li>{/each}
 		</ul>{/if}
