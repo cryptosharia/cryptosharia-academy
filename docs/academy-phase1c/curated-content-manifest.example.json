@@ -1,0 +1,47 @@
+{
+	"templateVersion": 1,
+	"syntheticExample": true,
+	"curriculum": {
+		"subjectId": "fundamental",
+		"levelId": "synthetic-level-id",
+		"levelNumber": 1,
+		"chapterId": "synthetic-chapter-id",
+		"chapterNumber": 1,
+		"lessonId": "synthetic-lesson-id",
+		"parentId": "synthetic-chapter-id",
+		"scopeId": "synthetic-scope",
+		"sortOrder": 1,
+		"title": "Synthetic lesson pending curation",
+		"outcomes": ["Owner-reviewed learning outcome goes here"],
+		"contentVersion": 1
+	},
+	"asset": {
+		"privateAssetRecordId": "opaque-internal-asset-id",
+		"sourceStage": "raw",
+		"durationSeconds": null,
+		"editingEvidenceId": null,
+		"availabilityCheckEvidenceId": null,
+		"captionEvidenceId": null
+	},
+	"rights": {
+		"ownershipEvidenceId": null,
+		"instructorConsentEvidenceId": null,
+		"embeddingRightsEvidenceId": null,
+		"status": "not-verified"
+	},
+	"review": {
+		"syariahRequired": null,
+		"syariahReviewerId": null,
+		"syariahEvidenceId": null,
+		"reviewerId": null,
+		"approvedVersion": null,
+		"approvedAt": null,
+		"approvalEvidenceId": null,
+		"status": "pending"
+	},
+	"publication": {
+		"editorialStatus": "draft",
+		"ready": false,
+		"blockingEvidence": ["rights", "review", "final asset", "playback", "approved environment"]
+	}
+}
