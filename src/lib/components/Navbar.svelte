@@ -119,86 +119,86 @@
 						<div class="relative">
 							<button
 								onclick={(e) => {
-								e.stopPropagation();
-								userMenuOpen = !userMenuOpen;
-							}}
-							class="hover:ring-primary-300 dark:hover:ring-primary-600 flex items-center gap-2 rounded-full p-0.5 transition-all hover:ring-2"
-						>
-							{#if userAuth.user?.photoURL}
-								<img
-									src={userAuth.user.photoURL}
-									alt="Avatar"
-									class="h-9 w-9 rounded-full object-cover"
-								/>
-							{:else}
+									e.stopPropagation();
+									userMenuOpen = !userMenuOpen;
+								}}
+								class="hover:ring-primary-300 dark:hover:ring-primary-600 flex items-center gap-2 rounded-full p-0.5 transition-all hover:ring-2"
+							>
+								{#if userAuth.user?.photoURL}
+									<img
+										src={userAuth.user.photoURL}
+										alt="Avatar"
+										class="h-9 w-9 rounded-full object-cover"
+									/>
+								{:else}
+									<div
+										class="from-primary-500 to-primary-700 flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br text-sm font-bold text-white"
+									>
+										{getUserInitial(userAuth.user)}
+									</div>
+								{/if}
+							</button>
+
+							{#if userMenuOpen}
 								<div
-									class="from-primary-500 to-primary-700 flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br text-sm font-bold text-white"
+									class="animate-in fade-in slide-in-from-top-2 absolute right-0 mt-2 w-64 rounded-xl border border-gray-200 bg-white py-2 shadow-xl dark:border-gray-700 dark:bg-gray-800"
 								>
-									{getUserInitial(userAuth.user)}
+									<!-- User info -->
+									<div class="border-b border-gray-100 px-4 py-3 dark:border-gray-700">
+										<div class="truncate text-sm font-semibold text-gray-900 dark:text-white">
+											{userAuth.user?.displayName || 'User'}
+										</div>
+										<div class="mt-0.5 truncate text-xs text-gray-500 dark:text-gray-400">
+											{userAuth.user?.email}
+										</div>
+									</div>
+									<!-- Menu items -->
+									<a
+										href="/profile"
+										class="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 transition-colors hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700"
+									>
+										<svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+											><path
+												stroke-linecap="round"
+												stroke-linejoin="round"
+												stroke-width="2"
+												d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+											/></svg
+										>
+										Profil Saya
+									</a>
+									<a
+										href="/profile"
+										class="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 transition-colors hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700"
+									>
+										<svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+											><path
+												stroke-linecap="round"
+												stroke-linejoin="round"
+												stroke-width="2"
+												d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
+											/></svg
+										>
+										Kursus Saya
+									</a>
+									<div class="my-1 border-t border-gray-100 dark:border-gray-700"></div>
+									<button
+										onclick={handleLogout}
+										class="flex w-full items-center gap-3 px-4 py-2.5 text-sm text-red-600 transition-colors hover:bg-red-50 dark:text-red-400 dark:hover:bg-red-900/20"
+									>
+										<svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+											><path
+												stroke-linecap="round"
+												stroke-linejoin="round"
+												stroke-width="2"
+												d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
+											/></svg
+										>
+										Keluar
+									</button>
 								</div>
 							{/if}
-						</button>
-
-						{#if userMenuOpen}
-							<div
-								class="animate-in fade-in slide-in-from-top-2 absolute right-0 mt-2 w-64 rounded-xl border border-gray-200 bg-white py-2 shadow-xl dark:border-gray-700 dark:bg-gray-800"
-							>
-								<!-- User info -->
-								<div class="border-b border-gray-100 px-4 py-3 dark:border-gray-700">
-									<div class="truncate text-sm font-semibold text-gray-900 dark:text-white">
-										{userAuth.user?.displayName || 'User'}
-									</div>
-									<div class="mt-0.5 truncate text-xs text-gray-500 dark:text-gray-400">
-										{userAuth.user?.email}
-									</div>
-								</div>
-								<!-- Menu items -->
-								<a
-									href="/profile"
-									class="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 transition-colors hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700"
-								>
-									<svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-										><path
-											stroke-linecap="round"
-											stroke-linejoin="round"
-											stroke-width="2"
-											d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-										/></svg
-									>
-									Profil Saya
-								</a>
-								<a
-									href="/profile"
-									class="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 transition-colors hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700"
-								>
-									<svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-										><path
-											stroke-linecap="round"
-											stroke-linejoin="round"
-											stroke-width="2"
-											d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
-										/></svg
-									>
-									Kursus Saya
-								</a>
-								<div class="my-1 border-t border-gray-100 dark:border-gray-700"></div>
-								<button
-									onclick={handleLogout}
-									class="flex w-full items-center gap-3 px-4 py-2.5 text-sm text-red-600 transition-colors hover:bg-red-50 dark:text-red-400 dark:hover:bg-red-900/20"
-								>
-									<svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-										><path
-											stroke-linecap="round"
-											stroke-linejoin="round"
-											stroke-width="2"
-											d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
-										/></svg
-									>
-									Keluar
-								</button>
-							</div>
-						{/if}
-					</div>
+						</div>
 					{/if}
 				{:else}
 					<!-- Guest buttons -->

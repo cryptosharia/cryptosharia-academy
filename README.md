@@ -33,14 +33,14 @@ Built with the CryptoSharia ecosystem standards for consistency and developer ex
 
 CryptoSharia Academy is part of the broader CryptoSharia microservice ecosystem:
 
-| Service | Repository | Description |
-|---|---|---|
-| API | `cryptosharia-api` | Central REST API (auth, content, users) |
-| Admin | `cryptosharia-admin` | Content management dashboard |
-| Profile | `cryptosharia-profile` | Public-facing website |
-| Portal | `cryptosharia-portal` | Community portal |
-| Media | `cryptosharia-media` | Media viewer & renderer |
-| **Academy** | **`cryptosharia-academy`** | **E-learning platform (this repo)** |
+| Service     | Repository                 | Description                             |
+| ----------- | -------------------------- | --------------------------------------- |
+| API         | `cryptosharia-api`         | Central REST API (auth, content, users) |
+| Admin       | `cryptosharia-admin`       | Content management dashboard            |
+| Profile     | `cryptosharia-profile`     | Public-facing website                   |
+| Portal      | `cryptosharia-portal`      | Community portal                        |
+| Media       | `cryptosharia-media`       | Media viewer & renderer                 |
+| **Academy** | **`cryptosharia-academy`** | **E-learning platform (this repo)**     |
 
 ## 📋 Prerequisites
 
@@ -88,31 +88,31 @@ docker compose up
 
 ## 🔑 Environment Variables
 
-| Variable | Description | Example |
-|---|---|---|
-| `PUBLIC_APP_URL` | Public app URL | `http://localhost:5177` |
-| `PUBLIC_CS_API_URL` | CryptoSharia API base URL | `https://preview.api.cryptosharia.id` |
-| `CS_API_KEY` | CryptoSharia API key (server-only) | `your-api-key-here` |
-| `DATABASE_URL` | PostgreSQL connection string | `postgresql://user:pass@localhost:5432/academy` |
+| Variable            | Description                        | Example                                         |
+| ------------------- | ---------------------------------- | ----------------------------------------------- |
+| `PUBLIC_APP_URL`    | Public app URL                     | `http://localhost:5177`                         |
+| `PUBLIC_CS_API_URL` | CryptoSharia API base URL          | `https://preview.api.cryptosharia.id`           |
+| `CS_API_KEY`        | CryptoSharia API key (server-only) | `your-api-key-here`                             |
+| `DATABASE_URL`      | PostgreSQL connection string       | `postgresql://user:pass@localhost:5432/academy` |
 
 > **Note:** Variables prefixed with `PUBLIC_` are exposed to the client. Never put secrets there.
 
 ## 📜 Available Scripts
 
-| Script | Description |
-|---|---|
-| `npm run dev` | Start development server |
-| `npm run build` | Create production build |
-| `npm run preview` | Preview production build locally |
-| `npm run check` | Run Svelte type checking |
-| `npm run lint` | Run ESLint + Prettier checks |
-| `npm run format` | Auto-format code with Prettier |
-| `npm run db:push` | Push schema changes to database |
-| `npm run db:generate` | Generate database migrations |
-| `npm run db:migrate` | Run pending migrations |
-| `npm run db:studio` | Open Drizzle Studio (DB GUI) |
+| Script                  | Description                                 |
+| ----------------------- | ------------------------------------------- |
+| `npm run dev`           | Start development server                    |
+| `npm run build`         | Create production build                     |
+| `npm run preview`       | Preview production build locally            |
+| `npm run check`         | Run Svelte type checking                    |
+| `npm run lint`          | Run ESLint + Prettier checks                |
+| `npm run format`        | Auto-format code with Prettier              |
+| `npm run db:push`       | Push schema changes to database             |
+| `npm run db:generate`   | Generate database migrations                |
+| `npm run db:migrate`    | Run pending migrations                      |
+| `npm run db:studio`     | Open Drizzle Studio (DB GUI)                |
 | `npm run gen:api-types` | Generate TypeScript types from OpenAPI spec |
-| `npm run test` | Run test suite |
+| `npm run test`          | Run test suite                              |
 
 ## 📁 Project Structure
 

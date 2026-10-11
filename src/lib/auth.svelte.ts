@@ -72,7 +72,11 @@ export async function loginWithEmail(email: string, password: string) {
 		const result = await signInWithEmailAndPassword(auth, email, password);
 		await saveUserToFirestore(result.user, 'email');
 	} catch (e: any) {
-		if (e.code === 'auth/user-not-found' || e.code === 'auth/wrong-password' || e.code === 'auth/invalid-credential') {
+		if (
+			e.code === 'auth/user-not-found' ||
+			e.code === 'auth/wrong-password' ||
+			e.code === 'auth/invalid-credential'
+		) {
 			error = 'Email atau password salah';
 		} else if (e.code === 'auth/too-many-requests') {
 			error = 'Terlalu banyak percobaan. Coba lagi nanti.';
@@ -106,7 +110,7 @@ export async function changePassword(currentPassword: string, newPassword: strin
 	error = null;
 	if (!auth.currentUser) throw new Error('Not authenticated');
 	const user = auth.currentUser as User;
-	const hasPassword = (user.providerData || []).some(p => p.providerId === 'password');
+	const hasPassword = (user.providerData || []).some((p) => p.providerId === 'password');
 
 	try {
 		if (hasPassword) {
@@ -142,12 +146,20 @@ export async function logout() {
 
 /** Reactive auth object */
 export const userAuth = {
-	get user() { return currentUser; },
-	get loading() { return loading; },
-	get error() { return error; },
-	get isLoggedIn() { return !!currentUser; },
+	get user() {
+		return currentUser;
+	},
+	get loading() {
+		return loading;
+	},
+	get error() {
+		return error;
+	},
+	get isLoggedIn() {
+		return !!currentUser;
+	},
 	get hasPasswordProvider() {
-		return (currentUser?.providerData || []).some(p => p.providerId === 'password');
+		return (currentUser?.providerData || []).some((p) => p.providerId === 'password');
 	},
 	init: initAuth,
 	loginWithGoogle,

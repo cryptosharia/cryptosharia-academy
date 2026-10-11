@@ -4,18 +4,18 @@ Tanggal audit: 10 Oktober 2026, Asia/Jakarta. Laporan internal lokal; jangan pub
 
 ## Identitas dan batas audit
 
-| Item | Bukti / hasil |
-| --- | --- |
-| Repository | origin `https://github.com/cryptosharia/cryptosharia-academy` |
-| Direktori | `cryptosharia-academy` di workspace `cs` |
-| Branch | `main`; tidak membuat atau berpindah branch |
-| HEAD | `9423cefae98d1ce1797be58b0da705b059a9ce21` |
-| Worktree awal | PASS — `git status --short` kosong |
-| Node | `v25.8.1` |
-| npm | `11.11.0` |
-| Instruksi lokal | `AGENTS.md`, `.kiro/steering/ponytail.md`; tidak ada AGENTS tambahan di ancestor workspace atau `src` yang ditemukan |
-| Perubahan diizinkan | Enam dokumen audit ini; instalasi dependency dan output tooling lokal yang diabaikan git |
-| Batasan | Tidak mengubah source, env, DB, sharing, produksi; tidak menjalankan checkout/reset, commit, push, PR, deploy, pembayaran atau notifikasi |
+| Item                | Bukti / hasil                                                                                                                             |
+| ------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| Repository          | origin `https://github.com/cryptosharia/cryptosharia-academy`                                                                             |
+| Direktori           | `cryptosharia-academy` di workspace `cs`                                                                                                  |
+| Branch              | `main`; tidak membuat atau berpindah branch                                                                                               |
+| HEAD                | `9423cefae98d1ce1797be58b0da705b059a9ce21`                                                                                                |
+| Worktree awal       | PASS — `git status --short` kosong                                                                                                        |
+| Node                | `v25.8.1`                                                                                                                                 |
+| npm                 | `11.11.0`                                                                                                                                 |
+| Instruksi lokal     | `AGENTS.md`, `.kiro/steering/ponytail.md`; tidak ada AGENTS tambahan di ancestor workspace atau `src` yang ditemukan                      |
+| Perubahan diizinkan | Enam dokumen audit ini; instalasi dependency dan output tooling lokal yang diabaikan git                                                  |
+| Batasan             | Tidak mengubah source, env, DB, sharing, produksi; tidak menjalankan checkout/reset, commit, push, PR, deploy, pembayaran atau notifikasi |
 
 Percobaan baseline pertama dari root `cs` menghasilkan `fatal: not a git repository (or any of the parent directories): .git` pada tiga perintah git. Setelah lokasi repo ditemukan, semua perintah baseline diulang di repository yang benar. Error lokasi awal bukan kerusakan repository. Git origin telah diverifikasi.
 
@@ -23,15 +23,15 @@ Percobaan baseline pertama dari root `cs` menghasilkan `fatal: not a git reposit
 
 `package.json` + lockfile v3: SvelteKit/Svelte 5, TypeScript strict, Tailwind 4, Firebase client Auth/Firestore, Vercel Blob, GSAP, Lenis. Adapter aktif: `@sveltejs/adapter-vercel` (`svelte.config.js`).
 
-| Dependency | Deklarasi package | Versi lock aktual |
-| --- | --- | --- |
-| SvelteKit | ^2.57.0 | 2.60.1 |
-| Svelte | ^5.55.2 | 5.55.7 |
-| Vite | ^8.0.7 | 8.0.13 |
-| TypeScript | ^6.0.2 | 6.0.3 |
-| Firebase | ^12.13.0 | 12.13.0 |
-| Vercel Blob | ^2.4.0 | 2.4.0 |
-| Adapter Vercel | ^6.3.3 | 6.3.3 |
+| Dependency     | Deklarasi package | Versi lock aktual |
+| -------------- | ----------------- | ----------------- |
+| SvelteKit      | ^2.57.0           | 2.60.1            |
+| Svelte         | ^5.55.2           | 5.55.7            |
+| Vite           | ^8.0.7            | 8.0.13            |
+| TypeScript     | ^6.0.2            | 6.0.3             |
+| Firebase       | ^12.13.0          | 12.13.0           |
+| Vercel Blob    | ^2.4.0            | 2.4.0             |
+| Adapter Vercel | ^6.3.3            | 6.3.3             |
 
 README:11–18 mengklaim Fluid Tailwind, bits-ui, Lucide, openapi-fetch, Zod, PostgreSQL/Drizzle, JWT/jose/Argon2id, Vitest. Paket tersebut tidak menjadi dependency langsung pada baseline ini; integrasi DB/auth aktual adalah Firebase (`src/lib/firebase.ts`, `src/lib/auth.svelte.ts`). README:110–115 mengiklankan `db:*`, `gen:api-types`, `test`; script-script itu tidak tersedia di `package.json`. Tidak ditemukan test suite otomatis atau konfigurasi emulator lokal. Direktori API/db/migration yang dijelaskan README tidak ditemukan. README:81 menyebut port 5177; `vite.config.ts` tidak menetapkan port tersebut. Klaim README mengenai quiz, sertifikat, progress dan RBAC belum didukung implementasi end-to-end.
 
@@ -63,22 +63,22 @@ Tidak ada file `.env` aktif yang ditemukan di root repo, dan tidak ada key proce
 
 Semua perintah npm dijalankan di repository. Output check/lint/build/audit ditangkap dalam log lokal sementara `academy-phase0-{check,lint,build,audit}.log` di direktori TEMP; cuplikan relevan di bawah. Log sementara bukan artifact publik. Tidak menjalankan `npm audit fix`, formatter write, migrasi atau test pembayaran.
 
-| Command | Exit code | Status | Hasil |
-| --- | --- | --- | --- |
-| `git status --short` awal | 0 | PASS | Kosong |
-| `git branch --show-current` | 0 | PASS | main |
-| `git rev-parse HEAD` | 0 | PASS | SHA persis di atas |
-| `node --version` | 0 | PASS | v25.8.1 |
-| `npm --version` | 0 | PASS | 11.11.0 |
-| `npm ci` | 0 | PASS | 299 packages added, 300 audited, sekitar 2 menit; lifecycle `svelte-kit sync` dijalankan |
-| `npm run check` | 1 | FAIL | 13 errors, 41 warnings, 16 files; komponen konfigurasi BLOCKED BY CONFIG |
-| `npm run lint` | 1 | FAIL | Prettier melaporkan 62 file; ESLint tidak dijalankan karena `&&` |
-| `npm run build` | 1 | BLOCKED | BLOCKED BY CONFIG; 6 missing exports Firebase, belum menghasilkan build tervalidasi |
-| `npm audit --json` | 1 | FAIL | 14 dependency findings: 1 low, 2 moderate, 9 high, 2 critical |
-| `npm explain tar websocket-driver undici --json` | 0 | PASS | Rantai dependency diverifikasi; bukan verifikasi exploit |
-| Uji helper URL lokal via Node | 0 | PARTIAL | Empat bentuk URL positif dinormalisasi helper landing; input negatif tidak ditolak; Academy tidak memakai helper |
-| Firestore Rules SDK/REST role test | — | BLOCKED | Rules, emulator, isolated project belum tersedia |
-| Browser end-to-end / playback | — | BLOCKED | Config dan isolasi belum terbukti; tidak menjalankan dev server atau halaman live |
+| Command                                          | Exit code | Status  | Hasil                                                                                                            |
+| ------------------------------------------------ | --------- | ------- | ---------------------------------------------------------------------------------------------------------------- |
+| `git status --short` awal                        | 0         | PASS    | Kosong                                                                                                           |
+| `git branch --show-current`                      | 0         | PASS    | main                                                                                                             |
+| `git rev-parse HEAD`                             | 0         | PASS    | SHA persis di atas                                                                                               |
+| `node --version`                                 | 0         | PASS    | v25.8.1                                                                                                          |
+| `npm --version`                                  | 0         | PASS    | 11.11.0                                                                                                          |
+| `npm ci`                                         | 0         | PASS    | 299 packages added, 300 audited, sekitar 2 menit; lifecycle `svelte-kit sync` dijalankan                         |
+| `npm run check`                                  | 1         | FAIL    | 13 errors, 41 warnings, 16 files; komponen konfigurasi BLOCKED BY CONFIG                                         |
+| `npm run lint`                                   | 1         | FAIL    | Prettier melaporkan 62 file; ESLint tidak dijalankan karena `&&`                                                 |
+| `npm run build`                                  | 1         | BLOCKED | BLOCKED BY CONFIG; 6 missing exports Firebase, belum menghasilkan build tervalidasi                              |
+| `npm audit --json`                               | 1         | FAIL    | 14 dependency findings: 1 low, 2 moderate, 9 high, 2 critical                                                    |
+| `npm explain tar websocket-driver undici --json` | 0         | PASS    | Rantai dependency diverifikasi; bukan verifikasi exploit                                                         |
+| Uji helper URL lokal via Node                    | 0         | PARTIAL | Empat bentuk URL positif dinormalisasi helper landing; input negatif tidak ditolak; Academy tidak memakai helper |
+| Firestore Rules SDK/REST role test               | —         | BLOCKED | Rules, emulator, isolated project belum tersedia                                                                 |
+| Browser end-to-end / playback                    | —         | BLOCKED | Config dan isolasi belum terbukti; tidak menjalankan dev server atau halaman live                                |
 
 Output asli utama:
 
@@ -103,21 +103,21 @@ Build menampilkan lima nama export; ringkasan enam error mencakup penggunaan API
 
 Semua 13 error check, dengan path relatif:
 
-| Path:line | Diagnostic asli utama |
-| --- | --- |
-| src/lib/firebase.ts:5 | Module '"$env/static/public"' has no exported member 'PUBLIC_FIREBASE_API_KEY'. |
-| src/lib/firebase.ts:6 | Module '"$env/static/public"' has no exported member 'PUBLIC_FIREBASE_AUTH_DOMAIN'. |
-| src/lib/firebase.ts:7 | Module '"$env/static/public"' has no exported member 'PUBLIC_FIREBASE_PROJECT_ID'. |
-| src/lib/firebase.ts:8 | Module '"$env/static/public"' has no exported member 'PUBLIC_FIREBASE_MESSAGING_SENDER_ID'. |
-| src/lib/firebase.ts:9 | Module '"$env/static/public"' has no exported member 'PUBLIC_FIREBASE_APP_ID'. |
-| src/lib/server/firebaseAuth.ts:1 | Module '"$env/static/public"' has no exported member 'PUBLIC_FIREBASE_API_KEY'. |
-| src/routes/e-learning/[id]/+page.svelte:14 | 'userAuth.user' is possibly 'null'. |
-| src/routes/e-learning/[id]/+page.svelte:64 | No overload matches this call. Argument of type 'string \| undefined' is not assignable to parameter of type 'string'. |
-| src/routes/payment/subscription/[id]/+page.svelte:40 | Type 'undefined' cannot be used as an index type. |
-| src/routes/profile/+page.svelte:175 | Property 'message' does not exist on type '{}'. |
-| src/routes/subscription/[id]/+page.svelte:13 | 'userAuth.user' is possibly 'null'. |
-| src/routes/subscription/[id]/+page.svelte:46 | No overload matches this call. Argument of type 'string \| undefined' is not assignable to parameter of type 'string'. |
-| src/routes/units/[id]/+page.svelte:49 | No overload matches this call. Argument of type 'string \| undefined' is not assignable to parameter of type 'string'. |
+| Path:line                                            | Diagnostic asli utama                                                                                                  |
+| ---------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| src/lib/firebase.ts:5                                | Module '"$env/static/public"' has no exported member 'PUBLIC_FIREBASE_API_KEY'.                                        |
+| src/lib/firebase.ts:6                                | Module '"$env/static/public"' has no exported member 'PUBLIC_FIREBASE_AUTH_DOMAIN'.                                    |
+| src/lib/firebase.ts:7                                | Module '"$env/static/public"' has no exported member 'PUBLIC_FIREBASE_PROJECT_ID'.                                     |
+| src/lib/firebase.ts:8                                | Module '"$env/static/public"' has no exported member 'PUBLIC_FIREBASE_MESSAGING_SENDER_ID'.                            |
+| src/lib/firebase.ts:9                                | Module '"$env/static/public"' has no exported member 'PUBLIC_FIREBASE_APP_ID'.                                         |
+| src/lib/server/firebaseAuth.ts:1                     | Module '"$env/static/public"' has no exported member 'PUBLIC_FIREBASE_API_KEY'.                                        |
+| src/routes/e-learning/[id]/+page.svelte:14           | 'userAuth.user' is possibly 'null'.                                                                                    |
+| src/routes/e-learning/[id]/+page.svelte:64           | No overload matches this call. Argument of type 'string \| undefined' is not assignable to parameter of type 'string'. |
+| src/routes/payment/subscription/[id]/+page.svelte:40 | Type 'undefined' cannot be used as an index type.                                                                      |
+| src/routes/profile/+page.svelte:175                  | Property 'message' does not exist on type '{}'.                                                                        |
+| src/routes/subscription/[id]/+page.svelte:13         | 'userAuth.user' is possibly 'null'.                                                                                    |
+| src/routes/subscription/[id]/+page.svelte:46         | No overload matches this call. Argument of type 'string \| undefined' is not assignable to parameter of type 'string'. |
+| src/routes/units/[id]/+page.svelte:49                | No overload matches this call. Argument of type 'string \| undefined' is not assignable to parameter of type 'string'. |
 
 Warnings mencakup label tanpa association, href `#`, state nonreactive dan event directive lama (`admin/vouchers`). Tidak menjalankan lint ulang setelah membuat laporan, agar jumlah 62 tetap mencerminkan source baseline sebelum dokumen audit ditambahkan.
 

@@ -67,12 +67,12 @@
 
 @layer base {
 	html {
-		@apply scroll-smooth font-sans text-foreground;
+		@apply text-foreground scroll-smooth font-sans;
 		scrollbar-gutter: stable;
 	}
 
 	body {
-		@apply bg-background transition-colors antialiased;
+		@apply bg-background antialiased transition-colors;
 	}
 
 	*,
@@ -87,74 +87,74 @@
 
 	/* ── Dark mode global overrides ── */
 	/* Section backgrounds */
-	.dark section:where([class*="bg-white"]),
-	.dark div:where([class*="bg-white"]:not([class*="from-"])) {
+	.dark section:where([class*='bg-white']),
+	.dark div:where([class*='bg-white']:not([class*='from-'])) {
 		background-color: var(--color-gray-950) !important;
 	}
 
-	.dark :where([class*="bg-gray-50"]) {
+	.dark :where([class*='bg-gray-50']) {
 		background-color: var(--color-gray-900) !important;
 	}
 
-	.dark :where([class*="bg-gray-100"]) {
+	.dark :where([class*='bg-gray-100']) {
 		background-color: var(--color-gray-800) !important;
 	}
 
 	/* Card backgrounds */
-	.dark .rounded-2xl:where([class*="bg-white"]:not([class*="from-"])),
-	.dark .rounded-xl:where([class*="bg-white"]:not([class*="from-"])) {
+	.dark .rounded-2xl:where([class*='bg-white']:not([class*='from-'])),
+	.dark .rounded-xl:where([class*='bg-white']:not([class*='from-'])) {
 		background-color: var(--color-gray-800) !important;
 	}
 
 	/* Text colors */
-	.dark :where([class*="text-gray-900"]),
-	.dark :where([class*="text-slate-900"]) {
+	.dark :where([class*='text-gray-900']),
+	.dark :where([class*='text-slate-900']) {
 		color: var(--color-gray-50) !important;
 	}
 
-	.dark :where([class*="text-gray-800"]),
-	.dark :where([class*="text-slate-800"]) {
+	.dark :where([class*='text-gray-800']),
+	.dark :where([class*='text-slate-800']) {
 		color: var(--color-gray-50) !important;
 	}
 
-	.dark :where([class*="text-gray-700"]),
-	.dark :where([class*="text-slate-700"]) {
+	.dark :where([class*='text-gray-700']),
+	.dark :where([class*='text-slate-700']) {
 		color: var(--color-gray-100) !important;
 	}
 
-	.dark :where([class*="text-gray-600"]),
-	.dark :where([class*="text-slate-600"]) {
+	.dark :where([class*='text-gray-600']),
+	.dark :where([class*='text-slate-600']) {
 		color: var(--color-gray-200) !important;
 	}
 
-	.dark :where([class*="text-gray-500"]),
-	.dark :where([class*="text-slate-500"]) {
+	.dark :where([class*='text-gray-500']),
+	.dark :where([class*='text-slate-500']) {
 		color: var(--color-gray-300) !important;
 	}
 
-	.dark :where([class*="text-gray-400"]),
-	.dark :where([class*="text-slate-400"]) {
+	.dark :where([class*='text-gray-400']),
+	.dark :where([class*='text-slate-400']) {
 		color: var(--color-gray-400) !important;
 	}
 
 	/* Border colors */
-	.dark :where([class*="border-gray-200"]),
-	.dark :where([class*="border-slate-200"]),
-	.dark :where([class*="border-gray-100"]),
-	.dark :where([class*="border-slate-100"]) {
+	.dark :where([class*='border-gray-200']),
+	.dark :where([class*='border-slate-200']),
+	.dark :where([class*='border-gray-100']),
+	.dark :where([class*='border-slate-100']) {
 		border-color: var(--color-gray-700) !important;
 	}
 
 	/* Input & form backgrounds */
-	.dark input:where([class*="bg-white"]),
-	.dark input:where([class*="bg-gray-50"]) {
+	.dark input:where([class*='bg-white']),
+	.dark input:where([class*='bg-gray-50']) {
 		background-color: var(--color-gray-800) !important;
 		color: var(--color-gray-100) !important;
 	}
 
 	/* Shadow adjustments */
-	.dark :where([class*="shadow-lg"]),
-	.dark :where([class*="shadow-xl"]) {
+	.dark :where([class*='shadow-lg']),
+	.dark :where([class*='shadow-xl']) {
 		--tw-shadow-color: rgba(0, 0, 0, 0.4);
 	}
 }
@@ -230,8 +230,12 @@
 }
 
 @keyframes marquee {
-	0% { transform: translateX(0); }
-	100% { transform: translateX(-50%); }
+	0% {
+		transform: translateX(0);
+	}
+	100% {
+		transform: translateX(-50%);
+	}
 }
 
 .animate-marquee {
@@ -243,7 +247,12 @@
 }
 
 .heading-gradient {
-	background-image: linear-gradient(to right, var(--tw-gradient-from), var(--tw-gradient-via), var(--tw-gradient-to));
+	background-image: linear-gradient(
+		to right,
+		var(--tw-gradient-from),
+		var(--tw-gradient-via),
+		var(--tw-gradient-to)
+	);
 	-webkit-background-clip: text;
 	background-clip: text;
 	color: transparent;

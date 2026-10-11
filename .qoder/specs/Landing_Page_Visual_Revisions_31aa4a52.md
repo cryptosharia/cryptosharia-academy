@@ -5,6 +5,7 @@
 The landing page is a single-file inline implementation (`src/routes/+page.svelte`, 1358 lines) rendering 11 configurable sections driven by `src/lib/landingContent.ts` via Firestore. The current design is functional but visually uniform — card layouts are repetitive, no carousels or scroll animations, section titles use plain white text, and cards have flat dark backgrounds. The goal is 7 visual enhancements to make the page more premium and dynamic while maintaining the existing dark-mode crypto/Islamic fintech aesthetic with orange/amber/green accents.
 
 **Guiding Principles** (per user feedback):
+
 - Do NOT over-engineer layouts. Keep the overall design consistent, clean, not too busy.
 - Preserve all CTAs, WhatsApp links, admin/auth/database logic, routing, and payment logic.
 - Do NOT break Firestore admin-edited content rendering.
@@ -30,6 +31,7 @@ The landing page is a single-file inline implementation (`src/routes/+page.svelt
 ## Assets to Move
 
 Move activity images from project root → `/static/events/`:
+
 - `nushafest.png` → `/static/events/nushafest.png`
 - `halalkulture.png` → `/static/events/halalkulture.png`
 - `bootcamp.png` → `/static/events/bootcamp.png`
@@ -38,6 +40,7 @@ Move activity images from project root → `/static/events/`:
 ## Assets to Create
 
 Coin logo fallbacks in `/static/coins/`:
+
 - `fhe.png`, `umbra.png`, `humanity.png`, `light.png`
 - **Strategy**: Create clean branded circular fallback initials (inline SVG rendered as component). Structure code so real PNG/WebP logos can be dropped in later without refactoring — use an `<img>` with `onerror` fallback to initials, or check file existence at render.
 
@@ -50,6 +53,7 @@ Coin logo fallbacks in `/static/coins/`:
 **Target**: All section `<h2>` headings (Authority, Testimonials, USP, Curriculum, Instructors, Pricing, FAQ)
 
 **Changes**:
+
 - Replace `text-white` / `dark:text-white` on h2s with gradient text: `bg-clip-text text-transparent bg-gradient-to-r`
 - Dark mode gradient: `from-white via-orange-100 to-orange-300` (subtle warm sheen)
 - Light mode gradient: `from-slate-900 via-orange-900 to-orange-700`
@@ -61,6 +65,7 @@ Coin logo fallbacks in `/static/coins/`:
 **Target**: USP cards, Curriculum day cards, Testimonial cards, FAQ expanded items
 
 **Changes** (keep decorations subtle, max ~10-12% opacity):
+
 - **USP cards** (line 552): Add subtle radial gradient glow in top-right (`radial-gradient(circle at 85% 15%, rgba(249,115,22,0.10), transparent 60%)`)
 - **Curriculum day cards** (line 807): Add soft `box-shadow: inset 0 1px 0 rgba(249,115,22,0.12)` top highlight
 - **Testimonial cards** (line 455–529): Subtle glass-morphism hint — very faint radial glow center
@@ -73,6 +78,7 @@ Coin logo fallbacks in `/static/coins/`:
 **Current issue**: Same `bg-slate-50 dark:bg-slate-900` as parent curriculum, visually blends.
 
 **Changes**:
+
 - Wrap outcomes area in distinct container:
   - Background: `bg-slate-900 dark:bg-slate-950` (inverted from parent)
   - Rounded with top gradient border (orange → teal via `bg-gradient-to-r` on a pseudo border)
@@ -96,7 +102,7 @@ Coin logo fallbacks in `/static/coins/`:
 
 **Current state**: 4 cards in a 2x2 grid with `image: ''` in defaults. Generic card layout.
 
-**Design Intent**: This section should communicate: *"CryptoSharia is not just a random online class. It comes from real education activities, real community events, and real market/community experience."* — a premium visual proof/storytelling section that breaks away from the typical card grid.
+**Design Intent**: This section should communicate: _"CryptoSharia is not just a random online class. It comes from real education activities, real community events, and real market/community experience."_ — a premium visual proof/storytelling section that breaks away from the typical card grid.
 
 **Changes**:
 
@@ -141,6 +147,7 @@ Coin logo fallbacks in `/static/coins/`:
 **Confirmed symbols** (from `landingContent.ts` line 221–225): **FHE, UMBRA, HUMANITY, LIGHT**
 
 **Changes**:
+
 1. Create `CoinTicker.svelte` — slow horizontal marquee:
    - Animation: CSS `@keyframes marquee` with `translateX`, duration ~30s (slow, premium)
    - Duplicates items for seamless infinite loop
@@ -165,6 +172,7 @@ Coin logo fallbacks in `/static/coins/`:
 **Target**: Testimonials section (lines 455–529)
 
 **Approach**: Full horizontal carousel (simple, responsive):
+
 - Create `TestimonialCarousel.svelte`:
   - CSS `scroll-snap-type: x mandatory` container
   - Auto-slide via `setInterval` (~5s per slide)
@@ -179,6 +187,7 @@ Coin logo fallbacks in `/static/coins/`:
 ### Task 3B: Layout Variation Polish
 
 Minimal, non-over-engineered layout adjustments:
+
 - **USP section**: Slight size variation — first 2 cards and last 2 cards normal, middle 2 cards slightly wider (span-2 on lg only) to break the uniform grid rhythm
 - **General**: Ensure all sections have consistent vertical spacing and the page flows naturally between dark/light backgrounds
 - **Mobile final check**: Ensure all new elements (ticker, carousel, activity grid) look clean on 375px width
@@ -205,10 +214,12 @@ Minimal, non-over-engineered layout adjustments:
 ## Verification Plan
 
 **After each batch**:
+
 1. `npm run build` — must pass with zero errors
 2. List all modified/created files
 
 **Final verification (after Batch 3)**:
+
 1. **Browser agent**: Start dev server, check desktop (1440px) and mobile (375px) rendering
 2. **Dark mode**: Verify gradients/glows render correctly
 3. **Carousel**: Auto-slides, pauses on hover, touch-scrollable on mobile

@@ -178,7 +178,6 @@
 		}
 	}
 
-
 	function getUserInitial(): string {
 		if (namaLengkap) return namaLengkap[0].toUpperCase();
 		if (userAuth.user?.email) return userAuth.user.email[0].toUpperCase();
@@ -606,14 +605,24 @@
 											Password berhasil diubah
 										</div>
 									{/if}
-									<form onsubmit={(e) => { e.preventDefault(); submitChangePassword(); }} class="space-y-3">
+									<form
+										onsubmit={(e) => {
+											e.preventDefault();
+											submitChangePassword();
+										}}
+										class="space-y-3"
+									>
 										{#if !userAuth.hasPasswordProvider}
-											<div class="mb-2 rounded-lg border border-blue-200 bg-blue-50 px-3 py-2 text-sm text-blue-700 dark:border-blue-800 dark:bg-blue-900/20 dark:text-blue-400">
-												Akun kamu terhubung via Google. Buat password baru untuk login dengan email juga.
+											<div
+												class="mb-2 rounded-lg border border-blue-200 bg-blue-50 px-3 py-2 text-sm text-blue-700 dark:border-blue-800 dark:bg-blue-900/20 dark:text-blue-400"
+											>
+												Akun kamu terhubung via Google. Buat password baru untuk login dengan email
+												juga.
 											</div>
 										{:else}
 											<div>
-												<label class="mb-2 block text-sm font-semibold text-gray-900 dark:text-white"
+												<label
+													class="mb-2 block text-sm font-semibold text-gray-900 dark:text-white"
 													>Password Saat Ini</label
 												>
 												<input

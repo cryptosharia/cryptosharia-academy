@@ -17,36 +17,36 @@ Format setiap hasil: `Case ID | SHA/env/browser/viewport | Actor | Steps | Expec
 
 ## Participant flow
 
-| Case | Langkah | Expected acceptance |
-| --- | --- | --- |
-| U01 Catalog guest | Buka /e-learning fresh session; filter empat bidang, level, bab; buka detail published | Hanya approved published metadata; ordered stable hierarchy, outcomes/instructor/duration akurat; tidak ada template course/statistik tak terbukti |
-| U02 Empty/error | Gunakan fixture kosong, query tanpa hasil, offline dan denied rules | Loading selesai; bedakan empty/network/permission/404; retry aman; tidak menampilkan private defaults |
-| U03 Google login | Login lewat provider isolated; repeat canceled popup, blocked popup, denied profile write | Tidak redirect sukses saat cancel; auth error jelas; profile failure tidak menyamarkan auth state; no duplicate profile writes |
-| U04 Email signup/login | Valid/invalid password, confirm mismatch, existing account, invalid credentials, throttling | Loading/disabled control, readable errors, safe own profile creation; no invented role/grant fields |
-| U05 Session loading | Reload halaman protected pada slow auth/network | Loading auth/entitlement jelas, fail-closed; tidak mem-flash unlocked player/admin |
-| U06 Logout | Logout di player kemudian back/refresh; switch dua accounts cepat | State/private references dibersihkan sesuai policy; delayed response uid lama tidak membuka hak user baru; no stale profile UI |
-| U07 Recovery/password | Sandbox reset password jika diimplementasikan; change-password dengan reauthentication dan Google-linked provider | Delivery hanya sandbox, no secret logs; password change errors benar. Baseline reset: NOT IMPLEMENTED |
-| U08 Authorized player | Active scoped actor buka published chapter; pilih lesson kedua, reload, buka direct link | Video sesuai lesson, scope valid, no mock slug fallback; arbitrary slug tidak membuka protected content |
-| U09 Unauthorized | Guest dan login tanpa grant buka ID/slug/subscription alias/direct link | No media/private lesson response; correct login/request-access state; UI dan direct SDK sama-sama deny |
-| U10 Expiry/revoke | Fixture expiry lalu lintasi waktu expiry saat tab terbuka; admin test revoke; request ulang | Request-time access denied, state diperbarui, no stale open/refetch access; historical progress tetap aman |
-| U11 Scope isolation | Active scope A coba course/lesson B, unit grant, admin preview sesuai policy | Grant hanya scope yang ditentukan; admin preview deliberate audited; unit model tidak otomatis full subscription |
-| U12 Progress/resume | Tonton/pause/save, lanjut lesson, reload dan device kedua; offline/retry save | Position/lesson/completion persist per uid; bounds enforced, debounced/idempotent retry; revoked user history tidak membuka media |
-| U13 Profile/dashboard | Login tanpa subscription lalu active/expired/revoked; view own orders dan history | Status sebenarnya, bukan heading active statis; own data only; pending tidak memberi akses |
-| U14 Reading/captions | Buka approved reading/PDF/slide, caption aktif, keyboard navigation | Tipe lesson memiliki renderer sesuai, access protected, attachment safe; missing refs/subtitle state jelas |
+| Case                   | Langkah                                                                                                           | Expected acceptance                                                                                                                                |
+| ---------------------- | ----------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| U01 Catalog guest      | Buka /e-learning fresh session; filter empat bidang, level, bab; buka detail published                            | Hanya approved published metadata; ordered stable hierarchy, outcomes/instructor/duration akurat; tidak ada template course/statistik tak terbukti |
+| U02 Empty/error        | Gunakan fixture kosong, query tanpa hasil, offline dan denied rules                                               | Loading selesai; bedakan empty/network/permission/404; retry aman; tidak menampilkan private defaults                                              |
+| U03 Google login       | Login lewat provider isolated; repeat canceled popup, blocked popup, denied profile write                         | Tidak redirect sukses saat cancel; auth error jelas; profile failure tidak menyamarkan auth state; no duplicate profile writes                     |
+| U04 Email signup/login | Valid/invalid password, confirm mismatch, existing account, invalid credentials, throttling                       | Loading/disabled control, readable errors, safe own profile creation; no invented role/grant fields                                                |
+| U05 Session loading    | Reload halaman protected pada slow auth/network                                                                   | Loading auth/entitlement jelas, fail-closed; tidak mem-flash unlocked player/admin                                                                 |
+| U06 Logout             | Logout di player kemudian back/refresh; switch dua accounts cepat                                                 | State/private references dibersihkan sesuai policy; delayed response uid lama tidak membuka hak user baru; no stale profile UI                     |
+| U07 Recovery/password  | Sandbox reset password jika diimplementasikan; change-password dengan reauthentication dan Google-linked provider | Delivery hanya sandbox, no secret logs; password change errors benar. Baseline reset: NOT IMPLEMENTED                                              |
+| U08 Authorized player  | Active scoped actor buka published chapter; pilih lesson kedua, reload, buka direct link                          | Video sesuai lesson, scope valid, no mock slug fallback; arbitrary slug tidak membuka protected content                                            |
+| U09 Unauthorized       | Guest dan login tanpa grant buka ID/slug/subscription alias/direct link                                           | No media/private lesson response; correct login/request-access state; UI dan direct SDK sama-sama deny                                             |
+| U10 Expiry/revoke      | Fixture expiry lalu lintasi waktu expiry saat tab terbuka; admin test revoke; request ulang                       | Request-time access denied, state diperbarui, no stale open/refetch access; historical progress tetap aman                                         |
+| U11 Scope isolation    | Active scope A coba course/lesson B, unit grant, admin preview sesuai policy                                      | Grant hanya scope yang ditentukan; admin preview deliberate audited; unit model tidak otomatis full subscription                                   |
+| U12 Progress/resume    | Tonton/pause/save, lanjut lesson, reload dan device kedua; offline/retry save                                     | Position/lesson/completion persist per uid; bounds enforced, debounced/idempotent retry; revoked user history tidak membuka media                  |
+| U13 Profile/dashboard  | Login tanpa subscription lalu active/expired/revoked; view own orders dan history                                 | Status sebenarnya, bukan heading active statis; own data only; pending tidak memberi akses                                                         |
+| U14 Reading/captions   | Buka approved reading/PDF/slide, caption aktif, keyboard navigation                                               | Tipe lesson memiliki renderer sesuai, access protected, attachment safe; missing refs/subtitle state jelas                                         |
 
 ## Admin dan publishing flow
 
-| Case | Langkah | Expected acceptance |
-| --- | --- | --- |
-| A01 Guard | Guest/nonadmin buka admin courses/orders/vouchers serta langsung SDK emulator | Semua unauthorized read/mutation deny; no reliance pada redirect/hidden button; nonadmin tidak mendapat broad orders/PII |
-| A02 CRUD draft | Verified admin membuat draft sintetis lengkap, menambah/edit/hapus lesson, cancel edit | Stable IDs, no nested state mutation pada cancel, schema/URL/type/duration validation; draft tidak visible peserta |
-| A03 Concurrency | Dua editor mengubah version yang sama; duplicate judul/ID; malformed required field | Conflict terdeteksi, no silent overwrite; judul bukan sole identity; no last-writer loss |
-| A04 Approve/publish | Ajukan review; reviewer approved version; publish; edit sesudah approved; unpublish | Hanya same approved version boleh publish; rights/syariah required; audit reviewer/time/version; unauthorized transition denied |
-| A05 Manifest | Tautkan curated fixture ke empat bidang; staged raw/edited/approved/uploaded/published | Tidak auto-publish raw/uploaded; counts bab/video akurat; tidak mengimpor semua Drive |
-| A06 Seed/delete | Review seed code tanpa menekan seed; isolated delete fixture jika diotorisasi | Default seed tidak dipakai; existing records tidak overwritten; safe confirmation/references/version handling |
-| A07 Image upload | Hanya dedicated sandbox Blob atau local handler test: valid image, invalid MIME, >5MB, invalid scope/path, missing/expired token/nonadmin | Server deny invalid; verified admin allow batas type/size; no public private materials; no API secret/token logs |
-| A08 Error paths | Denied snapshot/write, lost network saat save/publish/upload | Loading selesai/error jelas; no false success/publish; retry idempotent dan no duplicate data |
-| A09 Marketing | Review catalog/pricing/profile metadata/testimonials/CTA pada Academy | Unsupported counts, harga dan certificate promise removed/approved; Masterclass landing/flow tidak diubah |
+| Case                | Langkah                                                                                                                                   | Expected acceptance                                                                                                             |
+| ------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| A01 Guard           | Guest/nonadmin buka admin courses/orders/vouchers serta langsung SDK emulator                                                             | Semua unauthorized read/mutation deny; no reliance pada redirect/hidden button; nonadmin tidak mendapat broad orders/PII        |
+| A02 CRUD draft      | Verified admin membuat draft sintetis lengkap, menambah/edit/hapus lesson, cancel edit                                                    | Stable IDs, no nested state mutation pada cancel, schema/URL/type/duration validation; draft tidak visible peserta              |
+| A03 Concurrency     | Dua editor mengubah version yang sama; duplicate judul/ID; malformed required field                                                       | Conflict terdeteksi, no silent overwrite; judul bukan sole identity; no last-writer loss                                        |
+| A04 Approve/publish | Ajukan review; reviewer approved version; publish; edit sesudah approved; unpublish                                                       | Hanya same approved version boleh publish; rights/syariah required; audit reviewer/time/version; unauthorized transition denied |
+| A05 Manifest        | Tautkan curated fixture ke empat bidang; staged raw/edited/approved/uploaded/published                                                    | Tidak auto-publish raw/uploaded; counts bab/video akurat; tidak mengimpor semua Drive                                           |
+| A06 Seed/delete     | Review seed code tanpa menekan seed; isolated delete fixture jika diotorisasi                                                             | Default seed tidak dipakai; existing records tidak overwritten; safe confirmation/references/version handling                   |
+| A07 Image upload    | Hanya dedicated sandbox Blob atau local handler test: valid image, invalid MIME, >5MB, invalid scope/path, missing/expired token/nonadmin | Server deny invalid; verified admin allow batas type/size; no public private materials; no API secret/token logs                |
+| A08 Error paths     | Denied snapshot/write, lost network saat save/publish/upload                                                                              | Loading selesai/error jelas; no false success/publish; retry idempotent dan no duplicate data                                   |
+| A09 Marketing       | Review catalog/pricing/profile metadata/testimonials/CTA pada Academy                                                                     | Unsupported counts, harga dan certificate promise removed/approved; Masterclass landing/flow tidak diubah                       |
 
 ## Data exposure dan writes — emulator SDK/REST
 
@@ -62,18 +62,18 @@ Pengujian berikut hanya pada emulator/isolated project dengan rules actual/targe
 
 ## YouTube cases dan playback browser
 
-| Case | Input / langkah | Expected |
-| --- | --- | --- |
-| Y01 | https://youtu.be/ethrPMuAayU?si=Gb5QPRVzlh_oDWjR | Same exact videoId, embed derived trusted |
-| Y02 | https://www.youtube.com/watch?v=ethrPMuAayU | Same exact videoId |
-| Y03 | https://www.youtube.com/embed/ethrPMuAayU | Same exact videoId |
-| Y04 | https://youtube.com/shorts/ethrPMuAayU | Same exact videoId |
-| Y05 | javascript: / non-HTTPS / lookalike youtube.com.evil.example | Validation reject; tidak navigasi arbitrary URL atau eksekusi scheme |
-| Y06 | Empty, invalid ID, ID suffix tambahan, malformed URL/duplicate v params | Empty state atau validation error; no truncated ID fallback |
-| Y07 | Approved official embed dan youtube-nocookie.com variant pada actual preview domain | Playback nyata, audio/play/pause/seek/fullscreen/captions berfungsi sesuai permission; nocookie tidak diklaim DRM |
-| Y08 | Inspect request header destination tanpa menyimpan tokens | Referer appropriate; CSP permits intended host saja; no no-referrer regression |
-| Y09 | Controlled unavailable/private/embedding-disabled asset; autoplay block | Error 2/100/101/150/153 dan autoplay handling jelas, no endless blank iframe |
-| Y10 | Switch lesson lalu back/forward route, slow network, mobile rotation | Correct src/title, no previous course leak/state, responsive controls |
+| Case | Input / langkah                                                                     | Expected                                                                                                          |
+| ---- | ----------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
+| Y01  | https://youtu.be/ethrPMuAayU?si=Gb5QPRVzlh_oDWjR                                    | Same exact videoId, embed derived trusted                                                                         |
+| Y02  | https://www.youtube.com/watch?v=ethrPMuAayU                                         | Same exact videoId                                                                                                |
+| Y03  | https://www.youtube.com/embed/ethrPMuAayU                                           | Same exact videoId                                                                                                |
+| Y04  | https://youtube.com/shorts/ethrPMuAayU                                              | Same exact videoId                                                                                                |
+| Y05  | javascript: / non-HTTPS / lookalike youtube.com.evil.example                        | Validation reject; tidak navigasi arbitrary URL atau eksekusi scheme                                              |
+| Y06  | Empty, invalid ID, ID suffix tambahan, malformed URL/duplicate v params             | Empty state atau validation error; no truncated ID fallback                                                       |
+| Y07  | Approved official embed dan youtube-nocookie.com variant pada actual preview domain | Playback nyata, audio/play/pause/seek/fullscreen/captions berfungsi sesuai permission; nocookie tidak diklaim DRM |
+| Y08  | Inspect request header destination tanpa menyimpan tokens                           | Referer appropriate; CSP permits intended host saja; no no-referrer regression                                    |
+| Y09  | Controlled unavailable/private/embedding-disabled asset; autoplay block             | Error 2/100/101/150/153 dan autoplay handling jelas, no endless blank iframe                                      |
+| Y10  | Switch lesson lalu back/forward route, slow network, mobile rotation                | Correct src/title, no previous course leak/state, responsive controls                                             |
 
 Playback tidak PASS hanya karena parser PASS, iframe ada, video direct watch bisa dimainkan atau endpoint metadata sukses. [YouTube API](https://developers.google.com/youtube/iframe_api_reference) mengaitkan error 153 dengan Referer/client identification; [embed help](https://support.google.com/youtube/answer/171780) menjelaskan embedding/privacy-enhanced mode. Unlisted URL dapat disebar; entitlement app tidak memberikan DRM pada media YouTube.
 
