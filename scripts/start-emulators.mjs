@@ -36,7 +36,7 @@ const result = spawnSync(
 		'--config',
 		'firebase.emulator.json',
 		'--project',
-		'demo-academy-phase1b',
+		'demo-academy-phase1c',
 		'--only',
 		'auth,firestore'
 	],

@@ -4,17 +4,17 @@ import { resolveFirebaseSettings, requireFirebaseServices } from '../src/lib/fir
 const environment = {
 	...process.env,
 	PUBLIC_FIREBASE_MODE: 'emulator',
-	PUBLIC_FIREBASE_API_KEY: 'demo-academy-phase1b-key',
+	PUBLIC_FIREBASE_API_KEY: 'demo-academy-phase1c-key',
 	PUBLIC_FIREBASE_AUTH_DOMAIN: 'localhost',
-	PUBLIC_FIREBASE_PROJECT_ID: 'demo-academy-phase1b',
+	PUBLIC_FIREBASE_PROJECT_ID: 'demo-academy-phase1c',
 	PUBLIC_FIREBASE_MESSAGING_SENDER_ID: '0',
-	PUBLIC_FIREBASE_APP_ID: 'demo-academy-phase1b',
+	PUBLIC_FIREBASE_APP_ID: 'demo-academy-phase1c',
 	PUBLIC_FIREBASE_AUTH_EMULATOR_URL: 'http://127.0.0.1:9099',
 	PUBLIC_FIREBASE_FIRESTORE_EMULATOR_URL: 'http://127.0.0.1:8080',
 	PUBLIC_ACADEMY_ENABLED: 'true',
 	FIREBASE_AUTH_EMULATOR_HOST: '127.0.0.1:9099',
 	FIRESTORE_EMULATOR_HOST: '127.0.0.1:8080',
-	GCLOUD_PROJECT: 'demo-academy-phase1b'
+	GCLOUD_PROJECT: 'demo-academy-phase1c'
 };
 for (const key of [
 	'BLOB_READ_WRITE_TOKEN',

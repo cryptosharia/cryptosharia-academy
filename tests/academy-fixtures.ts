@@ -11,7 +11,7 @@ import {
 	type Media
 } from '../src/lib/academyData.ts';
 
-export const projectId = 'demo-academy-phase1b';
+export const projectId = 'demo-academy-phase1c';
 export const settings = resolveFirebaseSettings({
 	PUBLIC_FIREBASE_MODE: 'emulator',
 	PUBLIC_FIREBASE_API_KEY: `${projectId}-key`,
@@ -39,6 +39,10 @@ export const media: Media = {
 };
 export const metadata = (id: string, scopeId = 'scope-a'): Metadata => ({
 	id,
+	kind: 'lesson',
+	parentId: scopeId === 'scope-b' ? 'chapter-b' : 'chapter-a',
+	subjectId: scopeId === 'scope-b' ? 'technical' : 'fundamental',
+	chapterNumber: 1,
 	scopeId,
 	subject: 'Synthetic subject',
 	level: 1,
@@ -47,7 +51,12 @@ export const metadata = (id: string, scopeId = 'scope-a'): Metadata => ({
 	description: 'Isolated fixture; no approved Academy content.',
 	thumbnail: '/favicon.png',
 	durationSeconds: 120,
-	order: id === 'lesson-a2' ? 2 : 1,
+	order:
+		id === 'lesson-a2'
+			? 2
+			: ['lesson-a1', 'lesson-b1'].includes(id)
+				? 1
+				: 10 + [...id].reduce((n, c) => (n * 31 + c.charCodeAt(0)) % 9000, 0),
 	instructor: 'Synthetic approved instructor'
 });
 export const input = (id: string, scopeId = 'scope-a') => ({
@@ -161,6 +170,39 @@ export async function seed() {
 	});
 	// Fixture publishing itself walks the SAME protected application operations.
 	const admin = rulesDb(environment.authenticatedContext(users['verified-admin'].uid, claims));
+	for (const [scope, subject, suffix, title, order] of [
+		['scope-a', 'fundamental', 'a', 'Analisis Fundamental', 0],
+		['scope-b', 'technical', 'b', 'Analisis Teknikal', 1]
+	] as const) {
+		for (const [id, kind, parentId, nodeTitle] of [
+			[subject, 'subject', 'root', title],
+			[`level-${suffix}`, 'level', subject, 'Synthetic level 1'],
+			[`chapter-${suffix}`, 'chapter', `level-${suffix}`, 'Synthetic chapter']
+		] as const) {
+			await saveEditorial(
+				admin,
+				users['verified-admin'].uid,
+				{
+					metadata: {
+						...metadata(id, scope),
+						kind,
+						parentId,
+						subjectId: subject,
+						title: nodeTitle,
+						order: kind === 'subject' ? order : 1,
+						durationSeconds: 0,
+						instructor: '',
+						subject: title
+					},
+					media: null,
+					syariahRequired: true
+				},
+				null
+			);
+			for (const state of ['review', 'approved', 'published'] as const)
+				await transitionEditorial(admin, users['verified-admin'].uid, id, 1, state);
+		}
+	}
 	for (const [id, scope] of [
 		['lesson-a1', 'scope-a'],
 		['lesson-a2', 'scope-a'],

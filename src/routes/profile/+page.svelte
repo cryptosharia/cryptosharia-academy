@@ -5,6 +5,7 @@
 	import { resolve } from '$app/paths';
 	import { auth, db, ensureFirebaseReady } from '$lib/firebase';
 	import { userAuth } from '$lib/auth.svelte';
+	import AcademyDashboard from '$lib/components/AcademyDashboard.svelte';
 	let name = $state(''),
 		status = $state('Memuat akun…'),
 		signed = $state(false);
@@ -54,6 +55,7 @@
 <svelte:head><title>Profil | CryptoSharia Academy</title></svelte:head>
 <section class="mx-auto max-w-3xl px-6 py-24">
 	<h1 class="text-2xl font-bold">Profil Academy</h1>
+	<AcademyDashboard />
 	<p role="status">{status}</p>
 	{#if signed}<form
 			onsubmit={(e) => {

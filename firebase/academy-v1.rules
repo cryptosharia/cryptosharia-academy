@@ -19,15 +19,34 @@ service cloud.firestore {
     && get(grant(scope)).data.startsAt <= request.time && request.time < get(grant(scope)).data.expiresAt;
   }
   function metadata(m, id) {
-   return m.keys().hasAll(['id','scopeId','subject','level','chapter','title','description','thumbnail','durationSeconds','order','instructor'])
-    && m.keys().hasOnly(['id','scopeId','subject','level','chapter','title','description','thumbnail','durationSeconds','order','instructor'])
-    && m.id == id && m.scopeId is string && m.scopeId.matches('^[a-zA-Z0-9_-]{1,80}$')
+   return m.keys().hasAll(['id','kind','parentId','subjectId','chapterNumber','scopeId','subject','level','chapter','title','description','thumbnail','durationSeconds','order','instructor'])
+    && m.keys().hasOnly(['id','kind','parentId','subjectId','chapterNumber','scopeId','subject','level','chapter','title','description','thumbnail','durationSeconds','order','instructor'])
+    && m.id == id && m.id.matches('^[a-zA-Z0-9_-]{1,80}$') && m.scopeId is string && m.scopeId.matches('^[a-zA-Z0-9_-]{1,80}$')
     && m.subject is string && m.subject.size() <= 100 && m.level is int && m.level >= 1 && m.level <= 6
     && m.chapter is string && m.chapter.size() <= 200 && m.title is string && m.title.size() > 0 && m.title.size() <= 200
     && m.description is string && m.description.size() <= 2000
     && m.thumbnail is string && m.thumbnail.matches('^/[a-zA-Z0-9_-][a-zA-Z0-9_./-]*$')
-    && m.durationSeconds is int && m.durationSeconds >= 1 && m.durationSeconds <= 86400
-    && m.order is int && m.order >= 0 && m.instructor is string && m.instructor.size() <= 200;
+    && m.durationSeconds is int && m.durationSeconds <= 86400 && ((m.kind == 'lesson' && m.durationSeconds >= 1) || (m.kind != 'lesson' && m.durationSeconds == 0))
+    && m.order is int && m.order >= 0 && m.order <= 10000 && m.instructor is string && m.instructor.size() <= 200
+    && m.kind in ['subject','level','chapter','lesson'] && m.parentId is string && m.parentId.matches('^[a-zA-Z0-9_-]{1,80}$')
+    && m.subjectId in ['fundamental','technical','muamalah','web3'] && m.chapterNumber is int && m.chapterNumber >= 1 && m.chapterNumber <= 7
+    && (m.kind != 'level' || m.order == m.level) && (m.kind != 'chapter' || m.order == m.chapterNumber);
+  }
+  function sameTree(m,p) { return m.scopeId == p.scopeId && m.subjectId == p.subjectId; }
+  function hierarchy(m) {
+   return (m.kind == 'subject' && m.id == m.subjectId && m.parentId == 'root')
+    || (m.kind == 'level' && getAfter(editor(m.parentId)).data.metadata.kind == 'subject'
+     && m.parentId == m.subjectId && sameTree(m,getAfter(editor(m.parentId)).data.metadata))
+    || (m.kind == 'chapter' && getAfter(editor(m.parentId)).data.metadata.kind == 'level'
+     && m.level == getAfter(editor(m.parentId)).data.metadata.level && sameTree(m,getAfter(editor(m.parentId)).data.metadata))
+    || (m.kind == 'lesson' && getAfter(editor(m.parentId)).data.metadata.kind == 'chapter'
+     && m.level == getAfter(editor(m.parentId)).data.metadata.level
+     && m.chapterNumber == getAfter(editor(m.parentId)).data.metadata.chapterNumber && sameTree(m,getAfter(editor(m.parentId)).data.metadata));
+  }
+  function publishedParent(m) { return m.kind == 'subject' || (existsAfter(catalog(m.parentId)) && getAfter(catalog(m.parentId)).data.status == 'published'); }
+  function fixedStructure(m,p) {
+   return m.kind == p.kind && m.parentId == p.parentId && m.scopeId == p.scopeId
+    && m.subjectId == p.subjectId && m.level == p.level && m.chapterNumber == p.chapterNumber && m.order == p.order;
   }
   function media(m) {
    // ponytail: references are opaque strings; no attachment renderer or storage service in this phase.
@@ -46,10 +65,13 @@ service cloud.firestore {
   function shape(d,id) {
    return d.keys().hasAll(['metadata','media','version','status','approval','syariahRequired','auditId','updatedAt','updatedBy'])
     && d.keys().hasOnly(['metadata','media','version','status','approval','syariahRequired','auditId','updatedAt','updatedBy'])
-    && metadata(d.metadata,id) && media(d.media) && d.version is int && d.version >= 1
+    && metadata(d.metadata,id) && hierarchy(d.metadata)
+    && ((d.metadata.kind == 'lesson' && media(d.media)) || (d.metadata.kind != 'lesson' && d.media == null)) && d.version is int && d.version >= 1
     && d.syariahRequired is bool && d.updatedBy == request.auth.uid && d.updatedAt == request.time
     && d.auditId is string && audited(d,id)
-    && (d.status == 'published' || !existsAfter(catalog(id)));
+    && (d.status != 'published' || publishedParent(d.metadata))
+    && (d.metadata.kind == 'lesson' || !exists(catalog(id)) || fixedStructure(d.metadata,get(catalog(id)).data))
+    && (d.status == 'published' || d.metadata.kind != 'lesson' || !existsAfter(catalog(id)));
   }
   function approval(a,id,v,required) {
    return a is map && a.keys().hasAll(['contentId','version','reviewer','syariahReviewer','rights','decision','at'])
@@ -62,7 +84,7 @@ service cloud.firestore {
    allow read: if admin() || reviewer() || publisher();
    allow create: if admin() && shape(request.resource.data,id) && request.resource.data.status == 'draft'
     && request.resource.data.version == 1 && request.resource.data.approval == null;
-   allow update: if shape(request.resource.data,id) && request.resource.data.auditId != resource.data.auditId && (
+   allow update: if shape(request.resource.data,id) && request.resource.data.metadata.kind == resource.data.metadata.kind && request.resource.data.auditId != resource.data.auditId && (
     (admin() && request.resource.data.version == resource.data.version + 1 && request.resource.data.status == 'draft' && request.resource.data.approval == null)
     || (request.resource.data.version == resource.data.version && request.resource.data.metadata == resource.data.metadata
      && request.resource.data.media == resource.data.media && request.resource.data.syariahRequired == resource.data.syariahRequired && (
@@ -73,7 +95,8 @@ service cloud.firestore {
       || (publisher() && resource.data.status == 'approved' && request.resource.data.status == 'published'
        && request.resource.data.approval == resource.data.approval)
      )));
-   allow delete: if admin() && resource.data.status == 'draft' && !existsAfter(catalog(id))
+   // ponytail: parent removal needs an approved cascade policy; preserve IDs to prevent orphan descendants.
+   allow delete: if admin() && resource.data.metadata.kind == 'lesson' && resource.data.status == 'draft' && !existsAfter(catalog(id))
     && !existsAfter(/databases/$(database)/documents/academy_lessons/$(id))
     && getAfter(/databases/$(database)/documents/academy_audit/$(request.auth.uid + '_' + id + '_delete')).data ==
      {'contentId':id,'version':resource.data.version,'status':'deleted','actor':request.auth.uid,'at':request.time};
@@ -81,15 +104,25 @@ service cloud.firestore {
   match /academy_catalog/{id} {
    allow read: if resource.data.status == 'published';
    allow create, update: if publisher() && getAfter(editor(id)).data.status == 'published'
+    && publishedParent(request.resource.data)
+    && getAfter(/databases/$(database)/documents/academy_positions/$(request.resource.data.parentId + '_' + string(request.resource.data.order))).data.id == id
     && request.resource.data.keys().hasAll(getAfter(editor(id)).data.metadata.keys()) && request.resource.data.diff(getAfter(editor(id)).data.metadata).affectedKeys().hasOnly(['status','version']) && request.resource.data.status == 'published' && request.resource.data.version == getAfter(editor(id)).data.version;
-   allow delete: if (admin() || reviewer()) && (!existsAfter(editor(id)) || getAfter(editor(id)).data.status != 'published');
+   allow delete: if (admin() || reviewer()) && (!exists(catalog(id)) || resource.data.kind == 'lesson') && (!existsAfter(editor(id)) || getAfter(editor(id)).data.status != 'published');
+  }
+  match /academy_positions/{position} {
+   allow read: if admin() || reviewer() || publisher();
+   allow create, update: if publisher() && request.resource.data.keys().hasOnly(['id'])
+    && (!exists(/databases/$(database)/documents/academy_positions/$(position)) || resource.data.id == request.resource.data.id)
+    && getAfter(editor(request.resource.data.id)).data.status == 'published'
+    && position == getAfter(editor(request.resource.data.id)).data.metadata.parentId + '_' + string(getAfter(editor(request.resource.data.id)).data.metadata.order);
+   allow delete: if (admin() || reviewer()) && !existsAfter(catalog(resource.data.id));
   }
   match /academy_lessons/{id} {
    allow get: if admin() || (get(editor(id)).data.status == 'published'
     && resource.data.id == id && resource.data.scopeId == get(editor(id)).data.metadata.scopeId
     && resource.data.version == get(editor(id)).data.version && access(resource.data.scopeId));
    allow list: if false;
-   allow create, update: if publisher() && getAfter(editor(id)).data.status == 'published'
+   allow create, update: if publisher() && getAfter(editor(id)).data.status == 'published' && getAfter(editor(id)).data.metadata.kind == 'lesson'
     && request.resource.data.keys().hasAll(getAfter(editor(id)).data.media.keys()) && request.resource.data.diff(getAfter(editor(id)).data.media).affectedKeys().hasOnly(['id','scopeId','version']) && request.resource.data.id == id && request.resource.data.scopeId == getAfter(editor(id)).data.metadata.scopeId && request.resource.data.version == getAfter(editor(id)).data.version;
    allow delete: if admin() && (!existsAfter(editor(id)) || getAfter(editor(id)).data.status != 'published');
   }
@@ -123,7 +156,7 @@ service cloud.firestore {
   }
   match /academy_progress/{uid}/lessons/{id} {
    allow read: if signed() && request.auth.uid == uid;
-   allow create, update: if signed() && request.auth.uid == uid && get(editor(id)).data.status == 'published'
+   allow create, update: if signed() && request.auth.uid == uid && get(editor(id)).data.status == 'published' && get(editor(id)).data.metadata.kind == 'lesson'
     && access(get(editor(id)).data.metadata.scopeId)
     && request.resource.data.keys().hasAll(['lessonId','version','positionSeconds','updatedAt'])
     && request.resource.data.keys().hasOnly(['lessonId','version','positionSeconds','updatedAt'])

@@ -371,3 +371,174 @@ for (const role of ['no-grant', 'active', 'expired', 'revoked', 'verified-admin'
 			await deleteApp(client.app);
 		}
 	});
+
+test('curriculum invalid parents, traversal, scope and number writes deny', async () => {
+	const uid = fixture.users['verified-admin'].uid,
+		db = rulesDb(fixture.environment.authenticatedContext(uid, claims));
+	for (const change of [
+		{ parentId: 'missing' },
+		{ parentId: 'fundamental' },
+		{ parentId: 'chapter-b' },
+		{ level: 0 },
+		{ level: 7 },
+		{ chapterNumber: 0 },
+		{ chapterNumber: 8 },
+		{ kind: 'chapter', parentId: 'level-a', order: 2, chapterNumber: 1 },
+		{ subjectId: 'technical' },
+		{ scopeId: 'scope-b' }
+	])
+		await denied(
+			saveEditorial(
+				db,
+				uid,
+				{
+					...input('invalid-parent'),
+					metadata: { ...metadata('invalid-parent'), ...change } as ReturnType<typeof metadata>
+				},
+				null
+			)
+		);
+	const member = rulesDb(fixture.environment.authenticatedContext(fixture.users.active.uid));
+	await denied(getDocFromServer(doc(member, 'academy_positions', 'chapter-a_1')));
+	await denied(getDocFromServer(doc(member, 'academy_editorial', 'chapter-a')));
+	await denied(
+		setDoc(doc(member, 'academy_catalog', 'forged-parent'), {
+			...metadata('forged-parent'),
+			status: 'published',
+			version: 1
+		})
+	);
+});
+
+test('draft parent cannot publish child; duplicate sibling position is atomic', async () => {
+	const uid = fixture.users['verified-admin'].uid,
+		db = rulesDb(fixture.environment.authenticatedContext(uid, claims));
+	const parent = {
+		...input('draft-chapter'),
+		metadata: {
+			...metadata('draft-chapter'),
+			kind: 'chapter' as const,
+			durationSeconds: 0,
+			parentId: 'level-a',
+			chapterNumber: 2,
+			order: 2
+		},
+		media: null
+	};
+	await saveEditorial(db, uid, parent, null);
+	await saveEditorial(
+		db,
+		uid,
+		{
+			...input('draft-child'),
+			metadata: { ...metadata('draft-child'), parentId: 'draft-chapter', chapterNumber: 2 }
+		},
+		null
+	);
+	for (const state of ['review', 'approved'] as const)
+		await transitionEditorial(db, uid, 'draft-child', 1, state);
+	await denied(deleteDraft(db, uid, 'draft-chapter', 1));
+	await denied(transitionEditorial(db, uid, 'draft-child', 1, 'published'));
+	const guest = rulesDb(fixture.environment.unauthenticatedContext());
+	await denied(getDocFromServer(doc(guest, 'academy_catalog', 'draft-chapter')));
+	await denied(getDocFromServer(doc(guest, 'academy_catalog', 'draft-child')));
+	await saveEditorial(
+		db,
+		uid,
+		{ ...input('duplicate-order'), metadata: { ...metadata('duplicate-order'), order: 1 } },
+		null
+	);
+	for (const state of ['review', 'approved'] as const)
+		await transitionEditorial(db, uid, 'duplicate-order', 1, state);
+	await denied(transitionEditorial(db, uid, 'duplicate-order', 1, 'published'));
+	assert.equal(
+		(await getDocFromServer(doc(db, 'academy_positions', 'chapter-a_1'))).data()?.id,
+		'lesson-a1'
+	);
+});
+
+test('parent title revision keeps approved snapshot and immutable hierarchy, concurrent edit conflict', async () => {
+	const uid = fixture.users['verified-admin'].uid,
+		db = rulesDb(fixture.environment.authenticatedContext(uid, claims));
+	const snap = await getDocFromServer(doc(db, 'academy_editorial', 'chapter-a'));
+	const old = snap.data()!;
+	const changed = {
+		metadata: { ...old.metadata, title: 'Synthetic renamed chapter' },
+		media: null,
+		syariahRequired: true
+	};
+	const result = await Promise.allSettled([
+		saveEditorial(db, uid, changed, 1),
+		saveEditorial(
+			db,
+			uid,
+			{ ...changed, metadata: { ...changed.metadata, title: 'Other concurrent edit' } },
+			1
+		)
+	]);
+	assert.equal(result.filter((r) => r.status === 'fulfilled').length, 1);
+	const failed = result.find((r) => r.status === 'rejected');
+	assert(
+		failed?.status === 'rejected' &&
+			(/version conflict/.test(failed.reason.message) || failed.reason.code === 'permission-denied')
+	);
+	assert.equal(
+		(await getDocFromServer(doc(db, 'academy_editorial', 'chapter-a'))).data()?.version,
+		2
+	);
+	await assert.rejects(saveEditorial(db, uid, changed, 1), /version conflict/);
+	assert.equal(
+		(await getDocFromServer(doc(db, 'academy_editorial', 'chapter-a'))).data()?.approval,
+		null
+	);
+	assert.equal(
+		(await getDocFromServer(doc(db, 'academy_catalog', 'chapter-a'))).data()?.title,
+		'Synthetic chapter'
+	);
+	await denied(transitionEditorial(db, uid, 'chapter-a', 2, 'published'));
+	await denied(
+		saveEditorial(db, uid, { ...changed, metadata: { ...changed.metadata, scopeId: 'scope-b' } }, 2)
+	);
+	await denied(deleteDraft(db, uid, 'chapter-a', 2));
+	for (const state of ['review', 'approved', 'published'] as const)
+		await transitionEditorial(db, uid, 'chapter-a', 2, state);
+	assert.equal(
+		(await getDocFromServer(doc(db, 'academy_catalog', 'chapter-a'))).data()?.version,
+		2
+	);
+	assert((await getDocFromServer(doc(db, 'academy_catalog', 'lesson-a1'))).exists());
+});
+
+test('progress nonzero history remains readable after revoke, but writes and cross-user reads deny', async () => {
+	const uid = fixture.users.active.uid,
+		adminUid = fixture.users['verified-admin'].uid;
+	const db = rulesDb(fixture.environment.authenticatedContext(uid)),
+		admin = rulesDb(fixture.environment.authenticatedContext(adminUid, claims));
+	const lesson = { ...metadata('lesson-a2'), version: 1, status: 'published' as const };
+	await saveProgress(db, uid, lesson, 42);
+	assert.equal(
+		(await getDocFromServer(doc(db, 'academy_progress', uid, 'lessons', lesson.id))).data()
+			?.positionSeconds,
+		42
+	);
+	for (const positionSeconds of [NaN, Infinity, -1, 121])
+		await denied(saveProgress(db, uid, lesson, positionSeconds));
+	await denied(saveProgress(db, uid, { ...lesson, version: 2 }, 42));
+	await writeGrant(
+		admin,
+		adminUid,
+		uid,
+		'scope-a',
+		'revoked',
+		Timestamp.fromMillis(Date.now() - 1000),
+		Timestamp.fromMillis(Date.now() + 60000)
+	);
+	assert.equal(
+		(await getDocFromServer(doc(db, 'academy_progress', uid, 'lessons', lesson.id))).data()
+			?.positionSeconds,
+		42
+	);
+	await denied(saveProgress(db, uid, lesson, 43));
+	const other = rulesDb(fixture.environment.authenticatedContext(fixture.users['no-grant'].uid));
+	await denied(getDocsFromServer(collection(other, 'academy_progress', uid, 'lessons')));
+});

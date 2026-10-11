@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
-import { pathToFileURL } from 'node:url';
+import { pathToFileURL, fileURLToPath } from 'node:url';
+import { mkdir } from 'node:fs/promises';
 import { setTimeout as delay } from 'node:timers/promises';
 if (!process.env.ACADEMY_PLAYWRIGHT_MODULE)
 	throw new Error('Set ACADEMY_PLAYWRIGHT_MODULE to an installed Playwright module.');
@@ -22,6 +23,8 @@ const secondBrowser = await chromium.launch({
 const base = 'http://localhost:5173';
 let pass = 0;
 const contexts = [];
+const evidence = fileURLToPath(new URL('../../academy-phase1c-private/', import.meta.url));
+await mkdir(evidence, { recursive: true });
 async function session(engine = browser) {
 	const context = await engine.newContext();
 	contexts.push(context);
@@ -31,6 +34,19 @@ async function session(engine = browser) {
 		const u = new URL(route.request().url());
 		if (u.protocol === 'http:' && ['127.0.0.1', 'localhost'].includes(u.hostname))
 			return route.continue();
+		if (u.hostname === 'www.youtube.com' && u.pathname === '/iframe_api')
+			return route.fulfill({
+				status: 200,
+				contentType: 'text/javascript',
+				body: `
+window.__fakePlayers=[];
+window.YT={Player:class {
+ constructor(frame,options){this.position=0;this.seeked=0;this.events=options.events;this.dead=false;window.__fakePlayers.push(this);setTimeout(()=>this.events.onReady(),0);}
+ seekTo(p){this.position=p;this.seeked=p;} getCurrentTime(){return this.position;}
+ event(p,state){this.position=p;this.events.onStateChange({data:state});}
+ destroy(){this.dead=true;window.__lastDestroyed=this;}
+}};window.onYouTubeIframeAPIReady();`
+			});
 		if (u.hostname === 'www.youtube-nocookie.com')
 			return route.fulfill({
 				status: 200,
@@ -62,6 +78,7 @@ async function status(page, value) {
 		value,
 		{ timeout: 15000 }
 	);
+	if (value === 'ready') await page.locator('iframe').waitFor({ timeout: 15000 });
 	assert.equal(await page.locator('iframe').count(), value === 'ready' ? 1 : 0);
 }
 async function login(page, role) {
@@ -119,11 +136,35 @@ async function sdk(page, operation, args) {
 				const snap = await lite.getDocs(
 					lite.query(
 						lite.collection(client.lessonDb, 'academy_catalog'),
-						lite.where('status', '==', 'published')
+						lite.where('status', '==', 'published'),
+						lite.where('kind', '==', 'lesson')
 					)
 				);
 				if (snap.size !== catalog.length) throw new Error('Catalog transports disagree.');
 				return catalog;
+			}
+			if (operation === 'progress') {
+				const progress = await import('/src/lib/academyProgress.ts');
+				return (
+					await progress.freshProgress(client.lessonDb, args.uid ?? client.auth.currentUser.uid)
+				).map((p) => ({
+					lessonId: p.lessonId,
+					positionSeconds: p.positionSeconds,
+					version: p.version
+				}));
+			}
+			if (operation === 'writeProgress') {
+				try {
+					await data.saveProgress(
+						client.db,
+						client.auth.currentUser.uid,
+						(await data.readCatalog(client.db)).find((l) => l.id === args.id),
+						args.position
+					);
+					return 'allowed';
+				} catch (e) {
+					return e.code;
+				}
 			}
 			if (operation === 'offline') return fs.disableNetwork(client.db);
 			if (operation === 'online') return fs.enableNetwork(client.db);
@@ -178,11 +219,19 @@ try {
 	await login(a.page, 'active');
 	await a.page.goto(base + '/e-learning/scope-a');
 	await status(a.page, 'ready');
-	assert((await a.page.locator('iframe').getAttribute('src')).endsWith('/AAAAAAAAAAA'));
+	assert.equal(
+		new URL(await a.page.locator('iframe').getAttribute('src')).pathname,
+		'/embed/AAAAAAAAAAA'
+	);
 	await a.page.getByRole('button', { name: 'Synthetic lesson-a2', exact: true }).click();
 	await status(a.page, 'ready');
-	await a.page.getByRole('button', { name: 'Simpan posisi awal' }).click();
-	await a.page.getByText('Posisi awal tersimpan.').waitFor();
+	await a.page.waitForFunction(() => window.__fakePlayers?.some((p) => !p.dead));
+	await a.page.evaluate(() => window.__fakePlayers.findLast((p) => !p.dead).event(42, 2));
+	await a.page.getByText('Posisi belajar tersimpan.', { exact: true }).waitFor();
+	assert.equal(
+		(await sdk(a.page, 'progress', {})).find((p) => p.lessonId === 'lesson-a2').positionSeconds,
+		42
+	);
 	assert.equal(await sdk(a.page, 'private', { id: 'lesson-b1' }), 'permission-denied');
 	await a.page.goto(base + '/e-learning/scope-b');
 	await status(a.page, 'unauthorized');
@@ -350,12 +399,25 @@ try {
 	await management.page.getByRole('heading', { name: 'Grant sintetis per scope' }).waitFor();
 	assert(await management.page.getByText('Synthetic draft-only', { exact: true }).count());
 	await management.page.getByLabel('Judul', { exact: true }).fill('Browser synthetic draft');
-	await management.page.getByLabel('Scope ID', { exact: true }).first().fill('browser-scope');
+	await management.page.getByLabel('Scope ID', { exact: true }).first().fill('scope-b');
+	await management.page.getByLabel('Parent kurikulum', { exact: true }).selectOption('chapter-b');
+	await management.page.getByLabel('Urutan', { exact: true }).fill('3');
 	await management.page.getByLabel('Bidang', { exact: true }).fill('Synthetic subject');
 	await management.page.getByLabel('Bab', { exact: true }).fill('Synthetic chapter');
 	await management.page
 		.getByLabel('Pemateri disetujui', { exact: true })
 		.fill('Synthetic approved instructor');
+	await management.page
+		.getByLabel('Tautan video', { exact: true })
+		.fill('https://youtube.com.evil.example/watch?v=CCCCCCCCCCC');
+	await management.page.getByRole('button', { name: 'Simpan draft', exact: true }).click();
+	await management.page.getByText('Tautan YouTube tidak valid.', { exact: true }).waitFor();
+	assert.equal(
+		await management.page.getByText('Browser synthetic draft', { exact: true }).count(),
+		0
+	);
+	console.log('PASS invalid media URL rejects before editorial mutation');
+	pass++;
 	await management.page
 		.getByLabel('Tautan video', { exact: true })
 		.fill('https://youtu.be/CCCCCCCCCCC');
@@ -367,17 +429,279 @@ try {
 	await item.getByRole('button', { name: 'Terbitkan versi disetujui' }).click();
 	await item.getByText('published · versi 1').waitFor();
 	await management.page.getByLabel('UID peserta').fill(fixture.users['no-grant'].uid);
-	await management.page.getByLabel('Scope ID', { exact: true }).last().fill('browser-scope');
+	await management.page.getByLabel('Scope ID', { exact: true }).last().fill('scope-b');
 	await management.page.getByRole('button', { name: 'Berikan grant', exact: true }).click();
 	await management.page.getByText('Perubahan tersimpan.').waitFor();
 	const ng = await session();
 	await login(ng.page, 'no-grant');
-	await ng.page.goto(base + '/e-learning/browser-scope');
+	await ng.page.goto(base + '/e-learning/scope-b');
 	await status(ng.page, 'ready');
 	await management.page.getByRole('button', { name: 'Cabut grant', exact: true }).click();
 	await status(ng.page, 'revoked');
 	console.log('PASS verified-admin: UI CMS review/publish/grant/revoke with real SDK');
 	pass++;
+	// Phase 1C: actual data persistence and adapter events, with no YouTube egress.
+	await writeGrant(
+		adminDb,
+		adminUid,
+		fixture.users.active.uid,
+		'scope-a',
+		'active',
+		Timestamp.fromMillis(Date.now() - 1000),
+		Timestamp.fromMillis(Date.now() + 300000)
+	);
+	const learner = await session();
+	await login(learner.page, 'active');
+	await learner.page.goto(base + '/e-learning');
+	await learner.page.getByRole('heading', { name: 'Analisis Fundamental', exact: true }).waitFor();
+	assert.equal(await learner.page.locator('article').count(), 4);
+	assert.equal(await learner.page.locator('details').count(), 24);
+	await learner.page.getByText('Bab 1 · Synthetic chapter', { exact: true }).first().waitFor();
+	assert.equal(await learner.page.getByText('Synthetic draft-only', { exact: true }).count(), 0);
+	console.log(
+		'PASS hierarchy: four subjects, six planned levels, chapters and published lessons only'
+	);
+	pass++;
+	await learner.page.getByRole('link', { name: 'Synthetic lesson-a1', exact: true }).click();
+	await status(learner.page, 'ready');
+	await learner.page.getByRole('button', { name: 'Pelajaran berikutnya', exact: true }).click();
+	await status(learner.page, 'ready');
+	assert.equal(new URL(learner.page.url()).searchParams.get('lesson'), 'lesson-a2');
+	await learner.page.reload();
+	await status(learner.page, 'ready');
+	assert.equal(
+		await learner.page
+			.getByRole('button', { name: 'Synthetic lesson-a2', exact: true })
+			.getAttribute('aria-pressed'),
+		'true'
+	);
+	console.log('PASS selected lesson URL survives reload after next navigation');
+	pass++;
+	assert.equal(
+		await learner.page
+			.getByRole('button', { name: 'Synthetic lesson-a2', exact: true })
+			.getAttribute('aria-pressed'),
+		'true'
+	);
+	await learner.page.getByRole('button', { name: 'Pelajaran sebelumnya', exact: true }).click();
+	await status(learner.page, 'ready');
+	assert.equal(
+		await learner.page
+			.getByRole('button', { name: 'Synthetic lesson-a1', exact: true })
+			.getAttribute('aria-pressed'),
+		'true'
+	);
+	console.log('PASS ordered previous and next lesson navigation');
+	pass++;
+	await learner.page.waitForFunction(() => window.__fakePlayers?.some((p) => !p.dead));
+	await learner.page.evaluate(() => window.__fakePlayers.findLast((p) => !p.dead).event(57, 2));
+	await learner.page.getByText('Posisi belajar tersimpan.', { exact: true }).waitFor();
+	assert.equal(
+		(await sdk(learner.page, 'progress', {})).find((p) => p.lessonId === 'lesson-a1')
+			.positionSeconds,
+		57
+	);
+	console.log('PASS actual nonzero event persists through protected SDK');
+	pass++;
+	await learner.page.reload();
+	await status(learner.page, 'ready');
+	await learner.page.waitForFunction(() =>
+		window.__fakePlayers?.some((p) => !p.dead && p.seeked === 57)
+	);
+	console.log('PASS reload seeks to database position');
+	pass++;
+	await learner.page.screenshot({ path: evidence + '/player-desktop.png' });
+	const resume = await session(secondBrowser);
+	await login(resume.page, 'active');
+	await resume.page.goto(base + '/e-learning/scope-a');
+	await status(resume.page, 'ready');
+	await resume.page.waitForFunction(() =>
+		window.__fakePlayers?.some((p) => !p.dead && p.seeked === 57)
+	);
+	assert.equal(
+		await resume.page
+			.getByRole('button', { name: 'Synthetic lesson-a1', exact: true })
+			.getAttribute('aria-pressed'),
+		'true'
+	);
+	console.log('PASS second browser resumes last scoped lesson and stored position');
+	pass++;
+	await learner.page.goto(base + '/profile');
+	await learner.page
+		.locator('[data-testid="learning-dashboard"]')
+		.getByText('Posisi belajar terakhir: 57 detik', { exact: true })
+		.waitFor();
+	const dashboardTab = await learner.context.newPage();
+	await dashboardTab.goto(base + '/profile');
+	await dashboardTab
+		.locator('[data-testid="learning-dashboard"]')
+		.getByText('Posisi belajar terakhir: 57 detik', { exact: true })
+		.waitFor();
+	await dashboardTab.screenshot({ path: evidence + '/dashboard-desktop.png' });
+	await sdk(learner.page, 'login', { ...fixture.users['no-grant'], password });
+	for (const page of [learner.page, dashboardTab]) {
+		await page
+			.locator('[data-testid="learning-dashboard"]')
+			.getByText('Posisi belajar terakhir: 10 detik', { exact: true })
+			.waitFor();
+		assert.equal(
+			await page.getByText('Posisi belajar terakhir: 57 detik', { exact: true }).count(),
+			0
+		);
+	}
+	console.log('PASS dashboard and second tab clear A progress on account switch');
+	pass++;
+	const stale = await session();
+	await login(stale.page, 'active');
+	let releaseHistory,
+		heldHistory = false,
+		holdingHistory = false;
+	const held = new Promise((resolve) => {
+		releaseHistory = resolve;
+	});
+	await stale.page.route('**/*', async (route) => {
+		if (
+			!holdingHistory &&
+			route
+				.request()
+				.url()
+				.includes('/academy_progress/' + fixture.users.active.uid) &&
+			route.request().method() === 'POST'
+		) {
+			holdingHistory = true;
+			const response = await route.fetch();
+			assert.equal(response.status(), 200);
+			const body = await response.text();
+			assert(body.includes('positionSeconds') && body.includes('57'));
+			heldHistory = true;
+			await held;
+			await route.fulfill({ response });
+		} else await route.fallback();
+	});
+	await stale.page.goto(base + '/profile');
+	for (let i = 0; i < 100 && !heldHistory; i++) await delay(50);
+	assert(heldHistory, 'Must hold an actual authorized progress response');
+	await sdk(stale.page, 'login', { ...fixture.users['no-grant'], password });
+	await stale.page
+		.locator('[data-testid="learning-dashboard"]')
+		.getByText('Posisi belajar terakhir: 10 detik', { exact: true })
+		.waitFor();
+	releaseHistory();
+	await delay(500);
+	assert.equal(
+		await stale.page.getByText('Posisi belajar terakhir: 57 detik', { exact: true }).count(),
+		0
+	);
+	await stale.page.unroute('**/*');
+	console.log('PASS delayed progress response from account A cannot repopulate B dashboard');
+	pass++;
+	await resume.page.bringToFront();
+	await status(resume.page, 'ready');
+	await resume.page.waitForFunction(() => window.__fakePlayers?.some((p) => !p.dead));
+	await resume.page.evaluate(() => window.__fakePlayers.findLast((p) => !p.dead).event(75, 1));
+	for (let i = 0; i < 100; i++) {
+		if (
+			(await sdk(resume.page, 'progress', {})).find((p) => p.lessonId === 'lesson-a1')
+				?.positionSeconds === 75
+		)
+			break;
+		await delay(50);
+	}
+	const before = await sdk(resume.page, 'progress', {});
+	assert.equal(before.find((p) => p.lessonId === 'lesson-a1').positionSeconds, 75);
+	console.log('PASS PLAYING timer persists actual nonzero position before revoke');
+	pass++;
+	await writeGrant(
+		adminDb,
+		adminUid,
+		fixture.users.active.uid,
+		'scope-a',
+		'revoked',
+		Timestamp.fromMillis(Date.now() - 1000),
+		Timestamp.fromMillis(Date.now() + 300000)
+	);
+	await status(resume.page, 'revoked');
+	await resume.page.evaluate(() => window.__lastDestroyed.event(99, 2));
+	await delay(3500);
+	assert.deepEqual(await sdk(resume.page, 'progress', {}), before);
+	assert.equal(
+		await sdk(resume.page, 'writeProgress', { id: 'lesson-a1', position: 99 }),
+		'permission-denied'
+	);
+	console.log('PASS revoke destroys adapter, cancels samples and backend denies new progress');
+	pass++;
+	await management.page.bringToFront();
+	await item.getByRole('button', { name: 'Edit', exact: true }).click();
+	await management.page.getByLabel('Judul', { exact: true }).fill('Browser revised draft');
+	await management.page.getByRole('button', { name: 'Simpan draft', exact: true }).click();
+	const revised = management.page.locator('li').filter({ hasText: 'Browser revised draft' });
+	await revised.getByText('draft · versi 2').waitFor();
+	assert.equal(await revised.getByRole('button', { name: 'Terbitkan versi disetujui' }).count(), 0);
+	await guest.page.goto(base + '/e-learning');
+	await guest.page.getByRole('link', { name: 'Synthetic lesson-a1', exact: true }).waitFor();
+	assert.equal(
+		await guest.page.getByRole('link', { name: 'Browser synthetic draft', exact: true }).count(),
+		0
+	);
+	assert.equal(await guest.page.getByText('Browser revised draft', { exact: true }).count(), 0);
+	console.log('PASS edit withdraws published lesson and old approval cannot publish version two');
+	pass++;
+	await guest.page.setViewportSize({ width: 360, height: 800 });
+	assert(
+		await guest.page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)
+	);
+	await guest.page.getByRole('link', { name: 'Synthetic lesson-a1', exact: true }).focus();
+	assert.equal(
+		await guest.page
+			.getByRole('link', { name: 'Synthetic lesson-a1', exact: true })
+			.evaluate((el) => document.activeElement === el),
+		true
+	);
+	console.log('PASS mobile catalog does not overflow and lesson links receive keyboard focus');
+	pass++;
+	await guest.page.screenshot({ path: evidence + '/catalog-360.png' });
+	await learner.page.goto(base + '/e-learning/scope-a');
+	await status(learner.page, 'unauthorized');
+	assert.equal(await learner.page.locator('[data-testid="progress-status"]').count(), 0);
+	console.log('PASS no-grant history cannot instantiate playback or progress adapter');
+	pass++;
+	for (const kind of ['subject', 'level', 'chapter']) {
+		await management.page.getByRole('button', { name: 'Draft baru', exact: true }).click();
+		await management.page.getByLabel('Jenis kurikulum', { exact: true }).selectOption(kind);
+		if (kind === 'subject')
+			await management.page
+				.getByLabel('Identitas bidang', { exact: true })
+				.selectOption('muamalah');
+		else {
+			const parent =
+				kind === 'level'
+					? 'muamalah'
+					: await management.page
+							.locator('#curriculum-parent option')
+							.filter({ hasText: 'Synthetic CMS level' })
+							.getAttribute('value');
+			await management.page.getByLabel('Parent kurikulum', { exact: true }).selectOption(parent);
+		}
+		await management.page.getByLabel('Judul', { exact: true }).fill('Synthetic CMS ' + kind);
+		await management.page
+			.getByLabel('Scope ID', { exact: true })
+			.first()
+			.fill('synthetic-node-scope');
+		await management.page.getByLabel('Bidang', { exact: true }).fill('Fikih Muamalah');
+		await management.page.getByLabel('Bab', { exact: true }).fill('Synthetic CMS chapter');
+		await management.page.getByLabel('Level', { exact: true }).fill('2');
+		await management.page
+			.getByLabel('Urutan', { exact: true })
+			.fill(kind === 'chapter' ? '1' : '2');
+		await management.page.getByRole('button', { name: 'Simpan draft', exact: true }).click();
+		const node = management.page.locator('li').filter({ hasText: 'Synthetic CMS ' + kind });
+		await node.getByRole('button', { name: 'Ajukan review' }).click();
+		await node.getByRole('button', { name: 'Setujui rights dan review' }).click();
+		await node.getByRole('button', { name: 'Terbitkan versi disetujui' }).click();
+		await node.getByText('published · versi 1', { exact: true }).waitFor();
+		console.log('PASS CMS ' + kind + ' uses protected reviewed publishing');
+		pass++;
+	}
 	console.log(
 		JSON.stringify({
 			pass,

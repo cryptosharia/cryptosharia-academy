@@ -15,6 +15,10 @@ import type { User } from 'firebase/auth';
 
 export type Metadata = {
 	id: string;
+	kind: 'subject' | 'level' | 'chapter' | 'lesson';
+	parentId: string;
+	subjectId: string;
+	chapterNumber: number;
 	scopeId: string;
 	subject: string;
 	level: number;
@@ -46,7 +50,7 @@ export type Approval = {
 };
 export type Editorial = {
 	metadata: Metadata;
-	media: Media;
+	media: Media | null;
 	version: number;
 	status: 'draft' | 'review' | 'approved' | 'published';
 	approval: Approval | null;
@@ -64,10 +68,22 @@ export type Grant = {
 };
 
 export async function readCatalog(db: Firestore, scopeId?: string): Promise<CatalogLesson[]> {
-	const conditions = [where('status', '==', 'published')];
+	const conditions = [where('status', '==', 'published'), where('kind', '==', 'lesson')];
 	if (scopeId) conditions.push(where('scopeId', '==', scopeId));
 	const snap = await getDocsFromServer(query(collection(db, 'academy_catalog'), ...conditions));
-	return snap.docs.map((d) => d.data() as CatalogLesson).sort((a, b) => a.order - b.order);
+	return snap.docs.map((d) => d.data() as CatalogLesson).sort(lessonOrder);
+}
+
+export const lessonOrder = (a: CatalogLesson, b: CatalogLesson) =>
+	a.level - b.level ||
+	a.chapterNumber - b.chapterNumber ||
+	a.order - b.order ||
+	a.id.localeCompare(b.id);
+export async function readCurriculum(db: Firestore): Promise<CatalogLesson[]> {
+	const snap = await getDocsFromServer(
+		query(collection(db, 'academy_catalog'), where('status', '==', 'published'))
+	);
+	return snap.docs.map((d) => d.data() as CatalogLesson).sort(lessonOrder);
 }
 
 export async function academyRoles(user: User | null) {
@@ -86,7 +102,7 @@ export async function academyRoles(user: User | null) {
 export async function saveEditorial(
 	db: Firestore,
 	uid: string,
-	input: { metadata: Metadata; media: Media; syariahRequired: boolean },
+	input: { metadata: Metadata; media: Media | null; syariahRequired: boolean },
 	expectedVersion: number | null
 ) {
 	const ref = doc(db, 'academy_editorial', input.metadata.id);
@@ -105,7 +121,17 @@ export async function saveEditorial(
 			updatedBy: uid,
 			updatedAt: serverTimestamp()
 		});
-		tx.delete(doc(db, 'academy_catalog', input.metadata.id));
+		if (input.metadata.kind === 'lesson') {
+			tx.delete(doc(db, 'academy_catalog', input.metadata.id));
+			if (old.exists() && old.data().status === 'published')
+				tx.delete(
+					doc(
+						db,
+						'academy_positions',
+						`${old.data().metadata.parentId}_${old.data().metadata.order}`
+					)
+				);
+		}
 		tx.set(audit, {
 			contentId: input.metadata.id,
 			version,
@@ -159,18 +185,24 @@ export async function transitionEditorial(
 			at: serverTimestamp()
 		});
 		if (status === 'published') {
+			tx.set(
+				doc(db, 'academy_positions', `${current.metadata.parentId}_${current.metadata.order}`),
+				{ id }
+			);
 			tx.set(doc(db, 'academy_catalog', id), {
 				...current.metadata,
 				status,
 				version: expectedVersion
 			});
-			tx.set(doc(db, 'academy_lessons', id), {
-				...current.media,
-				id,
-				scopeId: current.metadata.scopeId,
-				version: expectedVersion
-			});
-		} else if (status === 'draft') tx.delete(doc(db, 'academy_catalog', id));
+			if (current.metadata.kind === 'lesson')
+				tx.set(doc(db, 'academy_lessons', id), {
+					...current.media,
+					id,
+					scopeId: current.metadata.scopeId,
+					version: expectedVersion
+				});
+		} else if (status === 'draft' && current.metadata.kind === 'lesson')
+			tx.delete(doc(db, 'academy_catalog', id));
 	});
 }
 
@@ -234,6 +266,13 @@ export async function saveProgress(
 	});
 	await batch.commit();
 }
+
+export type Progress = {
+	lessonId: string;
+	version: number;
+	positionSeconds: number;
+	updatedAt: Timestamp;
+};
 
 export const readEditorial = async (db: Firestore, id: string) => {
 	const snap = await getDocFromServer(doc(db, 'academy_editorial', id));
