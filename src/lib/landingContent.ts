@@ -254,8 +254,8 @@ export const defaultLandingContent: LandingContent = {
 			'Belajar langsung bersama founder Crypto Sharia, founder Qualifin, dan pakar fiqih muamalah dengan pendekatan sistematis, praktis, dan sesuai prinsip syariah.',
 		primaryCtaLabel: 'Daftar Sekarang',
 		secondaryCta: { label: 'Lihat Paket', href: '#pricing' },
-		videoUrl: '',
-		videoLabel: 'intro-masterclass.mp4',
+		videoUrl: 'https://youtu.be/kNg5YbmcYJw',
+		videoLabel: 'Video Perkenalan Masterclass',
 		videoTitle: 'Video Perkenalan Program',
 		videoDescription:
 			'Placeholder upload-ready untuk memperkenalkan visi program dan mentor utama.',
